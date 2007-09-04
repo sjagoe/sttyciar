@@ -94,6 +94,9 @@
 		<Unit filename="src/abstractionlayer/ethernetiiframe.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
+		<Unit filename="src/abstractionlayer/packet.cpp">
+			<Option target="AL-Debug" />
+		</Unit>
 		<Unit filename="src/swroute/main.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />

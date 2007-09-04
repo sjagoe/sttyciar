@@ -1,17 +1,25 @@
 #ifndef __PACKET_HH__
 #define __PACKET_HH__
 
+#include <vector>
+#include <pcap.h>
+
+#include "defines.hh"
+
+using std::vector;
+
 class Packet
 {
     private:
-        u_char* data;
+        vector<u_char> packet;
+        bpf_u_int32 payloadLength;
 
     public:
-        Packet( u_char* data );
+        Packet( const pcap_pkthdr* head, const u_char* data );
 
-        inline u_char* getData()
+        inline const vector<u_char>& getPacket()
         {
-            return data;
+            return packet;
         };
 };
 

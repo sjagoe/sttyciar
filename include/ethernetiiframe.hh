@@ -5,9 +5,14 @@
 #include <sys/types.h>
 #include <vector>
 
-//#include "defines.hh"
+#include "defines.hh"
+
+using std::vector;
 
 class Packet;
+
+#define ETHERNETII_MAC_LENGTH 6
+#define ETEHRNETII_ETHERTYPE_LENGTH 2
 
 /*!
 EthernetIIFrame encapsulates the Ethernet II Frame header and
@@ -23,14 +28,14 @@ class EthernetIIFrame
 {
     public:
         EthernetIIFrame();
-        //EthernetIIFrame( Packet& packet );
+        EthernetIIFrame( Packet& packet );
 
     private:
-        u_char sourceMAC[6];
-        u_char destinationMAC[6];
-        u_char nextType[2];
+        u_char sourceMAC[ETHERNETII_MAC_LENGTH];
+        u_char destinationMAC[ETHERNETII_MAC_LENGTH];
+        u_char etherType[ETEHRNETII_ETHERTYPE_LENGTH];
 
-        std::vector<u_char> payload;
+        vector<u_char> payload;
 };
 
 #endif

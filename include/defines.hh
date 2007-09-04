@@ -5,4 +5,6 @@
 #define u_char unsigned char
 #endif
 
+#define ETHERNETII_HEAD_LENGTH 14
+
 #endif

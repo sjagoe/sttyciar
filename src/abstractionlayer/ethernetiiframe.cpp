@@ -1,4 +1,7 @@
+#include <ext/algorithm>
+
 #include "ethernetiiframe.hh"
+#include "packet.hh"
 
 EthernetIIFrame::EthernetIIFrame()
 {
@@ -14,6 +17,13 @@ EthernetIIFrame::EthernetIIFrame()
     destinationMAC[3] = 0;
     destinationMAC[4] = 0;
     destinationMAC[5] = 0;
-    nextType[0] = 0;
-    nextType[1] = 0;
+    etherType[0] = 0;
+    etherType[1] = 0;
+}
+
+EthernetIIFrame::EthernetIIFrame( Packet& packet )
+{
+    vector<u_char> data = packet.getPacket();
+    vector<u_char>::const_iterator iter = data.begin();
+    //__gnu_cxx::copy_n(
 }
