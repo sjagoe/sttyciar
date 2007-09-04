@@ -31,8 +31,13 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory="/home/simon/Documents/University/FourthYear/lab-project/source/include" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="include/defines.hh" />
+		<Unit filename="include/ethernetiiframe.hh" />
+		<Unit filename="include/ipv4datagram.hh" />
+		<Unit filename="include/packet.hh" />
+		<Unit filename="src/swroute/main.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
