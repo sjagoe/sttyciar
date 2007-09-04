@@ -1,6 +1,12 @@
 #ifndef __ETHERNETIIFRAME_HH__
 #define __ETHERNETIIFRAME_HH__
 
+
+#include <sys/types.h>
+#include <vector>
+
+//#include "defines.hh"
+
 class Packet;
 
 /*!
@@ -17,12 +23,14 @@ class EthernetIIFrame
 {
     public:
         EthernetIIFrame();
-        EthernetIIFrame( Packet& packet );
+        //EthernetIIFrame( Packet& packet );
 
     private:
-        u_char[6] sourceMAC;
-        u_char[6] destinationMAC;
-        u_char[2] nextType;
+        u_char sourceMAC[6];
+        u_char destinationMAC[6];
+        u_char nextType[2];
+
+        std::vector<u_char> payload;
 };
 
 #endif
