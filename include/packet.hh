@@ -3,16 +3,16 @@
 
 class Packet
 {
-private:
-  u_char* data;
+    private:
+        u_char* data;
 
-public:
-  Packet(u_char* data);
+    public:
+        Packet( u_char* data );
 
-  inline u_char* getData()
-  {
-    return data;
-  };
+        inline u_char* getData()
+        {
+            return data;
+        };
 };
 
 #endif
