@@ -1,7 +1,9 @@
 bin/**
 obj/**
-
 bin
 obj
 .objs
 sttyciar.layout
+*.dll
+*.exe
+*.so
