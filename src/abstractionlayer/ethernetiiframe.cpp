@@ -29,15 +29,19 @@ EthernetIIFrame::EthernetIIFrame( Packet& packet )
 
     std::pair<vector<u_char>::const_iterator,
         array<u_char, ETHERNETII_MAC_LENGTH>::iterator > resultLocations =
-        __gnu_cxx::copy_n(data.begin(), ETHERNETII_MAC_LENGTH, sourceMAC.begin());
+        __gnu_cxx::copy_n(data.begin(), ETHERNETII_MAC_LENGTH,
+        sourceMAC.begin());
 
     resultLocations =
-        __gnu_cxx::copy_n(resultLocations.first, ETHERNETII_MAC_LENGTH, destinationMAC.begin());
+        __gnu_cxx::copy_n(resultLocations.first, ETHERNETII_MAC_LENGTH,
+        destinationMAC.begin());
 
     resultLocations =
-        __gnu_cxx::copy_n(resultLocations.first, ETEHRNETII_ETHERTYPE_LENGTH, etherType.begin());
+        __gnu_cxx::copy_n(resultLocations.first, ETEHRNETII_ETHERTYPE_LENGTH,
+        etherType.begin());
 
-    payload.resize(packet.getPayloadLength());
+    payload.resize(packet.getPacketLength() - ETHERNETII_HEAD_LENGTH);
 
-    __gnu_cxx::copy_n(resultLocations.first, (packet.getPayloadLength()), payload.begin());
+    __gnu_cxx::copy_n(resultLocations.first,
+        (packet.getPacketLength() - ETHERNETII_HEAD_LENGTH), payload.begin());
 }

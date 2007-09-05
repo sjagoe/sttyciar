@@ -18,11 +18,11 @@ class Packet;
 #define ETEHRNETII_ETHERTYPE_LENGTH 2
 
 /*!
-EthernetIIFrame encapsulates the Ethernet II Frame header and
-payload with an easy to use interface.
+EthernetIIFrame encapsulates the Ethernet II Frame header and payload with an
+easy to use interface.
 
-The EthernetIIFrame should be created with a Packet as an argument.
-It will take its data from the raw packet data.
+The EthernetIIFrame should be created with a Packet as an argument. It will
+extract the Ethernet II header and payload from the raw packet data.
 
 @author Simon Jagoe
 */
@@ -30,8 +30,19 @@ It will take its data from the raw packet data.
 class EthernetIIFrame
 {
     public:
+        /*!
+        Default constructor: zeros all member variables.
+        */
         EthernetIIFrame();
+
+        /*!
+        Preferred constructor: extract the header information and payload from
+        a Packet object.
+
+        @param packet The Packet object containing the raw packet data
+        */
         EthernetIIFrame( Packet& packet );
+
 
         inline const array<u_char, ETHERNETII_MAC_LENGTH>& getSourceMAC()
         {

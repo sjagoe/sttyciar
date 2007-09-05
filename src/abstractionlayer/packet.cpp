@@ -13,7 +13,7 @@ Packet::Packet( const pcap_pkthdr* head, const u_char* data )
         {
             this->packet.resize(head->len);
             __gnu_cxx::copy_n(data, head->len, this->packet.begin());
-            payloadLength = head->len - ETHERNETII_HEAD_LENGTH;
+            packetLength = head->len;
             //pkthdr = *head;
         }
     }
