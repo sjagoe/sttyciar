@@ -54,9 +54,6 @@ class EthernetIIFrame
         };
 
     private:
-        //u_char sourceMAC[ETHERNETII_MAC_LENGTH];
-        //u_char destinationMAC[ETHERNETII_MAC_LENGTH];
-        //u_char etherType[ETEHRNETII_ETHERTYPE_LENGTH];
         array<u_char, ETHERNETII_MAC_LENGTH> sourceMAC;
         array<u_char, ETHERNETII_MAC_LENGTH> destinationMAC;
         array<u_char, ETEHRNETII_ETHERTYPE_LENGTH> etherType;

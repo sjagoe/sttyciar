@@ -8,7 +8,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="AL-Debug">
-				<Option output="bin\Debug\abstractionlayer" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/abstractionlayer" prefix_auto="1" extension_auto="1" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -18,7 +18,7 @@
 				</Compiler>
 			</Target>
 			<Target title="NLL_Hub-Debug">
-				<Option output="bin\Debug\NLL_Hub" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/NLL_Hub" prefix_auto="1" extension_auto="1" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -28,7 +28,7 @@
 				</Compiler>
 			</Target>
 			<Target title="SL-Debug">
-				<Option output="bin\Debug\statisticslayer" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/statisticslayer" prefix_auto="1" extension_auto="1" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -38,20 +38,20 @@
 				</Compiler>
 			</Target>
 			<Target title="main-Debug">
-				<Option output="bin\Debug\sttyciar" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj\Debug\" />
+				<Option output="bin/Debug/sttyciar" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add library="bin\Debug\abstractionlayer.so" />
+					<Add library="bin/Debug/abstractionlayer.so" />
 				</Linker>
 			</Target>
 			<Target title="main-Release">
-				<Option output="bin\Release\sttyciar" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj\Release\" />
+				<Option output="bin/Release/sttyciar" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -70,41 +70,44 @@
 			<Add option="-fexceptions" />
 			<Add directory="include" />
 		</Compiler>
-		<Unit filename="include\abstractionlayer.hh">
+		<Unit filename="include/abstractionlayer.hh">
 			<Option target="main-Debug" />
 			<Option target="main-Release" />
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="include\defines.hh">
+		<Unit filename="include/defines.hh">
 			<Option target="main-Debug" />
 			<Option target="main-Release" />
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="include\ethernetiiframe.hh">
+		<Unit filename="include/ethernetiiframe.hh">
 			<Option target="main-Debug" />
 			<Option target="main-Release" />
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="include\ipv4datagram.hh">
+		<Unit filename="include/ipv4datagram.hh">
 			<Option target="main-Debug" />
 			<Option target="main-Release" />
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="include\packet.hh">
+		<Unit filename="include/packet.hh">
 			<Option target="main-Debug" />
 			<Option target="main-Release" />
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="src\abstractionlayer\abstractionlayer.cpp">
+		<Unit filename="src/abstractionlayer/abstractionlayer.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="src\abstractionlayer\ethernetiiframe.cpp">
+		<Unit filename="src/abstractionlayer/ethernetiiframe.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="src\abstractionlayer\packet.cpp">
+		<Unit filename="src/abstractionlayer/ipv4datagram.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="src\sttyciar\main.cpp">
+		<Unit filename="src/abstractionlayer/packet.cpp">
+			<Option target="AL-Debug" />
+		</Unit>
+		<Unit filename="src/sttyciar/main.cpp">
 			<Option target="main-Debug" />
 			<Option target="main-Release" />
 		</Unit>
