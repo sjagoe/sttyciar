@@ -11,8 +11,10 @@ Packet::Packet( const pcap_pkthdr* head, const u_char* data )
         //if (data) // if the above line is not needed,
         // this check can be performed with the (head) check.
         {
+            this->packet.resize(head->len);
             __gnu_cxx::copy_n(data, head->len, this->packet.begin());
             payloadLength = head->len - ETHERNETII_HEAD_LENGTH;
+            //pkthdr = *head;
         }
     }
 }

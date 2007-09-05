@@ -24,6 +24,20 @@ EthernetIIFrame::EthernetIIFrame()
 EthernetIIFrame::EthernetIIFrame( Packet& packet )
 {
     vector<u_char> data = packet.getPacket();
+
     vector<u_char>::const_iterator iter = data.begin();
-    //__gnu_cxx::copy_n(
+
+    std::pair<vector<u_char>::const_iterator,
+        array<u_char, ETHERNETII_MAC_LENGTH>::iterator > resultLocations =
+        __gnu_cxx::copy_n(data.begin(), ETHERNETII_MAC_LENGTH, sourceMAC.begin());
+
+    resultLocations =
+        __gnu_cxx::copy_n(resultLocations.first, ETHERNETII_MAC_LENGTH, destinationMAC.begin());
+
+    resultLocations =
+        __gnu_cxx::copy_n(resultLocations.first, ETEHRNETII_ETHERTYPE_LENGTH, etherType.begin());
+
+    payload.resize(packet.getPayloadLength());
+
+    __gnu_cxx::copy_n(resultLocations.first, (packet.getPayloadLength()), payload.begin());
 }

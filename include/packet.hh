@@ -13,6 +13,7 @@ class Packet
     private:
         vector<u_char> packet;
         bpf_u_int32 payloadLength;
+        //pcap_pkthdr pkthdr;
 
     public:
         Packet( const pcap_pkthdr* head, const u_char* data );
@@ -20,6 +21,12 @@ class Packet
         inline const vector<u_char>& getPacket()
         {
             return packet;
+        };
+
+        inline const bpf_u_int32& getPayloadLength()
+        {
+            return payloadLength;
+            //return pkthdr.len;
         };
 };
 

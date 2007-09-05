@@ -5,9 +5,12 @@
 #include <sys/types.h>
 #include <vector>
 
+#include <boost/array.hpp>
+
 #include "defines.hh"
 
 using std::vector;
+using boost::array;
 
 class Packet;
 
@@ -30,10 +33,33 @@ class EthernetIIFrame
         EthernetIIFrame();
         EthernetIIFrame( Packet& packet );
 
+        inline const array<u_char, ETHERNETII_MAC_LENGTH>& getSourceMAC()
+        {
+            return sourceMAC;
+        };
+
+        inline const array<u_char, ETHERNETII_MAC_LENGTH>& getDestinationMAC()
+        {
+            return destinationMAC;
+        };
+
+        inline const array<u_char, ETEHRNETII_ETHERTYPE_LENGTH>& getEtherType()
+        {
+            return etherType;
+        };
+
+        inline const vector<u_char>& getPayload()
+        {
+            return payload;
+        };
+
     private:
-        u_char sourceMAC[ETHERNETII_MAC_LENGTH];
-        u_char destinationMAC[ETHERNETII_MAC_LENGTH];
-        u_char etherType[ETEHRNETII_ETHERTYPE_LENGTH];
+        //u_char sourceMAC[ETHERNETII_MAC_LENGTH];
+        //u_char destinationMAC[ETHERNETII_MAC_LENGTH];
+        //u_char etherType[ETEHRNETII_ETHERTYPE_LENGTH];
+        array<u_char, ETHERNETII_MAC_LENGTH> sourceMAC;
+        array<u_char, ETHERNETII_MAC_LENGTH> destinationMAC;
+        array<u_char, ETEHRNETII_ETHERTYPE_LENGTH> etherType;
 
         vector<u_char> payload;
 };

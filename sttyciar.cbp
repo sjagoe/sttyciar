@@ -2,31 +2,11 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="swroute" />
+		<Option title="sttyciar" />
 		<Option pch_mode="2" />
+		<Option default_target="main-Debug" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="Debug">
-				<Option output="bin/Debug/swroute" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-g" />
-				</Compiler>
-			</Target>
-			<Target title="Release">
-				<Option output="bin/Release/swroute" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-O2" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-				</Linker>
-			</Target>
 			<Target title="AL-Debug">
 				<Option output="bin/Debug/abstractionlayer" prefix_auto="1" extension_auto="1" />
 				<Option type="3" />
@@ -57,35 +37,62 @@
 					<Add option="-g" />
 				</Compiler>
 			</Target>
+			<Target title="main-Debug">
+				<Option output="bin/Debug/sttyciar" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="bin/Debug/abstractionlayer.so" />
+				</Linker>
+			</Target>
+			<Target title="main-Release">
+				<Option output="bin/Release/sttyciar" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
 		</Build>
+		<VirtualTargets>
+			<Add alias="sttyciar-Debug" targets="AL-Debug;NLL_Hub-Debug;SL-Debug;main-Debug;" />
+		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add directory="/home/simon/Documents/University/FourthYear/lab-project/source/include" />
 		</Compiler>
 		<Unit filename="include/abstractionlayer.hh">
-			<Option target="Debug" />
-			<Option target="Release" />
+			<Option target="main-Debug" />
+			<Option target="main-Release" />
 			<Option target="AL-Debug" />
 		</Unit>
 		<Unit filename="include/defines.hh">
-			<Option target="Debug" />
-			<Option target="Release" />
+			<Option target="main-Debug" />
+			<Option target="main-Release" />
 			<Option target="AL-Debug" />
 		</Unit>
 		<Unit filename="include/ethernetiiframe.hh">
-			<Option target="Debug" />
-			<Option target="Release" />
+			<Option target="main-Debug" />
+			<Option target="main-Release" />
 			<Option target="AL-Debug" />
 		</Unit>
 		<Unit filename="include/ipv4datagram.hh">
-			<Option target="Debug" />
-			<Option target="Release" />
+			<Option target="main-Debug" />
+			<Option target="main-Release" />
 			<Option target="AL-Debug" />
 		</Unit>
 		<Unit filename="include/packet.hh">
-			<Option target="Debug" />
-			<Option target="Release" />
+			<Option target="main-Debug" />
+			<Option target="main-Release" />
 			<Option target="AL-Debug" />
 		</Unit>
 		<Unit filename="src/abstractionlayer/abstractionlayer.cpp">
@@ -97,9 +104,9 @@
 		<Unit filename="src/abstractionlayer/packet.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="src/swroute/main.cpp">
-			<Option target="Debug" />
-			<Option target="Release" />
+		<Unit filename="src/sttyciar/main.cpp">
+			<Option target="main-Debug" />
+			<Option target="main-Release" />
 		</Unit>
 		<Extensions>
 			<code_completion />
