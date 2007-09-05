@@ -46,7 +46,7 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add library="bin\Debug\abstractionlayer.so" />
+					<Add option="-Lbin/Debug -labstractionlayer" />
 				</Linker>
 			</Target>
 			<Target title="main-Release">
