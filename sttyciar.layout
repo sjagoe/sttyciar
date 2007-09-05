@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="sttyciar-Debug" />
-	<File name="include/abstractionlayer.hh" open="0" top="0" tabpos="0">
+	<File name="include\abstractionlayer.hh" open="0" top="0" tabpos="0">
 		<Cursor position="132" topLine="0" />
 	</File>
-	<File name="include/defines.hh" open="1" top="0" tabpos="3">
+	<File name="include\defines.hh" open="1" top="0" tabpos="3">
 		<Cursor position="129" topLine="0" />
 	</File>
-	<File name="include/ethernetiiframe.hh" open="1" top="0" tabpos="2">
-		<Cursor position="636" topLine="26" />
+	<File name="include\ethernetiiframe.hh" open="1" top="0" tabpos="2">
+		<Cursor position="286" topLine="0" />
 	</File>
-	<File name="include/ipv4datagram.hh" open="0" top="0" tabpos="0">
+	<File name="include\ipv4datagram.hh" open="0" top="0" tabpos="0">
 		<Cursor position="93" topLine="0" />
 	</File>
-	<File name="include/packet.hh" open="1" top="0" tabpos="4">
+	<File name="include\packet.hh" open="1" top="0" tabpos="4">
 		<Cursor position="104" topLine="0" />
 	</File>
-	<File name="src/abstractionlayer/ethernetiiframe.cpp" open="1" top="1" tabpos="1">
-		<Cursor position="612" topLine="18" />
+	<File name="src\abstractionlayer\ethernetiiframe.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="26" topLine="0" />
 	</File>
-	<File name="src/abstractionlayer/packet.cpp" open="1" top="0" tabpos="5">
+	<File name="src\abstractionlayer\packet.cpp" open="1" top="0" tabpos="5">
 		<Cursor position="559" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
