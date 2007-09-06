@@ -4,7 +4,7 @@
 #include <vector>
 #include <boost/array.hpp>
 
-#include "packet.hh"
+#include "networklayerpacket.hh"
 
 #define IPV4_DATAGRAMLENGTH_STORE_LENGTH 2
 #define IPV4_IDENTIFICATION_STORE_LENGTH 2
@@ -32,13 +32,16 @@ using std::pair;
 
 class RawPacket;
 
-class EthernetIIFrame;
-
-class IPv4Datagram: public Packet
+class IPv4Datagram: public NetworkLayerPacket
 {
     public:
-        IPv4Datagram( EthernetIIFrame& frame );
+        IPv4Datagram() {};
+        void setData( DataLinkLayerPacket& packet );
         RawPacket getRawPacket();
+//        inline const vector<u_char>& getPayload()
+//        {
+//            return _remainingData;
+//        };
 
     private:
         //! IP version (i.e. 4)

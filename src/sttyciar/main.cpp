@@ -48,7 +48,8 @@ int main()
     }
     cout << endl;
 
-    EthernetIIFrame b(a);
+    EthernetIIFrame b;
+    b.setData(a);
 
     array<u_char, ETHERNETII_MAC_LENGTH> s = b.getSourceMAC();
     array<u_char, ETHERNETII_MAC_LENGTH> d = b.getDestinationMAC();

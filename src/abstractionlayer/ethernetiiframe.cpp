@@ -21,7 +21,7 @@
 //    _etherType[1] = 0;
 //}
 
-EthernetIIFrame::EthernetIIFrame( RawPacket& packet )
+void EthernetIIFrame::setData( RawPacket& packet )
 {
     vector<u_char> data = packet.getPacket();
 

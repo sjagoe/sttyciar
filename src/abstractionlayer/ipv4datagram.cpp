@@ -27,10 +27,11 @@
 //#define IPV4_MINIMUM_LENGTH 20
 
 //IPv4Datagram::IPv4Datagram( RawPacket& packet )
-IPv4Datagram::IPv4Datagram( EthernetIIFrame& frame )
+//IPv4Datagram::IPv4Datagram( EthernetIIFrame& frame )
+void IPv4Datagram::setData( DataLinkLayerPacket& packet )
 {
     // get the raw packet vector
-    vector<u_char> data = frame.getPayload();
+    vector<u_char> data = packet.getPayload();
 
     // make sure the IP header is at least the minimum length
     if ( data.size() >= IPV4_MINIMUM_LENGTH )

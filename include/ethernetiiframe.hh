@@ -9,7 +9,7 @@
 
 #include "defines.hh"
 
-#include "packet.hh"
+#include "datalinklayerpacket.hh"
 
 using std::vector;
 using boost::array;
@@ -29,7 +29,7 @@ extract the Ethernet II header and payload from the raw packet data.
 @author Simon Jagoe
 */
 
-class EthernetIIFrame: public Packet
+class EthernetIIFrame: public DataLinkLayerPacket
 {
     public:
 //        /*!
@@ -43,7 +43,9 @@ class EthernetIIFrame: public Packet
 
         @param packet The Packet object containing the raw packet data
         */
-        EthernetIIFrame( RawPacket& packet );
+        EthernetIIFrame() {};
+
+        void setData( RawPacket& packet );
 
         RawPacket getRawPacket();
 
