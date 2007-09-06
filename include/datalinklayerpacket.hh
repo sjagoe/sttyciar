@@ -13,7 +13,7 @@ class DataLinkLayerPacket: public Packet
 {
     public:
         virtual void setData( RawPacket& packet ) = 0;
-        virtual const vector<u_char>& getPayload() = 0;
+        virtual const vector<u_char>& getPayload() const = 0;
 };
 
 #endif

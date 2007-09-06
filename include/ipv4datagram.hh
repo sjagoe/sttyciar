@@ -15,12 +15,12 @@
 #define IPV4_TEMP_FLAGS_OFFSET_LENGTH 2
 
 #define IPV4_VERSION_AND_VALUE 0xF0
-#define IPV4_VERSION_LEFT_SHIFT 4
+#define IPV4_VERSION_SHIFT 4
 
 #define IPV4_HEADERLENGTH_AND_VALUE 0x0F
 
 #define IPV4_FLAGS_AND_VALUE 0xE000
-#define IPV4_FLAGS_LEFT_SHIFT 13
+#define IPV4_FLAGS_SHIFT 13
 
 #define IPV4_OFFSET_AND_VALUE 0x1FFF
 
@@ -37,11 +37,37 @@ class IPv4Datagram: public NetworkLayerPacket
     public:
         IPv4Datagram() {};
         void setData( DataLinkLayerPacket& packet );
-        RawPacket getRawPacket();
-//        inline const vector<u_char>& getPayload()
+        RawPacket getRawPacket() const;
+//        inline const vector<u_char>& getPayload() const
 //        {
 //            return _remainingData;
 //        };
+
+        inline const u_char getVersion() const;
+
+        inline const u_char getHeaderLength() const;
+
+        inline const u_char getTypeOfService() const;
+
+        inline const u_int16_t getDatagramLength() const;
+
+        inline const u_int16_t getIdentification() const;
+
+        inline const u_char getFlags() const;
+
+        inline const u_int16_t getFragmentationOffset() const;
+
+        inline const u_char getTimeToLive() const;
+
+        inline const u_char getProtocol() const;
+
+        inline const u_int16_t getChecksum() const;
+
+        inline const array<u_char, IPV4_ADDRESS_STORE_LENGTH>&
+            getSourceAddress() const;
+
+        inline const array<u_char, IPV4_ADDRESS_STORE_LENGTH>&
+            getDestinationAddress() const;
 
     private:
         //! IP version (i.e. 4)
@@ -58,8 +84,6 @@ class IPv4Datagram: public NetworkLayerPacket
         //! Total length of the datagram including data payload (max 65535,
         //! min 20)
         array<u_char, IPV4_DATAGRAMLENGTH_STORE_LENGTH> _datagramLength;
-
-        unsigned int _easyLength;
 
         //! unique ID of the packet (used in fragmentation and reassembly?)
         array<u_char, IPV4_IDENTIFICATION_STORE_LENGTH> _identification;

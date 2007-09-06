@@ -47,25 +47,27 @@ class EthernetIIFrame: public DataLinkLayerPacket
 
         void setData( RawPacket& packet );
 
-        RawPacket getRawPacket();
+        RawPacket getRawPacket() const;
 
 
-        inline const array<u_char, ETHERNETII_MAC_LENGTH>& getSourceMAC()
+        inline const array<u_char, ETHERNETII_MAC_LENGTH>& getSourceMAC() const
         {
             return _sourceMAC;
         };
 
-        inline const array<u_char, ETHERNETII_MAC_LENGTH>& getDestinationMAC()
+        inline const array<u_char, ETHERNETII_MAC_LENGTH>&
+            getDestinationMAC() const
         {
             return _destinationMAC;
         };
 
-        inline const array<u_char, ETEHRNETII_ETHERTYPE_LENGTH>& getEtherType()
+        inline const array<u_char, ETEHRNETII_ETHERTYPE_LENGTH>&
+            getEtherType() const
         {
             return _etherType;
         };
 
-        inline const vector<u_char>& getPayload()
+        inline const vector<u_char>& getPayload() const
         {
             return _payload;
         };

@@ -46,7 +46,7 @@ void EthernetIIFrame::setData( RawPacket& packet )
         (packet.getPacketLength() - ETHERNETII_HEAD_LENGTH), _payload.begin());
 }
 
-RawPacket EthernetIIFrame::getRawPacket()
+RawPacket EthernetIIFrame::getRawPacket() const
 {
     RawPacket raw;
 

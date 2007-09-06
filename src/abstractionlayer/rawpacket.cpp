@@ -33,3 +33,8 @@ void RawPacket::append(vector<u_char> data)
 {
     _packet.insert( _packet.end(), data.begin(), data.end() );
 }
+
+void RawPacket::append(u_char data)
+{
+    _packet.push_back( data );
+}
