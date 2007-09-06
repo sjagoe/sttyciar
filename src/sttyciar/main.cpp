@@ -25,9 +25,9 @@ int main()
 
     for ( int i = 0; i < 16; i++, arr++ )
     {
-        cout << ( unsigned int ) *arr << endl;
+        printf("%X ", *arr);
     }
-    cout << endl;
+    cout << endl << endl;
 
     pcap_pkthdr* head = new pcap_pkthdr;
     head->caplen = 16;
@@ -44,11 +44,12 @@ int main()
     vector<u_char>::const_iterator iter = pckt_data.begin();
     for (; iter != pckt_data.end(); iter++)
     {
-        cout << (unsigned int) *iter << endl;
+        printf("%X ", *iter);
     }
-    cout << endl;
+    cout << endl << endl;
 
-    EthernetIIFrame b(a);
+    EthernetIIFrame b;
+    b.setData(a);
 
     array<u_char, ETHERNETII_MAC_LENGTH> s = b.getSourceMAC();
     array<u_char, ETHERNETII_MAC_LENGTH> d = b.getDestinationMAC();
@@ -84,6 +85,17 @@ int main()
         printf("%X ", *iter);
     }
     cout << endl << endl;
+
+    RawPacket raw = b.getRawPacket();
+
+    p = raw.getPacket();
+    iter = p.begin();
+    for (; iter != p.end(); iter++)
+    {
+        printf("%X ", *iter);
+    }
+    cout << endl << endl;
+
 
 
     return 0;

@@ -2,6 +2,7 @@
 #define __RAWPACKET_HH__
 
 #include <vector>
+#include <iterator>
 #include <boost/array.hpp>
 #include <pcap.h>
 
@@ -37,13 +38,14 @@ class RawPacket
 
         void setPacket( bpf_u_int32 length, vector<u_char> packet );
         void append(vector<u_char> data);
+        void append(u_char data);
 
-        inline const vector<u_char>& getPacket()
+        inline const vector<u_char>& getPacket() const
         {
             return _packet;
         };
 
-        inline const bpf_u_int32& getPacketLength()
+        inline const bpf_u_int32& getPacketLength() const
         {
             return _packetLength;
             //return pkthdr.len;

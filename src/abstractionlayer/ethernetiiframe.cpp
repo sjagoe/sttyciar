@@ -3,25 +3,25 @@
 #include "ethernetiiframe.hh"
 #include "rawpacket.hh"
 
-EthernetIIFrame::EthernetIIFrame()
-{
-    _sourceMAC[0] = 0;
-    _sourceMAC[1] = 0;
-    _sourceMAC[2] = 0;
-    _sourceMAC[3] = 0;
-    _sourceMAC[4] = 0;
-    _sourceMAC[5] = 0;
-    _destinationMAC[0] = 0;
-    _destinationMAC[1] = 0;
-    _destinationMAC[2] = 0;
-    _destinationMAC[3] = 0;
-    _destinationMAC[4] = 0;
-    _destinationMAC[5] = 0;
-    _etherType[0] = 0;
-    _etherType[1] = 0;
-}
+//EthernetIIFrame::EthernetIIFrame()
+//{
+//    _sourceMAC[0] = 0;
+//    _sourceMAC[1] = 0;
+//    _sourceMAC[2] = 0;
+//    _sourceMAC[3] = 0;
+//    _sourceMAC[4] = 0;
+//    _sourceMAC[5] = 0;
+//    _destinationMAC[0] = 0;
+//    _destinationMAC[1] = 0;
+//    _destinationMAC[2] = 0;
+//    _destinationMAC[3] = 0;
+//    _destinationMAC[4] = 0;
+//    _destinationMAC[5] = 0;
+//    _etherType[0] = 0;
+//    _etherType[1] = 0;
+//}
 
-EthernetIIFrame::EthernetIIFrame( RawPacket& packet )
+void EthernetIIFrame::setData( RawPacket& packet )
 {
     vector<u_char> data = packet.getPacket();
 
@@ -46,9 +46,27 @@ EthernetIIFrame::EthernetIIFrame( RawPacket& packet )
         (packet.getPacketLength() - ETHERNETII_HEAD_LENGTH), _payload.begin());
 }
 
-RawPacket EthernetIIFrame::getRawPacket()
+RawPacket EthernetIIFrame::getRawPacket() const
 {
     RawPacket raw;
+
+    vector<u_char> temp(_sourceMAC.begin(), _sourceMAC.end());
+
+    raw.append( temp );
+
+    temp.clear();
+
+    temp.insert( temp.begin(), _destinationMAC.begin(), _destinationMAC.end() );
+
+    raw.append( temp );
+
+    temp.clear();
+
+    temp.insert( temp.begin(), _etherType.begin(), _etherType.end() );
+
+    raw.append( temp );
+
+    raw.append( _payload );
 
     return raw;
 }

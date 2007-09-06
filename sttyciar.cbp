@@ -79,6 +79,9 @@
 			<Option target="main-Release" />
 			<Option target="AL-Debug" />
 		</Unit>
+		<Unit filename="include/datalinklayerpacket.hh">
+			<Option target="AL-Debug" />
+		</Unit>
 		<Unit filename="include/defines.hh">
 			<Option target="main-Release" />
 			<Option target="AL-Debug" />
@@ -89,6 +92,9 @@
 		</Unit>
 		<Unit filename="include/ipv4datagram.hh">
 			<Option target="main-Release" />
+			<Option target="AL-Debug" />
+		</Unit>
+		<Unit filename="include/networklayerpacket.hh">
 			<Option target="AL-Debug" />
 		</Unit>
 		<Unit filename="include/packet.hh">

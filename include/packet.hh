@@ -7,7 +7,7 @@ class Packet
 {
     public:
         virtual ~Packet() {};
-        virtual RawPacket getRawPacket() = 0;
+        virtual RawPacket getRawPacket() const = 0;
 
 };
 
