@@ -1,7 +1,7 @@
 #include <ext/algorithm>
 
 #include "ethernetiiframe.hh"
-#include "packet.hh"
+#include "rawpacket.hh"
 
 EthernetIIFrame::EthernetIIFrame()
 {
@@ -21,7 +21,7 @@ EthernetIIFrame::EthernetIIFrame()
     etherType[1] = 0;
 }
 
-EthernetIIFrame::EthernetIIFrame( Packet& packet )
+EthernetIIFrame::EthernetIIFrame( RawPacket& packet )
 {
     vector<u_char> data = packet.getPacket();
 

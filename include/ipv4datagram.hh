@@ -11,12 +11,12 @@
 
 using boost::array;
 
-class Packet;
+class RawPacket;
 
 class IPv4Datagram
 {
     public:
-        IPv4Datagram( Packet& packet );
+        IPv4Datagram( RawPacket& packet );
 
     private:
         u_char version; //! IP version (i.e. 4)

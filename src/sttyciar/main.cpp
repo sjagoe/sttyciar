@@ -2,7 +2,7 @@
 
 #include <pcap.h>
 
-#include "packet.hh"
+#include "rawpacket.hh"
 #include "ethernetiiframe.hh"
 
 using std::cout;
@@ -33,7 +33,7 @@ int main()
     head->caplen = 16;
     head->len = 16;
 
-    Packet a(head, array1);
+    RawPacket a(head, array1);
 
     free(( void* )array1 );
 

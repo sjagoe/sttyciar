@@ -12,7 +12,7 @@
 using std::vector;
 using boost::array;
 
-class Packet;
+class RawPacket;
 
 #define ETHERNETII_MAC_LENGTH 6
 #define ETEHRNETII_ETHERTYPE_LENGTH 2
@@ -21,7 +21,7 @@ class Packet;
 EthernetIIFrame encapsulates the Ethernet II Frame header and payload with an
 easy to use interface.
 
-The EthernetIIFrame should be created with a Packet as an argument. It will
+The EthernetIIFrame should be created with a RawPacket as an argument. It will
 extract the Ethernet II header and payload from the raw packet data.
 
 @author Simon Jagoe
@@ -37,11 +37,11 @@ class EthernetIIFrame
 
         /*!
         Preferred constructor: extract the header information and payload from
-        a Packet object.
+        a RawPacket object.
 
         @param packet The Packet object containing the raw packet data
         */
-        EthernetIIFrame( Packet& packet );
+        EthernetIIFrame( RawPacket& packet );
 
 
         inline const array<u_char, ETHERNETII_MAC_LENGTH>& getSourceMAC()
