@@ -2,6 +2,7 @@
 #define __RAWPACKET_HH__
 
 #include <vector>
+#include <iterator>
 #include <boost/array.hpp>
 #include <pcap.h>
 

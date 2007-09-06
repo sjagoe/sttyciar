@@ -27,9 +27,9 @@ RawPacket::RawPacket( const pcap_pkthdr* head, const u_char* data )
 void RawPacket::setPacket( bpf_u_int32 length, vector<u_char> packet )
 {
 
-};
+}
 
 void RawPacket::append(vector<u_char> data)
 {
-
-};
+    _packet.insert( _packet.end(), data.begin(), data.end() );
+}

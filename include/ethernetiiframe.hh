@@ -32,10 +32,10 @@ extract the Ethernet II header and payload from the raw packet data.
 class EthernetIIFrame: public Packet
 {
     public:
-        /*!
-        Default constructor: zeros all member variables.
-        */
-        EthernetIIFrame();
+//        /*!
+//        Default constructor: zeros all member variables.
+//        */
+//        EthernetIIFrame();
 
         /*!
         Preferred constructor: extract the header information and payload from

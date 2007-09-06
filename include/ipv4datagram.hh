@@ -1,6 +1,7 @@
 #ifndef __IPV4DATAGRAM_HH__
 #define __IPV4DATAGRAM_HH__
 
+#include <vector>
 #include <boost/array.hpp>
 
 #include "packet.hh"
@@ -11,14 +12,32 @@
 #define IPV4_CHECKSUM_STORE_LENGTH 2
 #define IPV4_ADDRESS_STORE_LENGTH 4
 
+#define IPV4_TEMP_FLAGS_OFFSET_LENGTH 2
+
+#define IPV4_VERSION_AND_VALUE 0xF0
+#define IPV4_VERSION_LEFT_SHIFT 4
+
+#define IPV4_HEADERLENGTH_AND_VALUE 0x0F
+
+#define IPV4_FLAGS_AND_VALUE 0xE000
+#define IPV4_FLAGS_LEFT_SHIFT 13
+
+#define IPV4_OFFSET_AND_VALUE 0x1FFF
+
+#define IPV4_MINIMUM_LENGTH 20
+
+using std::vector;
 using boost::array;
+using std::pair;
 
 class RawPacket;
+
+class EthernetIIFrame;
 
 class IPv4Datagram: public Packet
 {
     public:
-        IPv4Datagram( RawPacket& packet );
+        IPv4Datagram( EthernetIIFrame& frame );
         RawPacket getRawPacket();
 
     private:
@@ -36,6 +55,8 @@ class IPv4Datagram: public Packet
         //! Total length of the datagram including data payload (max 65535,
         //! min 20)
         array<u_char, IPV4_DATAGRAMLENGTH_STORE_LENGTH> _datagramLength;
+
+        unsigned int _easyLength;
 
         //! unique ID of the packet (used in fragmentation and reassembly?)
         array<u_char, IPV4_IDENTIFICATION_STORE_LENGTH> _identification;
@@ -61,6 +82,9 @@ class IPv4Datagram: public Packet
 
         //! Destination IP Address
         array<u_char, IPV4_ADDRESS_STORE_LENGTH> _destinationAddress;
+
+        //! Remainder of the packet - Options and Payload
+        vector<u_char> _remainingData;
 
 };
 
