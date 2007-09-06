@@ -6,7 +6,8 @@ class RawPacket;
 class Packet
 {
     public:
-        virtual RawPacket& getRawPacket() = 0;
+        virtual ~Packet() {};
+        virtual RawPacket getRawPacket() = 0;
 
 };
 

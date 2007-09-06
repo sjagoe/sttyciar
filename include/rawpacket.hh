@@ -2,11 +2,13 @@
 #define __RAWPACKET_HH__
 
 #include <vector>
+#include <boost/array.hpp>
 #include <pcap.h>
 
 #include "defines.hh"
 
 using std::vector;
+using boost::array;
 
 /*!
 The Packet class provides a pointer-free encapsulation of (most of) the data
@@ -25,21 +27,25 @@ pointer-based array), and the packet length.
 class RawPacket
 {
     private:
-        vector<u_char> packet;
-        bpf_u_int32 packetLength;
+        vector<u_char> _packet;
+        bpf_u_int32 _packetLength;
         //pcap_pkthdr pkthdr;
 
     public:
+        RawPacket();
         RawPacket( const pcap_pkthdr* head, const u_char* data );
+
+        void setPacket( bpf_u_int32 length, vector<u_char> packet );
+        void append(vector<u_char> data);
 
         inline const vector<u_char>& getPacket()
         {
-            return packet;
+            return _packet;
         };
 
         inline const bpf_u_int32& getPacketLength()
         {
-            return packetLength;
+            return _packetLength;
             //return pkthdr.len;
         };
 };

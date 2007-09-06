@@ -9,6 +9,8 @@
 
 #include "defines.hh"
 
+#include "packet.hh"
+
 using std::vector;
 using boost::array;
 
@@ -27,7 +29,7 @@ extract the Ethernet II header and payload from the raw packet data.
 @author Simon Jagoe
 */
 
-class EthernetIIFrame
+class EthernetIIFrame: public Packet
 {
     public:
         /*!
@@ -43,33 +45,35 @@ class EthernetIIFrame
         */
         EthernetIIFrame( RawPacket& packet );
 
+        RawPacket getRawPacket();
+
 
         inline const array<u_char, ETHERNETII_MAC_LENGTH>& getSourceMAC()
         {
-            return sourceMAC;
+            return _sourceMAC;
         };
 
         inline const array<u_char, ETHERNETII_MAC_LENGTH>& getDestinationMAC()
         {
-            return destinationMAC;
+            return _destinationMAC;
         };
 
         inline const array<u_char, ETEHRNETII_ETHERTYPE_LENGTH>& getEtherType()
         {
-            return etherType;
+            return _etherType;
         };
 
         inline const vector<u_char>& getPayload()
         {
-            return payload;
+            return _payload;
         };
 
     private:
-        array<u_char, ETHERNETII_MAC_LENGTH> sourceMAC;
-        array<u_char, ETHERNETII_MAC_LENGTH> destinationMAC;
-        array<u_char, ETEHRNETII_ETHERTYPE_LENGTH> etherType;
+        array<u_char, ETHERNETII_MAC_LENGTH>       _sourceMAC;
+        array<u_char, ETHERNETII_MAC_LENGTH>       _destinationMAC;
+        array<u_char, ETEHRNETII_ETHERTYPE_LENGTH> _etherType;
 
-        vector<u_char> payload;
+        vector<u_char> _payload;
 };
 
 #endif
