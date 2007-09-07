@@ -19,10 +19,10 @@
 
 #define IPV4_HEADERLENGTH_AND_VALUE 0x0F
 
-#define IPV4_FLAGS_AND_VALUE 0xE000
-#define IPV4_FLAGS_SHIFT 13
+#define IPV4_FLAGS_AND_VALUE 0xE0
+#define IPV4_FLAGS_SHIFT 5
 
-#define IPV4_OFFSET_AND_VALUE 0x1FFF
+#define IPV4_OFFSET_AND_VALUE 0x1F
 
 #define IPV4_MINIMUM_LENGTH 20
 
@@ -36,6 +36,10 @@ class IPv4Datagram: public NetworkLayerPacket
 {
     public:
         IPv4Datagram() {};
+        IPv4Datagram( DataLinkLayerPacket& packet )
+        {
+            setData( packet );
+        };
         void setData( DataLinkLayerPacket& packet );
         RawPacket getRawPacket() const;
 //        inline const vector<u_char>& getPayload() const
@@ -43,30 +47,30 @@ class IPv4Datagram: public NetworkLayerPacket
 //            return _remainingData;
 //        };
 
-        inline const u_char getVersion() const;
+        const u_char getVersion() const;
 
-        inline const u_char getHeaderLength() const;
+        const u_char getHeaderLength() const;
 
-        inline const u_char getTypeOfService() const;
+        const u_char getTypeOfService() const;
 
-        inline const u_int16_t getDatagramLength() const;
+        const u_int16_t getDatagramLength() const;
 
-        inline const u_int16_t getIdentification() const;
+        const u_int16_t getIdentification() const;
 
-        inline const u_char getFlags() const;
+        const u_char getFlags() const;
 
-        inline const u_int16_t getFragmentationOffset() const;
+        const u_int16_t getFragmentationOffset() const;
 
-        inline const u_char getTimeToLive() const;
+        const u_char getTimeToLive() const;
 
-        inline const u_char getProtocol() const;
+        const u_char getProtocol() const;
 
-        inline const u_int16_t getChecksum() const;
+        const u_int16_t getChecksum() const;
 
-        inline const array<u_char, IPV4_ADDRESS_STORE_LENGTH>&
+        const array<u_char, IPV4_ADDRESS_STORE_LENGTH>&
             getSourceAddress() const;
 
-        inline const array<u_char, IPV4_ADDRESS_STORE_LENGTH>&
+        const array<u_char, IPV4_ADDRESS_STORE_LENGTH>&
             getDestinationAddress() const;
 
     private:

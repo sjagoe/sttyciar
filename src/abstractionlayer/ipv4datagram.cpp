@@ -1,4 +1,5 @@
 #include <ext/algorithm>
+#include <algorithm>
 
 #include "ipv4datagram.hh"
 
@@ -46,6 +47,8 @@ void IPv4Datagram::setData( DataLinkLayerPacket& packet )
         out = __gnu_cxx::copy_n( iter, IPV4_IDENTIFICATION_STORE_LENGTH,
             _identification.begin() );
 
+        iter = out.first;
+
         // flags_offset_bytes
         array<u_char, IPV4_TEMP_FLAGS_OFFSET_LENGTH> flags_offset_bytes;
         out = __gnu_cxx::copy_n( iter, IPV4_TEMP_FLAGS_OFFSET_LENGTH,
@@ -84,6 +87,8 @@ void IPv4Datagram::setData( DataLinkLayerPacket& packet )
             out1 = __gnu_cxx::copy_n( iter, IPV4_ADDRESS_STORE_LENGTH,
             _sourceAddress.begin() );
 
+        iter = out1.first;
+
         // _destinationAddress
         out1 = __gnu_cxx::copy_n( iter, IPV4_ADDRESS_STORE_LENGTH,
             _destinationAddress.begin() );
@@ -91,12 +96,24 @@ void IPv4Datagram::setData( DataLinkLayerPacket& packet )
         iter = out1.first;
 
         // _remainingData
-        unsigned int length = ( _datagramLength[0] << 8 ) & _datagramLength[1];
+        unsigned int length = ( _datagramLength[0] << 8 ) | _datagramLength[1];
         if ( length > IPV4_MINIMUM_LENGTH)
         {
-            _remainingData.resize( length - IPV4_MINIMUM_LENGTH );
-            __gnu_cxx::copy_n( iter, ( length - IPV4_MINIMUM_LENGTH ),
-                _remainingData.begin() );
+
+            if (( length > data.size() )
+                && ( data.size() > IPV4_MINIMUM_LENGTH ) )
+            {
+                //std::copy( iter, data.end(), _remainingData.begin() );
+                _remainingData.resize( data.size() - IPV4_MINIMUM_LENGTH );
+                __gnu_cxx::copy_n( iter, ( data.size() - IPV4_MINIMUM_LENGTH ),
+                    _remainingData.begin() );
+            }
+            else if ( length >= data.size() )
+            {
+                _remainingData.resize( length - IPV4_MINIMUM_LENGTH );
+                __gnu_cxx::copy_n( iter, ( length - IPV4_MINIMUM_LENGTH ),
+                    _remainingData.begin() );
+            }
         }
     }
 }
@@ -105,7 +122,7 @@ RawPacket IPv4Datagram::getRawPacket() const
 {
     RawPacket raw;
 
-    raw.append( (_version << IPV4_VERSION_SHIFT) & _headerLength );
+    raw.append( (_version << IPV4_VERSION_SHIFT) | _headerLength );
 
     raw.append( _typeOfService );
 
@@ -115,7 +132,7 @@ RawPacket IPv4Datagram::getRawPacket() const
     raw.append( _identification[0] );
     raw.append( _identification[1] );
 
-    raw.append( ( _flags << IPV4_FLAGS_SHIFT ) & _fragmentationOffset[0] );
+    raw.append( ( _flags << IPV4_FLAGS_SHIFT ) | _fragmentationOffset[0] );
     raw.append( _fragmentationOffset[1] );
 
     raw.append( _timeToLive );
@@ -135,68 +152,74 @@ RawPacket IPv4Datagram::getRawPacket() const
     raw.append( _destinationAddress[2] );
     raw.append( _destinationAddress[3] );
 
+//    vector<u_char>::const_iterator iter = _remainingData.begin();
+//    for (; iter != _remainingData.end(); iter++)
+//    {
+//        raw.append( *iter );
+//    }
+
     raw.append( _remainingData );
 
     return raw;
 }
 
-inline const u_char IPv4Datagram::getVersion() const
+const u_char IPv4Datagram::getVersion() const
 {
     return _version;
 }
 
-inline const u_char IPv4Datagram::getHeaderLength() const
+const u_char IPv4Datagram::getHeaderLength() const
 {
     return _headerLength;
 }
 
-inline const u_char IPv4Datagram::getTypeOfService() const
+const u_char IPv4Datagram::getTypeOfService() const
 {
     return _typeOfService;
 }
 
-inline const u_int16_t IPv4Datagram::getDatagramLength() const
+const u_int16_t IPv4Datagram::getDatagramLength() const
 {
-    return ( ( _datagramLength[0] << 8 ) & _datagramLength[1] );
+    return ( ( _datagramLength[0] << 8 ) |  _datagramLength[1] );
 }
 
-inline const u_int16_t IPv4Datagram::getIdentification() const
+const u_int16_t IPv4Datagram::getIdentification() const
 {
-    return ( ( _identification[0] << 8 ) & _identification[1] );
+    return ( ( _identification[0] << 8 ) | _identification[1] );
 }
 
-inline const u_char IPv4Datagram::getFlags() const
+const u_char IPv4Datagram::getFlags() const
 {
     return _flags;
 }
 
-inline const u_int16_t IPv4Datagram::getFragmentationOffset() const
+const u_int16_t IPv4Datagram::getFragmentationOffset() const
 {
-    return ( ( _fragmentationOffset[0] << 8 ) & _fragmentationOffset[1] );
+    return ( ( _fragmentationOffset[0] << 8 ) | _fragmentationOffset[1] );
 }
 
-inline const u_char IPv4Datagram::getTimeToLive() const
+const u_char IPv4Datagram::getTimeToLive() const
 {
     return _timeToLive;
 }
 
-inline const u_char IPv4Datagram::getProtocol() const
+const u_char IPv4Datagram::getProtocol() const
 {
     return _protocol;
 }
 
-inline const u_int16_t IPv4Datagram::getChecksum() const
+const u_int16_t IPv4Datagram::getChecksum() const
 {
-    return ( ( _checksum[0] << 8 ) & _checksum[1] );
+    return ( ( _checksum[0] << 8 ) | _checksum[1] );
 }
 
-inline const array<u_char, IPV4_ADDRESS_STORE_LENGTH>&
+const array<u_char, IPV4_ADDRESS_STORE_LENGTH>&
     IPv4Datagram::getSourceAddress() const
 {
     return _sourceAddress;
 }
 
-inline const array<u_char, IPV4_ADDRESS_STORE_LENGTH>&
+const array<u_char, IPV4_ADDRESS_STORE_LENGTH>&
     IPv4Datagram::getDestinationAddress() const
 {
     return _destinationAddress;

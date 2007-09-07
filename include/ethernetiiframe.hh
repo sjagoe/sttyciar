@@ -32,10 +32,10 @@ extract the Ethernet II header and payload from the raw packet data.
 class EthernetIIFrame: public DataLinkLayerPacket
 {
     public:
-//        /*!
-//        Default constructor: zeros all member variables.
-//        */
-//        EthernetIIFrame();
+        /*!
+        Default constructor: zeros all member variables.
+        */
+        EthernetIIFrame() {};
 
         /*!
         Preferred constructor: extract the header information and payload from
@@ -43,7 +43,10 @@ class EthernetIIFrame: public DataLinkLayerPacket
 
         @param packet The Packet object containing the raw packet data
         */
-        EthernetIIFrame() {};
+        EthernetIIFrame( RawPacket& packet )
+        {
+            setData( packet );
+        };
 
         void setData( RawPacket& packet );
 
