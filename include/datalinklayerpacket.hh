@@ -6,7 +6,6 @@
 
 //#include "defines.hh"
 #include "packet.hh"
-
 using std::vector;
 
 class RawPacket;
