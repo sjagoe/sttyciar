@@ -15,6 +15,11 @@ class ALNetworkListener
 {
     public:
         /*!
+        Virtual destructor to allow destructor overriding.
+        */
+        virtual ~ALNetworkListener() {};
+
+        /*!
         This method is called every time a packet is received by the AL to
         pass the packet data to the NLL for analysis and routing.
 

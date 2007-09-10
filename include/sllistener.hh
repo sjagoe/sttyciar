@@ -12,6 +12,11 @@ class SLListener
 {
     public:
         /*!
+        Virtual destructor to allow destructor overriding.
+        */
+        virtual ~SLListener() {};
+
+        /*!
         A method to send updated statistical/usage information to the UI.
         */
         virtual void updateStatistics(

@@ -112,6 +112,9 @@
 		<Unit filename="include/networklayerpacket.hh">
 			<Option target="AL-Debug" />
 		</Unit>
+		<Unit filename="include/nllhub.hh">
+			<Option target="NLL_Hub-Debug" />
+		</Unit>
 		<Unit filename="include/nlllistener.hh">
 			<Option target="AL-Debug" />
 		</Unit>
@@ -141,6 +144,9 @@
 		</Unit>
 		<Unit filename="src/abstractionlayer/rawpacket.cpp">
 			<Option target="AL-Debug" />
+		</Unit>
+		<Unit filename="src/networklogiclayer/hub/nllhub.cpp">
+			<Option target="NLL_Hub-Debug" />
 		</Unit>
 		<Unit filename="src/sttyciar/main.cpp">
 			<Option target="main-Debug" />

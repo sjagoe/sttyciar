@@ -16,6 +16,11 @@ class NLLListener
 {
     public:
         /*!
+        Virtual destructor to allow destructor overriding.
+        */
+        virtual ~NLLListener() {};
+
+        /*!
         send a data link layer frame (i.e. all headers and payload is
         contained, and the AL can send it without modification)
 

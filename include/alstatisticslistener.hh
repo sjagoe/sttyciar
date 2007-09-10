@@ -14,6 +14,11 @@ class ALStatisticsListener
 {
     public:
         /*!
+        Virtual destructor to allow destructor overriding.
+        */
+        virtual ~ALStatisticsListener() {};
+
+        /*!
         A method to send raw usage data to the SL for processing.
 
         The SL processes the data received through this method, and passes the
