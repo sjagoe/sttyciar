@@ -2,11 +2,15 @@
 #define __ABSTRACTIONLAYER_HH__
 
 #include <vector>
+#include <list>
 #include <boost/shared_ptr.hpp>
-
+#include "pcap.h"
 #include "nlllistener.hh"
+#include "device.hh"
+#include "exceptions.hh"
 
 using std::vector;
+using std::list;
 using boost::shared_ptr;
 
 class ALNetworkListener;
@@ -55,6 +59,11 @@ class AbstractionLayer: public NLLListener
         send messages to.
         */
         void unregisterNLL( shared_ptr<ALNetworkListener> nllModule );
+
+        list<Device> getDevices() throw(DeviceNotFoundException);
+
+    private:
+        char pcapErrorBuffer[PCAP_ERRBUF_SIZE];
 };
 
 #endif

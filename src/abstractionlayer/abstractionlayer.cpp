@@ -70,3 +70,23 @@ void AbstractionLayer::unregisterNLL( shared_ptr<ALNetworkListener> nllModule )
         }
     }
 }
+
+list<Device> AbstractionLayer::getDevices() throw(DeviceNotFoundException)
+{
+    pcap_if *pcapAllDevices;
+
+    if (pcap_findalldevs(&pcapAllDevices, this->pcapErrorBuffer) == -1)
+        throw DeviceNotFoundException(this->pcapErrorBuffer);
+    list<Device> devices;
+    Device tempDevice;
+    for(pcap_if* pcapTempDevice=pcapAllDevices; pcapTempDevice != NULL; pcapTempDevice=pcapTempDevice->next)
+    {
+        tempDevice.setContents(pcapTempDevice);
+        devices.push_back(tempDevice);
+    }
+
+    pcap_freealldevs(pcapAllDevices);
+    return devices;
+
+
+}

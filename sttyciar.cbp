@@ -89,7 +89,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add directory="include" />
+<<<<<<< TREE
 			<Add directory="..\resources\WpdPack_4_0_1\WpdPack\Include" />
+			<Add directory="..\..\libraries\boost_1_34_1" />
+			<Add directory="..\..\libraries\WpdPack\Include" />
+=======
+			<Add directory="..\resources\WpdPack_4_0_1\WpdPack\Include" />
+>>>>>>> MERGE-SOURCE
 		</Compiler>
 		<Linker>
 			<Add directory="bin\Debug" />
