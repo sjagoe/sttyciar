@@ -90,6 +90,9 @@
 			<Option target="main-Release" />
 			<Option target="AL-Debug" />
 		</Unit>
+		<Unit filename="include/interfaceroute.hh">
+			<Option target="AL-Debug" />
+		</Unit>
 		<Unit filename="include/ipv4datagram.hh">
 			<Option target="main-Release" />
 			<Option target="AL-Debug" />
@@ -108,6 +111,9 @@
 			<Option target="AL-Debug" />
 		</Unit>
 		<Unit filename="src/abstractionlayer/ethernetiiframe.cpp">
+			<Option target="AL-Debug" />
+		</Unit>
+		<Unit filename="src/abstractionlayer/interfaceroute.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
 		<Unit filename="src/abstractionlayer/ipv4datagram.cpp">
