@@ -1,9 +1,10 @@
 #ifndef __LINKLAYERPACKET_HH__
 #define __LINKLAYERPACKET_HH__
 
+#include <pcap.h>
 #include <vector>
 
-#include "defines.hh"
+//#include "defines.hh"
 #include "packet.hh"
 
 using std::vector;

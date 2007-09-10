@@ -69,8 +69,8 @@
 	<boost/array.hpp>
 	"datalinklayerpacket.hh"
 
-1189444884 d:\vista\users\simon\documents\university\fourthyear\lab-project\source\include\defines.hh
-	<sys/types.h>
+1189450767 d:\vista\users\simon\documents\university\fourthyear\lab-project\source\include\defines.hh
+	<pcap.h>
 
 1189444884 d:\vista\users\simon\documents\university\fourthyear\lab-project\source\include\packet.hh
 
@@ -194,9 +194,9 @@
 	<algorithm>
 	<boost/shared_ptr.hpp>
 
-1189444884 d:\vista\users\simon\documents\university\fourthyear\lab-project\source\include\datalinklayerpacket.hh
+1189450846 d:\vista\users\simon\documents\university\fourthyear\lab-project\source\include\datalinklayerpacket.hh
+	<pcap.h>
 	<vector>
-	"defines.hh"
 	"packet.hh"
 
 1189444884 d:\vista\users\simon\documents\university\fourthyear\lab-project\source\include\rawpacket.hh

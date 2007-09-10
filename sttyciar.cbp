@@ -106,7 +106,6 @@
 		<Unit filename="include\datalinklayerpacket.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="include\defines.hh" />
 		<Unit filename="include\ethernetiiframe.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
