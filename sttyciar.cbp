@@ -88,6 +88,12 @@
 		<Unit filename="include/abstractionlayer.hh">
 			<Option target="AL-Debug" />
 		</Unit>
+		<Unit filename="include/alnetworklistener.hh">
+			<Option target="AL-Debug" />
+		</Unit>
+		<Unit filename="include/alstatisticslayer.hh">
+			<Option target="AL-Debug" />
+		</Unit>
 		<Unit filename="include/datalinklayerpacket.hh">
 			<Option target="AL-Debug" />
 		</Unit>
@@ -106,10 +112,19 @@
 		<Unit filename="include/networklayerpacket.hh">
 			<Option target="AL-Debug" />
 		</Unit>
+		<Unit filename="include/nlllistener.hh">
+			<Option target="AL-Debug" />
+		</Unit>
 		<Unit filename="include/packet.hh">
 			<Option target="AL-Debug" />
 		</Unit>
 		<Unit filename="include/rawpacket.hh">
+			<Option target="AL-Debug" />
+		</Unit>
+		<Unit filename="include/sllistener.hh">
+			<Option target="AL-Debug" />
+		</Unit>
+		<Unit filename="include/uilistener.h">
 			<Option target="AL-Debug" />
 		</Unit>
 		<Unit filename="src/abstractionlayer/abstractionlayer.cpp">
