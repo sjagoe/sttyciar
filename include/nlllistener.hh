@@ -1,9 +1,15 @@
 #ifndef __NLLLISTENER_HH__
 #define __NLLLISTENER_HH__
 
+#include <vector>
+#include <boost/shared_ptr.hpp>
+
+using std::vector;
+
 class DataLinkLayerPacket;
 class NetworkLayerPacket;
 class ALNetworkListener;
+
 
 /*!
 The NLLListener is a (pure virtual) public interface that is implemented by the
@@ -43,12 +49,25 @@ class NLLListener
             InterfaceRoute& interfaces ) = 0;
 
         /*!
-        register an ALListener (i.e. NLL module) with the AL.
+        register an ALNetworkListener (i.e. NLL module) with the AL.
 
         @param nllModule A NLL module (i.e. ALNetworkListener) that the AL can
         send messages to.
         */
-        virtual void registerNLL( ALNetworkListener& nllModule ) = 0;
+        virtual void
+            registerNLL( shared_ptr<ALNetworkListener> nllModule ) = 0;
+
+        /*!
+        Unregister an ALNetworkListener (i.e. NLL module) with the AL.
+
+        @param nllModule A NLL module (i.e. ALNetworkListener) that the AL can
+        send messages to.
+        */
+        virtual void
+            unregisterNLL( shared_ptr<ALNetworkListener> nllModule ) = 0;
+
+    protected:
+        vector<shared_ptr<ALNetworkListener> > _networkLogicLayer;
 };
 
 #endif

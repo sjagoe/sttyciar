@@ -1,8 +1,15 @@
 #ifndef __ALNETWORKLISTENER_HH__
 #define __ALNETWORKLISTENER_HH__
 
+#include <boost/shared_ptr.hpp>
+
+using boost::shared_ptr;
+
 class RawPacket;
 class InterfaceRoute;
+//class NLLListener;
+
+#include "nlllistener.hh"
 
 /*!
 The ALNetworkListener class in a (pure virtual) public interface that the
@@ -29,6 +36,15 @@ class ALNetworkListener
         */
         virtual void packetReceived( RawPacket& packet,
             InterfaceRoute& interfaces ) = 0;
+
+        void registerAL( shared_ptr<NLLListener> abstractionLayer )
+        {
+            _abstractionLayer = abstractionLayer;
+        };
+
+
+    protected:
+        shared_ptr<NLLListener> _abstractionLayer;
 };
 
 #endif
