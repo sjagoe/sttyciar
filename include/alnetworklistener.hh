@@ -20,7 +20,15 @@ Abstraction Layer.
 */
 class ALNetworkListener
 {
+    protected:
+        shared_ptr<NLLListener> _abstractionLayer;
+
     public:
+        ALNetworkListener() {};
+        ALNetworkListener( shared_ptr<NLLListener> abstractionLayer )
+        {
+            _abstractionLayer = abstractionLayer;
+        };
         /*!
         Virtual destructor to allow destructor overriding.
         */
@@ -37,14 +45,17 @@ class ALNetworkListener
         virtual void packetReceived( RawPacket& packet,
             InterfaceRoute& interfaces ) = 0;
 
+        /*!
+        register a Network Logic Layer Listener (i.e. the AL) with the NLL
+        module.
+
+        @param abstractionLayer the AL that the NLL module must send messages
+        to (there is only one AL).
+        */
         void registerAL( shared_ptr<NLLListener> abstractionLayer )
         {
             _abstractionLayer = abstractionLayer;
         };
-
-
-    protected:
-        shared_ptr<NLLListener> _abstractionLayer;
 };
 
 #endif
