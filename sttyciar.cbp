@@ -91,7 +91,7 @@
 		<Unit filename="include/alnetworklistener.hh">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="include/alstatisticslayerlistener.hh">
+		<Unit filename="include/alstatisticslistener.hh">
 			<Option target="AL-Debug" />
 		</Unit>
 		<Unit filename="include/datalinklayerpacket.hh">
