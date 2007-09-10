@@ -7,6 +7,9 @@
 #include "ethernetiiframe.hh"
 #include "ipv4datagram.hh"
 
+#define ETHERNETII_MAC_LENGTH 6
+#define ETEHRNETII_ETHERTYPE_LENGTH 2
+
 using std::cout;
 using std::endl;
 using std::vector;

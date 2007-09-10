@@ -37,6 +37,13 @@
 					<Add option="-g" />
 				</Compiler>
 			</Target>
+			<Target title="UI-Debug">
+				<Option output="bin/Debug/libui" prefix_auto="1" extension_auto="1" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+			</Target>
 			<Target title="main-Debug">
 				<Option output="bin/Debug/sttyciar" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin/Debug/" />
@@ -70,12 +77,13 @@
 				<Option compiler="gcc" />
 				<Linker>
 					<Add library="abstractionlayer" />
+					<Add library="nllhub" />
 				</Linker>
 			</Target>
 		</Build>
 		<VirtualTargets>
-			<Add alias="sttyciar-Debug" targets="AL-Debug;NLL_Hub-Debug;SL-Debug;main-Debug;" />
-			<Add alias="test" targets="AL-Debug;NLL_Hub-Debug;SL-Debug;test-main;" />
+			<Add alias="sttyciar-Debug" targets="AL-Debug;NLL_Hub-Debug;SL-Debug;UI-Debug;main-Debug;" />
+			<Add alias="test" targets="AL-Debug;NLL_Hub-Debug;SL-Debug;" />
 		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
@@ -87,31 +95,28 @@
 			<Add directory="bin/Debug" />
 		</Linker>
 		<Unit filename="include/abstractionlayer.hh">
-			<Option target="AL-Debug" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/alnetworklistener.hh">
-			<Option target="AL-Debug" />
+			<Option target="NLL_Hub-Debug" />
 		</Unit>
 		<Unit filename="include/alstatisticslistener.hh">
-			<Option target="AL-Debug" />
+			<Option target="SL-Debug" />
 		</Unit>
 		<Unit filename="include/datalinklayerpacket.hh">
-			<Option target="AL-Debug" />
-		</Unit>
-		<Unit filename="include/defines.hh">
-			<Option target="main-Release" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/ethernetiiframe.hh">
-			<Option target="AL-Debug" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/interfaceroute.hh">
-			<Option target="AL-Debug" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/ipv4datagram.hh">
-			<Option target="AL-Debug" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/networklayerpacket.hh">
-			<Option target="AL-Debug" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/nllhub.hh">
 			<Option target="NLL_Hub-Debug" />
@@ -120,16 +125,19 @@
 			<Option target="AL-Debug" />
 		</Unit>
 		<Unit filename="include/packet.hh">
-			<Option target="AL-Debug" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/rawpacket.hh">
-			<Option target="AL-Debug" />
+			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include/sllistener.hh">
-			<Option target="AL-Debug" />
+			<Option target="UI-Debug" />
+		</Unit>
+		<Unit filename="include/statisticslayer.hh">
+			<Option target="SL-Debug" />
 		</Unit>
 		<Unit filename="include/uilistener.hh">
-			<Option target="AL-Debug" />
+			<Option target="NLL_Hub-Debug" />
 		</Unit>
 		<Unit filename="src/abstractionlayer/abstractionlayer.cpp">
 			<Option target="AL-Debug" />
@@ -148,6 +156,9 @@
 		</Unit>
 		<Unit filename="src/networklogiclayer/hub/nllhub.cpp">
 			<Option target="NLL_Hub-Debug" />
+		</Unit>
+		<Unit filename="src/statisticslayer/statisticslayer.cpp">
+			<Option target="SL-Debug" />
 		</Unit>
 		<Unit filename="src/sttyciar/main.cpp">
 			<Option target="main-Debug" />

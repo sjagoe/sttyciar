@@ -7,8 +7,6 @@
 
 #include <boost/array.hpp>
 
-#include "defines.hh"
-
 #include "datalinklayerpacket.hh"
 
 using std::vector;

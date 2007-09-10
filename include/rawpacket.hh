@@ -6,8 +6,6 @@
 #include <boost/array.hpp>
 #include <pcap.h>
 
-#include "defines.hh"
-
 using std::vector;
 using boost::array;
 
