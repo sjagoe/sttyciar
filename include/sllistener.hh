@@ -5,9 +5,11 @@
 class SLListener
 {
     public:
-        void updateStatistics(/*some class containing meaningful information*/);
+        virtual void updateStatistics(
+            /* some class containing meaningful information */ ) = 0;
 
-        void availableInterfaces( /* interface linked list class thing */ );
+        virtual void availableInterfaces(
+            /* interface linked list class thing */ ) = 0;
 };
 
 #endif
