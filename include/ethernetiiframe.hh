@@ -16,8 +16,8 @@ using boost::array;
 
 class RawPacket;
 
-#define ETHERNETII_MAC_LENGTH 6
-#define ETEHRNETII_ETHERTYPE_LENGTH 2
+//#define ETHERNETII_MAC_LENGTH 6
+//#define ETEHRNETII_ETHERTYPE_LENGTH 2
 
 /*!
 EthernetIIFrame encapsulates the Ethernet II Frame header and payload with an
@@ -31,6 +31,17 @@ extract the Ethernet II header and payload from the raw packet data.
 
 class EthernetIIFrame: public DataLinkLayerPacket
 {
+    private:
+        static const int ETHERNETII_HEAD_LENGTH = 14;
+        static const int ETHERNETII_MAC_LENGTH = 6;
+        static const int ETEHRNETII_ETHERTYPE_LENGTH = 2;
+
+        array<u_char, ETHERNETII_MAC_LENGTH>       _sourceMAC;
+        array<u_char, ETHERNETII_MAC_LENGTH>       _destinationMAC;
+        array<u_char, ETEHRNETII_ETHERTYPE_LENGTH> _etherType;
+
+        vector<u_char> _payload;
+
     public:
         /*!
         Default constructor: zeros all member variables.
@@ -75,12 +86,7 @@ class EthernetIIFrame: public DataLinkLayerPacket
             return _payload;
         };
 
-    private:
-        array<u_char, ETHERNETII_MAC_LENGTH>       _sourceMAC;
-        array<u_char, ETHERNETII_MAC_LENGTH>       _destinationMAC;
-        array<u_char, ETEHRNETII_ETHERTYPE_LENGTH> _etherType;
 
-        vector<u_char> _payload;
 };
 
 #endif
