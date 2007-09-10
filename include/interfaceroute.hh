@@ -16,6 +16,10 @@ devices to use to transmit a packet.
 */
 class InterfaceRoute
 {
+    private:
+        string _sourceInterface;
+        vector<string> _destinationInterfaces;
+
     public:
         /*!
         Create an InterfaceRoute with a specified source device.
@@ -56,10 +60,6 @@ class InterfaceRoute
         {
             return _sourceInterface;
         };
-
-    private:
-        string _sourceInterface;
-        vector<string> _destinationInterfaces;
 };
 
 #endif
