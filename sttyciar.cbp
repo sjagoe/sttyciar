@@ -89,18 +89,21 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add directory="include" />
-<<<<<<< TREE
-			<Add directory="..\resources\WpdPack_4_0_1\WpdPack\Include" />
 			<Add directory="..\..\libraries\boost_1_34_1" />
 			<Add directory="..\..\libraries\WpdPack\Include" />
-=======
 			<Add directory="..\resources\WpdPack_4_0_1\WpdPack\Include" />
->>>>>>> MERGE-SOURCE
 		</Compiler>
 		<Linker>
+			<Add library="..\resources\WpdPack\Lib\wpcap.lib" />
+			<Add library="..\resources\WpdPack\Lib\Packet.lib" />
+			<Add library="..\resources\WpdPack\Lib\libpacket.a" />
+			<Add library="..\resources\WpdPack\Lib\libwpcap.a" />
 			<Add directory="bin\Debug" />
 		</Linker>
 		<Unit filename="include\abstractionlayer.hh">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="include\address.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include\alnetworklistener.hh">
@@ -112,7 +115,16 @@
 		<Unit filename="include\datalinklayerpacket.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="include\device.hh">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="include\deviceaddress.hh">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="include\ethernetiiframe.hh">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="include\exceptions.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="include\interfaceroute.hh">
@@ -148,7 +160,19 @@
 		<Unit filename="src\abstractionlayer\abstractionlayer.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
+		<Unit filename="src\abstractionlayer\address.cpp">
+			<Option target="AL-Debug" />
+		</Unit>
+		<Unit filename="src\abstractionlayer\device.cpp">
+			<Option target="AL-Debug" />
+		</Unit>
+		<Unit filename="src\abstractionlayer\deviceaddress.cpp">
+			<Option target="AL-Debug" />
+		</Unit>
 		<Unit filename="src\abstractionlayer\ethernetiiframe.cpp">
+			<Option target="AL-Debug" />
+		</Unit>
+		<Unit filename="src\abstractionlayer\exceptions.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
 		<Unit filename="src\abstractionlayer\interfaceroute.cpp">
