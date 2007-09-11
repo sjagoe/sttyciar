@@ -1,8 +1,28 @@
 #ifndef ADDRESS_H
 #define ADDRESS_H
 
+#if defined(WIN32) // if Win32 platform
+    #include <winsock.h>
+#else // *NIX platforms
+    #include <pcap.h>
+
+    struct in_addr_windows {
+        union {
+            struct {
+                u_char s_b1,s_b2,s_b3,s_b4;
+            } S_un_b;
+            struct {
+                u_short s_w1,s_w2;
+            } S_un_w;
+            u_long S_addr;
+        } S_un;
+    };
+
+    #include <sys/socket.h>
+    #include <linux/in.h>
+#endif // endif Win32/*NIX
+
 #include <string>
-#include <winsock.h>
 #include <boost/array.hpp>
 
 using namespace std;

@@ -8,7 +8,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="AL-Debug">
-				<Option output="bin\Debug\libabstractionlayer" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/libabstractionlayer" prefix_auto="1" extension_auto="1" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -18,7 +18,7 @@
 				</Compiler>
 			</Target>
 			<Target title="NLL_Hub-Debug">
-				<Option output="bin\Debug\libnllhub" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/libnllhub" prefix_auto="1" extension_auto="1" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -28,7 +28,7 @@
 				</Compiler>
 			</Target>
 			<Target title="SL-Debug">
-				<Option output="bin\Debug\libstatisticslayer" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/libstatisticslayer" prefix_auto="1" extension_auto="1" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -38,16 +38,16 @@
 				</Compiler>
 			</Target>
 			<Target title="UI-Debug">
-				<Option output="bin\Debug\libui" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/libui" prefix_auto="1" extension_auto="1" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 			</Target>
 			<Target title="main-Debug">
-				<Option output="bin\Debug\sttyciar" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin\Debug\" />
-				<Option object_output="obj\Debug\" />
+				<Option output="bin/Debug/sttyciar" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Debug/" />
+				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -59,8 +59,8 @@
 				</Linker>
 			</Target>
 			<Target title="main-Release">
-				<Option output="bin\Release\sttyciar" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj\Release\" />
+				<Option output="bin/Release/sttyciar" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -71,8 +71,8 @@
 				</Linker>
 			</Target>
 			<Target title="test-main">
-				<Option output="bin\Debug\tests" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="bin\Debug" />
+				<Option output="bin/Debug/tests" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Debug" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Linker>
@@ -89,112 +89,110 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add directory="include" />
-			<Add directory="..\..\libraries\boost_1_34_1" />
-			<Add directory="..\..\libraries\WpdPack\Include" />
-			<Add directory="..\resources\WpdPack_4_0_1\WpdPack\Include" />
+			<Add directory="../resources/WpdPack_4_0_1/WpdPack/Include" />
 		</Compiler>
 		<Linker>
-			<Add library="..\resources\WpdPack\Lib\wpcap.lib" />
-			<Add library="..\resources\WpdPack\Lib\Packet.lib" />
-			<Add library="..\resources\WpdPack\Lib\libpacket.a" />
-			<Add library="..\resources\WpdPack\Lib\libwpcap.a" />
-			<Add directory="bin\Debug" />
+			<Add library="../resources/WpdPack/Lib/wpcap.lib" />
+			<Add library="../resources/WpdPack/Lib/Packet.lib" />
+			<Add library="../resources/WpdPack/Lib/libpacket.a" />
+			<Add library="../resources/WpdPack/Lib/libwpcap.a" />
+			<Add directory="bin/Debug" />
 		</Linker>
-		<Unit filename="include\abstractionlayer.hh">
+		<Unit filename="include/abstractionlayer.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="include\address.hh">
+		<Unit filename="include/address.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="include\alnetworklistener.hh">
+		<Unit filename="include/alnetworklistener.hh">
 			<Option target="NLL_Hub-Debug" />
 		</Unit>
-		<Unit filename="include\alstatisticslistener.hh">
+		<Unit filename="include/alstatisticslistener.hh">
 			<Option target="SL-Debug" />
 		</Unit>
-		<Unit filename="include\datalinklayerpacket.hh">
+		<Unit filename="include/datalinklayerpacket.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="include\device.hh">
+		<Unit filename="include/device.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="include\deviceaddress.hh">
+		<Unit filename="include/deviceaddress.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="include\ethernetiiframe.hh">
+		<Unit filename="include/ethernetiiframe.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="include\exceptions.hh">
+		<Unit filename="include/exceptions.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="include\interfaceroute.hh">
+		<Unit filename="include/interfaceroute.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="include\ipv4datagram.hh">
+		<Unit filename="include/ipv4datagram.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="include\networklayerpacket.hh">
+		<Unit filename="include/networklayerpacket.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="include\nllhub.hh">
+		<Unit filename="include/nllhub.hh">
 			<Option target="NLL_Hub-Debug" />
 		</Unit>
-		<Unit filename="include\nlllistener.hh">
+		<Unit filename="include/nlllistener.hh">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="include\packet.hh">
+		<Unit filename="include/packet.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="include\rawpacket.hh">
+		<Unit filename="include/rawpacket.hh">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="include\sllistener.hh">
+		<Unit filename="include/sllistener.hh">
 			<Option target="UI-Debug" />
 		</Unit>
-		<Unit filename="include\statisticslayer.hh">
+		<Unit filename="include/statisticslayer.hh">
 			<Option target="SL-Debug" />
 		</Unit>
-		<Unit filename="include\uilistener.hh">
+		<Unit filename="include/uilistener.hh">
 			<Option target="NLL_Hub-Debug" />
 		</Unit>
-		<Unit filename="src\abstractionlayer\abstractionlayer.cpp">
+		<Unit filename="src/abstractionlayer/abstractionlayer.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="src\abstractionlayer\address.cpp">
+		<Unit filename="src/abstractionlayer/address.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="src\abstractionlayer\device.cpp">
+		<Unit filename="src/abstractionlayer/device.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="src\abstractionlayer\deviceaddress.cpp">
+		<Unit filename="src/abstractionlayer/deviceaddress.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="src\abstractionlayer\ethernetiiframe.cpp">
+		<Unit filename="src/abstractionlayer/ethernetiiframe.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="src\abstractionlayer\exceptions.cpp">
+		<Unit filename="src/abstractionlayer/exceptions.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="src\abstractionlayer\interfaceroute.cpp">
+		<Unit filename="src/abstractionlayer/interfaceroute.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="src\abstractionlayer\ipv4datagram.cpp">
+		<Unit filename="src/abstractionlayer/ipv4datagram.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="src\abstractionlayer\rawpacket.cpp">
+		<Unit filename="src/abstractionlayer/rawpacket.cpp">
 			<Option target="AL-Debug" />
 		</Unit>
-		<Unit filename="src\networklogiclayer\hub\nllhub.cpp">
+		<Unit filename="src/networklogiclayer/hub/nllhub.cpp">
 			<Option target="NLL_Hub-Debug" />
 		</Unit>
-		<Unit filename="src\statisticslayer\statisticslayer.cpp">
+		<Unit filename="src/statisticslayer/statisticslayer.cpp">
 			<Option target="SL-Debug" />
 		</Unit>
-		<Unit filename="src\sttyciar\main.cpp">
+		<Unit filename="src/sttyciar/main.cpp">
 			<Option target="main-Debug" />
 			<Option target="main-Release" />
 		</Unit>
-		<Unit filename="src\tests\main.cpp">
+		<Unit filename="src/tests/main.cpp">
 			<Option target="test-main" />
 		</Unit>
 		<Extensions>

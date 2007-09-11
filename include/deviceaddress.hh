@@ -1,8 +1,14 @@
 #ifndef ADDRESS_H_INCLUDED
 #define ADDRESS_H_INCLUDED
+
+#if defined(WIN32) // if Win32 platform
 #include <winsock.h>
+//#elif defined() // if MS-DOS platform
+#else // *NIX platforms
+#endif // endif Win32/DOS/*NIX
+
 #include <ext/algorithm>
-#include "pcap.h"
+#include <pcap.h>
 #include "address.hh"
 
 
