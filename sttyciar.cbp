@@ -80,6 +80,15 @@
 					<Add library="nllhub" />
 				</Linker>
 			</Target>
+			<Target title="test2-main">
+				<Option output="bin\Debug\test2" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin\Debug" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Linker>
+					<Add library="bin\Debug\libabstractionlayer.a" />
+				</Linker>
+			</Target>
 		</Build>
 		<VirtualTargets>
 			<Add alias="sttyciar-Debug" targets="AL-Debug;NLL_Hub-Debug;SL-Debug;UI-Debug;main-Debug;" />
@@ -92,11 +101,19 @@
 			<Add directory="../resources/WpdPack_4_0_1/WpdPack/Include" />
 		</Compiler>
 		<Linker>
+<<<<<<< TREE
 			<Add library="../resources/WpdPack/Lib/wpcap.lib" />
 			<Add library="../resources/WpdPack/Lib/Packet.lib" />
 			<Add library="../resources/WpdPack/Lib/libpacket.a" />
 			<Add library="../resources/WpdPack/Lib/libwpcap.a" />
 			<Add directory="bin/Debug" />
+=======
+			<Add library="..\resources\WpdPack\Lib\libpacket.a" />
+			<Add library="..\resources\WpdPack\Lib\libwpcap.a" />
+			<Add library="..\resources\WpdPack\Lib\Packet.lib" />
+			<Add library="..\resources\WpdPack\Lib\wpcap.lib" />
+			<Add directory="bin\Debug" />
+>>>>>>> MERGE-SOURCE
 		</Linker>
 		<Unit filename="include/abstractionlayer.hh">
 			<Option target="&lt;{~None~}&gt;" />
@@ -194,6 +211,9 @@
 		</Unit>
 		<Unit filename="src/tests/main.cpp">
 			<Option target="test-main" />
+		</Unit>
+		<Unit filename="src\tests\test2-main.cpp">
+			<Option target="test2-main" />
 		</Unit>
 		<Extensions>
 			<code_completion />
