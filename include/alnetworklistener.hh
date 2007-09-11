@@ -32,7 +32,10 @@ class ALNetworkListener
         /*!
         Virtual destructor to allow destructor overriding.
         */
-        virtual ~ALNetworkListener() {};
+        virtual ~ALNetworkListener()
+        {
+            _abstractionLayer.reset();
+        };
 
         /*!
         This method is called every time a packet is received by the AL to

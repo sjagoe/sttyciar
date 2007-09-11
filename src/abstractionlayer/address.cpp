@@ -18,19 +18,19 @@ Address::Address(sockaddr* socketAddress)
 
 void Address::setContents(sockaddr_in* socketAddress)
 {
-#if defined(WIN32) // If on Win32
-    this->_address[0]=socketAddress->sin_addr.S_un.S_un_b.s_b1;
-    this->_address[1]=socketAddress->sin_addr.S_un.S_un_b.s_b2;
-    this->_address[2]=socketAddress->sin_addr.S_un.S_un_b.s_b3;
-    this->_address[3]=socketAddress->sin_addr.S_un.S_un_b.s_b4;
-#else // If on *NIX
+//#if defined(WIN32) // If on Win32
+//    this->_address[0]=socketAddress->sin_addr.S_un.S_un_b.s_b1;
+//    this->_address[1]=socketAddress->sin_addr.S_un.S_un_b.s_b2;
+//    this->_address[2]=socketAddress->sin_addr.S_un.S_un_b.s_b3;
+//    this->_address[3]=socketAddress->sin_addr.S_un.S_un_b.s_b4;
+//#else // If on *NIX
     struct in_addr_windows* sin_addr = (struct in_addr_windows*)
         &socketAddress->sin_addr;
     this->_address[0]=sin_addr->S_un.S_un_b.s_b1;
     this->_address[1]=sin_addr->S_un.S_un_b.s_b2;
     this->_address[2]=sin_addr->S_un.S_un_b.s_b3;
     this->_address[3]=sin_addr->S_un.S_un_b.s_b4;
-#endif // Win32/*NIX
+//#endif // Win32/*NIX
     this->_size=4;
 }
 
