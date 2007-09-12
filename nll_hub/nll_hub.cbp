@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="nll_hub" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../bin/Debug/libnllhub" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Option projectCompilerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add directory="../bin/Debug" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add option="-D_REENTRANT" />
+			<Add directory="../include" />
+		</Compiler>
+		<Linker>
+			<Add directory="../fakelib" />
+		</Linker>
+		<Unit filename="../include/abstractionlayer.hh" />
+		<Unit filename="../include/address.hh" />
+		<Unit filename="../include/alnetworklistener.hh" />
+		<Unit filename="../include/alstatisticslistener.hh" />
+		<Unit filename="../include/datalinklayerpacket.hh" />
+		<Unit filename="../include/device.hh" />
+		<Unit filename="../include/deviceaddress.hh" />
+		<Unit filename="../include/ethernetiiframe.hh" />
+		<Unit filename="../include/exceptions.hh" />
+		<Unit filename="../include/interfaceroute.hh" />
+		<Unit filename="../include/ipv4datagram.hh" />
+		<Unit filename="../include/networklayerpacket.hh" />
+		<Unit filename="../include/nllhub.hh" />
+		<Unit filename="../include/nlllistener.hh" />
+		<Unit filename="../include/packet.hh" />
+		<Unit filename="../include/rawpacket.hh" />
+		<Unit filename="../include/sllistener.hh" />
+		<Unit filename="../include/statisticslayer.hh" />
+		<Unit filename="../include/uilistener.hh" />
+		<Unit filename="src/nllhub.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

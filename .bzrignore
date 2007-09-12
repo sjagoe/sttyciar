@@ -3,7 +3,7 @@ obj/**
 bin
 obj
 .objs
-sttyciar.layout
+*.layout
 *.dll
 *.exe
 *.so
