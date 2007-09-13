@@ -49,6 +49,7 @@ class NetworkLogicLayer: public QThread, public ALNetworkListener
         shared_ptr<QWaitCondition> _wait;
         shared_ptr<QSemaphore> _waitingPackets;
         QMutex _waitMutex;
+        static QMutex _runningMutex;
         static bool _running;
 };
 
