@@ -21,7 +21,8 @@ CONFIG(debug, debug|release) {
 }
 
 win32 {
-    LIBS += -L../../resources/WpdPack_4_0_1/WpdPack/Include
+    INCLUDEPATH += ../../resources/WpdPack_4_0_1/WpdPack/Include
+    LIBS += -L../../resources/WpdPack/Lib/
     LIBS += -lpacket
     LIBS += -lwpcap
 } else {
