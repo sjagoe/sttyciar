@@ -20,6 +20,14 @@ CONFIG(debug, debug|release) {
     DEPENDPATH += ../bin/Release
 }
 
+win32 {
+    LIBS += -L../../resources/WpdPack_4_0_1/WpdPack/Include
+    LIBS += -lpacket
+    LIBS += -lwpcap
+} else {
+    LIBS += -lpcap
+}
+
 TARGET = abstractionlayer
 
 # Input

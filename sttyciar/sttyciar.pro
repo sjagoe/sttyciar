@@ -13,10 +13,14 @@ CONFIG += debug_and_release
 CONFIG(debug, debug|release) {
     DESTDIR = ../bin/Debug
     DEPENDPATH += ../bin/Debug
+    LIBS += -L../bin/Debug
 } else {
     DESTDIR = ../bin/Release
     DEPENDPATH += ../bin/Release
+    LIBS += -L../bin/Release
 }
+
+LIBS += -labstractionlayer
 
 TARGET = sttyciar
 
