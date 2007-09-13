@@ -2,8 +2,8 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="Sttyciar">
 		<Project filename="abstractionlayer/abstractionlayer.cbp" />
-		<Project filename="nll_hub/nll_hub.cbp" />
+		<Project filename="nll_hub/nll_hub.cbp" active="1" />
 		<Project filename="statisticslayer/statisticslayer.cbp" />
-		<Project filename="sttyciar/sttyciar.cbp" active="1" />
+		<Project filename="sttyciar/sttyciar.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

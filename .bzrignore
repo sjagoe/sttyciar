@@ -7,3 +7,6 @@ obj
 *.dll
 *.exe
 *.so
+debug
+release
+Makefile*
