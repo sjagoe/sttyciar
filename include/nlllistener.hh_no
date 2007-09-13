@@ -28,11 +28,11 @@ class NLLListener
 
     public:
         NLLListener() {};
-        NLLListener( shared_ptr<ALNetworkListener> nllModule )
+        NLLListener( shared_ptr<ALNetworkListener>& nllModule )
         {
             _networkLogicLayer.push_back( nllModule );
         };
-        NLLListener( vector<shared_ptr<ALNetworkListener> > nllModules )
+        NLLListener( vector<shared_ptr<ALNetworkListener> >& nllModules )
         {
             _networkLogicLayer.resize( nllModules.size() );
             std::copy( nllModules.begin(), nllModules.end(),
@@ -72,7 +72,7 @@ class NLLListener
         send messages to.
         */
         virtual void
-        registerNLL( shared_ptr<ALNetworkListener> nllModule ) = 0;
+        registerNLL( shared_ptr<ALNetworkListener>& nllModule ) = 0;
 
         /*!
         Unregister an ALNetworkListener (i.e. NLL module) with the AL.
@@ -81,7 +81,7 @@ class NLLListener
         send messages to.
         */
         virtual void
-        unregisterNLL( shared_ptr<ALNetworkListener> nllModule ) = 0;
+        unregisterNLL( shared_ptr<ALNetworkListener>& nllModule ) = 0;
 };
 
 #endif

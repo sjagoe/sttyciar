@@ -5,7 +5,7 @@
 #include <list>
 #include <boost/shared_ptr.hpp>
 #include "pcap.h"
-#include "nlllistener.hh"
+//#include "nlllistener.hh"
 #include "device.hh"
 #include "exceptions.hh"
 
@@ -14,13 +14,27 @@ using std::list;
 using boost::shared_ptr;
 
 class ALNetworkListener;
+class DataLinkLayerPacket;
+class NetworkLayerPacket;
+class InterfaceRoute;
 
-class AbstractionLayer: public NLLListener
+class QWaitCondition;
+class QSemaphore;
+
+class AbstractionLayer//: public NLLListener
 {
     public:
+        /*!
+        Default Constructor creates required onjects (QWaitCondition and
+        QSemaphore).
+        */
         AbstractionLayer();
+
+        /*!
+        Constructor that sets the NLL module to interact with.
+        */
         AbstractionLayer( shared_ptr<ALNetworkListener> nllModule );
-        AbstractionLayer( vector<shared_ptr<ALNetworkListener> > nllModules );
+        //AbstractionLayer( vector<shared_ptr<ALNetworkListener> > nllModules );
 
         /*!
         send a data link layer frame (i.e. all headers and payload is
@@ -50,20 +64,27 @@ class AbstractionLayer: public NLLListener
         @param nllModule A NLL module (i.e. ALNetworkListener) that the AL can
         send messages to.
         */
-        void registerNLL( shared_ptr<ALNetworkListener> nllModule );
+        void registerNLL( shared_ptr<ALNetworkListener>& nllModule );
 
-        /*!
+        /* !
         Unregister an ALNetworkListener (i.e. NLL module) with the AL.
 
         @param nllModule A NLL module (i.e. ALNetworkListener) that the AL can
         send messages to.
         */
-        void unregisterNLL( shared_ptr<ALNetworkListener> nllModule );
+        //void unregisterNLL( shared_ptr<ALNetworkListener>& nllModule );
 
         list<Device> getDevices() throw(DeviceNotFoundException);
 
+        shared_ptr<QWaitCondition>& getNLLWaitCondition();
+        shared_ptr<QSemaphore>& getNLLSemaphore();
+
     private:
         char pcapErrorBuffer[PCAP_ERRBUF_SIZE];
+        //vector<shared_ptr<ALNetworkListener> > _networkLogicLayer;
+        shared_ptr<ALNetworkListener> _networkLogicLayer;
+        shared_ptr<QWaitCondition> _nllWaitCondition;
+        shared_ptr<QSemaphore> _nllSemaphore;
 };
 
 #endif

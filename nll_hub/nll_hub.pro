@@ -12,6 +12,8 @@ QT = core
 DEPENDPATH += . src
 INCLUDEPATH += . ../include
 
+DEFINES += _REENTRANT
+
 CONFIG -= app_bundle
 CONFIG += console
 CONFIG += debug_and_release
@@ -19,16 +21,21 @@ CONFIG += debug_and_release
 CONFIG(debug, debug|release) {
     DESTDIR = ../bin/Debug
     DEPENDPATH += ../bin/Debug
+    LIBS += -L../bin/Debug
 } else {
     DESTDIR = ../bin/Release
     DEPENDPATH += ../bin/Release
+    LIBS += -L../bin/Release
 }
 
 win32 {
     CONFIG += dll
     CONFIG += rtti
     CONFIG += exceptions
+    INCLUDEPATH += ../../resources/WpdPack_4_0_1/WpdPack/Include
 }
+
+LIBS += -lnetworklogiclayer
 
 TARGET = nll_hub
 

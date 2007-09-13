@@ -11,6 +11,8 @@ TEMPLATE = app
 DEPENDPATH += . src
 INCLUDEPATH += . ../include
 
+DEFINES += _REENTRANT
+
 CONFIG += console
 CONFIG += debug_and_release
 

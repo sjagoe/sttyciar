@@ -2,14 +2,16 @@
 #define __ALNETWORKLISTENER_HH__
 
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 using boost::shared_ptr;
+using boost::weak_ptr;
 
 class RawPacket;
 class InterfaceRoute;
 //class NLLListener;
 
-#include "nlllistener.hh"
+#include "abstractionlayer.hh"
 
 /*!
 The ALNetworkListener class in a (pure virtual) public interface that the
@@ -21,11 +23,11 @@ Abstraction Layer.
 class ALNetworkListener
 {
     protected:
-        shared_ptr<NLLListener> _abstractionLayer;
+        weak_ptr<AbstractionLayer> _abstractionLayer;
 
     public:
         ALNetworkListener() {};
-        ALNetworkListener( shared_ptr<NLLListener> abstractionLayer )
+        ALNetworkListener( shared_ptr<AbstractionLayer>& abstractionLayer )
         {
             _abstractionLayer = abstractionLayer;
         };
@@ -55,7 +57,7 @@ class ALNetworkListener
         @param abstractionLayer the AL that the NLL module must send messages
         to (there is only one AL).
         */
-        void registerAL( shared_ptr<NLLListener> abstractionLayer )
+        void registerAL( shared_ptr<AbstractionLayer>& abstractionLayer )
         {
             _abstractionLayer = abstractionLayer;
         };

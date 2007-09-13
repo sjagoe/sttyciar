@@ -12,6 +12,8 @@ QT = core
 DEPENDPATH += . src
 INCLUDEPATH += . ../include
 
+DEFINES += _REENTRANT
+
 CONFIG -= app_bundle
 CONFIG += console
 CONFIG += debug_and_release

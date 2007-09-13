@@ -1,25 +1,31 @@
+#include <QWaitCondition>
+#include <QSemaphore>
+
 #include "abstractionlayer.hh"
 
 #include "alnetworklistener.hh"
 
 AbstractionLayer::AbstractionLayer()
-    : NLLListener()
 {
-
+    _nllWaitCondition.reset( new QWaitCondition );
+    _nllSemaphore.reset( new QSemaphore );
 }
 
 AbstractionLayer::AbstractionLayer( shared_ptr<ALNetworkListener> nllModule )
-    : NLLListener( nllModule )
 {
-
+    AbstractionLayer();
+    //_networkLogicLayer.push_back( nllModule );
+    _networkLogicLayer = nllModule;
 }
 
-AbstractionLayer::AbstractionLayer(
-    vector<shared_ptr<ALNetworkListener> > nllModules )
-    : NLLListener( nllModules )
-{
-
-}
+//AbstractionLayer::AbstractionLayer(
+//    vector<shared_ptr<ALNetworkListener> > nllModules )
+//{
+//    AbstractionLayer();
+//    _networkLogicLayer.resize( nllModules.size() );
+//    std::copy( nllModules.begin(), nllModules.end(),
+//               _networkLogicLayer.begin() );
+//}
 
 void AbstractionLayer::sendDataLinkLayerPacket( DataLinkLayerPacket& packet,
                               InterfaceRoute& interfaces )
@@ -33,43 +39,45 @@ void AbstractionLayer::sendNetworkLayerPacket( NetworkLayerPacket& packet,
 
 }
 
-void AbstractionLayer::registerNLL( shared_ptr<ALNetworkListener> nllModule )
+void AbstractionLayer::registerNLL( shared_ptr<ALNetworkListener>& nllModule )
 {
-    vector<shared_ptr<ALNetworkListener> >::const_iterator iter
-        = _networkLogicLayer.begin();
+    _networkLogicLayer = nllModule;
 
-    bool exists = false;
-
-    for ( ; iter != _networkLogicLayer.end(), exists == false; iter++ )
-    {
-        if ( (*iter) == nllModule )
-        {
-            exists = true;
-        }
-    }
-
-    if (!exists)
-    {
-        _networkLogicLayer.push_back(nllModule);
-    }
+//    vector<shared_ptr<ALNetworkListener> >::const_iterator iter
+//        = _networkLogicLayer.begin();
+//
+//    bool exists = false;
+//
+//    for ( ; iter != _networkLogicLayer.end(), exists == false; iter++ )
+//    {
+//        if ( (*iter) == nllModule )
+//        {
+//            exists = true;
+//        }
+//    }
+//
+//    if (!exists)
+//    {
+//        _networkLogicLayer.push_back(nllModule);
+//    }
 }
 
-void AbstractionLayer::unregisterNLL( shared_ptr<ALNetworkListener> nllModule )
-{
-    vector<shared_ptr<ALNetworkListener> >::iterator iter
-        = _networkLogicLayer.begin();
-
-    bool found = false;
-
-    for ( ; iter != _networkLogicLayer.end(), found == false; iter++ )
-    {
-        if ( (*iter) == nllModule )
-        {
-            found = true;
-            iter = _networkLogicLayer.erase(iter);
-        }
-    }
-}
+//void AbstractionLayer::unregisterNLL( shared_ptr<ALNetworkListener>& nllModule )
+//{
+//    vector<shared_ptr<ALNetworkListener> >::iterator iter
+//        = _networkLogicLayer.begin();
+//
+//    bool found = false;
+//
+//    for ( ; iter != _networkLogicLayer.end(), found == false; iter++ )
+//    {
+//        if ( (*iter) == nllModule )
+//        {
+//            found = true;
+//            iter = _networkLogicLayer.erase(iter);
+//        }
+//    }
+//}
 
 list<Device> AbstractionLayer::getDevices() throw(DeviceNotFoundException)
 {
@@ -89,4 +97,14 @@ list<Device> AbstractionLayer::getDevices() throw(DeviceNotFoundException)
     return devices;
 
 
+}
+
+shared_ptr<QWaitCondition>& AbstractionLayer::getNLLWaitCondition()
+{
+    return _nllWaitCondition;
+}
+
+shared_ptr<QSemaphore>& AbstractionLayer::getNLLSemaphore()
+{
+    return _nllSemaphore;
 }
