@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="Sttyciar">
-		<Project filename="abstractionlayer/abstractionlayer.cbp" active="1" />
-		<Project filename="nll_hub/nll_hub.cbp" />
-		<Project filename="statisticslayer/statisticslayer.cbp" />
-		<Project filename="sttyciar/sttyciar.cbp" />
+		<Project filename="abstractionlayer\abstractionlayer.cbp" />
+		<Project filename="nll_hub\nll_hub.cbp" />
+		<Project filename="statisticslayer\statisticslayer.cbp" />
+		<Project filename="sttyciar\sttyciar.cbp" active="1" />
 	</Workspace>
 </CodeBlocks_workspace_file>

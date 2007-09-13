@@ -25,8 +25,11 @@ CONFIG(debug, debug|release) {
 }
 
 win32 {
+    CONFIG += dll
+    CONFIG += rtti
+    CONFIG += exceptions
     INCLUDEPATH += ../../resources/WpdPack_4_0_1/WpdPack/Include
-    LIBS += -L../../resources/WpdPack/Lib/
+    LIBS += -L../../resources/WpdPack_4_0_1/WpdPack/Lib/
     LIBS += -lpacket
     LIBS += -lwpcap
 } else {

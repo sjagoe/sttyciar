@@ -6,11 +6,17 @@
 		<Option makefile_is_custom="1" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<MakeCommands>
+			<Build command="$make -f $makefile $target" />
+			<CompileFile command="$make -f $makefile $file" />
+			<Clean command="$make -f $makefile clean" />
+			<DistClean command="$make -f $makefile distclean" />
+		</MakeCommands>
 		<Build>
 			<Target title="debug">
-				<Option output="." prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../bin/Debug" />
-				<Option object_output="obj/Debug/" />
+				<Option output="..\bin\Debug\sttyciar" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\bin\Debug" />
+				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option projectCompilerOptionsRelation="2" />
@@ -18,19 +24,31 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add directory="../bin/Debug" />
+					<Add directory="..\bin\Debug" />
 				</Linker>
+				<MakeCommands>
+					<Build command="$make -f $makefile $target" />
+					<CompileFile command="$make -f $makefile $file" />
+					<Clean command="$make -f $makefile clean" />
+					<DistClean command="$make -f $makefile distclean" />
+				</MakeCommands>
 			</Target>
 			<Target title="release">
-				<Option output="." prefix_auto="1" extension_auto="1" />
-				<Option working_dir="../bin/Release" />
-				<Option object_output="obj/Debug/" />
+				<Option output="..\bin\Release\sttyciar" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="..\bin\Release" />
+				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option projectCompilerOptionsRelation="2" />
 				<Linker>
-					<Add directory="../bin/Debug" />
+					<Add directory="..\bin\Debug" />
 				</Linker>
+				<MakeCommands>
+					<Build command="$make -f $makefile $target" />
+					<CompileFile command="$make -f $makefile $file" />
+					<Clean command="$make -f $makefile clean" />
+					<DistClean command="$make -f $makefile distclean" />
+				</MakeCommands>
 			</Target>
 		</Build>
 		<VirtualTargets>
@@ -40,35 +58,36 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add option="-D_REENTRANT" />
-			<Add directory="../include" />
+			<Add directory="..\include" />
 		</Compiler>
 		<Linker>
-			<Add directory="../fakelib" />
+			<Add directory="..\fakelib" />
 		</Linker>
-		<Unit filename="../include/abstractionlayer.hh" />
-		<Unit filename="../include/address.hh" />
-		<Unit filename="../include/alnetworklistener.hh" />
-		<Unit filename="../include/alstatisticslistener.hh" />
-		<Unit filename="../include/datalinklayerpacket.hh" />
-		<Unit filename="../include/device.hh" />
-		<Unit filename="../include/deviceaddress.hh" />
-		<Unit filename="../include/ethernetiiframe.hh" />
-		<Unit filename="../include/exceptions.hh" />
-		<Unit filename="../include/interfaceroute.hh" />
-		<Unit filename="../include/ipv4datagram.hh" />
-		<Unit filename="../include/networklayerpacket.hh" />
-		<Unit filename="../include/nllhub.hh" />
-		<Unit filename="../include/nlllistener.hh" />
-		<Unit filename="../include/packet.hh" />
-		<Unit filename="../include/rawpacket.hh" />
-		<Unit filename="../include/sllistener.hh" />
-		<Unit filename="../include/statisticslayer.hh" />
-		<Unit filename="../include/uilistener.hh" />
-		<Unit filename="src/main.cpp" />
+		<Unit filename="..\include\abstractionlayer.hh" />
+		<Unit filename="..\include\address.hh" />
+		<Unit filename="..\include\alnetworklistener.hh" />
+		<Unit filename="..\include\alstatisticslistener.hh" />
+		<Unit filename="..\include\datalinklayerpacket.hh" />
+		<Unit filename="..\include\device.hh" />
+		<Unit filename="..\include\deviceaddress.hh" />
+		<Unit filename="..\include\ethernetiiframe.hh" />
+		<Unit filename="..\include\exceptions.hh" />
+		<Unit filename="..\include\interfaceroute.hh" />
+		<Unit filename="..\include\ipv4datagram.hh" />
+		<Unit filename="..\include\networklayerpacket.hh" />
+		<Unit filename="..\include\nllhub.hh" />
+		<Unit filename="..\include\nlllistener.hh" />
+		<Unit filename="..\include\packet.hh" />
+		<Unit filename="..\include\rawpacket.hh" />
+		<Unit filename="..\include\sllistener.hh" />
+		<Unit filename="..\include\statisticslayer.hh" />
+		<Unit filename="..\include\uilistener.hh" />
+		<Unit filename="src\main.cpp" />
 		<Unit filename="sttyciar.pro" />
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

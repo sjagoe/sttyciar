@@ -24,6 +24,12 @@ CONFIG(debug, debug|release) {
     DEPENDPATH += ../bin/Release
 }
 
+win32 {
+    CONFIG += dll
+    CONFIG += rtti
+    CONFIG += exceptions
+}
+
 TARGET = nll_hub
 
 # Input
