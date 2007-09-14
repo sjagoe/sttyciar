@@ -48,4 +48,9 @@ void Device::createAddressList(pcap_if* pcapDevice)
     }
 }
 
+bool Device::operator==(Device& device) const
+{
+    return this->getName()==device.getName();
+}
+
 

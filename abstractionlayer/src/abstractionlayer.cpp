@@ -82,17 +82,17 @@ void AbstractionLayer::registerNLL( ALNetworkListener* nllModule )
 //    }
 //}
 
-list<Device> AbstractionLayer::getDevices() throw(DeviceNotFoundException)
+list<shared_ptr<Device> > AbstractionLayer::getDevices() throw(DeviceNotFoundException)
 {
     pcap_if *pcapAllDevices;
 
     if (pcap_findalldevs(&pcapAllDevices, this->pcapErrorBuffer) == -1)
         throw DeviceNotFoundException(this->pcapErrorBuffer);
-    list<Device> devices;
-    Device tempDevice;
+    list<shared_ptr<Device> > devices;
+    shared_ptr<Device> tempDevice;
     for(pcap_if* pcapTempDevice=pcapAllDevices; pcapTempDevice != NULL; pcapTempDevice=pcapTempDevice->next)
     {
-        tempDevice.setContents(pcapTempDevice);
+        tempDevice.reset(new Device(pcapTempDevice));
         devices.push_back(tempDevice);
     }
 
@@ -102,21 +102,23 @@ list<Device> AbstractionLayer::getDevices() throw(DeviceNotFoundException)
 
 }
 
-void AbstractionLayer::activateDevice(Device device)
+void AbstractionLayer::activateDevice(shared_ptr<Device>& device)
 {
-
+    if (!this->isDeviceActivated(device))
+        this->activatedDevices.push_back(device);
 }
 
-bool AbstractionLayer::isDeviceActivated(Device device)
+bool AbstractionLayer::isDeviceActivated(shared_ptr<Device>& device)
 {
-    for (list<Device>::iterator iter=this->activatedDeviceNames.begin(); iter!=this->activatedDeviceNames.end(); ++iter)
-        if (iter->getName() == device.getName())
+    for (list<shared_ptr<Device> >::iterator iter=this->activatedDevices.begin(); iter!=this->activatedDevices.end(); ++iter)
+        if (**iter==*device)
             return true;
     return false;
 
 }
 void AbstractionLayer::startListening()
 {
+
 }
 
 shared_ptr<QWaitCondition>& AbstractionLayer::getNLLWaitCondition()

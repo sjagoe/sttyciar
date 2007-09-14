@@ -18,6 +18,7 @@ class Device
         string getDescription() const;
         const list<DeviceAddress>& getAddresses() const;
         bool isLoopback() const;
+        bool operator==(Device& device) const;
 
     private:
         string _name;
