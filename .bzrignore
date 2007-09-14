@@ -11,6 +11,3 @@ debug
 release
 Makefile*
 Sttyciar.workspace
-*.Debug
-*.Release
-*.pro1
