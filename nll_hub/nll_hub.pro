@@ -35,6 +35,8 @@ win32 {
     INCLUDEPATH += ../../resources/WpdPack/Include
 }
 
+INCLUDEPATH += ../../resources/tbb/include
+
 LIBS += -lnetworklogiclayer
 
 TARGET = nll_hub

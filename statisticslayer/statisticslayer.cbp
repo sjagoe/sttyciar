@@ -14,8 +14,8 @@
 		</MakeCommands>
 		<Build>
 			<Target title="debug">
-				<Option output="..\bin\Debug\libstatisticslayer" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj\Debug\" />
+				<Option output="../bin/Debug/libstatisticslayer" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -25,7 +25,7 @@
 					<Add option="-g" />
 				</Compiler>
 				<Linker>
-					<Add directory="..\bin\Debug" />
+					<Add directory="../bin/Debug" />
 				</Linker>
 				<MakeCommands>
 					<Build command="$make -f $makefile $target" />
@@ -35,15 +35,15 @@
 				</MakeCommands>
 			</Target>
 			<Target title="release">
-				<Option output="..\bin\Release\libstatisticslayer" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj\Debug\" />
+				<Option output="../bin/Release/libstatisticslayer" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Option projectCompilerOptionsRelation="2" />
 				<Linker>
-					<Add directory="..\bin\Debug" />
+					<Add directory="../bin/Debug" />
 				</Linker>
 				<MakeCommands>
 					<Build command="$make -f $makefile $target" />
@@ -57,29 +57,16 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add option="-D_REENTRANT" />
-			<Add directory="..\include" />
+			<Add directory="../include" />
 		</Compiler>
 		<Linker>
-			<Add directory="..\fakelib" />
+			<Add directory="../fakelib" />
 		</Linker>
-		<Unit filename="..\include\abstractionlayer.hh" />
-		<Unit filename="..\include\address.hh" />
-		<Unit filename="..\include\alstatisticslistener.hh" />
-		<Unit filename="..\include\datalinklayerpacket.hh" />
-		<Unit filename="..\include\device.hh" />
-		<Unit filename="..\include\deviceaddress.hh" />
-		<Unit filename="..\include\ethernetiiframe.hh" />
-		<Unit filename="..\include\exceptions.hh" />
-		<Unit filename="..\include\interfaceroute.hh" />
-		<Unit filename="..\include\ipv4datagram.hh" />
-		<Unit filename="..\include\networklayerpacket.hh" />
-		<Unit filename="..\include\nllhub.hh" />
-		<Unit filename="..\include\packet.hh" />
-		<Unit filename="..\include\rawpacket.hh" />
-		<Unit filename="..\include\sllistener.hh" />
-		<Unit filename="..\include\statisticslayer.hh" />
-		<Unit filename="..\include\uilistener.hh" />
-		<Unit filename="src\statisticslayer.cpp" />
+		<Unit filename="../include/alstatisticslistener.hh" />
+		<Unit filename="../include/interfaceroute.hh" />
+		<Unit filename="../include/sllistener.hh" />
+		<Unit filename="../include/statisticslayer.hh" />
+		<Unit filename="src/statisticslayer.cpp" />
 		<Unit filename="statisticslayer.pro" />
 		<Extensions>
 			<code_completion />

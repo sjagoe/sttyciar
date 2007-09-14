@@ -1,9 +1,17 @@
 #ifndef __ALNETWORKLISTENER_HH__
 #define __ALNETWORKLISTENER_HH__
 
+#include <QPair>
+
+#include <tbb/concurrent_queue.h>
+
+#include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
+using tbb::concurrent_queue;
+
+using boost::scoped_ptr;
 using boost::shared_ptr;
 using boost::weak_ptr;
 
@@ -22,22 +30,11 @@ Abstraction Layer.
 */
 class ALNetworkListener
 {
-    protected:
-        weak_ptr<AbstractionLayer> _abstractionLayer;
-
     public:
-        ALNetworkListener() {};
-        ALNetworkListener( shared_ptr<AbstractionLayer>& abstractionLayer )
-        {
-            _abstractionLayer = abstractionLayer;
-        };
         /*!
         Virtual destructor to allow destructor overriding.
         */
-        virtual ~ALNetworkListener()
-        {
-            _abstractionLayer.reset();
-        };
+        virtual ~ALNetworkListener() {};
 
         /*!
         This method is called every time a packet is received by the AL to
@@ -47,20 +44,8 @@ class ALNetworkListener
         @param interfaces An InterfaceRoute object containing the source
         interface, and an empty list of destination interfaces.
         */
-        virtual void packetReceived( RawPacket& packet,
-            InterfaceRoute& interfaces ) = 0;
-
-        /*!
-        register a Network Logic Layer Listener (i.e. the AL) with the NLL
-        module.
-
-        @param abstractionLayer the AL that the NLL module must send messages
-        to (there is only one AL).
-        */
-        void registerAL( shared_ptr<AbstractionLayer>& abstractionLayer )
-        {
-            _abstractionLayer = abstractionLayer;
-        };
+        virtual void packetReceived( shared_ptr<RawPacket>& packet,
+            shared_ptr<InterfaceRoute>& interfaces ) = 0;
 };
 
 #endif

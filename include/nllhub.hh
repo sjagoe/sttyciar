@@ -1,10 +1,9 @@
 #ifndef __NLLHUB_HH__
 #define __NLLHUB_HH__
 
-#include "alnetworklistener.hh"
-#include "uilistener.hh"
+#include "networklogiclayer.hh"
 
-class NLLHub: public ALNetworkListener, public UIListener
+class NLLHub: public NetworkLogicLayer
 {
 
 };

@@ -5,6 +5,8 @@
 
 #include "alnetworklistener.hh"
 
+#include "rawpacket.hh"
+
 AbstractionLayer::AbstractionLayer()
 {
     _nllWaitCondition.reset( new QWaitCondition );
@@ -39,9 +41,9 @@ void AbstractionLayer::sendNetworkLayerPacket( NetworkLayerPacket& packet,
 
 }
 
-void AbstractionLayer::registerNLL( shared_ptr<ALNetworkListener>& nllModule )
+void AbstractionLayer::registerNLL( ALNetworkListener* nllModule )
 {
-    _networkLogicLayer = nllModule;
+    _networkLogicLayer.reset( nllModule );
 
 //    vector<shared_ptr<ALNetworkListener> >::const_iterator iter
 //        = _networkLogicLayer.begin();

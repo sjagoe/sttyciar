@@ -3,6 +3,37 @@
 bool NetworkLogicLayer::_running;
 QMutex NetworkLogicLayer::_runningMutex;
 
+NetworkLogicLayer::NetworkLogicLayer( shared_ptr<AbstractionLayer>& al )
+{
+    // set the pointer to the abstraction layer
+    _abstractionLayer = al;
+
+    // lock the AL as a shared_ptr (prevent it from being destroyed while we
+    // are using it
+    shared_ptr<AbstractionLayer> lockedAL = getAbstractionLayer();
+
+    // if the AL still exists
+    if ( lockedAL.get() )
+    {
+        // get the WaitCondition for the NLL
+        _wait = lockedAL->getNLLWaitCondition();
+        // get the Semaphore for the NLL
+        _waitingPackets = lockedAL->getNLLSemaphore();
+        // enable the NLL
+        _running = true;
+    } else {
+        // No AL exists, we should throw an exception
+    }
+};
+
+NetworkLogicLayer::~NetworkLogicLayer()
+{
+    // remove our references to the shared objects
+    _wait.reset();
+    _waitingPackets.reset();
+    _abstractionLayer.reset();
+};
+
 void NetworkLogicLayer::exitNow()
 {
     // prevent the thread loop from running once woken
@@ -13,10 +44,11 @@ void NetworkLogicLayer::exitNow()
     _wait->wakeAll();
 }
 
-void NetworkLogicLayer::packetReceived( RawPacket& packet,
-    InterfaceRoute& interfaces )
+void NetworkLogicLayer::packetReceived( shared_ptr<RawPacket>& packet,
+    shared_ptr<InterfaceRoute>& interfaces )
 {
-    // create a QPair and push it onto the concurrent_queue
+    // create QPair and push it onto the queue.
+    _receiveBuffer->push( qMakePair( packet, interfaces ) );
 }
 
 void NetworkLogicLayer::run()
@@ -35,11 +67,11 @@ void NetworkLogicLayer::run()
         while (( _waitingPackets->tryAcquire() ) && (_running) )
         {
             _runningMutex.unlock();
-            // pop a packet/interfaceroute QPair from the concurrent_queue
-            shared_ptr<RawPacket> raw;
-            shared_ptr<InterfaceRoute> ifaces;
+            // pop a packet/interfaceroute QPair from the receive buffer
+            QPair<shared_ptr<RawPacket>, shared_ptr<InterfaceRoute> > pair;
+            _receiveBuffer->pop( pair );
             // call the method that performs the actual routing
-            routePacket(raw, ifaces);
+            routePacket( pair );
             _runningMutex.lock();
         }
         _runningMutex.unlock();

@@ -1,6 +1,8 @@
 #ifndef __ABSTRACTIONLAYER_HH__
 #define __ABSTRACTIONLAYER_HH__
 
+#include <tbb/concurrent_queue.h>
+
 #include <vector>
 #include <list>
 #include <boost/shared_ptr.hpp>
@@ -8,6 +10,8 @@
 //#include "nlllistener.hh"
 #include "device.hh"
 #include "exceptions.hh"
+
+using tbb::concurrent_queue;
 
 using std::vector;
 using std::list;
@@ -20,6 +24,7 @@ class InterfaceRoute;
 
 class QWaitCondition;
 class QSemaphore;
+class RawPacket;
 
 class AbstractionLayer//: public NLLListener
 {
@@ -64,7 +69,7 @@ class AbstractionLayer//: public NLLListener
         @param nllModule A NLL module (i.e. ALNetworkListener) that the AL can
         send messages to.
         */
-        void registerNLL( shared_ptr<ALNetworkListener>& nllModule );
+        void registerNLL( ALNetworkListener* nllModule );
 
         /* !
         Unregister an ALNetworkListener (i.e. NLL module) with the AL.
@@ -87,8 +92,11 @@ class AbstractionLayer//: public NLLListener
         char pcapErrorBuffer[PCAP_ERRBUF_SIZE];
         //vector<shared_ptr<ALNetworkListener> > _networkLogicLayer;
         list<Device> activatedDeviceNames;
+
         shared_ptr<ALNetworkListener> _networkLogicLayer;
+
         shared_ptr<QWaitCondition> _nllWaitCondition;
+
         shared_ptr<QSemaphore> _nllSemaphore;
 };
 
