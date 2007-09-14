@@ -31,7 +31,7 @@ win32 {
     CONFIG += rtti
     CONFIG += exceptions
     INCLUDEPATH += ../../resources/WpdPack/Include
-    LIBS += ../../resources/WpdPack/Lib
+    LIBS += -L../../resources/WpdPack/Lib
     LIBS += -lpacket
     LIBS += -lwpcap
 } else {
