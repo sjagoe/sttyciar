@@ -27,39 +27,36 @@ class InterfaceRoute
         The only time a source device can be set is at creation time (i.e.
         the source cannot be modified in the NLL).
         */
-        InterfaceRoute(/* source device */);
+        InterfaceRoute( string& sourceInterface );
 
         /*!
         Add a destination to the list of destination devices.
         */
-        void addDestination();
+        void addDestination( string& destinationInterface );
 
         /*!
         Remove all destinations from the list.
         */
         void clearDestinations();
 
-        /*!
+        /* !
         Set the list of destinations to a precompiled list (rather than
         appending one by one).
         */
-        void setDestinations();
+        //void setDestinations();
 
         /*!
         Return the list of destination Devices.
         */
-        inline const vector<string>& getDestinations() const
-        {
-            return _destinationInterfaces;
-        };
+        inline const vector<string>& getDestinations() const;
 
         /*!
         Return the source Device.
         */
-        inline const string& getSource() const
-        {
-            return _sourceInterface;
-        };
+        inline const string& getSource() const;
+//        {
+//            return _sourceInterface;
+//        };
 };
 
 #endif

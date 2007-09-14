@@ -1,13 +1,17 @@
 #ifndef __NLL_BASE_HH__
 #define __NLL_BASE_HH__
 
+// Qt includes
 #include <QtCore>
 
+// Intel TBB includes
 #include <tbb/concurrent_queue.h>
 
+// boost includes
 #include <boost/weak_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 
+// local includes
 #include "abstractionlayer.hh"
 #include "alnetworklistener.hh"
 #include "uilistener.hh"

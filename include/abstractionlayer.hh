@@ -1,22 +1,30 @@
 #ifndef __ABSTRACTIONLAYER_HH__
 #define __ABSTRACTIONLAYER_HH__
 
+// Intel TBB
 #include <tbb/concurrent_queue.h>
 
+// STL
 #include <vector>
 #include <list>
+
+// boost
 #include <boost/shared_ptr.hpp>
-#include "pcap.h"
-//#include "nlllistener.hh"
+
+// pcap
+#include <pcap.h>
+
+// local
 #include "device.hh"
 #include "exceptions.hh"
 
+// import specific types from namespaces
 using tbb::concurrent_queue;
-
 using std::vector;
 using std::list;
 using boost::shared_ptr;
 
+// forward declerations
 class ALNetworkListener;
 class DataLinkLayerPacket;
 class NetworkLayerPacket;
@@ -90,10 +98,12 @@ class AbstractionLayer//: public NLLListener
 
     private:
         char pcapErrorBuffer[PCAP_ERRBUF_SIZE];
-        //vector<shared_ptr<ALNetworkListener> > _networkLogicLayer;
+
         list<Device> activatedDeviceNames;
 
         shared_ptr<ALNetworkListener> _networkLogicLayer;
+
+        //vector<shared_ptr<ALNetworkListener> > _networkLogicLayer;
 
         shared_ptr<QWaitCondition> _nllWaitCondition;
 

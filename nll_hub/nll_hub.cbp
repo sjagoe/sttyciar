@@ -62,14 +62,7 @@
 		<Linker>
 			<Add directory="../fakelib" />
 		</Linker>
-		<Unit filename="../include/datalinklayerpacket.hh" />
-		<Unit filename="../include/ethernetiiframe.hh" />
-		<Unit filename="../include/interfaceroute.hh" />
-		<Unit filename="../include/ipv4datagram.hh" />
-		<Unit filename="../include/networklayerpacket.hh" />
 		<Unit filename="../include/nllhub.hh" />
-		<Unit filename="../include/rawpacket.hh" />
-		<Unit filename="../include/uilistener.hh" />
 		<Unit filename="nll_hub.pro" />
 		<Unit filename="src/nllhub.cpp" />
 		<Extensions>

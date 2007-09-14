@@ -64,7 +64,8 @@ void AbstractionLayer::registerNLL( ALNetworkListener* nllModule )
 //    }
 }
 
-//void AbstractionLayer::unregisterNLL( shared_ptr<ALNetworkListener>& nllModule )
+//void AbstractionLayer::unregisterNLL(
+//    shared_ptr<ALNetworkListener>& nllModule )
 //{
 //    vector<shared_ptr<ALNetworkListener> >::iterator iter
 //        = _networkLogicLayer.begin();
