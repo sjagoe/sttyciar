@@ -71,9 +71,12 @@
 		<Unit filename="src\exceptions.cpp" />
 		<Unit filename="src\interfaceroute.cpp" />
 		<Unit filename="src\ipv4datagram.cpp" />
+		<Unit filename="src\pcapthread.cpp" />
 		<Unit filename="src\rawpacket.cpp" />
 		<Unit filename="..\include\abstractionlayer.hh" />
 		<Unit filename="..\include\address.hh" />
+		<Unit filename="..\include\alnetworklistener.hh" />
+		<Unit filename="..\include\alstatisticslistener.hh" />
 		<Unit filename="..\include\datalinklayerpacket.hh" />
 		<Unit filename="..\include\device.hh" />
 		<Unit filename="..\include\deviceaddress.hh" />
@@ -83,6 +86,7 @@
 		<Unit filename="..\include\ipv4datagram.hh" />
 		<Unit filename="..\include\networklayerpacket.hh" />
 		<Unit filename="..\include\packet.hh" />
+		<Unit filename="..\include\pcapthread.hh" />
 		<Unit filename="..\include\rawpacket.hh" />
 		<Extensions>
 			<code_completion />

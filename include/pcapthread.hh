@@ -13,8 +13,11 @@ class PcapThread : public QThread
 
     public:
         PcapThread();
+
         PcapThread(const shared_ptr<Device>& device);
+
         ~PcapThread();
+
     protected:
         void run();
     private:
