@@ -32,7 +32,7 @@ win32 {
     CONFIG += dll
     CONFIG += rtti
     CONFIG += exceptions
-    INCLUDEPATH += ../../resources/WpdPack_4_0_1/WpdPack/Include
+    INCLUDEPATH += ../../resources/WpdPack/Include
 }
 
 LIBS += -lnetworklogiclayer
