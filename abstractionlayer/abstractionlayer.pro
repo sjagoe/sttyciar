@@ -13,6 +13,7 @@ DEPENDPATH += . src
 INCLUDEPATH += ../include
 
 DEFINES += _REENTRANT
+DEFINES += _DLL
 
 CONFIG -= app_bundle
 CONFIG += console
@@ -55,4 +56,5 @@ SOURCES += src/abstractionlayer.cpp \
            src/exceptions.cpp \
            src/interfaceroute.cpp \
            src/ipv4datagram.cpp \
-           src/rawpacket.cpp
+           src/rawpacket.cpp \
+           src/pcapthread.cpp
