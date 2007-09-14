@@ -24,12 +24,10 @@ CONFIG(debug, debug|release) {
     DESTDIR = ../bin/Debug
     DEPENDPATH += ../bin/Debug
     LIBS += -L../bin/Debug
-    LIBS += -ltbb_debug
 } else {
     DESTDIR = ../bin/Release
     DEPENDPATH += ../bin/Release
     LIBS += -L../bin/Release
-    LIBS += -ltbb
 }
 
 win32 {

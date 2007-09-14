@@ -31,6 +31,8 @@ CONFIG(debug, debug|release) {
     LIBS += -ltbb
 }
 
+LIBS += -labstractionlayer
+
 win32 {
     CONFIG += dll
     CONFIG += rtti
@@ -48,5 +50,16 @@ INCLUDEPATH += ../../resources/tbb/include
 TARGET += networklogiclayer
 
 # Input
+HEADERS += ../include/abstractionlayer.hh \
+           ../include/alnetworklistener.hh \
+           ../include/datalinklayerpacket.hh \
+           ../include/ethernetiiframe.hh \
+           ../include/interfaceroute.hh \
+           ../include/ipv4datagram.hh \
+           ../include/networklayerpacket.hh \
+           ../include/networklogiclayer.hh \
+           ../include/packet.hh \
+           ../include/rawpacket.hh
+
 SOURCES += src/networklogiclayer.cpp
-HEADERS += ../include/networklogiclayer.hh
+
