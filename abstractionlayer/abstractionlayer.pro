@@ -30,10 +30,11 @@ win32 {
     CONFIG += dll
     CONFIG += rtti
     CONFIG += exceptions
-    INCLUDEPATH += ../../resources/WpdPack_4_0_1/WpdPack/Include
-    LIBS += -L../../resources/WpdPack_4_0_1/WpdPack/Lib/
-    LIBS += -lpacket
-    LIBS += -lwpcap
+    INCLUDEPATH += ../../resources/WpdPack/Include
+    LIBS += ../../resources/WpdPack/Lib/libpacket.a
+    LIBS += ../../resources/WpdPack/Lib/libwpcap.a
+    LIBS += ../../resources/WpdPack/Lib/Packet.lib
+    LIBS += ../../resources/WpdPack/Lib/wpcap.lib
 } else {
     LIBS += -lpcap
 }
