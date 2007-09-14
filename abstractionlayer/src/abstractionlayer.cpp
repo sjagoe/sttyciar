@@ -99,10 +99,29 @@ list<Device> AbstractionLayer::getDevices() throw(DeviceNotFoundException)
 
 }
 
+void AbstractionLayer::activateDevice(Device device)
+{
+
+}
+
+bool AbstractionLayer::isDeviceActivated(Device device)
+{
+    for (list<Device>::iterator iter=this->activatedDeviceNames.begin(); iter!=this->activatedDeviceNames.end(); ++iter)
+        if (iter->getName() == device.getName())
+            return true;
+    return false;
+
+}
+void AbstractionLayer::startListening()
+{
+}
+
 shared_ptr<QWaitCondition>& AbstractionLayer::getNLLWaitCondition()
 {
     return _nllWaitCondition;
 }
+
+
 
 shared_ptr<QSemaphore>& AbstractionLayer::getNLLSemaphore()
 {

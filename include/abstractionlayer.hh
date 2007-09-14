@@ -76,12 +76,17 @@ class AbstractionLayer//: public NLLListener
 
         list<Device> getDevices() throw(DeviceNotFoundException);
 
+        void activateDevice(Device device);
+        bool isDeviceActivated(Device device);
+        void startListening();
+
         shared_ptr<QWaitCondition>& getNLLWaitCondition();
         shared_ptr<QSemaphore>& getNLLSemaphore();
 
     private:
         char pcapErrorBuffer[PCAP_ERRBUF_SIZE];
         //vector<shared_ptr<ALNetworkListener> > _networkLogicLayer;
+        list<Device> activatedDeviceNames;
         shared_ptr<ALNetworkListener> _networkLogicLayer;
         shared_ptr<QWaitCondition> _nllWaitCondition;
         shared_ptr<QSemaphore> _nllSemaphore;
