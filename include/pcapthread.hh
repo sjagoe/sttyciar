@@ -7,14 +7,17 @@
 #include "device.hh"
 #include "exceptions.hh"
 
+
 using boost::shared_ptr;
+class ALNetworkListener;
 
 class PcapThread : public QThread
 {
     Q_OBJECT
 
     public:
-        PcapThread(const shared_ptr<Device>& device,int packetCaptureSize,int timeout) throw(CannotOpenDeviceException);
+        PcapThread(const shared_ptr<Device>& device,int packetCaptureSize,
+                    int timeout,shared_ptr<ALNetworkListener> alNetworkListener) throw(CannotOpenDeviceException);
         ~PcapThread();
 
     protected:
@@ -26,6 +29,7 @@ class PcapThread : public QThread
         int _pcapTimeout;
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
         bool _running;
+        shared_ptr<ALNetworkListener> _alNetworkListener;
 };
 
 #endif // PCAPTHREAD_HH
