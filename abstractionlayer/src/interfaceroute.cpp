@@ -1,11 +1,11 @@
 #include "interfaceroute.hh"
 
-InterfaceRoute::InterfaceRoute( string& sourceInterface )
+InterfaceRoute::InterfaceRoute( shared_ptr<Device>& sourceInterface )
 {
     _sourceInterface = sourceInterface;
 }
 
-void InterfaceRoute::addDestination( string& destinationInterface )
+void InterfaceRoute::addDestination( shared_ptr<Device>& destinationInterface )
 {
     _destinationInterfaces.push_back( destinationInterface );
 }
@@ -20,12 +20,3 @@ void InterfaceRoute::clearDestinations()
 //
 //}
 
-const vector<string>& InterfaceRoute::getDestinations() const
-{
-    return _destinationInterfaces;
-}
-
-const string& InterfaceRoute::getSource() const
-{
-    return _sourceInterface;
-}
