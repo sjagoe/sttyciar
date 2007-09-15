@@ -19,6 +19,7 @@ class PcapThread : public QThread
         PcapThread(const shared_ptr<Device>& device,int packetCaptureSize,
                     int timeout,shared_ptr<ALNetworkListener> alNetworkListener) throw(CannotOpenDeviceException);
         ~PcapThread();
+        void stopListening();
 
     protected:
         void run() throw(CannotOpenDeviceException);
@@ -28,7 +29,7 @@ class PcapThread : public QThread
         int _pcapPacketCaptureSize;
         int _pcapTimeout;
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
-        bool _running;
+        bool _listening;
         shared_ptr<ALNetworkListener> _alNetworkListener;
 };
 

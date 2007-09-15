@@ -1,6 +1,10 @@
 #ifndef __PACKETACCESS_HH__
 #define __PACKETACCESS_HH__
 
+#if defined(WIN32)
+#include <winsock2.h>
+#endif
+
 struct six_byte
 {
     u_char b1,b2,b3,b4,b5,b6;
@@ -16,7 +20,7 @@ struct four_byte
         } S_uchar;
         struct
         {
-            u_int32_t address;
+            unsigned long address;
         } S_uint32;
     } U_main;
 };

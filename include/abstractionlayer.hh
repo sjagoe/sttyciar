@@ -29,6 +29,7 @@ class InterfaceRoute;
 class QWaitCondition;
 class QSemaphore;
 class RawPacket;
+class PcapThread;
 
 class AbstractionLayer//: public NLLListener
 {
@@ -87,7 +88,8 @@ class AbstractionLayer//: public NLLListener
 
         void activateDevice(shared_ptr<Device>& device);
         bool isDeviceActivated(shared_ptr<Device>& device);
-        void startListening();
+        void startListening(int packetCaptureSize,int timeout);
+        void stopListening();
 
         shared_ptr<QWaitCondition>& getNLLWaitCondition();
         shared_ptr<QSemaphore>& getNLLSemaphore();
@@ -95,8 +97,10 @@ class AbstractionLayer//: public NLLListener
     private:
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
 
-        list<shared_ptr<Device> > activatedDevices;
+        list<shared_ptr<Device> > _activatedDevices;
+        list<shared_ptr<PcapThread> > _pcapThreads;
 
+        bool _listening;
         shared_ptr<ALNetworkListener> _networkLogicLayer;
 
         //vector<shared_ptr<ALNetworkListener> > _networkLogicLayer;
@@ -104,6 +108,7 @@ class AbstractionLayer//: public NLLListener
         shared_ptr<QWaitCondition> _nllWaitCondition;
 
         shared_ptr<QSemaphore> _nllSemaphore;
+
 };
 
 #endif
