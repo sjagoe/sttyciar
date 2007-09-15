@@ -17,7 +17,6 @@
 // local includes
 #include "abstractionlayer.hh"
 #include "alnetworklistener.hh"
-#include "uilistener.hh"
 
 using tbb::concurrent_queue;
 
@@ -41,8 +40,7 @@ logic of the device being emulated.
 */
 class NetworkLogicLayer:
     public QThread,
-    public ALNetworkListener,
-    public UIListener
+    public ALNetworkListener
 {
     Q_OBJECT
     public:
@@ -53,13 +51,16 @@ class NetworkLogicLayer:
 
         @param al boost::shared_ptr to the AbstractionLayer object.
         */
-        NetworkLogicLayer( shared_ptr<AbstractionLayer>& al );
+        //NetworkLogicLayer( shared_ptr<AbstractionLayer>& al );
+        NetworkLogicLayer() {};
 
         /*!
         Virtual destructor, which destroys all the member object pointed to by
         a boost pointer.
         */
         virtual ~NetworkLogicLayer();
+
+        void registerAbstractionLayer( shared_ptr<AbstractionLayer>& al );
 
         /*!
         A method that allows the thread loops to be stopped

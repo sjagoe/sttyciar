@@ -11,6 +11,7 @@ QT = core
 
 DEPENDPATH += . src
 INCLUDEPATH += ../include
+INCLUDEPATH += ../../resources/tbb/include
 
 DEFINES += _REENTRANT
 DEFINES += _DLL
@@ -44,8 +45,6 @@ win32 {
 } else {
     LIBS += -lpcap
 }
-
-INCLUDEPATH += ../../resources/tbb/include
 
 TARGET += networklogiclayer
 

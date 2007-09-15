@@ -13,12 +13,12 @@ AbstractionLayer::AbstractionLayer()
     _nllSemaphore.reset( new QSemaphore );
 }
 
-AbstractionLayer::AbstractionLayer( shared_ptr<ALNetworkListener> nllModule )
-{
-    AbstractionLayer();
-    //_networkLogicLayer.push_back( nllModule );
-    _networkLogicLayer = nllModule;
-}
+//AbstractionLayer::AbstractionLayer( shared_ptr<ALNetworkListener> nllModule )
+//{
+//    AbstractionLayer();
+//    //_networkLogicLayer.push_back( nllModule );
+//    _networkLogicLayer = nllModule;
+//}
 
 //AbstractionLayer::AbstractionLayer(
 //    vector<shared_ptr<ALNetworkListener> > nllModules )
@@ -43,9 +43,9 @@ void AbstractionLayer::sendNetworkLayerPacket(
 
 }
 
-void AbstractionLayer::registerNLL( ALNetworkListener* nllModule )
+void AbstractionLayer::registerNLL( shared_ptr<ALNetworkListener>& nllModule )
 {
-    _networkLogicLayer.reset( nllModule );
+    _networkLogicLayer = nllModule;
 
 //    vector<shared_ptr<ALNetworkListener> >::const_iterator iter
 //        = _networkLogicLayer.begin();
