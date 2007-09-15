@@ -7,13 +7,15 @@
 
 #include "rawpacket.hh"
 
-AbstractionLayer::AbstractionLayer()
+#include "pcapthread.hh"
+
+AbstractionLayer::AbstractionLayer() : _listening(false)
 {
     _nllWaitCondition.reset( new QWaitCondition );
     _nllSemaphore.reset( new QSemaphore );
 }
 
-AbstractionLayer::AbstractionLayer( shared_ptr<ALNetworkListener> nllModule )
+AbstractionLayer::AbstractionLayer( shared_ptr<ALNetworkListener> nllModule ) : _listening(false)
 {
     AbstractionLayer();
     //_networkLogicLayer.push_back( nllModule );
@@ -107,20 +109,39 @@ list<shared_ptr<Device> > AbstractionLayer::getDevices() throw(DeviceNotFoundExc
 void AbstractionLayer::activateDevice(shared_ptr<Device>& device)
 {
     if (!this->isDeviceActivated(device))
-        this->activatedDevices.push_back(device);
+        this->_activatedDevices.push_back(device);
 }
 
 bool AbstractionLayer::isDeviceActivated(shared_ptr<Device>& device)
 {
-    for (list<shared_ptr<Device> >::iterator iter=this->activatedDevices.begin(); iter!=this->activatedDevices.end(); ++iter)
+    for (list<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end(); ++iter)
         if (**iter==*device)
             return true;
     return false;
 
 }
-void AbstractionLayer::startListening()
+void AbstractionLayer::startListening(int packetCaptureSize,int timeout)
 {
+    this->_pcapThreads.clear();
+    for (list<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end(); ++iter)
+    {
+        shared_ptr<PcapThread> pcapThread(new PcapThread(*iter,packetCaptureSize,timeout,this->_networkLogicLayer));
+        this->_pcapThreads.push_back(pcapThread);
+    }
 
+    for (list<shared_ptr<PcapThread> >::iterator iter=this->_pcapThreads.begin(); iter!=this->_pcapThreads.end(); ++iter)
+    {
+        (*iter)->start();
+    }
+}
+
+void AbstractionLayer::stopListening()
+{
+    for (list<shared_ptr<PcapThread> >::iterator iter=this->_pcapThreads.begin(); iter!=this->_pcapThreads.end(); ++iter)
+    {
+        (*iter)->stopListening();
+    }
+    this->_pcapThreads.clear();
 }
 
 shared_ptr<QWaitCondition>& AbstractionLayer::getNLLWaitCondition()

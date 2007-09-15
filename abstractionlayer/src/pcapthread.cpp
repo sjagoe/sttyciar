@@ -1,8 +1,9 @@
 #include "pcapthread.hh"
 #include "alnetworklistener.hh"
+#include "rawpacket.hh"
 
 PcapThread::PcapThread(const shared_ptr<Device>& device,int packetCaptureSize,
-                        int timeout,shared_ptr<ALNetworkListener> alNetworkListener) throw (CannotOpenDeviceException)
+                        int timeout,shared_ptr<ALNetworkListener> alNetworkListener) throw (CannotOpenDeviceException) : _listening(false)
 {
     this->_device=device;
     this->_pcapPacketCaptureSize=packetCaptureSize;
@@ -14,16 +15,21 @@ PcapThread::~PcapThread()
 {
 }
 
+void PcapThread::stopListening()
+{
+
+    this->_listening=false;
+}
+
 void PcapThread::run() throw(CannotOpenDeviceException)
 
 {
     pcap_t* source;
-    this->_running = true;
+    this->_listening = true;
 
-    if ((source=pcap_open(this->_device->getName().c_str(),this->_pcapPacketCaptureSize,
-                            PCAP_OPENFLAG_PROMISCUOUS,this->_pcapTimeout,
-                            NULL,this->_pcapErrorBuffer))==NULL)
-        this->_running = false;
+    if ((source=pcap_open_live(this->_device->getName().c_str(),this->_pcapPacketCaptureSize,
+                            true,this->_pcapTimeout,this->_pcapErrorBuffer))==NULL)
+        this->_listening = false;
 
 
     struct pcap_pkthdr *pkt_header;
@@ -31,12 +37,12 @@ void PcapThread::run() throw(CannotOpenDeviceException)
     int result=0;
     bool noterror=true;
 
-    while (this->_running && noterror)
+    while (this->_listening && noterror)
     {
-        while (this->_running && (result=pcap_next_ex(source,&pkt_header,&pkt_data) == 1))
+        while (this->_listening && (result=pcap_next_ex(source,&pkt_header,&pkt_data) == 1))
         {
             shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data));
-            this->_alNetworkListener.packetReceived(rawPacket,this->_device);
+            this->_alNetworkListener->packetReceived(rawPacket,this->_device);
         }
         if (result<0)
         {
@@ -44,7 +50,7 @@ void PcapThread::run() throw(CannotOpenDeviceException)
         }
     }
 
-
+    pcap_close(source);
     delete pkt_header;
     delete pkt_data;
 
