@@ -3,13 +3,9 @@
 
 #include <QPair>
 
-#include <tbb/concurrent_queue.h>
-
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
-
-using tbb::concurrent_queue;
 
 using boost::scoped_ptr;
 using boost::shared_ptr;

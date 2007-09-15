@@ -42,8 +42,6 @@ win32 {
     LIBS += -lpcap
 }
 
-INCLUDEPATH += ../../resources/tbb/include
-
 TARGET = abstractionlayer
 
 # Input
@@ -61,7 +59,8 @@ HEADERS += ../include/abstractionlayer.hh \
            ../include/networklayerpacket.hh \
            ../include/packet.hh \
            ../include/pcapthread.hh \
-           ../include/rawpacket.hh
+           ../include/rawpacket.hh \
+           ../include/packetaccess.hh
 
 
 SOURCES += src/abstractionlayer.cpp \

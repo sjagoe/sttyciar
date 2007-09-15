@@ -1,7 +1,8 @@
-#include <iostream>
+#include <QtCore>
 
-int main()
+int main(int argc, char* argv[])
 {
+    QCoreApplication app(argc, argv);
 
     return 0;
 }

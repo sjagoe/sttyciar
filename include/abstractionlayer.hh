@@ -1,9 +1,6 @@
 #ifndef __ABSTRACTIONLAYER_HH__
 #define __ABSTRACTIONLAYER_HH__
 
-// Intel TBB
-#include <tbb/concurrent_queue.h>
-
 // STL
 #include <vector>
 #include <list>
@@ -19,7 +16,6 @@
 #include "exceptions.hh"
 
 // import specific types from namespaces
-using tbb::concurrent_queue;
 using std::vector;
 using std::list;
 using boost::shared_ptr;

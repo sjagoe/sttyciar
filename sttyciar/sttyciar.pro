@@ -7,6 +7,7 @@ macx {
 }
 
 TEMPLATE = app
+QT = core
 
 DEPENDPATH += . src
 INCLUDEPATH += . ../include

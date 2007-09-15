@@ -5,17 +5,25 @@
 #include <sys/types.h>
 #include <vector>
 
-#include <boost/array.hpp>
+#include <boost/shared_array.hpp>
+#include <boost/shared_ptr.hpp>
+
+#include "packetaccess.hh"
 
 #include "datalinklayerpacket.hh"
 
 using std::vector;
-using boost::array;
+using boost::shared_array;
+using boost::shared_ptr;
 
 class RawPacket;
 
 //#define ETHERNETII_MAC_LENGTH 6
 //#define ETEHRNETII_ETHERTYPE_LENGTH 2
+
+typedef struct six_byte mac_t;
+typedef struct two_byte ethertype_t;
+
 
 /*!
 EthernetIIFrame encapsulates the Ethernet II Frame header and payload with an
@@ -32,58 +40,39 @@ class EthernetIIFrame: public DataLinkLayerPacket
     private:
         static const int ETHERNETII_HEAD_LENGTH = 14;
         static const int ETHERNETII_MAC_LENGTH = 6;
-        static const int ETEHRNETII_ETHERTYPE_LENGTH = 2;
+        //static const int ETHERNETII_ETHERTYPE_LENGTH = 2;
 
-        array<u_char, ETHERNETII_MAC_LENGTH>       _sourceMAC;
-        array<u_char, ETHERNETII_MAC_LENGTH>       _destinationMAC;
-        array<u_char, ETEHRNETII_ETHERTYPE_LENGTH> _etherType;
-
-        vector<u_char> _payload;
+        mac_t* _sourceMAC, *_destMAC;
+        ethertype_t* _etherType;
 
     public:
         /*!
-        Default constructor: zeros all member variables.
-        */
-        EthernetIIFrame() {};
-
-        /*!
-        Preferred constructor: extract the header information and payload from
+        Extract the header information and payload from
         a RawPacket object.
 
         @param packet The Packet object containing the raw packet data
         */
-        EthernetIIFrame( RawPacket& packet )
+        EthernetIIFrame( shared_ptr<RawPacket>& packet );
+
+        inline const int getPayloadOffset() const
         {
-            setData( packet );
+            return ETHERNETII_HEAD_LENGTH;
         };
 
-        void setData( RawPacket& packet );
-
-        RawPacket getRawPacket() const;
-
-
-        inline const array<u_char, ETHERNETII_MAC_LENGTH>& getSourceMAC() const
+        inline const mac_t& getSourceMAC() const
         {
-            return _sourceMAC;
+            return *_sourceMAC;
         };
 
-        inline const array<u_char, ETHERNETII_MAC_LENGTH>&
-            getDestinationMAC() const
+        inline const mac_t& getDestinationMAC() const
         {
-            return _destinationMAC;
+            return *_destMAC;
         };
 
-        inline const array<u_char, ETEHRNETII_ETHERTYPE_LENGTH>&
-            getEtherType() const
+        inline const ethertype_t& getEtherType() const
         {
-            return _etherType;
+            return *_etherType;
         };
-
-        inline const vector<u_char>& getPayload() const
-        {
-            return _payload;
-        };
-
 
 };
 
