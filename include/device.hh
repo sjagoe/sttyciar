@@ -3,8 +3,8 @@
 
 #include <string>
 #include <list>
+#include <pcap.h>
 #include "deviceaddress.hh"
-#include "pcap.h"
 
 using namespace std;
 

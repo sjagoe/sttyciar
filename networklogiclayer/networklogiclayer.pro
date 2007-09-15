@@ -53,6 +53,8 @@ TARGET += networklogiclayer
 HEADERS += ../include/abstractionlayer.hh \
            ../include/alnetworklistener.hh \
            ../include/datalinklayerpacket.hh \
+           ../include/device.hh \
+           ../include/deviceaddress.hh \
            ../include/ethernetiiframe.hh \
            ../include/interfaceroute.hh \
            ../include/ipv4datagram.hh \

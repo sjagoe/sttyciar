@@ -1,11 +1,20 @@
 #ifndef __INTERFACEROUTE_HH__
 #define __INTERFACEROUTE_HH__
 
+// STL
 #include <vector>
-#include <string>
+
+// boost
+#include <boost/shared_ptr.hpp>
+
+// local
+//#include "device.hh"
 
 using std::vector;
-using std::string;
+using boost::shared_ptr;
+
+// forward declerations
+class Device;
 
 /*!
 InterfaceRoute contains a source device, used by the NLL to help determine a
@@ -17,8 +26,8 @@ devices to use to transmit a packet.
 class InterfaceRoute
 {
     private:
-        string _sourceInterface;
-        vector<string> _destinationInterfaces;
+        shared_ptr<Device> _sourceInterface;
+        vector<shared_ptr<Device> > _destinationInterfaces;
 
     public:
         /*!
@@ -27,12 +36,12 @@ class InterfaceRoute
         The only time a source device can be set is at creation time (i.e.
         the source cannot be modified in the NLL).
         */
-        InterfaceRoute( string& sourceInterface );
+        InterfaceRoute( shared_ptr<Device>& sourceInterface );
 
         /*!
         Add a destination to the list of destination devices.
         */
-        void addDestination( string& destinationInterface );
+        void addDestination( shared_ptr<Device>& destinationInterface );
 
         /*!
         Remove all destinations from the list.
@@ -48,15 +57,18 @@ class InterfaceRoute
         /*!
         Return the list of destination Devices.
         */
-        inline const vector<string>& getDestinations() const;
+        inline const vector<shared_ptr<Device> >& getDestinations() const
+        {
+            return _destinationInterfaces;
+        };
 
         /*!
         Return the source Device.
         */
-        inline const string& getSource() const;
-//        {
-//            return _sourceInterface;
-//        };
+        inline const shared_ptr<Device>& getSource() const
+        {
+            return _sourceInterface;
+        };
 };
 
 #endif
