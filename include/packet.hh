@@ -9,10 +9,11 @@ class RawPacket;
 
 class Packet
 {
-    protected:
+    private:
         shared_ptr<RawPacket> _rawPacket;
 
-        void setRawPacket( shared_ptr<RawPacket>& rawPacket )
+    protected:
+        void setRawPacket( const shared_ptr<RawPacket>& rawPacket )
         {
             _rawPacket = rawPacket;
         };

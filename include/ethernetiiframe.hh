@@ -21,12 +21,28 @@ class RawPacket;
 
 typedef struct mac
 {
-    u_char b1,b2,b3,b4,b5,b6;
+    union
+    {
+        struct
+        {
+            u_char b1,b2,b3,b4,b5,b6;
+        } S_uchar;
+    } S_un;
 } mac_t;
 
 typedef struct ethertype
 {
-    u_char b1,b2;
+    union
+    {
+        struct
+        {
+            u_char high,low;
+        } S_uchar;
+        struct
+        {
+            u_short eType;
+        } S_ushort;
+    } S_un;
 } ethertype_t;
 
 /*!
@@ -59,6 +75,12 @@ class EthernetIIFrame: public DataLinkLayerPacket
         EthernetIIFrame( shared_ptr<RawPacket>& packet );
 
         const int getPayloadOffset() const;
+
+        inline const mac_t& getSourceMAC() const;
+
+        inline const mac_t& getDestinationMAC() const;
+
+        inline const ethertype_t& getEtherType() const;
 
 };
 

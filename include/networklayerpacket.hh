@@ -10,13 +10,13 @@ using boost::shared_ptr;
 
 class NetworkLayerPacket: public Packet
 {
-    protected:
+    private:
         int _networkLayerPacketOffset;
 
     public:
         NetworkLayerPacket( DataLinkLayerPacket& packet )
         {
-            _rawPacket = packet.getRawPacket();
+            setRawPacket(packet.getRawPacket());
             _networkLayerPacketOffset = packet.getPayloadOffset();
         };
 
