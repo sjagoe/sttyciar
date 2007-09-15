@@ -4,7 +4,16 @@
 bool NetworkLogicLayer::_running;
 QMutex NetworkLogicLayer::_runningMutex;
 
-NetworkLogicLayer::NetworkLogicLayer( shared_ptr<AbstractionLayer>& al )
+NetworkLogicLayer::~NetworkLogicLayer()
+{
+    // remove our references to the shared objects
+    _wait.reset();
+    _waitingPackets.reset();
+    _abstractionLayer.reset();
+}
+
+void NetworkLogicLayer::registerAbstractionLayer(
+    shared_ptr<AbstractionLayer>& al )
 {
     // set the pointer to the abstraction layer
     _abstractionLayer = al;
@@ -31,15 +40,7 @@ NetworkLogicLayer::NetworkLogicLayer( shared_ptr<AbstractionLayer>& al )
     } else {
         // No AL exists, we should throw an exception
     }
-};
-
-NetworkLogicLayer::~NetworkLogicLayer()
-{
-    // remove our references to the shared objects
-    _wait.reset();
-    _waitingPackets.reset();
-    _abstractionLayer.reset();
-};
+}
 
 void NetworkLogicLayer::exitNow()
 {

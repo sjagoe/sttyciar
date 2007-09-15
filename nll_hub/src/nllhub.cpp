@@ -15,5 +15,5 @@ void NLLHub::routePacket( shared_ptr<RawPacket> packet,
         }
     }
 
-    getAbstractionLayer()->sendNetworkLayerPacket( packet, interfaces );
+    //getAbstractionLayer()->sendNetworkLayerPacket( packet, interfaces );
 }

@@ -20,7 +20,7 @@ class NLLHub: public NetworkLogicLayer
 {
     public:
         NLLHub( shared_ptr<AbstractionLayer>& al )
-            : NetworkLogicLayer( al )
+            : NetworkLogicLayer()
         {};
 
     protected:

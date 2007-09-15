@@ -7,6 +7,7 @@
 
 // boost
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 
 // pcap
 #include <pcap.h>
@@ -19,6 +20,7 @@
 using std::vector;
 using std::list;
 using boost::shared_ptr;
+using boost::weak_ptr;
 
 // forward declerations
 class ALNetworkListener;
@@ -43,7 +45,7 @@ class AbstractionLayer//: public NLLListener
         /*!
         Constructor that sets the NLL module to interact with.
         */
-        AbstractionLayer( shared_ptr<ALNetworkListener> nllModule );
+        //AbstractionLayer( shared_ptr<ALNetworkListener> nllModule );
         //AbstractionLayer( vector<shared_ptr<ALNetworkListener> > nllModules );
 
         /*!
@@ -74,7 +76,7 @@ class AbstractionLayer//: public NLLListener
         @param nllModule A NLL module (i.e. ALNetworkListener) that the AL can
         send messages to.
         */
-        void registerNLL( ALNetworkListener* nllModule );
+        void registerNLL( shared_ptr<ALNetworkListener>& nllModule );
 
         /* !
         Unregister an ALNetworkListener (i.e. NLL module) with the AL.
@@ -88,11 +90,17 @@ class AbstractionLayer//: public NLLListener
 
         void activateDevice(shared_ptr<Device>& device);
         bool isDeviceActivated(shared_ptr<Device>& device);
-        void startListening(int packetCaptureSize,int timeout);
+        void startListening(int packetCaptureSize,int timeout) {};
         void stopListening();
 
         shared_ptr<QWaitCondition>& getNLLWaitCondition();
         shared_ptr<QSemaphore>& getNLLSemaphore();
+
+    public:
+        inline shared_ptr<ALNetworkListener> getNLL()
+        {
+            return _networkLogicLayer.lock();
+        };
 
     private:
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
@@ -101,7 +109,7 @@ class AbstractionLayer//: public NLLListener
         list<shared_ptr<PcapThread> > _pcapThreads;
 
         bool _listening;
-        shared_ptr<ALNetworkListener> _networkLogicLayer;
+        weak_ptr<ALNetworkListener> _networkLogicLayer;
 
         //vector<shared_ptr<ALNetworkListener> > _networkLogicLayer;
 
