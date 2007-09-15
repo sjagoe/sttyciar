@@ -12,7 +12,7 @@ using boost::shared_ptr;
 using boost::weak_ptr;
 
 class RawPacket;
-class InterfaceRoute;
+class Device;
 //class NLLListener;
 
 #include "abstractionlayer.hh"
@@ -41,7 +41,7 @@ class ALNetworkListener
         interface, and an empty list of destination interfaces.
         */
         virtual void packetReceived( shared_ptr<RawPacket>& packet,
-            shared_ptr<InterfaceRoute>& interfaces ) = 0;
+            shared_ptr<Device>& device ) = 0;
 };
 
 #endif

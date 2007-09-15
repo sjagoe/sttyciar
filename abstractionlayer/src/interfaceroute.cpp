@@ -5,7 +5,7 @@ InterfaceRoute::InterfaceRoute( shared_ptr<Device>& sourceInterface )
     _sourceInterface = sourceInterface;
 }
 
-void InterfaceRoute::addDestination( shared_ptr<Device>& destinationInterface )
+void InterfaceRoute::addDestination( const shared_ptr<Device>& destinationInterface )
 {
     _destinationInterfaces.push_back( destinationInterface );
 }

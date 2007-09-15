@@ -29,14 +29,16 @@ AbstractionLayer::AbstractionLayer( shared_ptr<ALNetworkListener> nllModule )
 //               _networkLogicLayer.begin() );
 //}
 
-void AbstractionLayer::sendDataLinkLayerPacket( DataLinkLayerPacket& packet,
-                              InterfaceRoute& interfaces )
+void AbstractionLayer::sendDataLinkLayerPacket(
+    shared_ptr<DataLinkLayerPacket>& packet,
+    shared_ptr<InterfaceRoute>& interfaces )
 {
 
 }
 
-void AbstractionLayer::sendNetworkLayerPacket( NetworkLayerPacket& packet,
-                             InterfaceRoute& interfaces )
+void AbstractionLayer::sendNetworkLayerPacket(
+    shared_ptr<NetworkLayerPacket>& packet,
+    shared_ptr<InterfaceRoute>& interfaces )
 {
 
 }

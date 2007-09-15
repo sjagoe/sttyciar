@@ -53,8 +53,8 @@ class AbstractionLayer//: public NLLListener
         @param interfaces The InterfaceRoute object now containing full
         source/destination interface data.
         */
-        void sendDataLinkLayerPacket( DataLinkLayerPacket& packet,
-                                      InterfaceRoute& interfaces );
+        void sendDataLinkLayerPacket( shared_ptr<DataLinkLayerPacket>& packet,
+                                      shared_ptr<InterfaceRoute>& interfaces );
 
         /*!
         send a network layer frame (i.e. the network layer [IP] header and
@@ -64,8 +64,8 @@ class AbstractionLayer//: public NLLListener
         @param interfaces The InterfaceRoute object now containing full
         source/destination interface data.
         */
-        void sendNetworkLayerPacket( NetworkLayerPacket& packet,
-                                     InterfaceRoute& interfaces );
+        void sendNetworkLayerPacket( shared_ptr<NetworkLayerPacket>& packet,
+                                     shared_ptr<InterfaceRoute>& interfaces );
 
         /*!
         register an ALNetworkListener (i.e. NLL module) with the AL.

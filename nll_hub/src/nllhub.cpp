@@ -1,7 +1,19 @@
 #include "nllhub.hh"
 
-void routePacket( QPair<shared_ptr<RawPacket>,
-    shared_ptr<InterfaceRoute> >& packet )
-{
+#include "interfaceroute.hh"
 
+void NLLHub::routePacket( shared_ptr<RawPacket> packet,
+    shared_ptr<InterfaceRoute>& interfaces )
+{
+    list<shared_ptr<Device> >::const_iterator iter = _devices.begin();
+
+    for (; iter != _devices.end(); iter++)
+    {
+        if ( interfaces->getSource().get() != iter->get() )
+        {
+            interfaces->addDestination( *iter );
+        }
+    }
+
+    getAbstractionLayer()->sendNetworkLayerPacket( packet, interfaces );
 }

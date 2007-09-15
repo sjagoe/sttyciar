@@ -1,4 +1,5 @@
 #include "networklogiclayer.hh"
+#include "interfaceroute.hh"
 
 bool NetworkLogicLayer::_running;
 QMutex NetworkLogicLayer::_runningMutex;
@@ -12,15 +13,21 @@ NetworkLogicLayer::NetworkLogicLayer( shared_ptr<AbstractionLayer>& al )
     // are using it
     shared_ptr<AbstractionLayer> lockedAL = getAbstractionLayer();
 
+    shared_ptr<NetworkLogicLayer> me(this);
+
     // if the AL still exists
     if ( lockedAL.get() )
     {
+        // get the devices
+        _devices = lockedAL->getDevices();
         // get the WaitCondition for the NLL
         _wait = lockedAL->getNLLWaitCondition();
         // get the Semaphore for the NLL
         _waitingPackets = lockedAL->getNLLSemaphore();
         // enable the NLL
+        _runningMutex.lock();
         _running = true;
+        _runningMutex.unlock();
     } else {
         // No AL exists, we should throw an exception
     }
@@ -45,8 +52,10 @@ void NetworkLogicLayer::exitNow()
 }
 
 void NetworkLogicLayer::packetReceived( shared_ptr<RawPacket>& packet,
-    shared_ptr<InterfaceRoute>& interfaces )
+    shared_ptr<Device>& device )
 {
+    shared_ptr<InterfaceRoute> interfaces(new InterfaceRoute( device ) );
+
     // create QPair and push it onto the queue.
     _receiveBuffer->push( qMakePair( packet, interfaces ) );
 }
@@ -71,7 +80,7 @@ void NetworkLogicLayer::run()
             QPair<shared_ptr<RawPacket>, shared_ptr<InterfaceRoute> > pair;
             _receiveBuffer->pop( pair );
             // call the method that performs the actual routing
-            routePacket( pair );
+            routePacket( pair.first, pair.second );
             _runningMutex.lock();
         }
         _runningMutex.unlock();

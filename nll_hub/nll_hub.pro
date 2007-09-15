@@ -42,4 +42,10 @@ LIBS += -lnetworklogiclayer
 TARGET = nll_hub
 
 # Input
+HEADERS += ../include/abstractionlayer.hh \
+           ../include/nllhub.hh \
+           ../include/networklogiclayer.hh \
+           ../include/device.hh \
+           ../include/interfaceroute.hh
+
 SOURCES += src/nllhub.cpp

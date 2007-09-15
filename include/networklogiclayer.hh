@@ -11,6 +11,9 @@
 #include <boost/weak_ptr.hpp>
 #include <boost/shared_ptr.hpp>
 
+// STL
+#include <list>
+
 // local includes
 #include "abstractionlayer.hh"
 #include "alnetworklistener.hh"
@@ -20,6 +23,8 @@ using tbb::concurrent_queue;
 
 using boost::weak_ptr;
 using boost::shared_ptr;
+
+using std::list;
 
 class RawPacket;
 
@@ -73,9 +78,11 @@ class NetworkLogicLayer:
         the packet came from.
         */
         void packetReceived( shared_ptr<RawPacket>& packet,
-            shared_ptr<InterfaceRoute>& interfaces );
+            shared_ptr<Device>& device );
 
     protected:
+        list<shared_ptr<Device> > _devices;
+
         /*!
         virtual method provided by QThread, where the actual thread loop is
         implemented.
@@ -88,8 +95,8 @@ class NetworkLogicLayer:
 
         @param packet A QPair containing the RawPacket data and InterfaceRoute.
         */
-        virtual void routePacket( QPair<shared_ptr<RawPacket>,
-            shared_ptr<InterfaceRoute> >& packet ) = 0;
+        virtual void routePacket( shared_ptr<RawPacket> packet,
+            shared_ptr<InterfaceRoute>& interfaces ) = 0;
 
         /*!
         A method to be used by specific NLL module implementations to obtain a
@@ -98,6 +105,7 @@ class NetworkLogicLayer:
         inline shared_ptr<AbstractionLayer> getAbstractionLayer();
 
     private:
+
         //! A weak_ptr to the abstraction layer - the weak_ptr prevents cyclic
         //! dependencies and memory leaks.
         weak_ptr<AbstractionLayer> _abstractionLayer;

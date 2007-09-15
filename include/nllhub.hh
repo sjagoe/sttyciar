@@ -5,7 +5,7 @@
 #include <boost/shared_ptr.hpp>
 
 // Qt
-#include <QPair>
+//#include <QPair>
 
 // local
 #include "networklogiclayer.hh"
@@ -21,11 +21,11 @@ class NLLHub: public NetworkLogicLayer
     public:
         NLLHub( shared_ptr<AbstractionLayer>& al )
             : NetworkLogicLayer( al )
-        {}
+        {};
 
     protected:
-        void routePacket( QPair<shared_ptr<RawPacket>,
-            shared_ptr<InterfaceRoute> >& packet );
+        void routePacket( shared_ptr<RawPacket> packet,
+            shared_ptr<InterfaceRoute>& interfaces );
 };
 
 #endif

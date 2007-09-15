@@ -41,7 +41,7 @@ class InterfaceRoute
         /*!
         Add a destination to the list of destination devices.
         */
-        void addDestination( shared_ptr<Device>& destinationInterface );
+        void addDestination( const shared_ptr<Device>& destinationInterface );
 
         /*!
         Remove all destinations from the list.
