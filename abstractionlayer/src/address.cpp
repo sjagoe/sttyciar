@@ -1,6 +1,6 @@
 #include "address.hh"
 
-const int Address::DEFAULT_ADDRESS_LENGTH;
+//const int Address::DEFAULT_ADDRESS_LENGTH;
 
 Address::Address()
 {
@@ -16,6 +16,11 @@ Address::Address(sockaddr* socketAddress)
     this->setContents((sockaddr_in*)socketAddress);
 }
 
+Address::Address(uint8_t* address,int size)
+{
+    this->setContents(address,size);
+}
+
 void Address::setContents(sockaddr_in* socketAddress)
 {
 //#if defined(WIN32) // If on Win32
@@ -24,6 +29,7 @@ void Address::setContents(sockaddr_in* socketAddress)
 //    this->_address[2]=socketAddress->sin_addr.S_un.S_un_b.s_b3;
 //    this->_address[3]=socketAddress->sin_addr.S_un.S_un_b.s_b4;
 //#else // If on *NIX
+    this->_address.reset(new uint8_t[4]);
     struct in_addr_windows* sin_addr = (struct in_addr_windows*)
         &socketAddress->sin_addr;
     this->_address[0]=sin_addr->S_un.S_un_b.s_b1;
@@ -39,7 +45,13 @@ void Address::setContents(sockaddr* socketAddress)
     this->setContents((sockaddr_in*)socketAddress);
 }
 
-const array<uint8_t,Address::DEFAULT_ADDRESS_LENGTH>& Address::getByteAddress()
+void Address::setContents(uint8_t* address,int size)
+{
+    this->_address.reset(address);
+    this->_size=size;
+}
+
+const shared_array<uint8_t>& Address::getByteAddress()
 {
     return this->_address;
 }
@@ -51,5 +63,13 @@ int Address::getSize() const
 
 uint8_t Address::getAddressByte(const int i) const
 {
-    return this->_address[i];
+    if (i < this->_size)
+        return this->_address[i];
+    else
+        return 0;
+}
+
+uint8_t Address::operator[](const int i)
+{
+    return this->getAddressByte(i);
 }

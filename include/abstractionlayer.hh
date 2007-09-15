@@ -93,7 +93,7 @@ class AbstractionLayer//: public NLLListener
         shared_ptr<QSemaphore>& getNLLSemaphore();
 
     private:
-        char pcapErrorBuffer[PCAP_ERRBUF_SIZE];
+        char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
 
         list<shared_ptr<Device> > activatedDevices;
 
