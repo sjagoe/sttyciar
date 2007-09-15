@@ -12,4 +12,10 @@ class DeviceNotFoundException : public runtime_error
         DeviceNotFoundException(const string& what_arg);
 };
 
+class CannotOpenDeviceException : public runtime_error
+{
+    public:
+        CannotOpenDeviceException(const string& what_arg);
+};
+
 #endif // EXCEPTIONS_H

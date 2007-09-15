@@ -86,8 +86,8 @@ list<shared_ptr<Device> > AbstractionLayer::getDevices() throw(DeviceNotFoundExc
 {
     pcap_if *pcapAllDevices;
 
-    if (pcap_findalldevs(&pcapAllDevices, this->pcapErrorBuffer) == -1)
-        throw DeviceNotFoundException(this->pcapErrorBuffer);
+    if (pcap_findalldevs(&pcapAllDevices, this->_pcapErrorBuffer) == -1)
+        throw DeviceNotFoundException(this->_pcapErrorBuffer);
     list<shared_ptr<Device> > devices;
     shared_ptr<Device> tempDevice;
     for(pcap_if* pcapTempDevice=pcapAllDevices; pcapTempDevice != NULL; pcapTempDevice=pcapTempDevice->next)

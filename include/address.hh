@@ -11,7 +11,7 @@
 #endif // endif Win32/*NIX
 
 #include <string>
-#include <boost/array.hpp>
+#include <boost/shared_array.hpp>
 
 struct in_addr_windows
 {
@@ -30,7 +30,7 @@ struct in_addr_windows
 };
 
 using namespace std;
-using boost::array;
+using boost::shared_array;
 
 class Address
 {
@@ -38,15 +38,18 @@ class Address
         Address();
         Address(sockaddr_in* socketAddress);
         Address(sockaddr* socketAddress);
-        static const int DEFAULT_ADDRESS_LENGTH = 16;
+        Address(uint8_t* address,int size);
+        //static const int DEFAULT_ADDRESS_LENGTH = 16;
         void setContents(sockaddr_in* socketAddress);
         void setContents(sockaddr* socketAddress);
-        const array<uint8_t,DEFAULT_ADDRESS_LENGTH>& getByteAddress();
+        void setContents(uint8_t* address,int size);
+        const shared_array<uint8_t>& getByteAddress();
         int getSize() const;
         uint8_t getAddressByte(const int i) const;
+        uint8_t operator[](const int i);
 
     private:
-        array<uint8_t,DEFAULT_ADDRESS_LENGTH> _address;
+        shared_array<uint8_t> _address;
         int _size; //this indicates the amount of space actually being used
 
 };

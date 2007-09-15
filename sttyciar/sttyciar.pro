@@ -12,6 +12,7 @@ DEPENDPATH += . src
 INCLUDEPATH += . ../include
 
 DEFINES += _REENTRANT
+DEFINES += _DLL
 
 CONFIG += console
 CONFIG += debug_and_release
@@ -25,6 +26,20 @@ CONFIG(debug, debug|release) {
     DEPENDPATH += ../bin/Release
     LIBS += -L../bin/Release
 }
+
+win32 {
+    CONFIG += dll
+    CONFIG += rtti
+    CONFIG += exceptions
+    INCLUDEPATH += ../../resources/WpdPack/Include
+    LIBS += -L../../resources/WpdPack/Lib
+    LIBS += -lpacket
+    LIBS += -lwpcap
+} else {
+    LIBS += -lpcap
+}
+
+INCLUDEPATH += ../../resources/tbb/include
 
 LIBS += -labstractionlayer
 

@@ -14,6 +14,7 @@ INCLUDEPATH += ../include
 
 DEFINES += _REENTRANT
 DEFINES += _DLL
+DEFINES += HAVE_REMOTE
 
 CONFIG -= app_bundle
 CONFIG += console
