@@ -19,6 +19,7 @@ class SttyciarUI: public QObject
         virtual void exit() = 0;
 
     signals:
+        void stopSignal();
         void exitSignal();
         void startSttyciar(QString deviceType);
         void stopSttyciar();

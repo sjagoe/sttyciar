@@ -21,9 +21,10 @@ void SttyciarCLIMain::draw()
 
     QTextStream in(stdin);
 
-    int selection;
+    int selection = -1;
 
-    in >> selection;
+    if (((QIODevice*)stdin)->waitForReadyRead(1000))
+        in >> selection;
 
     switch (selection)
     {

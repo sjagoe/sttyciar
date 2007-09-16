@@ -10,8 +10,9 @@ class SttyciarCLI: public SttyciarUI
 {
     Q_OBJECT
     private:
+        bool _statisticsVisible;
         shared_ptr<SttyciarCLIMain> _mainUI;
-        //shared_ptr<SttyciarCLIStatistics> _statisticsUI;
+        shared_ptr<SttyciarCLIStatistics> _statisticsUI;
 
     public:
         SttyciarCLI();

@@ -57,10 +57,12 @@
 		<Unit filename="../include/sllistener.hh" />
 		<Unit filename="../include/sttyciarui_cli.hh" />
 		<Unit filename="../include/sttyciarui_cli_main.hh" />
+		<Unit filename="../include/sttyciarui_cli_statistics.hh" />
 		<Unit filename="../include/sttyciarui_common.hh" />
 		<Unit filename="../include/uilistener.hh" />
 		<Unit filename="src/sttyciarui_cli.cpp" />
 		<Unit filename="src/sttyciarui_cli_main.cpp" />
+		<Unit filename="src/sttyciarui_cli_statistics.cpp" />
 		<Unit filename="sttyciarui_cli.pro" />
 		<Extensions>
 			<code_completion />

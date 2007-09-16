@@ -42,7 +42,9 @@ HEADERS += ../include/sllistener.hh \
            ../include/sttyciarui_cli.hh \
            ../include/uilistener.hh \
            ../include/sttyciarui_cli_main.hh \
-           ../include/sttyciarui_common.hh
+           ../include/sttyciarui_common.hh \
+           ../include/sttyciarui_cli_statistics.hh
 
 SOURCES += src/sttyciarui_cli.cpp \
-           src/sttyciarui_cli_main.cpp
+           src/sttyciarui_cli_main.cpp \
+           src/sttyciarui_cli_statistics.cpp
