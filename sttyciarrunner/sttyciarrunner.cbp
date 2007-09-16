@@ -34,27 +34,13 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="../include/abstractionlayer.hh" />
-		<Unit filename="../include/address.hh" />
 		<Unit filename="../include/alnetworklistener.hh" />
 		<Unit filename="../include/alstatisticslistener.hh" />
-		<Unit filename="../include/datalinklayerpacket.hh" />
-		<Unit filename="../include/device.hh" />
-		<Unit filename="../include/deviceaddress.hh" />
-		<Unit filename="../include/ethernetiiframe.hh" />
-		<Unit filename="../include/exceptions.hh" />
-		<Unit filename="../include/interfaceroute.hh" />
-		<Unit filename="../include/ipv4datagram.hh" />
-		<Unit filename="../include/networklayerpacket.hh" />
 		<Unit filename="../include/networklogiclayer.hh" />
 		<Unit filename="../include/nllhub.hh" />
-		<Unit filename="../include/packet.hh" />
-		<Unit filename="../include/packetaccess.hh" />
-		<Unit filename="../include/pcapthread.hh" />
-		<Unit filename="../include/rawpacket.hh" />
 		<Unit filename="../include/sllistener.hh" />
 		<Unit filename="../include/statisticslayer.hh" />
 		<Unit filename="../include/sttyciarrunner.hh" />
-		<Unit filename="../include/uilistener.hh" />
 		<Unit filename="src/sttyciarrunner.cpp" />
 		<Unit filename="sttyciarrunner.pro" />
 		<Extensions>

@@ -31,7 +31,7 @@ SttyciarCLI::SttyciarCLI()
             this, SLOT( showStatistics() ));
     // stop
     connect( _statisticsUI.get(), SIGNAL( stopSttyciar() ),
-            this, SIGNAL( stopSignal() ) );
+            this, SIGNAL( stopSttyciar() ) );
     //stop (show main view)
     connect ( _statisticsUI.get(), SIGNAL( stopSttyciar() ),
             this, SLOT( showMain() ) );
@@ -64,7 +64,7 @@ void SttyciarCLI::exit()
             this, SLOT( showStatistics() ));
 
     disconnect( _statisticsUI.get(), SIGNAL( stopSttyciar() ),
-            this, SIGNAL( stopSignal() ) );
+            this, SIGNAL( stopSttyciar() ) );
 
     disconnect ( _statisticsUI.get(), SIGNAL( stopSttyciar() ),
             this, SLOT( showMain() ) );
@@ -72,7 +72,7 @@ void SttyciarCLI::exit()
     _mainUI.reset();
     _statisticsUI.reset();
 
-    emit exitSignal();
+    emit exitSttyciar();
 }
 
 void SttyciarCLI::showMain()

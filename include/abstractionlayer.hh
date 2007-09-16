@@ -96,7 +96,7 @@ class AbstractionLayer//: public NLLListener
         shared_ptr<QWaitCondition>& getNLLWaitCondition();
         shared_ptr<QSemaphore>& getNLLSemaphore();
 
-    public:
+    protected:
         inline shared_ptr<ALNetworkListener> getNLL()
         {
             return _networkLogicLayer.lock();
