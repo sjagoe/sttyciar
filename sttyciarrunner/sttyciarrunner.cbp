@@ -8,18 +8,18 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="debug">
-				<Option output="bin/Debug/sttyciarrunner" prefix_auto="1" extension_auto="1" />
+				<Option output="../bin/Debug/libsttyciarrunner" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
-				<Option type="1" />
+				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
 			</Target>
 			<Target title="release">
-				<Option output="bin/Release/sttyciarrunner" prefix_auto="1" extension_auto="1" />
+				<Option output="../bin/Release/libsttyciarrunner" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
-				<Option type="1" />
+				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
