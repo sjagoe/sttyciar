@@ -29,6 +29,8 @@ CONFIG(debug, debug|release) {
     LIBS += -L../bin/Release
 }
 
+LIBS += -lsttyciarui_common
+
 win32 {
     CONFIG += dll
     CONFIG += rtti
