@@ -1,1 +1,18 @@
 # depslib dependency file v1.0
+1189608061 source:/home/simon/Documents/University/FourthYear/lab-project/sttyciar/abstractionlayer/src/deviceaddress.cpp
+	"deviceaddress.hh"
+
+1189608061 /home/simon/Documents/University/FourthYear/lab-project/sttyciar/include/deviceaddress.hh
+	<winsock.h>
+	<ext/algorithm>
+	<pcap.h>
+	"address.hh"
+
+1189867454 /home/simon/Documents/University/FourthYear/lab-project/sttyciar/include/address.hh
+	<winsock.h>
+	<pcap.h>
+	<sys/socket.h>
+	<linux/in.h>
+	<string>
+	<boost/shared_array.hpp>
+

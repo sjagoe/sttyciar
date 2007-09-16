@@ -2,7 +2,6 @@
 #define __STTYCIARRUNNER_H__
 
 #include <QtCore>
-#include <QObject>
 
 #include <boost/shared_ptr.hpp>
 
@@ -15,9 +14,9 @@ class ALNetworkListener;
 
 class SttyciarRunner : public UIListener
 {
-//    Q_OBJECT
-//    public:
-
+    Q_OBJECT
+    public:
+        SttyciarRunner();
 };
 
 #endif
