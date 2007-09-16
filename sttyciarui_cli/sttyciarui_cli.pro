@@ -40,6 +40,9 @@ TARGET = sttyciarui
 # Input
 HEADERS += ../include/sllistener.hh \
            ../include/sttyciarui_cli.hh \
-           ../include/uilistener.hh
+           ../include/uilistener.hh \
+           ../include/sttyciarui_cli_main.hh \
+           ../include/sttyciarui_common.hh
 
-SOURCES += src/sttyciarui_cli.cpp
+SOURCES += src/sttyciarui_cli.cpp \
+           src/sttyciarui_cli_main.cpp

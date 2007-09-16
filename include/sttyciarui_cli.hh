@@ -3,11 +3,28 @@
 
 #include "sttyciarui_common.hh"
 
+class SttyciarCLIMain;
+class SttyciarCLIStatistics;
+
 class SttyciarCLI: public SttyciarUI
 {
     Q_OBJECT
+    private:
+        shared_ptr<SttyciarCLIMain> _mainUI;
+        //shared_ptr<SttyciarCLIStatistics> _statisticsUI;
+
     public:
         SttyciarCLI();
+
+    public slots:
+        void updateStatistics();
+
+    protected slots:
+        void exit();
+
+    private slots:
+        void showMain();
+        void showStatistics();
 };
 
 #endif
