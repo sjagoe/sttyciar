@@ -2,7 +2,7 @@
 #define __INTERFACEROUTE_HH__
 
 // STL
-#include <vector>
+#include <list>
 
 // boost
 #include <boost/shared_ptr.hpp>
@@ -10,7 +10,7 @@
 // local
 //#include "device.hh"
 
-using std::vector;
+using std::list;
 using boost::shared_ptr;
 
 // forward declerations
@@ -27,7 +27,7 @@ class InterfaceRoute
 {
     private:
         shared_ptr<Device> _sourceInterface;
-        vector<shared_ptr<Device> > _destinationInterfaces;
+        list<shared_ptr<Device> > _destinationInterfaces;
 
     public:
         /*!
@@ -57,7 +57,7 @@ class InterfaceRoute
         /*!
         Return the list of destination Devices.
         */
-        inline const vector<shared_ptr<Device> >& getDestinations() const
+        inline const list<shared_ptr<Device> >& getDestinations() const
         {
             return _destinationInterfaces;
         };
