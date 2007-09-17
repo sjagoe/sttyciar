@@ -46,6 +46,7 @@ void PcapThread::run() throw(CannotOpenDeviceException)
         {
             std::cout << "1" << std::endl;
             shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data));
+            //shared_ptr<RawPacket> rawPacket(new RawPacket(0,0));
             std::cout << "2" << std::endl;
             this->_alNetworkListener.lock()->packetReceived(rawPacket,this->_device);
             std::cout << "3" << std::endl;
@@ -58,13 +59,6 @@ void PcapThread::run() throw(CannotOpenDeviceException)
     }
 
     pcap_close(source);
-    delete pkt_header;
-    delete pkt_data;
-
-
-
-
-
 }
 
 //void PcapThread::openAda

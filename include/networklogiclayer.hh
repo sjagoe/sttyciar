@@ -52,7 +52,7 @@ class NetworkLogicLayer:
         @param al boost::shared_ptr to the AbstractionLayer object.
         */
         //NetworkLogicLayer( shared_ptr<AbstractionLayer>& al );
-        NetworkLogicLayer() {};
+        NetworkLogicLayer();
 
         /*!
         Virtual destructor, which destroys all the member object pointed to by
