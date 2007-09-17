@@ -27,7 +27,7 @@ void SttyciarCLIMain::draw()
 
     int selection = -1;
 
-    if (((QIODevice*)stdin)->waitForReadyRead(1000))
+    //if (((QIODevice*)stdin)->waitForReadyRead(1000))
         in >> selection;
 
     switch (selection)

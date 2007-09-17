@@ -1,7 +1,15 @@
 #ifndef __ALSTATISTICSLISTENER_HH__
 #define __ALSTATISTICSLISTENER_HH__
 
+#include <boost/shared_ptr.hpp>
+
+#include <list>
+
+using boost::shared_ptr;
+using std::list;
+
 class InterfaceRoute;
+class Device;
 
 /*!
 The ALStatisticsListener is a (pure virtual) public interface that must be
@@ -33,7 +41,8 @@ class ALStatisticsListener
         A method to pass all available network interfaces to the user interface
         to allow users to easily configure the routing infrastructure.
         */
-        virtual void availableInterfaces( /* device linked list */ ) = 0;
+        virtual void
+        availableInterfaces( list<shared_ptr<Device> >& devices ) = 0;
 };
 
 #endif

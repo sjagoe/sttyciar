@@ -17,6 +17,7 @@ DEFINES += _REENTRANT
 CONFIG -= app_bundle
 CONFIG += console
 CONFIG += debug_and_release
+CONFIG += thread
 
 CONFIG(debug, debug|release) {
     DESTDIR = ../bin/Debug
@@ -35,4 +36,9 @@ win32 {
 TARGET = statisticslayer
 
 # Input
+HEADERS += ../include/statisticslayer.hh \
+           ../include/alstatisticslistener.hh \
+           ../include/sllistener.hh \
+           ../include/interfaceroute.hh
+
 SOURCES += src/statisticslayer.cpp
