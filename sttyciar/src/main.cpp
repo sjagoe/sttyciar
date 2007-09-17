@@ -3,15 +3,26 @@
 #include <sstream>
 #include <string>
 #include "boost/shared_ptr.hpp"
+#include <boost/weak_ptr.hpp>
+
 #include "abstractionlayer.hh"
 #include "device.hh"
 #include "deviceaddress.hh"
 #include "address.hh"
 
+#include "nllhub.hh"
+
 int main()
 {
-    AbstractionLayer abstractionLayer;
-    list<shared_ptr<Device> > devices=abstractionLayer.getDevices();
+    shared_ptr<AbstractionLayer> abstractionLayer( new AbstractionLayer );
+    shared_ptr<NetworkLogicLayer> networkLogicLayer( new NLLHub );
+
+    //weak_ptr<AbstractionLayer> weakAL( abstractionLayer );
+    weak_ptr<ALNetworkListener> weakNLL( networkLogicLayer );
+
+    abstractionLayer->registerNLL( weakNLL );
+
+    list<shared_ptr<Device> > devices = abstractionLayer->getDevices();
 
     int count = 0;
     for (list<shared_ptr<Device> >::iterator iter = devices.begin(); iter != devices.end(); ++iter)
@@ -33,16 +44,17 @@ int main()
     {
         if (count++==deviceNo)
         {
-            abstractionLayer.activateDevice(*iter);
+            abstractionLayer->activateDevice(*iter);
         }
     }
-    abstractionLayer.startListening(65535,3000);
+    abstractionLayer->startListening(65535,3000);
     std::cout << "Push any button to stop listening...";
     cin.sync();
-    cin.get();
+    char a;
+    cin >> a;
     std::cout << "Waiting for threads to die... ";
-    abstractionLayer.stopListening();
-    std::cout << "Ping! Your waffles are ready!";
+    abstractionLayer->stopListening();
+    std::cout << "Ping! Your waffles are ready!" << endl;
 
     return 0;
 }

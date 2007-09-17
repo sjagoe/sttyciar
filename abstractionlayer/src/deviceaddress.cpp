@@ -1,4 +1,9 @@
+#include <iostream>
+
 #include "deviceaddress.hh"
+
+using std::cout;
+using std::endl;
 
 const int DeviceAddress::DEFAULT_ADDRESS_LENGTH;
 
@@ -13,9 +18,12 @@ DeviceAddress::DeviceAddress(pcap_addr* pcapAddress)
 
 void DeviceAddress::setContents(pcap_addr* pcapAddress)
 {
-    this->_addr.setContents(pcapAddress->addr);
-    this->_netmask.setContents(pcapAddress->netmask);
-    this->_broadAddr.setContents(pcapAddress->broadaddr);
+    if (pcapAddress->addr != NULL)
+        this->_addr.setContents(pcapAddress->addr);
+    if (pcapAddress->netmask)
+        this->_netmask.setContents(pcapAddress->netmask);
+    if (pcapAddress->broadaddr)
+        this->_broadAddr.setContents(pcapAddress->broadaddr);
 
  /*   DeviceAddress::copySockAddr(*(pcapAddress->addr),this->_addr);
     DeviceAddress::copySockAddr(*(pcapAddress->netmask),this->_netmask);

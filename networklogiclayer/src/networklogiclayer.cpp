@@ -1,13 +1,16 @@
+#include <iostream>
+
 #include "networklogiclayer.hh"
 #include "interfaceroute.hh"
 
 bool NetworkLogicLayer::_running;
 QMutex NetworkLogicLayer::_runningMutex;
 
-//NetworkLogicLayer::NetworkLogicLayer(shared_ptr<AbstractionLayer>& al)
-//{
-//    registerAbstractionLayer(al);
-//}
+NetworkLogicLayer::NetworkLogicLayer()
+{
+    _receiveBuffer.reset( new concurrent_queue<QPair<shared_ptr<RawPacket>,
+                          shared_ptr<InterfaceRoute> > > );
+}
 
 NetworkLogicLayer::~NetworkLogicLayer()
 {
@@ -61,7 +64,9 @@ void NetworkLogicLayer::packetReceived( shared_ptr<RawPacket>& packet,
     shared_ptr<InterfaceRoute> interfaces(new InterfaceRoute( device ) );
 
     // create QPair and push it onto the queue.
-    _receiveBuffer->push( qMakePair( packet, interfaces ) );
+    //_receiveBuffer->push( qMakePair( packet, interfaces ) );
+
+    std::cout << " - Packet Rx: " << device->getName() << endl;
 }
 
 void NetworkLogicLayer::run()

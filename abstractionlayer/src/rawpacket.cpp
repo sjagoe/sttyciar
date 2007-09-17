@@ -11,8 +11,15 @@ RawPacket::RawPacket()
 
 RawPacket::RawPacket ( const pcap_pkthdr* head, const u_char* packet )
 {
-    _pcapHeader.reset ( ( pcap_pkthdr* ) head );
-    _packet.reset ( ( u_char* ) packet );
+    pcap_pkthdr* newHead;
+    *newHead = *head;
+
+    u_char newPacket[newHead->len];
+
+    __gnu_cxx::copy_n( packet, newHead->len, newPacket );
+
+    _pcapHeader.reset ( newHead );
+    _packet.reset ( ( u_char* ) newPacket );
 }
 
 RawPacket::RawPacket ( const shared_ptr<pcap_pkthdr>& head,
