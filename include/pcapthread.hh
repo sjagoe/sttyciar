@@ -27,7 +27,6 @@ class PcapThread : public QThread
         void run() throw(CannotOpenDeviceException);
     private:
         shared_ptr<Device> _device;
-        //shared_ptr<pcap_t> _source;
         int _pcapPacketCaptureSize;
         int _pcapTimeout;
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
