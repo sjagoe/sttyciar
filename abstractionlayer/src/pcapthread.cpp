@@ -25,7 +25,7 @@ void PcapThread::stopListening()
 void PcapThread::run() throw(CannotOpenDeviceException)
 
 {
-    pcap_t* source;
+    pcap_t* source=NULL;
     this->_listening = true;
 
     if ((source=pcap_open_live(this->_device->getName().c_str(),this->_pcapPacketCaptureSize,
@@ -39,13 +39,17 @@ void PcapThread::run() throw(CannotOpenDeviceException)
     bool noterror=true;
     list<DeviceAddress>  addresslist = (*(this->_device)).getAddresses();
     std::string ipaddress = addresslist.front().getAddress().toIPString();
+    //int count = 0;
     while (this->_listening && noterror)
     {
         while (this->_listening && (result=pcap_next_ex(source,&pkt_header,&pkt_data) == 1))
         {
-            /*shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data));
-            this->_alNetworkListener->packetReceived(rawPacket,this->_device);*/
-            std::cout << ipaddress << std::endl;
+            std::cout << "1" << std::endl;
+            shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data));
+            std::cout << "2" << std::endl;
+            this->_alNetworkListener.lock()->packetReceived(rawPacket,this->_device);
+            std::cout << "3" << std::endl;
+            //std::cout << count++ << ": " << ipaddress << std::endl;
         }
         if (result<0)
         {

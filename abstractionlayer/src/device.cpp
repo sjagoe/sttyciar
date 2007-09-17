@@ -12,7 +12,8 @@ Device::Device(pcap_if* pcapDevice)
 void Device::setContents(pcap_if* pcapDevice)
 {
     this->_name=pcapDevice->name;
-    this->_description=pcapDevice->description;
+    if (pcapDevice->description != NULL)
+        this->_description=pcapDevice->description;
     this->createAddressList(pcapDevice);
     this->_flags=pcapDevice->flags;
 }

@@ -1,5 +1,6 @@
 #include <QWaitCondition>
 #include <QSemaphore>
+#include <iostream>
 
 #include "abstractionlayer.hh"
 
@@ -108,6 +109,7 @@ void AbstractionLayer::stopListening()
     for (list<shared_ptr<PcapThread> >::iterator iter=this->_pcapThreads.begin(); iter!=this->_pcapThreads.end(); ++iter)
     {
         (*iter)->stopListening();
+        (*iter)->wait();
     }
     this->_pcapThreads.clear();
 }
