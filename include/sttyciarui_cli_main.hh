@@ -13,7 +13,7 @@ class SttyciarCLIMain: public QObject
 
     signals:
         void redraw();
-        void startSttyciar(QString deviceType);
+        void startSttyciar(short deviceType);
         void exit();
 };
 

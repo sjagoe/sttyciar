@@ -1,6 +1,10 @@
+#include <QTextStream>
+
+#include "sttyciarui_cli.hh"
 #include "sttyciarui_cli_main.hh"
 
-#include <QTextStream>
+const short SttyciarUI::EXIT;
+const short SttyciarUI::HUB_TYPE;
 
 SttyciarCLIMain::SttyciarCLIMain()
 {
@@ -13,9 +17,9 @@ void SttyciarCLIMain::draw()
     out << "Select a device type:\n";
     out << "---------------------\n";
     out << '\n';
-    out << "1: Hub\n";
+    out << SttyciarUI::HUB_TYPE << ": Hub\n";
     out << '\n';
-    out << "0: Exit\n";
+    out << SttyciarUI::EXIT << ": Exit\n";
     out << '\n';
     out << "Enter Selection: >> ";
 
@@ -28,14 +32,14 @@ void SttyciarCLIMain::draw()
 
     switch (selection)
     {
-        case 0:
+        case SttyciarUI::EXIT:
         {
             emit exit();
             return;
         }
-        case 1:
+        case SttyciarUI::HUB_TYPE:
         {
-            emit startSttyciar(QString("hub"));
+            emit startSttyciar(SttyciarUI::HUB_TYPE);
             return;
         }
         default:

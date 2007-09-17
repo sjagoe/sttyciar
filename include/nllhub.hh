@@ -19,7 +19,7 @@ class AbstractionLayer;
 class NLLHub: public NetworkLogicLayer
 {
     public:
-        NLLHub( shared_ptr<AbstractionLayer>& al )
+        NLLHub()
             : NetworkLogicLayer()
         {};
 

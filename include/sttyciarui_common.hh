@@ -12,6 +12,10 @@ using boost::shared_ptr;
 class SttyciarUI: public QObject
 {
     Q_OBJECT
+    public:
+        static const short EXIT = 0;
+        static const short HUB_TYPE = 1;
+
     public slots:
         virtual void updateStatistics() = 0;
 
@@ -20,7 +24,7 @@ class SttyciarUI: public QObject
 
     signals:
         void exitSttyciar();
-        void startSttyciar(QString deviceType);
+        void startSttyciar(short deviceType);
         void stopSttyciar();
 };
 

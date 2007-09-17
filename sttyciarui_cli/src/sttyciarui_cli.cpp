@@ -12,10 +12,10 @@ SttyciarCLI::SttyciarCLI()
     // redraw
     connect(_mainUI.get(), SIGNAL(redraw()), this, SLOT(showMain()));
     // start
-    connect(_mainUI.get(), SIGNAL(startSttyciar(QString)),
-            this, SIGNAL( startSttyciar(QString) ));
+    connect(_mainUI.get(), SIGNAL(startSttyciar(short)),
+            this, SIGNAL( startSttyciar(short) ));
     // start ( show statistics view )
-    connect(_mainUI.get(), SIGNAL(startSttyciar(QString)),
+    connect(_mainUI.get(), SIGNAL(startSttyciar(short)),
             this, SLOT(showStatistics()));
     // exit
     connect(_mainUI.get(), SIGNAL(exit()), this, SLOT(exit()));
@@ -50,10 +50,10 @@ void SttyciarCLI::exit()
 {
     disconnect(_mainUI.get(), SIGNAL(redraw()), this, SLOT(showMain()));
 
-    disconnect(_mainUI.get(), SIGNAL(startSttyciar(QString)),
-            this, SIGNAL( startSttyciar(QString) ));
+    disconnect(_mainUI.get(), SIGNAL(startSttyciar(short)),
+            this, SIGNAL( startSttyciar(short) ));
 
-    disconnect(_mainUI.get(), SIGNAL(startSttyciar(QString)),
+    disconnect(_mainUI.get(), SIGNAL(startSttyciar(short)),
             this, SLOT(showStatistics()));
 
     disconnect(_mainUI.get(), SIGNAL(exit()), this, SLOT(exit()));
