@@ -1,4 +1,6 @@
 #include "address.hh"
+#include <iostream>
+#include <sstream>
 
 //const int Address::DEFAULT_ADDRESS_LENGTH;
 
@@ -69,7 +71,22 @@ uint8_t Address::getAddressByte(const int i) const
         return 0;
 }
 
+string Address::toIPString() const
+{
+    std::ostringstream sIPAddress;
+    sIPAddress << (unsigned int)getAddressByte(0);
+    sIPAddress << ":";
+    sIPAddress << (unsigned int)getAddressByte(1);
+    sIPAddress << ":";
+    sIPAddress << (unsigned int)getAddressByte(2);
+    sIPAddress << ":";
+    sIPAddress << (unsigned int)getAddressByte(3);
+
+    return sIPAddress.str();
+}
+
 uint8_t Address::operator[](const int i)
 {
     return this->getAddressByte(i);
 }
+

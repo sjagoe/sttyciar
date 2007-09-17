@@ -19,10 +19,7 @@ int main()
         for (list<DeviceAddress>::iterator iter2 = deviceAddresses.begin(); iter2 != deviceAddresses.end(); ++iter2)
         {
             Address address = iter2->getAddress();
-            for (int i = 0 ; i < 4; i++)
-            {
-                std::cout<<(unsigned int)address.getAddressByte(i)<<":";
-            }
+            std::cout<<address.toIPString();
             std::cout << std::endl;
         }
         std::cout << std::endl;
