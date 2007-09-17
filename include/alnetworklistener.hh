@@ -42,6 +42,8 @@ class ALNetworkListener
         */
         virtual void packetReceived( shared_ptr<RawPacket>& packet,
             shared_ptr<Device>& device ) = 0;
+
+        virtual void exitNow() = 0;
 };
 
 #endif

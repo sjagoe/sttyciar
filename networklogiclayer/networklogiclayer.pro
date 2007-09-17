@@ -46,7 +46,7 @@ win32 {
     LIBS += -lpcap
 }
 
-TARGET += networklogiclayer
+TARGET = networklogiclayer
 
 # Input
 HEADERS += ../include/abstractionlayer.hh \
