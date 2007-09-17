@@ -7,10 +7,13 @@
 
 #include "rawpacket.hh"
 
+#include "pcapthread.hh"
+
 AbstractionLayer::AbstractionLayer()
 {
     _nllWaitCondition.reset( new QWaitCondition );
     _nllSemaphore.reset( new QSemaphore );
+    this->_listening = false;
 }
 
 //AbstractionLayer::AbstractionLayer( shared_ptr<ALNetworkListener> nllModule )
@@ -64,8 +67,6 @@ list<shared_ptr<Device> > AbstractionLayer::getDevices() throw(DeviceNotFoundExc
 
     pcap_freealldevs(pcapAllDevices);
     return devices;
-
-
 }
 
 void AbstractionLayer::activateDevice(shared_ptr<Device>& device)
@@ -83,10 +84,33 @@ bool AbstractionLayer::isDeviceActivated(shared_ptr<Device>& device)
 
 }
 
-//void AbstractionLayer::startListening()
-//{
-//
-//}
+void AbstractionLayer::startListening(int packetCaptureSize,int timeout)
+{
+    this->_pcapThreads.clear();
+    shared_ptr<PcapThread> tempPcapThread;
+
+    //store the thread objects
+    for (list<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end(); ++iter)
+    {
+        tempPcapThread.reset(new PcapThread(*iter,packetCaptureSize,timeout,this->_networkLogicLayer));
+        this->_pcapThreads.push_back(tempPcapThread);
+    }
+
+    //start the thread objects running
+    for (list<shared_ptr<PcapThread> >::iterator iter=this->_pcapThreads.begin(); iter!=this->_pcapThreads.end(); ++iter)
+    {
+        (*iter)->start();
+    }
+}
+
+void AbstractionLayer::stopListening()
+{
+    for (list<shared_ptr<PcapThread> >::iterator iter=this->_pcapThreads.begin(); iter!=this->_pcapThreads.end(); ++iter)
+    {
+        (*iter)->stopListening();
+    }
+    this->_pcapThreads.clear();
+}
 
 shared_ptr<QWaitCondition>& AbstractionLayer::getNLLWaitCondition()
 {

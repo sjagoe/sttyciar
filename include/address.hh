@@ -46,6 +46,7 @@ class Address
         const shared_array<uint8_t>& getByteAddress();
         int getSize() const;
         uint8_t getAddressByte(const int i) const;
+        string toIPString() const;
         uint8_t operator[](const int i);
 
     private:

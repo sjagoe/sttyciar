@@ -1,9 +1,10 @@
 #include "pcapthread.hh"
 #include "alnetworklistener.hh"
 #include "rawpacket.hh"
+#include <iostream>
 
 PcapThread::PcapThread(const shared_ptr<Device>& device,int packetCaptureSize,
-                        int timeout,shared_ptr<ALNetworkListener> alNetworkListener) throw (CannotOpenDeviceException) : _listening(false)
+                        int timeout,weak_ptr<ALNetworkListener> alNetworkListener) throw (CannotOpenDeviceException) : _listening(false)
 {
     this->_device=device;
     this->_pcapPacketCaptureSize=packetCaptureSize;
@@ -36,13 +37,15 @@ void PcapThread::run() throw(CannotOpenDeviceException)
     const u_char *pkt_data;
     int result=0;
     bool noterror=true;
-
+    list<DeviceAddress>  addresslist = (*(this->_device)).getAddresses();
+    std::string ipaddress = addresslist.front().getAddress().toIPString();
     while (this->_listening && noterror)
     {
         while (this->_listening && (result=pcap_next_ex(source,&pkt_header,&pkt_data) == 1))
         {
-            shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data));
-            this->_alNetworkListener->packetReceived(rawPacket,this->_device);
+            /*shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data));
+            this->_alNetworkListener->packetReceived(rawPacket,this->_device);*/
+            std::cout << ipaddress << std::endl;
         }
         if (result<0)
         {

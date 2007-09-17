@@ -3,12 +3,14 @@
 
 #include <QtCore>
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 #include "pcap.h"
 #include "device.hh"
 #include "exceptions.hh"
 
 
 using boost::shared_ptr;
+using boost::weak_ptr;
 class ALNetworkListener;
 
 class PcapThread : public QThread
@@ -17,7 +19,7 @@ class PcapThread : public QThread
 
     public:
         PcapThread(const shared_ptr<Device>& device,int packetCaptureSize,
-                    int timeout,shared_ptr<ALNetworkListener> alNetworkListener) throw(CannotOpenDeviceException);
+                    int timeout,weak_ptr<ALNetworkListener> alNetworkListener) throw(CannotOpenDeviceException);
         ~PcapThread();
         void stopListening();
 
@@ -30,7 +32,7 @@ class PcapThread : public QThread
         int _pcapTimeout;
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
         bool _listening;
-        shared_ptr<ALNetworkListener> _alNetworkListener;
+        weak_ptr<ALNetworkListener> _alNetworkListener;
 };
 
 #endif // PCAPTHREAD_HH

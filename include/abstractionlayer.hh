@@ -90,7 +90,7 @@ class AbstractionLayer//: public NLLListener
 
         void activateDevice(shared_ptr<Device>& device);
         bool isDeviceActivated(shared_ptr<Device>& device);
-        void startListening(int packetCaptureSize,int timeout) {};
+        void startListening(int packetCaptureSize,int timeout);
         void stopListening();
 
         shared_ptr<QWaitCondition>& getNLLWaitCondition();
