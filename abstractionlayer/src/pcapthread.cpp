@@ -45,7 +45,6 @@ void PcapThread::run() throw(CannotOpenDeviceException)
         while (this->_listening && (result=pcap_next_ex(source,&pkt_header,&pkt_data) == 1))
         {
             shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data));
-
             this->_alNetworkListener.lock()->packetReceived(rawPacket,this->_device);
             //std::cout << count++ << ": " << ipaddress << std::endl;
         }

@@ -64,7 +64,7 @@ void NetworkLogicLayer::packetReceived( shared_ptr<RawPacket>& packet,
     shared_ptr<InterfaceRoute> interfaces(new InterfaceRoute( device ) );
 
     // create QPair and push it onto the queue.
-    //_receiveBuffer->push( qMakePair( packet, interfaces ) );
+    _receiveBuffer->push( qMakePair( packet, interfaces ) );
 
     std::cout << " - Packet Rx: " << device->getName() << endl;
 }
