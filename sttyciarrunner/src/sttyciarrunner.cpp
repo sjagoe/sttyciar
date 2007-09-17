@@ -7,6 +7,9 @@
 
 const short SttyciarUI::HUB_TYPE;
 
+const int SttyciarRunner::PACKET_CAPTURE_SIZE;
+const int SttyciarRunner::PCAP_READ_TIMEOUT;
+
 SttyciarRunner::SttyciarRunner()
 {
     _ui.reset( new SttyciarCLI );
@@ -14,9 +17,18 @@ SttyciarRunner::SttyciarRunner()
 
 void SttyciarRunner::startSttyciar(short deviceType)
 {
+    _abstractionLayer.reset( new AbstractionLayer );
+
     if ( deviceType == SttyciarUI::HUB_TYPE )
     {
-
+        _networkLogicLayer.reset( new NLLHub );
+        weak_ptr<ALNetworkListener> weakNLL(_networkLogicLayer);
+        _abstractionLayer->registerNLL(weakNLL);
+        weak_ptr<AbstractionLayer> weakAL(_abstractionLayer);
+        _networkLogicLayer->registerAbstractionLayer(weakAL);
+        _networkLogicLayer->start();
+        _abstractionLayer->startListening(PACKET_CAPTURE_SIZE,
+                                          PCAP_READ_TIMEOUT);
     }
 }
 

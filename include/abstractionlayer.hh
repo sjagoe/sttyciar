@@ -76,7 +76,7 @@ class AbstractionLayer//: public NLLListener
         @param nllModule A NLL module (i.e. ALNetworkListener) that the AL can
         send messages to.
         */
-        void registerNLL( shared_ptr<ALNetworkListener>& nllModule );
+        void registerNLL( weak_ptr<ALNetworkListener>& nllModule );
 
         /* !
         Unregister an ALNetworkListener (i.e. NLL module) with the AL.

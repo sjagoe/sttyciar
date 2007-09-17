@@ -19,6 +19,7 @@ DEFINES += _DLL
 CONFIG -= app_bundle
 CONFIG += console
 CONFIG += debug_and_release
+CONFIG += thread
 
 CONFIG(debug, debug|release) {
     DESTDIR = ../bin/Debug

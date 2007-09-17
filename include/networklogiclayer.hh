@@ -44,7 +44,7 @@ class NetworkLogicLayer:
 {
     Q_OBJECT
     public:
-        /*!
+        /* !
         Constructor setting the AbstractionLayer pointer.
 
         This MUST be called by the inheriting class!
@@ -60,7 +60,7 @@ class NetworkLogicLayer:
         */
         virtual ~NetworkLogicLayer();
 
-        void registerAbstractionLayer( shared_ptr<AbstractionLayer>& al );
+        void registerAbstractionLayer( weak_ptr<AbstractionLayer>& al );
 
         /*!
         A method that allows the thread loops to be stopped

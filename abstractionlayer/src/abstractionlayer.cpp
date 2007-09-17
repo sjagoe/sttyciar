@@ -43,7 +43,7 @@ void AbstractionLayer::sendNetworkLayerPacket(
 
 }
 
-void AbstractionLayer::registerNLL( shared_ptr<ALNetworkListener>& nllModule )
+void AbstractionLayer::registerNLL( weak_ptr<ALNetworkListener>& nllModule )
 {
     _networkLogicLayer = nllModule;
 }

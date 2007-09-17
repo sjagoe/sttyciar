@@ -4,6 +4,11 @@
 bool NetworkLogicLayer::_running;
 QMutex NetworkLogicLayer::_runningMutex;
 
+//NetworkLogicLayer::NetworkLogicLayer(shared_ptr<AbstractionLayer>& al)
+//{
+//    registerAbstractionLayer(al);
+//}
+
 NetworkLogicLayer::~NetworkLogicLayer()
 {
     // remove our references to the shared objects
@@ -13,7 +18,7 @@ NetworkLogicLayer::~NetworkLogicLayer()
 }
 
 void NetworkLogicLayer::registerAbstractionLayer(
-    shared_ptr<AbstractionLayer>& al )
+    weak_ptr<AbstractionLayer>& al )
 {
     // set the pointer to the abstraction layer
     _abstractionLayer = al;
@@ -21,8 +26,6 @@ void NetworkLogicLayer::registerAbstractionLayer(
     // lock the AL as a shared_ptr (prevent it from being destroyed while we
     // are using it
     shared_ptr<AbstractionLayer> lockedAL = getAbstractionLayer();
-
-    shared_ptr<NetworkLogicLayer> me(this);
 
     // if the AL still exists
     if ( lockedAL.get() )
