@@ -84,6 +84,7 @@
 		<Unit filename="../include/exceptions.hh" />
 		<Unit filename="../include/interfaceroute.hh" />
 		<Unit filename="../include/ipv4datagram.hh" />
+		<Unit filename="../include/lockablequeue.hh" />
 		<Unit filename="../include/networklayerpacket.hh" />
 		<Unit filename="../include/packet.hh" />
 		<Unit filename="../include/packetaccess.hh" />

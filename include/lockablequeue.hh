@@ -4,10 +4,10 @@
 #include <QtCore>
 
 template <class T>
-class WindowsQueue
+class LockableQueue
 {
     public:
-        WindowsQueue(){};
+        LockableQueue(){};
 
         void push(const T& element)
         {
