@@ -7,11 +7,14 @@
 #include "pcap.h"
 #include "device.hh"
 #include "exceptions.hh"
+#include "lockablequeue.hh"
 
 
 using boost::shared_ptr;
 using boost::weak_ptr;
 class ALNetworkListener;
+class RawPacket;
+class InterfaceRoute;
 
 class PcapThread : public QThread
 {
@@ -32,6 +35,7 @@ class PcapThread : public QThread
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
         bool _listening;
         weak_ptr<ALNetworkListener> _alNetworkListener;
+        shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,shared_ptr<InterfaceRoute> > > > _receiveBuffer;
 };
 
 #endif // PCAPTHREAD_HH
