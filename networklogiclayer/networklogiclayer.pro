@@ -21,6 +21,8 @@ CONFIG += console
 CONFIG += debug_and_release
 CONFIG += thread
 
+#win32:LIBS += -lmsvcp60
+
 CONFIG(debug, debug|release) {
     DESTDIR = ../bin/Debug
     DEPENDPATH += ../bin/Debug
@@ -40,6 +42,7 @@ win32 {
     CONFIG += rtti
     CONFIG += exceptions
     INCLUDEPATH += ../../resources/WpdPack/Include
+
     LIBS += -L../../resources/WpdPack/Lib
     LIBS += -lpacket
     LIBS += -lwpcap
