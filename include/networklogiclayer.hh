@@ -4,8 +4,8 @@
 // Qt includes
 #include <QtCore>
 
-// Intel TBB includes
-#include <tbb/concurrent_queue.h>
+//// Intel TBB includes
+//#include <tbb/concurrent_queue.h>
 
 // boost includes
 #include <boost/weak_ptr.hpp>
@@ -18,7 +18,9 @@
 #include "abstractionlayer.hh"
 #include "alnetworklistener.hh"
 
-using tbb::concurrent_queue;
+#include "lockablequeuegroup.hh"
+
+//using tbb::concurrent_queue;
 
 using boost::weak_ptr;
 using boost::shared_ptr;
@@ -78,9 +80,13 @@ class NetworkLogicLayer:
         @param interfaces A shared_ptr to the InterfaceRoute describing where
         the packet came from.
         */
-        void packetReceived( shared_ptr<RawPacket>& packet,
-            shared_ptr<Device>& device );
+//        void packetReceived( shared_ptr<RawPacket>& packet,
+//            shared_ptr<Device>& device );
         void packetReceived();
+
+        void
+        registerQueue( shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,
+            shared_ptr<InterfaceRoute> > > > queue );
 
     protected:
         list<shared_ptr<Device> > _devices;
@@ -112,9 +118,12 @@ class NetworkLogicLayer:
         //! dependencies and memory leaks.
         weak_ptr<AbstractionLayer> _abstractionLayer;
 
-        //! The concurrent_queue used as a receive buffer - a scoped_ptr
-        //! prevents it from being copied outside of this class.
-        scoped_ptr<concurrent_queue<QPair<shared_ptr<RawPacket>,
+//        //! The concurrent_queue used as a receive buffer - a scoped_ptr
+//        //! prevents it from being copied outside of this class.
+//        scoped_ptr<concurrent_queue<QPair<shared_ptr<RawPacket>,
+//            shared_ptr<InterfaceRoute> > > > _receiveBuffer;
+
+        scoped_ptr<LockableQueueGroup<QPair<shared_ptr<RawPacket>,
             shared_ptr<InterfaceRoute> > > > _receiveBuffer;
 
         //! the QWaitCondition used to wake up the thread once a packet is on

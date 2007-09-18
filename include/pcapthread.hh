@@ -3,6 +3,7 @@
 
 #include <QtCore>
 #include <boost/shared_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 #include "pcap.h"
 #include "device.hh"
@@ -11,10 +12,13 @@
 
 
 using boost::shared_ptr;
+using boost::scoped_ptr;
 using boost::weak_ptr;
 class ALNetworkListener;
 class RawPacket;
 class InterfaceRoute;
+
+class PcapThreadTicket;
 
 class PcapThread : public QThread
 {
@@ -35,7 +39,8 @@ class PcapThread : public QThread
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
         bool _listening;
         weak_ptr<ALNetworkListener> _alNetworkListener;
-        shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,shared_ptr<InterfaceRoute> > > > _receiveBuffer;
+        //shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,shared_ptr<InterfaceRoute> > > > _receiveBuffer;
+        scoped_ptr<PcapThreadTicket> _receiveBuffer;
 };
 
 #endif // PCAPTHREAD_HH

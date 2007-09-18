@@ -34,6 +34,8 @@ class ALNetworkListener
         */
         virtual ~ALNetworkListener() {};
 
+        virtual void exitNow() = 0;
+
         /*!
         This method is called every time a packet is received by the AL to
         pass the packet data to the NLL for analysis and routing.
@@ -42,16 +44,14 @@ class ALNetworkListener
         @param interfaces An InterfaceRoute object containing the source
         interface, and an empty list of destination interfaces.
         */
-        virtual void packetReceived( shared_ptr<RawPacket>& packet,
-            shared_ptr<Device>& device ) = 0;
+//        virtual void packetReceived( shared_ptr<RawPacket>& packet,
+//            shared_ptr<Device>& device ) = 0;
 
         virtual void packetReceived() = 0;
 
         virtual void
         registerQueue( shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,
-            shared_ptr<InterfaceRoute> > > > ) = 0;
-
-        virtual void exitNow() = 0;
+            shared_ptr<InterfaceRoute> > > > queue ) = 0;
 };
 
 #endif

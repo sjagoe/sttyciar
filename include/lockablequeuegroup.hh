@@ -17,6 +17,10 @@ class LockableQueueGroup
         void pop(T& element)
         {
             _queues[_currentQueue]->pop(element);
+            if (++_currentQueue >= _queues.size())
+            {
+                _currentQueue = 0;
+            }
         };
 
         void registerQueue(shared_ptr<LockableQueue<T> >& queue)
@@ -25,7 +29,7 @@ class LockableQueueGroup
         };
 
     private:
-        unsigned long _currentQueue;
+        long _currentQueue;
         QList<shared_ptr<LockableQueue<T> > > _queues;
 };
 

@@ -8,7 +8,9 @@ QMutex NetworkLogicLayer::_runningMutex;
 
 NetworkLogicLayer::NetworkLogicLayer()
 {
-    _receiveBuffer.reset( new concurrent_queue<QPair<shared_ptr<RawPacket>,
+//    _receiveBuffer.reset( new concurrent_queue<QPair<shared_ptr<RawPacket>,
+//                          shared_ptr<InterfaceRoute> > > );
+    _receiveBuffer.reset( new LockableQueueGroup<QPair<shared_ptr<RawPacket>,
                           shared_ptr<InterfaceRoute> > > );
 }
 
@@ -58,22 +60,29 @@ void NetworkLogicLayer::exitNow()
     _wait->wakeAll();
 }
 
-void NetworkLogicLayer::packetReceived( shared_ptr<RawPacket>& packet,
-    shared_ptr<Device>& device )
-{
-    shared_ptr<InterfaceRoute> interfaces(new InterfaceRoute( device ) );
-
-    // create QPair and push it onto the queue.
-    _receiveBuffer->push( qMakePair( packet, interfaces ) );
-
-    std::cout << " - Packet Rx: " << device->getName() << endl;
-}
+//void NetworkLogicLayer::packetReceived( shared_ptr<RawPacket>& packet,
+//    shared_ptr<Device>& device )
+//{
+//    shared_ptr<InterfaceRoute> interfaces(new InterfaceRoute( device ) );
+//
+//    // create QPair and push it onto the queue.
+//    _receiveBuffer->push( qMakePair( packet, interfaces ) );
+//
+//    std::cout << " - Packet Rx: " << device->getName() << endl;
+//}
 
 void NetworkLogicLayer::packetReceived()
 {
     _waitingPackets->release();
     _wait->wakeAll();
     std::cout << " - Packet Rx: " << endl;
+}
+
+void NetworkLogicLayer::registerQueue(
+    shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,
+        shared_ptr<InterfaceRoute> > > > queue )
+{
+    _receiveBuffer->registerQueue( queue );
 }
 
 void NetworkLogicLayer::run()

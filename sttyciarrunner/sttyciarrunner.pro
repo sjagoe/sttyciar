@@ -31,7 +31,9 @@ CONFIG(debug, debug|release) {
 
 LIBS += -labstractionlayer
 LIBS += -lnetworklogiclayer
+LIBS += -lnll_hub
 LIBS += -lstatisticslayer
+LIBS += -lsttyciarui
 
 win32 {
     CONFIG += dll
