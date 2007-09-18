@@ -61,10 +61,12 @@ HEADERS += ../include/abstractionlayer.hh \
            ../include/packet.hh \
            ../include/pcapthread.hh \
            ../include/rawpacket.hh \
-           ../include/packetaccess.hh
+           ../include/packetaccess.hh \
+           ../include/pcapsendthread.hh
 
 
 SOURCES += src/abstractionlayer.cpp \
+           src/pcapsendthread.cpp \
            src/address.cpp \
            src/device.cpp \
            src/deviceaddress.cpp \

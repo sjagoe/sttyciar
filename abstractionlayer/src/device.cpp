@@ -49,9 +49,13 @@ void Device::createAddressList(pcap_if* pcapDevice)
     }
 }
 
+void Device::sendPacket(shared_ptr<Packet>& packet)
+{
+    this->_pcapSendThread.addPacket(packet);
+}
+
 bool Device::operator==(Device& device) const
 {
     return this->getName()==device.getName();
 }
-
 

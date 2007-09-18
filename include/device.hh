@@ -3,10 +3,15 @@
 
 #include <string>
 #include <list>
+#include <boost/shared_ptr.hpp>
 #include <pcap.h>
 #include "deviceaddress.hh"
+#include "lockablequeue.hh"
+#include "packet.hh"
+#include "pcapsendthread.hh"
 
 using namespace std;
+using boost::shared_ptr;
 
 class Device
 {
@@ -19,11 +24,13 @@ class Device
         const list<DeviceAddress>& getAddresses() const;
         bool isLoopback() const;
         bool operator==(Device& device) const;
+        void sendPacket(shared_ptr<Packet>& packet);
 
     private:
         string _name;
         string _description;
         list<DeviceAddress> _addresses;
+        PcapSendThread _pcapSendThread;
         unsigned int _flags;
         void createAddressList(pcap_if* pcapDevice);
 };
