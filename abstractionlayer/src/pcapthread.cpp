@@ -13,6 +13,7 @@ PcapThread::PcapThread(const shared_ptr<Device>& device,int packetCaptureSize,
     this->_pcapPacketCaptureSize=packetCaptureSize;
     this->_pcapTimeout=timeout;
     this->_alNetworkListener = alNetworkListener;
+
     //this->_receiveBuffer.reset(new LockableQueue<QPair<shared_ptr<RawPacket>,shared_ptr<InterfaceRoute> > >());
     this->_receiveBuffer.reset(
         new PcapThreadTicket( this->_alNetworkListener ) );
@@ -57,7 +58,11 @@ void PcapThread::run() throw(CannotOpenDeviceException)
             /* // the 3 lines below are replaced with the single line above, the PcapThreadTicket object
             interfaceRoute.reset(new InterfaceRoute(this->_device));
             this->_receiveBuffer->push(qMakePair(rawPacket,interfaceRoute));
+<<<<<<< TREE
             this->_alNetworkListener.lock()->packetReceived();*/
+=======
+            this->_alNetworkListener.lock()->packetReceived();
+>>>>>>> MERGE-SOURCE
             //std::cout << count++ << ": " << ipaddress << std::endl;
         }
         if (result<0)
