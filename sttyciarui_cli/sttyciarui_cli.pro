@@ -13,7 +13,6 @@ DEPENDPATH += . src
 INCLUDEPATH += ../include
 
 DEFINES += _REENTRANT
-DEFINES += _DLL
 
 CONFIG -= app_bundle
 CONFIG += console
