@@ -13,3 +13,5 @@ Makefile*
 Sttyciar.workspace
 *.Debug
 *.Release
+*.layout.backup
+*.workspace.backup

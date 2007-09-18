@@ -14,6 +14,8 @@ SttyciarGUIMain::SttyciarGUIMain()
 {
     _ui.setupUi(this);
     _ui.treeAvailableInterfaces->sortItems(0, Qt::AscendingOrder);
+    _ui.treeAvailableInterfaces->setColumnWidth(0, 150);
+    _ui.treeUsedInterfaces->setColumnWidth(0, 150);
 }
 
 void SttyciarGUIMain::on_btnStart_clicked()
