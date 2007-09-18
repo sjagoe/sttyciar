@@ -12,10 +12,12 @@ using boost::shared_ptr;
 using boost::weak_ptr;
 
 class RawPacket;
+class InterfaceRoute;
 class Device;
 //class NLLListener;
 
 #include "abstractionlayer.hh"
+#include "lockablequeue.hh"
 
 /*!
 The ALNetworkListener class in a (pure virtual) public interface that the
@@ -42,6 +44,12 @@ class ALNetworkListener
         */
         virtual void packetReceived( shared_ptr<RawPacket>& packet,
             shared_ptr<Device>& device ) = 0;
+
+        virtual void packetReceived() = 0;
+
+        virtual void
+        registerQueue( shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,
+            shared_ptr<InterfaceRoute> > > > ) = 0;
 
         virtual void exitNow() = 0;
 };

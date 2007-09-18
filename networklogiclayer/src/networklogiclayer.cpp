@@ -69,6 +69,13 @@ void NetworkLogicLayer::packetReceived( shared_ptr<RawPacket>& packet,
     std::cout << " - Packet Rx: " << device->getName() << endl;
 }
 
+void NetworkLogicLayer::packetReceived()
+{
+    _waitingPackets->release();
+    _wait->wakeAll();
+    std::cout << " - Packet Rx: " << endl;
+}
+
 void NetworkLogicLayer::run()
 {
     // loop the thread
@@ -90,6 +97,7 @@ void NetworkLogicLayer::run()
             _receiveBuffer->pop( pair );
             // call the method that performs the actual routing
             routePacket( pair.first, pair.second );
+            _waitingPackets->tryAcquire();
             _runningMutex.lock();
         }
         _runningMutex.unlock();

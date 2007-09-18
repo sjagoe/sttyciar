@@ -80,6 +80,7 @@ class NetworkLogicLayer:
         */
         void packetReceived( shared_ptr<RawPacket>& packet,
             shared_ptr<Device>& device );
+        void packetReceived();
 
     protected:
         list<shared_ptr<Device> > _devices;
