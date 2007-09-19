@@ -15,6 +15,27 @@ SttyciarGUI::SttyciarGUI()
     _mainUI->show();
 }
 
+void SttyciarGUI::sttyciarRunning()
+{
+    _mainUI->hide();
+    _statisticsUI->show();
+}
+
+void SttyciarGUI::updateStatistics()
+{
+
+}
+
+void SttyciarGUI::exit()
+{
+    emit exitSttyciar();
+}
+
+void SttyciarGUI::startSttyciar(short deviceType)
+{
+    //std::cout << deviceType << std::endl;
+}
+
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);

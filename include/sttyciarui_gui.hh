@@ -18,22 +18,14 @@ class SttyciarGUI: public SttyciarUI
         SttyciarGUI();
 
     public slots:
-        void updateStatistics() {};
+        void sttyciarRunning();
 
+        void updateStatistics();
 
     protected slots:
-        void exit()
-        {
-            emit exitSttyciar();
-        };
+        void exit();
 
-        void startSttyciar(short deviceType)
-        {
-            //std::cout << deviceType << std::endl;
-            _mainUI->hide();
-            _statisticsUI->show();
-
-        };
+        void startSttyciar(short deviceType);
 
     private:
         scoped_ptr<SttyciarGUIMain> _mainUI;
