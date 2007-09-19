@@ -3,10 +3,15 @@
 #include "rawpacket.hh"
 #include "interfaceroute.hh"
 
+RawPacket::RawPacket()
+{
+    _interfaceRoute.reset( new InterfaceRoute() );
+}
+
 RawPacket::RawPacket ( const pcap_pkthdr* head, const u_char* packet,
                        const shared_ptr<Device>& sourceDevice )
 {
-    _interfaceRoute.reset( new InterfaceRoute( sourceDevice ) );
+    RawPacket();
     pcap_pkthdr* newHead = new pcap_pkthdr;
     newHead->caplen = head->caplen;
     newHead->len = head->len;
@@ -23,7 +28,7 @@ RawPacket::RawPacket ( const shared_ptr<pcap_pkthdr>& head,
                        const shared_array<u_char>& packet,
                        const shared_ptr<Device>& sourceDevice  )
 {
-    _interfaceRoute.reset( new InterfaceRoute( sourceDevice ) );
+    RawPacket();
     _pcapHeader = head;
     _packet = packet;
 }

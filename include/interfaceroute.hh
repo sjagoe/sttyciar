@@ -27,9 +27,10 @@ class InterfaceRoute
 {
     private:
         shared_ptr<Device> _sourceInterface;
-        QList<shared_ptr<Device> > _destinationInterfaces;
+        shared_ptr<QList<shared_ptr<Device> > > _destinationInterfaces;
 
     public:
+        InterfaceRoute();
         /*!
         Create an InterfaceRoute with a specified source device.
 
@@ -37,6 +38,8 @@ class InterfaceRoute
         the source cannot be modified in the NLL).
         */
         InterfaceRoute( const shared_ptr<Device>& sourceInterface );
+
+        void setSource( const shared_ptr<Device>& sourceInterface );
 
         /*!
         Add a destination to the list of destination devices.
@@ -51,7 +54,7 @@ class InterfaceRoute
         /*!
         Return the list of destination Devices.
         */
-        inline const QList<shared_ptr<Device> >& getDestinations() const
+        inline const shared_ptr<QList<shared_ptr<Device> > >& getDestinations() const
         {
             return _destinationInterfaces;
         };

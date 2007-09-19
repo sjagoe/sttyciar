@@ -43,6 +43,7 @@ class RawPacket
         scoped_ptr<InterfaceRoute> _interfaceRoute;
 
     public:
+        RawPacket();
         RawPacket ( const pcap_pkthdr* head, const u_char* packet,
                     const shared_ptr<Device>& sourceDevice );
         RawPacket ( const shared_ptr<pcap_pkthdr>& head,
@@ -76,6 +77,11 @@ class RawPacket
         inline scoped_ptr<InterfaceRoute>& getInterfaceRoute()
         {
             return _interfaceRoute;
+        };
+
+        inline const u_char* getPacketPointer() const
+        {
+            return _packet.get();
         };
 };
 

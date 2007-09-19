@@ -53,6 +53,12 @@ class EthernetIIFrame: public DataLinkLayerPacket
         */
         EthernetIIFrame( shared_ptr<RawPacket>& packet );
 
+        void setSourceMAC( const mac_t& mac );
+
+        void setDestinationMAC( const mac_t& mac );
+
+        void setEtherType( const ethertype_t& et );
+
         inline const int getPayloadOffset() const
         {
             return ETHERNETII_HEAD_LENGTH;
