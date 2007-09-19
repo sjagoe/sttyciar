@@ -49,7 +49,7 @@ void Device::createAddressList(pcap_if* pcapDevice)
     }
 }
 
-void Device::sendPacket(shared_ptr<Packet>& packet)
+void Device::sendPacket(const shared_ptr<RawPacket>& packet)
 {
     this->_pcapSendThread.addPacket(packet);
 }

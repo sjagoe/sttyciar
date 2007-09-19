@@ -21,7 +21,12 @@ class LockableQueue
             _queueMutex.lock();
             element = _queue.dequeue();
             _queueMutex.unlock();
-        }
+        };
+
+        bool isEmpty()
+        {
+            return _queue.isEmpty();
+        };
 
     private:
         QQueue<T> _queue;

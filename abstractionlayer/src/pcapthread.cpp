@@ -46,15 +46,16 @@ void PcapThread::run() throw(CannotOpenDeviceException)
     QList<DeviceAddress>  addresslist = (*(this->_device)).getAddresses();
     std::string ipaddress = addresslist.front().getAddress().toIPString();
     shared_ptr<InterfaceRoute> interfaceRoute;
-    //int count = 0;
+    int count = 0;
+    std::cout << "listening";
     while (this->_listening && noterror)
     {
         while (this->_listening && (result=pcap_next_ex(source,&pkt_header,&pkt_data) == 1))
         {
-            shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data, this->_device));
-            this->_receiveBuffer->enqueue( rawPacket );
+            //shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data, this->_device));
+            //this->_receiveBuffer->enqueue( rawPacket );
 
-            //std::cout << count++ << ": " << ipaddress << std::endl;
+            std::cout << count++ << ": " << ipaddress << std::endl;
         }
         if (result<0)
         {

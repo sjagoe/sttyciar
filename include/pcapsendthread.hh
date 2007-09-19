@@ -3,10 +3,11 @@
 
 #include <QtCore>
 #include <boost/shared_ptr.hpp>
+#include "lockablequeue.hh"
 
 using boost::shared_ptr;
 
-class Packet;
+class RawPacket;
 
 class PcapSendThread : public QThread
 {
@@ -15,9 +16,13 @@ class PcapSendThread : public QThread
     public:
         PcapSendThread();
         ~PcapSendThread();
-        void addPacket(shared_ptr<Packet>& packet);
+        void addPacket(const shared_ptr<RawPacket>& packet);
     protected:
         void run();
+
+    private:
+        LockableQueue<shared_ptr<RawPacket> > _packetQueue;
+        bool _running;
 };
 
 #endif // __PCAPSENDTHREAD_HH__

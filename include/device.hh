@@ -7,7 +7,7 @@
 #include <pcap.h>
 #include "deviceaddress.hh"
 #include "lockablequeue.hh"
-#include "packet.hh"
+#include "rawpacket.hh"
 #include "pcapsendthread.hh"
 
 using namespace std;
@@ -24,7 +24,7 @@ class Device
         const QList<DeviceAddress>& getAddresses() const;
         bool isLoopback() const;
         bool operator==(Device& device) const;
-        void sendPacket(shared_ptr<Packet>& packet);
+        void sendPacket(const shared_ptr<RawPacket>& packet);
 
     private:
         string _name;

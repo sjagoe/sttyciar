@@ -10,6 +10,10 @@
 
 #include "pcapthread.hh"
 
+#include "datalinklayerpacket.hh"
+
+#include "interfaceroute.hh"
+
 AbstractionLayer::AbstractionLayer()
 {
     _nllWaitCondition.reset( new QWaitCondition );
@@ -21,7 +25,13 @@ void AbstractionLayer::sendDataLinkLayerPacket(
     shared_ptr<DataLinkLayerPacket>& packet,
     shared_ptr<InterfaceRoute>& interfaces )
 {
+    //is this inefficient?
+    shared_ptr<QList<shared_ptr<Device> > > destinations = packet->getRawPacket()->getInterfaceRoute()->getDestinations();
+    for (QList<shared_ptr<Device> >::iterator iter = destinations->begin(); iter != destinations->begin(); iter++)
+    {
+        (*iter)->sendPacket(packet->getRawPacket());
 
+    }
 }
 
 void AbstractionLayer::sendNetworkLayerPacket(
