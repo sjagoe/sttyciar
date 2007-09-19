@@ -1,6 +1,6 @@
 #include "interfaceroute.hh"
 
-InterfaceRoute::InterfaceRoute( shared_ptr<Device>& sourceInterface )
+InterfaceRoute::InterfaceRoute( const shared_ptr<Device>& sourceInterface )
 {
     _sourceInterface = sourceInterface;
 }
@@ -14,9 +14,3 @@ void InterfaceRoute::clearDestinations()
 {
     _destinationInterfaces.clear();
 }
-
-//void InterfaceRoute::setDestinations()
-//{
-//
-//}
-

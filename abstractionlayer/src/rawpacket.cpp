@@ -1,16 +1,12 @@
-//#include <algorithm>
 #include <ext/algorithm>
 
 #include "rawpacket.hh"
+#include "interfaceroute.hh"
 
-RawPacket::RawPacket()
+RawPacket::RawPacket ( const pcap_pkthdr* head, const u_char* packet,
+                       const shared_ptr<Device>& sourceDevice )
 {
-    _packet.reset();
-    _pcapHeader.reset();
-}
-
-RawPacket::RawPacket ( const pcap_pkthdr* head, const u_char* packet )
-{
+    _interfaceRoute.reset( new InterfaceRoute( sourceDevice ) );
     pcap_pkthdr* newHead = new pcap_pkthdr;
     newHead->caplen = head->caplen;
     newHead->len = head->len;
@@ -24,8 +20,10 @@ RawPacket::RawPacket ( const pcap_pkthdr* head, const u_char* packet )
 }
 
 RawPacket::RawPacket ( const shared_ptr<pcap_pkthdr>& head,
-                       const shared_array<u_char>& packet )
+                       const shared_array<u_char>& packet,
+                       const shared_ptr<Device>& sourceDevice  )
 {
+    _interfaceRoute.reset( new InterfaceRoute( sourceDevice ) );
     _pcapHeader = head;
     _packet = packet;
 }
@@ -57,12 +55,7 @@ void RawPacket::insert( const vector<u_char>& data,
     }
 }
 
-//const shared_array<u_char>& RawPacket::getPacket() const
-//{
-//    return _packet;
-//}
-
-//const bpf_u_int32& RawPacket::getPacketLength() const
-//{
-//    return _pcapHeader->len;
-//}
+void RawPacket::addDestination( const shared_ptr<Device>& destinationInterface )
+{
+    _interfaceRoute->addDestination( destinationInterface );
+}

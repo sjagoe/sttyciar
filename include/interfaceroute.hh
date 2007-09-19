@@ -36,7 +36,7 @@ class InterfaceRoute
         The only time a source device can be set is at creation time (i.e.
         the source cannot be modified in the NLL).
         */
-        InterfaceRoute( shared_ptr<Device>& sourceInterface );
+        InterfaceRoute( const shared_ptr<Device>& sourceInterface );
 
         /*!
         Add a destination to the list of destination devices.
@@ -47,12 +47,6 @@ class InterfaceRoute
         Remove all destinations from the list.
         */
         void clearDestinations();
-
-        /* !
-        Set the list of destinations to a precompiled list (rather than
-        appending one by one).
-        */
-        //void setDestinations();
 
         /*!
         Return the list of destination Devices.

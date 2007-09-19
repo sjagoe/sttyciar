@@ -43,12 +43,6 @@ class AbstractionLayer//: public NLLListener
         AbstractionLayer();
 
         /*!
-        Constructor that sets the NLL module to interact with.
-        */
-        //AbstractionLayer( shared_ptr<ALNetworkListener> nllModule );
-        //AbstractionLayer( vector<shared_ptr<ALNetworkListener> > nllModules );
-
-        /*!
         send a data link layer frame (i.e. all headers and payload is
         contained, and the AL can send it without modification)
 
@@ -110,8 +104,6 @@ class AbstractionLayer//: public NLLListener
 
         bool _listening;
         weak_ptr<ALNetworkListener> _networkLogicLayer;
-
-        //vector<shared_ptr<ALNetworkListener> > _networkLogicLayer;
 
         shared_ptr<QWaitCondition> _nllWaitCondition;
 

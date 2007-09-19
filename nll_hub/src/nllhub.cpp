@@ -2,16 +2,18 @@
 
 #include "interfaceroute.hh"
 
-void NLLHub::routePacket( shared_ptr<RawPacket> packet,
-    shared_ptr<InterfaceRoute>& interfaces )
+#include "rawpacket.hh"
+
+void NLLHub::routePacket( shared_ptr<RawPacket> packet )
 {
+
     list<shared_ptr<Device> >::const_iterator iter = _devices.begin();
 
     for (; iter != _devices.end(); iter++)
     {
-        if ( interfaces->getSource().get() != iter->get() )
+        if ( packet->getInterfaceRoute()->getSource().get() != iter->get() )
         {
-            interfaces->addDestination( *iter );
+            packet->getInterfaceRoute()->addDestination( *iter );
         }
     }
 

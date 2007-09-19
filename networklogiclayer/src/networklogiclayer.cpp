@@ -8,10 +8,7 @@ QMutex NetworkLogicLayer::_runningMutex;
 
 NetworkLogicLayer::NetworkLogicLayer()
 {
-//    _receiveBuffer.reset( new concurrent_queue<QPair<shared_ptr<RawPacket>,
-//                          shared_ptr<InterfaceRoute> > > );
-    _receiveBuffer.reset( new LockableQueueGroup<QPair<shared_ptr<RawPacket>,
-                          shared_ptr<InterfaceRoute> > > );
+    _receiveBuffer.reset( new LockableQueueGroup<shared_ptr<RawPacket> > );
 }
 
 NetworkLogicLayer::~NetworkLogicLayer()
@@ -60,17 +57,6 @@ void NetworkLogicLayer::exitNow()
     _wait->wakeAll();
 }
 
-//void NetworkLogicLayer::packetReceived( shared_ptr<RawPacket>& packet,
-//    shared_ptr<Device>& device )
-//{
-//    shared_ptr<InterfaceRoute> interfaces(new InterfaceRoute( device ) );
-//
-//    // create QPair and push it onto the queue.
-//    _receiveBuffer->push( qMakePair( packet, interfaces ) );
-//
-//    std::cout << " - Packet Rx: " << device->getName() << endl;
-//}
-
 void NetworkLogicLayer::packetReceived()
 {
     _waitingPackets->release();
@@ -79,8 +65,7 @@ void NetworkLogicLayer::packetReceived()
 }
 
 void NetworkLogicLayer::registerQueue(
-    shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,
-        shared_ptr<InterfaceRoute> > > > queue )
+    shared_ptr<LockableQueue<shared_ptr<RawPacket> > > queue )
 {
     _receiveBuffer->registerQueue( queue );
 }
@@ -102,10 +87,11 @@ void NetworkLogicLayer::run()
         {
             _runningMutex.unlock();
             // pop a packet/interfaceroute QPair from the receive buffer
-            QPair<shared_ptr<RawPacket>, shared_ptr<InterfaceRoute> > pair;
-            _receiveBuffer->pop( pair );
+            shared_ptr<RawPacket> packet;
+            _receiveBuffer->pop( packet );
             // call the method that performs the actual routing
-            routePacket( pair.first, pair.second );
+            //routePacket( pair.first, pair.second );
+            routePacket( packet );
             _waitingPackets->tryAcquire();
             _runningMutex.lock();
         }

@@ -1,5 +1,5 @@
-#ifndef __WINDOWSQUEUE_HH_
-#define __WINDOWSQUEUE_HH_
+#ifndef __LOCKABLEQUEUE_HH_
+#define __LOCKABLEQUEUE_HH_
 
 #include <QtCore>
 

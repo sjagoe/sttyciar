@@ -40,7 +40,6 @@ class EthernetIIFrame: public DataLinkLayerPacket
     private:
         static const int ETHERNETII_HEAD_LENGTH = 14;
         static const int ETHERNETII_MAC_LENGTH = 6;
-        //static const int ETHERNETII_ETHERTYPE_LENGTH = 2;
 
         mac_t* _sourceMAC, *_destMAC;
         ethertype_t* _etherType;

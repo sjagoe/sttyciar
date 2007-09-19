@@ -30,14 +30,6 @@ class IPv4Datagram: public NetworkLayerPacket
         static const short IPV4_SOURCEADDRESS_OFFSET = 12;
         static const short IPV4_DESTINATIONADDRESS_OFFSET = 16;
 
-//        static const short IPV4_DATAGRAMLENGTH_STORE_LENGTH = 2;
-//        static const short IPV4_IDENTIFICATION_STORE_LENGTH = 2;
-//        static const short IPV4_FRAGOFFSET_STORE_LENGTH = 2;
-//        static const short IPV4_CHECKSUM_STORE_LENGTH = 2;
-//        static const short IPV4_ADDRESS_STORE_LENGTH = 4;
-//
-//        static const short IPV4_TEMP_FLAGS_OFFSET_LENGTH = 2;
-
         static const short IPV4_VERSION_AND_VALUE = 0xF0;
         static const short IPV4_VERSION_SHIFT = 4;
 
