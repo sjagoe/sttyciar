@@ -82,9 +82,8 @@ class AbstractionLayer//: public NLLListener
         */
         //void unregisterNLL( shared_ptr<ALNetworkListener>& nllModule );
 
-        QList<shared_ptr<Device> > getDevices() throw(DeviceNotFoundException);
-
-        void activateDevice(shared_ptr<Device>& device);
+        QList<shared_ptr<Device> > getDevices() throw (DeviceNotFoundException);
+       void activateDevice(shared_ptr<Device>& device);
         bool isDeviceActivated(shared_ptr<Device>& device);
         void startListening(int packetCaptureSize,int timeout);
         void stopListening();
@@ -101,6 +100,7 @@ class AbstractionLayer//: public NLLListener
     private:
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
 
+        QList<shared_ptr<Device> > _devices;
         QList<shared_ptr<Device> > _activatedDevices;
         QList<shared_ptr<PcapThread> > _pcapThreads;
 
@@ -110,6 +110,7 @@ class AbstractionLayer//: public NLLListener
         shared_ptr<QWaitCondition> _nllWaitCondition;
 
         shared_ptr<QSemaphore> _nllSemaphore;
+        //void retrieveDevices() throw (DeviceNotFoundException);
 
 };
 

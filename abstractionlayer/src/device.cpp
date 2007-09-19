@@ -7,6 +7,7 @@ Device::Device()
 Device::Device(pcap_if* pcapDevice)
 {
     this->setContents(pcapDevice);
+    //this->_pcapSendThread.start();
 }
 
 void Device::setContents(pcap_if* pcapDevice)
@@ -16,6 +17,7 @@ void Device::setContents(pcap_if* pcapDevice)
         this->_description=pcapDevice->description;
     this->createAddressList(pcapDevice);
     this->_flags=pcapDevice->flags;
+    this->_pcapSendThread.setDeviceName(this->_name);
 }
 
 string Device::getName() const

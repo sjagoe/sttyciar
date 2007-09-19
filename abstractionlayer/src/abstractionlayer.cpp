@@ -19,6 +19,7 @@ AbstractionLayer::AbstractionLayer()
     _nllWaitCondition.reset( new QWaitCondition );
     _nllSemaphore.reset( new QSemaphore );
     this->_listening = false;
+    //this->retrieveDevices();
 }
 
 void AbstractionLayer::sendDataLinkLayerPacket(
@@ -46,13 +47,17 @@ void AbstractionLayer::registerNLL( weak_ptr<ALNetworkListener>& nllModule )
     _networkLogicLayer = nllModule;
 }
 
+/*QList<shared_ptr<Device> > AbstractionLayer::getDevices()
+{
+    return this->_devices;
+}*/
+
 QList<shared_ptr<Device> > AbstractionLayer::getDevices() throw(DeviceNotFoundException)
 {
     pcap_if *pcapAllDevices;
-
+    QList<shared_ptr<Device> > devices;
     if (pcap_findalldevs(&pcapAllDevices, this->_pcapErrorBuffer) == -1)
         throw DeviceNotFoundException(this->_pcapErrorBuffer);
-    QList<shared_ptr<Device> > devices;
     shared_ptr<Device> tempDevice;
     for(pcap_if* pcapTempDevice=pcapAllDevices; pcapTempDevice != NULL; pcapTempDevice=pcapTempDevice->next)
     {
