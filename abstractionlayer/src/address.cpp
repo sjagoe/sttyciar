@@ -75,11 +75,11 @@ string Address::toIPString() const
 {
     std::ostringstream sIPAddress;
     sIPAddress << (unsigned int)getAddressByte(0);
-    sIPAddress << ":";
+    sIPAddress << ".";
     sIPAddress << (unsigned int)getAddressByte(1);
-    sIPAddress << ":";
+    sIPAddress << ".";
     sIPAddress << (unsigned int)getAddressByte(2);
-    sIPAddress << ":";
+    sIPAddress << ".";
     sIPAddress << (unsigned int)getAddressByte(3);
 
     return sIPAddress.str();

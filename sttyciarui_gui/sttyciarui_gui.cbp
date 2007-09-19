@@ -14,7 +14,7 @@
 		</MakeCommands>
 		<Build>
 			<Target title="debug">
-				<Option output="bin\Debug\sttyciarui" prefix_auto="1" extension_auto="1" />
+				<Option output="..\bin\Debug\sttyciarui_gui" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -30,12 +30,11 @@
 				</MakeCommands>
 			</Target>
 			<Target title="release">
-				<Option output="..\bin\Release\libsttyciarui" prefix_auto="1" extension_auto="1" />
+				<Option output="..\bin\Release\sttyciarui_gui" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj\Release\" />
-				<Option type="3" />
+				<Option type="1" />
 				<Option compiler="gcc" />
-				<Option createDefFile="1" />
-				<Option createStaticLib="1" />
+				<Option use_console_runner="0" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>

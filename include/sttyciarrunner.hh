@@ -6,14 +6,13 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
 
-#include "abstractionlayer.hh"
-#include "alnetworklistener.hh"
-#include "networklogiclayer.hh"
-
 #include "sttyciarui_cli.hh"
 
 using boost::shared_ptr;
 using boost::scoped_ptr;
+
+class AbstractionLayer;
+class NetworkLogicLayer;
 
 class SttyciarRunner: public QObject
 {
@@ -27,13 +26,15 @@ class SttyciarRunner: public QObject
 
         scoped_ptr<SttyciarUI> _ui;
         shared_ptr<AbstractionLayer> _abstractionLayer;
-        //shared_ptr<ALNetworkListener> _networkLogicLayer;
         shared_ptr<NetworkLogicLayer> _networkLogicLayer;
 
     private slots:
         void startSttyciar(short deviceType);
         void stopSttyciar();
         void exitSttyciar();
+
+    signals:
+        void exit();
 };
 
 #endif

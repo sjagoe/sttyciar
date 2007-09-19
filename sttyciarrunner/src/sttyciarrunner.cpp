@@ -1,8 +1,11 @@
+#include <iostream>
+
+#include "abstractionlayer.hh"
+#include "alnetworklistener.hh"
+#include "networklogiclayer.hh"
+
 #include "sttyciarrunner.hh"
-
-#include "sttyciarui_cli.hh"
-
-
+#include "sttyciarui_gui.hh"
 #include "nllhub.hh"
 
 const short SttyciarUI::HUB_TYPE;
@@ -12,13 +15,14 @@ const int SttyciarRunner::PCAP_READ_TIMEOUT;
 
 SttyciarRunner::SttyciarRunner()
 {
-    _ui.reset( new SttyciarCLI );
+    _abstractionLayer.reset( new AbstractionLayer );
+    _ui.reset( new SttyciarGUI );
+    connect( _ui.get(), SIGNAL(exitSttyciar()), this, SIGNAL(exit()));
+    _ui->receiveDevices( _abstractionLayer->getDevices() );
 }
 
 void SttyciarRunner::startSttyciar(short deviceType)
 {
-    _abstractionLayer.reset( new AbstractionLayer );
-
     if ( deviceType == SttyciarUI::HUB_TYPE )
     {
         _networkLogicLayer.reset( new NLLHub );
@@ -39,12 +43,12 @@ void SttyciarRunner::stopSttyciar()
     // stop the NLL from processing packets
     _networkLogicLayer->exitNow();
     // destroy the AL and NLL objects
-    _abstractionLayer.reset();
     _networkLogicLayer.reset();
 }
 
 void SttyciarRunner::exitSttyciar()
 {
     stopSttyciar();
+    _abstractionLayer.reset();
     _ui.reset();
 }

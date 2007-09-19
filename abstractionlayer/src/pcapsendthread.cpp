@@ -23,7 +23,7 @@ void PcapSendThread::run()
     {
         if (!this->_packetQueue.isEmpty())
         {
-            pcap_sendpacket(
+            //pcap_sendpacket(
         }
     }
 }
