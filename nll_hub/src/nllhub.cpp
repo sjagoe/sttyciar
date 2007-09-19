@@ -24,8 +24,8 @@ void NLLHub::routePacket( shared_ptr<RawPacket> packet )
 
 //    getAbstractionLayer()->sendNetworkLayerPacket( packet, interfaces );
 
-    EthernetIIFrame e( packet );
 
+    EthernetIIFrame e( packet );
     IPv4Datagram d( e );
 
     ip_t ip = d.getSourceAddress();
@@ -36,5 +36,4 @@ void NLLHub::routePacket( shared_ptr<RawPacket> packet )
         << (int) ip.U_main.S_uchar.b3 << "."
         << (int) ip.U_main.S_uchar.b4
         << std::endl;
-
 }

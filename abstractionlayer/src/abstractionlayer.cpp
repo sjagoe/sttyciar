@@ -19,12 +19,11 @@ AbstractionLayer::AbstractionLayer()
     _nllWaitCondition.reset( new QWaitCondition );
     _nllSemaphore.reset( new QSemaphore );
     this->_listening = false;
-    //this->retrieveDevices();
+    this->retrieveDevices();
 }
 
 void AbstractionLayer::sendDataLinkLayerPacket(
-    shared_ptr<DataLinkLayerPacket>& packet,
-    shared_ptr<InterfaceRoute>& interfaces )
+    shared_ptr<DataLinkLayerPacket>& packet)
 {
     //is this inefficient?
     shared_ptr<QList<shared_ptr<Device> > > destinations = packet->getRawPacket()->getInterfaceRoute()->getDestinations();
@@ -47,26 +46,24 @@ void AbstractionLayer::registerNLL( weak_ptr<ALNetworkListener>& nllModule )
     _networkLogicLayer = nllModule;
 }
 
-/*QList<shared_ptr<Device> > AbstractionLayer::getDevices()
+QList<shared_ptr<Device> > AbstractionLayer::getDevices()
 {
     return this->_devices;
-}*/
+}
 
-QList<shared_ptr<Device> > AbstractionLayer::getDevices() throw(DeviceNotFoundException)
+void AbstractionLayer::retrieveDevices() throw(DeviceNotFoundException)
 {
     pcap_if *pcapAllDevices;
-    QList<shared_ptr<Device> > devices;
     if (pcap_findalldevs(&pcapAllDevices, this->_pcapErrorBuffer) == -1)
         throw DeviceNotFoundException(this->_pcapErrorBuffer);
     shared_ptr<Device> tempDevice;
     for(pcap_if* pcapTempDevice=pcapAllDevices; pcapTempDevice != NULL; pcapTempDevice=pcapTempDevice->next)
     {
         tempDevice.reset(new Device(pcapTempDevice));
-        devices.push_back(tempDevice);
+        this->_devices.push_back(tempDevice);
     }
 
     pcap_freealldevs(pcapAllDevices);
-    return devices;
 }
 
 void AbstractionLayer::activateDevice(shared_ptr<Device>& device)
@@ -94,6 +91,8 @@ void AbstractionLayer::startListening(int packetCaptureSize,int timeout)
     {
         tempPcapThread.reset(new PcapThread(*iter,packetCaptureSize,timeout,this->_networkLogicLayer));
         this->_pcapThreads.push_back(tempPcapThread);
+
+        (*iter)->startListening();
     }
 
     //start the thread objects running
@@ -101,6 +100,7 @@ void AbstractionLayer::startListening(int packetCaptureSize,int timeout)
     {
         (*iter)->start();
     }
+
 }
 
 void AbstractionLayer::stopListening()
