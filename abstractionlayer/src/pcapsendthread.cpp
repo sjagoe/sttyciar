@@ -19,11 +19,14 @@ void PcapSendThread::addPacket(const shared_ptr<RawPacket>& packet)
 void PcapSendThread::run()
 {
     this->_running = true;
+    shared_ptr<RawPacket> rawPacket;
     while (this->_running)
     {
         if (!this->_packetQueue.isEmpty())
+            _packetQueue.pop(rawPacket);
+        else
         {
-            pcap_sendpacket(
         }
+
     }
 }
