@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-#include "ui_main.h"
+#include "ui_sttyciar_gui_main.h"
 
 class SttyciarGUIMain: public QMainWindow
 {
@@ -25,6 +25,8 @@ class SttyciarGUIMain: public QMainWindow
 
         void on_btnRemoveAllDevices_clicked();
 
+        void on_btnExit_clicked();
+
         void moveAllDevices(QTreeWidget* sourceInterfaceTree,
             QTreeWidget* destinationInterfaceTree);
         void moveDevice(QTreeWidget* sourceInterfaceTree,
@@ -32,6 +34,7 @@ class SttyciarGUIMain: public QMainWindow
 
     signals:
         void startSttyciar(short deviceType);
+        void exit();
 };
 
 #endif

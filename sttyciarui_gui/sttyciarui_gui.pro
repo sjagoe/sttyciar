@@ -36,8 +36,7 @@ win32 {
 TARGET = sttyciarui
 
 # Input
-FORMS += forms/main.ui \
-         forms/textstatisticswidget.ui
+FORMS += forms/sttyciar_gui_main.ui
 
 HEADERS += ../include/sttyciarui_common.hh \
            ../include/sttyciarui_gui.hh \

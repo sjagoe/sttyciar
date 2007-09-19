@@ -63,8 +63,8 @@ void PcapThread::run() throw(CannotOpenDeviceException)
     }
 
     pcap_close(source);
-    delete pkt_header;
-    delete pkt_data;
+//    delete pkt_header;
+//    delete pkt_data;
 
 
 }

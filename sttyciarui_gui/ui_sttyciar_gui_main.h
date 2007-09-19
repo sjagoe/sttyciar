@@ -1,14 +1,14 @@
 /********************************************************************************
-** Form generated from reading ui file 'main.ui'
+** Form generated from reading ui file 'sttyciar_gui_main.ui'
 **
-** Created: Wed Sep 19 12:38:56 2007
+** Created: Wed Sep 19 16:21:38 2007
 **      by: Qt User Interface Compiler version 4.3.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
 ********************************************************************************/
 
-#ifndef UI_MAIN_H
-#define UI_MAIN_H
+#ifndef UI_STTYCIAR_GUI_MAIN_H
+#define UI_STTYCIAR_GUI_MAIN_H
 
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
@@ -33,8 +33,8 @@ public:
     QWidget *centralwidget;
     QVBoxLayout *vboxLayout;
     QHBoxLayout *hboxLayout;
+    QLabel *label;
     QComboBox *comboNetworkDevices;
-    QPushButton *btnStart;
     QGroupBox *grpInterfaces;
     QVBoxLayout *vboxLayout1;
     QVBoxLayout *vboxLayout2;
@@ -50,6 +50,10 @@ public:
     QVBoxLayout *vboxLayout3;
     QLabel *lblUsedInterfaces;
     QTreeWidget *treeUsedInterfaces;
+    QHBoxLayout *hboxLayout2;
+    QSpacerItem *spacerItem2;
+    QPushButton *btnStart;
+    QPushButton *btnExit;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -66,6 +70,11 @@ public:
     vboxLayout->setObjectName(QString::fromUtf8("vboxLayout"));
     hboxLayout = new QHBoxLayout();
     hboxLayout->setObjectName(QString::fromUtf8("hboxLayout"));
+    label = new QLabel(centralwidget);
+    label->setObjectName(QString::fromUtf8("label"));
+
+    hboxLayout->addWidget(label);
+
     comboNetworkDevices = new QComboBox(centralwidget);
     comboNetworkDevices->setObjectName(QString::fromUtf8("comboNetworkDevices"));
     QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
@@ -75,16 +84,6 @@ public:
     comboNetworkDevices->setSizePolicy(sizePolicy);
 
     hboxLayout->addWidget(comboNetworkDevices);
-
-    btnStart = new QPushButton(centralwidget);
-    btnStart->setObjectName(QString::fromUtf8("btnStart"));
-    QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Fixed);
-    sizePolicy1.setHorizontalStretch(1);
-    sizePolicy1.setVerticalStretch(0);
-    sizePolicy1.setHeightForWidth(btnStart->sizePolicy().hasHeightForWidth());
-    btnStart->setSizePolicy(sizePolicy1);
-
-    hboxLayout->addWidget(btnStart);
 
 
     vboxLayout->addLayout(hboxLayout);
@@ -117,32 +116,32 @@ public:
 
     btnAddAllDevices = new QPushButton(grpInterfaces);
     btnAddAllDevices->setObjectName(QString::fromUtf8("btnAddAllDevices"));
-    QSizePolicy sizePolicy2(QSizePolicy::Minimum, QSizePolicy::Fixed);
-    sizePolicy2.setHorizontalStretch(0);
-    sizePolicy2.setVerticalStretch(0);
-    sizePolicy2.setHeightForWidth(btnAddAllDevices->sizePolicy().hasHeightForWidth());
-    btnAddAllDevices->setSizePolicy(sizePolicy2);
+    QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Fixed);
+    sizePolicy1.setHorizontalStretch(0);
+    sizePolicy1.setVerticalStretch(0);
+    sizePolicy1.setHeightForWidth(btnAddAllDevices->sizePolicy().hasHeightForWidth());
+    btnAddAllDevices->setSizePolicy(sizePolicy1);
 
     hboxLayout1->addWidget(btnAddAllDevices);
 
     btnAddDevice = new QPushButton(grpInterfaces);
     btnAddDevice->setObjectName(QString::fromUtf8("btnAddDevice"));
-    sizePolicy2.setHeightForWidth(btnAddDevice->sizePolicy().hasHeightForWidth());
-    btnAddDevice->setSizePolicy(sizePolicy2);
+    sizePolicy1.setHeightForWidth(btnAddDevice->sizePolicy().hasHeightForWidth());
+    btnAddDevice->setSizePolicy(sizePolicy1);
 
     hboxLayout1->addWidget(btnAddDevice);
 
     btnRemoveDevice = new QPushButton(grpInterfaces);
     btnRemoveDevice->setObjectName(QString::fromUtf8("btnRemoveDevice"));
-    sizePolicy2.setHeightForWidth(btnRemoveDevice->sizePolicy().hasHeightForWidth());
-    btnRemoveDevice->setSizePolicy(sizePolicy2);
+    sizePolicy1.setHeightForWidth(btnRemoveDevice->sizePolicy().hasHeightForWidth());
+    btnRemoveDevice->setSizePolicy(sizePolicy1);
 
     hboxLayout1->addWidget(btnRemoveDevice);
 
     btnRemoveAllDevices = new QPushButton(grpInterfaces);
     btnRemoveAllDevices->setObjectName(QString::fromUtf8("btnRemoveAllDevices"));
-    sizePolicy2.setHeightForWidth(btnRemoveAllDevices->sizePolicy().hasHeightForWidth());
-    btnRemoveAllDevices->setSizePolicy(sizePolicy2);
+    sizePolicy1.setHeightForWidth(btnRemoveAllDevices->sizePolicy().hasHeightForWidth());
+    btnRemoveAllDevices->setSizePolicy(sizePolicy1);
 
     hboxLayout1->addWidget(btnRemoveAllDevices);
 
@@ -172,6 +171,29 @@ public:
 
     vboxLayout->addWidget(grpInterfaces);
 
+    hboxLayout2 = new QHBoxLayout();
+    hboxLayout2->setObjectName(QString::fromUtf8("hboxLayout2"));
+    spacerItem2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+    hboxLayout2->addItem(spacerItem2);
+
+    btnStart = new QPushButton(centralwidget);
+    btnStart->setObjectName(QString::fromUtf8("btnStart"));
+    sizePolicy1.setHeightForWidth(btnStart->sizePolicy().hasHeightForWidth());
+    btnStart->setSizePolicy(sizePolicy1);
+
+    hboxLayout2->addWidget(btnStart);
+
+    btnExit = new QPushButton(centralwidget);
+    btnExit->setObjectName(QString::fromUtf8("btnExit"));
+    sizePolicy1.setHeightForWidth(btnExit->sizePolicy().hasHeightForWidth());
+    btnExit->setSizePolicy(sizePolicy1);
+
+    hboxLayout2->addWidget(btnExit);
+
+
+    vboxLayout->addLayout(hboxLayout2);
+
     FormSttyciarGUIMain->setCentralWidget(centralwidget);
     menubar = new QMenuBar(FormSttyciarGUIMain);
     menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -180,8 +202,17 @@ public:
     statusbar = new QStatusBar(FormSttyciarGUIMain);
     statusbar->setObjectName(QString::fromUtf8("statusbar"));
     FormSttyciarGUIMain->setStatusBar(statusbar);
+    label->setBuddy(comboNetworkDevices);
     lblInterfacesAvailable->setBuddy(treeAvailableInterfaces);
     lblUsedInterfaces->setBuddy(treeUsedInterfaces);
+    QWidget::setTabOrder(comboNetworkDevices, btnStart);
+    QWidget::setTabOrder(btnStart, btnExit);
+    QWidget::setTabOrder(btnExit, treeAvailableInterfaces);
+    QWidget::setTabOrder(treeAvailableInterfaces, btnAddAllDevices);
+    QWidget::setTabOrder(btnAddAllDevices, btnAddDevice);
+    QWidget::setTabOrder(btnAddDevice, btnRemoveDevice);
+    QWidget::setTabOrder(btnRemoveDevice, btnRemoveAllDevices);
+    QWidget::setTabOrder(btnRemoveAllDevices, treeUsedInterfaces);
 
     retranslateUi(FormSttyciarGUIMain);
 
@@ -191,7 +222,7 @@ public:
     void retranslateUi(QMainWindow *FormSttyciarGUIMain)
     {
     FormSttyciarGUIMain->setWindowTitle(QApplication::translate("FormSttyciarGUIMain", "Sttyciar", 0, QApplication::UnicodeUTF8));
-    btnStart->setText(QApplication::translate("FormSttyciarGUIMain", "&Start Device", 0, QApplication::UnicodeUTF8));
+    label->setText(QApplication::translate("FormSttyciarGUIMain", "&Device Type:", 0, QApplication::UnicodeUTF8));
     grpInterfaces->setTitle(QApplication::translate("FormSttyciarGUIMain", "Interfaces", 0, QApplication::UnicodeUTF8));
     lblInterfacesAvailable->setText(QApplication::translate("FormSttyciarGUIMain", "Available Interfaces", 0, QApplication::UnicodeUTF8));
     treeAvailableInterfaces->headerItem()->setText(0, QApplication::translate("FormSttyciarGUIMain", "Device", 0, QApplication::UnicodeUTF8));
@@ -236,6 +267,8 @@ public:
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">This displays the interfaces that will be bound to the device.</p></body></html>", 0, QApplication::UnicodeUTF8));
+    btnStart->setText(QApplication::translate("FormSttyciarGUIMain", "&Start Device", 0, QApplication::UnicodeUTF8));
+    btnExit->setText(QApplication::translate("FormSttyciarGUIMain", "&Exit", 0, QApplication::UnicodeUTF8));
     Q_UNUSED(FormSttyciarGUIMain);
     } // retranslateUi
 
@@ -245,4 +278,4 @@ namespace Ui {
     class FormSttyciarGUIMain: public Ui_FormSttyciarGUIMain {};
 } // namespace Ui
 
-#endif // UI_MAIN_H
+#endif // UI_STTYCIAR_GUI_MAIN_H

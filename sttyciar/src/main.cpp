@@ -48,7 +48,7 @@ int main()
             abstractionLayer->activateDevice(*iter);
         }
     }
-    abstractionLayer->startListening(65535,3000);
+    abstractionLayer->startListening(65535,50);
     networkLogicLayer->start();
     std::cout << "Push any button to stop listening...";
     cin.sync();
@@ -56,6 +56,8 @@ int main()
     cin >> a;
     std::cout << "Waiting for threads to die... ";
     abstractionLayer->stopListening();
+    networkLogicLayer->exitNow();
+    networkLogicLayer->wait();
     std::cout << "Ping! Your waffles are ready!" << endl;
 
     return 0;

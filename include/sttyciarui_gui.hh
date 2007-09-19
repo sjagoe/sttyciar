@@ -22,11 +22,17 @@ class SttyciarGUI: public SttyciarUI
 
 
     protected slots:
-        void exit() {};
+        void exit()
+        {
+            emit exitSttyciar();
+        };
 
         void startSttyciar(short deviceType)
         {
             //std::cout << deviceType << std::endl;
+            _mainUI->hide();
+            _statisticsUI->show();
+
         };
 
     private:

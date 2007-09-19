@@ -2,14 +2,15 @@
 #include <QObject>
 
 #include "sttyciarui_gui.hh"
-#include "sttyciarui_gui_main.hh"
-#include "sttyciarui_gui_statistics.hh"
 
 SttyciarGUI::SttyciarGUI()
 {
     _mainUI.reset( new SttyciarGUIMain );
+    _statisticsUI.reset( new SttyciarGUIStatistics );
 
     connect( _mainUI.get(), SIGNAL(startSttyciar(short)), this, SLOT(startSttyciar(short)) );
+    connect( _mainUI.get(), SIGNAL(exit()), this, SLOT(exit()) );
+    connect( _statisticsUI.get(), SIGNAL(exit()), this, SLOT(exit()) );
 
     _mainUI->show();
 }
@@ -18,10 +19,8 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    SttyciarGUIStatistics ui;
-    QObject::connect( &ui, SIGNAL(exit()), &app, SLOT(quit()) );
-
-    ui.show();
+    SttyciarGUI ui;
+    QObject::connect( &ui, SIGNAL(exitSttyciar()), &app, SLOT(quit()) );
 
     return app.exec();
 }

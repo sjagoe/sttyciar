@@ -44,6 +44,11 @@ void SttyciarGUIMain::on_btnRemoveAllDevices_clicked()
     moveAllDevices( _ui.treeUsedInterfaces, _ui.treeAvailableInterfaces );
 }
 
+void SttyciarGUIMain::on_btnExit_clicked()
+{
+    emit exit();
+}
+
 void SttyciarGUIMain::moveAllDevices(QTreeWidget* sourceInterfaceTree,
     QTreeWidget* destinationInterfaceTree)
 {
