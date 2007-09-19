@@ -17,22 +17,6 @@ AbstractionLayer::AbstractionLayer()
     this->_listening = false;
 }
 
-//AbstractionLayer::AbstractionLayer( shared_ptr<ALNetworkListener> nllModule )
-//{
-//    AbstractionLayer();
-//    //_networkLogicLayer.push_back( nllModule );
-//    _networkLogicLayer = nllModule;
-//}
-
-//AbstractionLayer::AbstractionLayer(
-//    vector<shared_ptr<ALNetworkListener> > nllModules )
-//{
-//    AbstractionLayer();
-//    _networkLogicLayer.resize( nllModules.size() );
-//    std::copy( nllModules.begin(), nllModules.end(),
-//               _networkLogicLayer.begin() );
-//}
-
 void AbstractionLayer::sendDataLinkLayerPacket(
     shared_ptr<DataLinkLayerPacket>& packet,
     shared_ptr<InterfaceRoute>& interfaces )

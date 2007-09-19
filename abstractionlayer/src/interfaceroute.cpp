@@ -14,9 +14,3 @@ void InterfaceRoute::clearDestinations()
 {
     _destinationInterfaces.clear();
 }
-
-//void InterfaceRoute::setDestinations()
-//{
-//
-//}
-

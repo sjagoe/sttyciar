@@ -46,12 +46,11 @@ class NetworkLogicLayer:
 {
     Q_OBJECT
     public:
-        /* !
+        /*!
         Constructor setting the AbstractionLayer pointer.
 
-        This MUST be called by the inheriting class!
-
-        @param al boost::shared_ptr to the AbstractionLayer object.
+        This MUST be called by the inheriting class! This constructor creates
+        the LockableQueueGroup used as am incoming packet buffer.
         */
         //NetworkLogicLayer( shared_ptr<AbstractionLayer>& al );
         NetworkLogicLayer();
@@ -72,7 +71,7 @@ class NetworkLogicLayer:
         */
         void exitNow();
 
-        /*!
+        /* !
         Method provided by the ALNetworkListener for the AL to push a received
         packet onto the receive buffer.
 
@@ -80,13 +79,12 @@ class NetworkLogicLayer:
         @param interfaces A shared_ptr to the InterfaceRoute describing where
         the packet came from.
         */
-//        void packetReceived( shared_ptr<RawPacket>& packet,
-//            shared_ptr<Device>& device );
+        /*!
+        Method provided by the ALNetworkListener for the AL to notify the NLL
+        that a packet has been received, and wake the NLL thread.
+        */
         void packetReceived();
 
-//        void
-//        registerQueue( shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,
-//            shared_ptr<InterfaceRoute> > > > queue );
         void
         registerQueue(
             shared_ptr<LockableQueue<shared_ptr<RawPacket> > > queue );
@@ -104,10 +102,9 @@ class NetworkLogicLayer:
         A pure virtual method for specific NLL modules to override and provide
         the routing logic specific to the device.
 
-        @param packet A QPair containing the RawPacket data and InterfaceRoute.
+        @param packet A RawPacket containing the raw packet data and
+        InterfaceRoute.
         */
-//        virtual void routePacket( shared_ptr<RawPacket> packet,
-//            shared_ptr<InterfaceRoute>& interfaces ) = 0;
         virtual void routePacket( shared_ptr<RawPacket> packet ) = 0;
 
         /*!

@@ -48,12 +48,6 @@ class InterfaceRoute
         */
         void clearDestinations();
 
-        /* !
-        Set the list of destinations to a precompiled list (rather than
-        appending one by one).
-        */
-        //void setDestinations();
-
         /*!
         Return the list of destination Devices.
         */
