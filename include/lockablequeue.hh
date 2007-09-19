@@ -19,7 +19,8 @@ class LockableQueue
         void pop(T& element)
         {
             _queueMutex.lock();
-            element = _queue.dequeue();
+            if (!_queue.isEmpty())
+                element = _queue.dequeue();
             _queueMutex.unlock();
         };
 
