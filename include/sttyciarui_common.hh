@@ -7,7 +7,7 @@
 
 using boost::shared_ptr;
 
-//class SttyciarUIBase;
+class Device;
 
 class SttyciarUI: public QObject
 {
@@ -18,6 +18,8 @@ class SttyciarUI: public QObject
 
     public slots:
         virtual void updateStatistics() = 0;
+        virtual void receiveDevices(
+            const QList<shared_ptr<Device> >& devices ) {};
 
     protected slots:
         virtual void exit() = 0;

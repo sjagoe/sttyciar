@@ -1,3 +1,4 @@
+#include <iostream>
 #include <QApplication>
 #include <QObject>
 
@@ -24,6 +25,12 @@ void SttyciarGUI::sttyciarRunning()
 void SttyciarGUI::updateStatistics()
 {
 
+}
+
+void SttyciarGUI::receiveDevices(
+    const QList<shared_ptr<Device> >& devices )
+{
+    _mainUI->setDevices( devices );
 }
 
 void SttyciarGUI::exit()

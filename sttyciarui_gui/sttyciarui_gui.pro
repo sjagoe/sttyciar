@@ -6,7 +6,7 @@ macx {
     error(Sttyciar does not support MacOS X at this time)
 }
 
-TEMPLATE = app
+TEMPLATE = lib
 
 DEPENDPATH += . src
 INCLUDEPATH += ../include
@@ -18,11 +18,11 @@ CONFIG += console
 CONFIG += debug_and_release
 
 CONFIG(debug, debug|release) {
-    DESTDIR = bin/Debug
+    DESTDIR = ../bin/Debug
     DEPENDPATH += bin/Debug
     LIBS += -L../bin/Debug
 } else {
-    DESTDIR = bin/Release
+    DESTDIR = ../bin/Release
     DEPENDPATH += bin/Release
     LIBS += -L../bin/Release
 }
@@ -31,7 +31,10 @@ win32 {
     CONFIG += dll
     CONFIG += rtti
     CONFIG += exceptions
+    INCLUDEPATH += ../../resources/WpdPack/Include
 }
+
+LIBS += -labstractionlayer
 
 TARGET = sttyciarui
 

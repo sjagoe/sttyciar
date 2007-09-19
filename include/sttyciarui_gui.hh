@@ -9,6 +9,8 @@
 #include "sttyciarui_gui_main.hh"
 #include "sttyciarui_gui_statistics.hh"
 
+#include "device.hh"
+
 using boost::scoped_ptr;
 
 class SttyciarGUI: public SttyciarUI
@@ -21,6 +23,8 @@ class SttyciarGUI: public SttyciarUI
         void sttyciarRunning();
 
         void updateStatistics();
+
+        void receiveDevices( const QList<shared_ptr<Device> >& devices );
 
     protected slots:
         void exit();
