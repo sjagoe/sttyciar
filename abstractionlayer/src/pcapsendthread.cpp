@@ -14,6 +14,7 @@ PcapSendThread::~PcapSendThread()
 void PcapSendThread::addPacket(const shared_ptr<RawPacket>& packet)
 {
     this->_packetQueue.push(packet);
+    this->_waitCondition.wakeAll();
 }
 
 void PcapSendThread::run()
@@ -26,6 +27,8 @@ void PcapSendThread::run()
             _packetQueue.pop(rawPacket);
         else
         {
+            this->mutex.lock();
+            this->_waitCondition.wait(this->_mutex);
         }
 
     }

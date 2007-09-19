@@ -23,6 +23,8 @@ class PcapSendThread : public QThread
     private:
         LockableQueue<shared_ptr<RawPacket> > _packetQueue;
         bool _running;
+        QWaitCondition _waitCondition;
+        QMutex _mutex;
 };
 
 #endif // __PCAPSENDTHREAD_HH__
