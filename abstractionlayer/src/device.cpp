@@ -7,7 +7,6 @@ Device::Device()
 Device::Device(pcap_if* pcapDevice)
 {
     this->setContents(pcapDevice);
-    //this->_pcapSendThread.start();
 }
 
 void Device::setContents(pcap_if* pcapDevice)
@@ -49,6 +48,16 @@ void Device::createAddressList(pcap_if* pcapDevice)
         address.setContents(pcapTempAddress);
         _addresses.push_back(address);
     }
+}
+
+void Device::startListening()
+{
+    this->_pcapSendThread.start();
+}
+
+void Device::stopListening()
+{
+    this->_pcapSendThread.stopRunning();
 }
 
 void Device::sendPacket(const shared_ptr<RawPacket>& packet)

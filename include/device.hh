@@ -24,6 +24,8 @@ class Device
         const QList<DeviceAddress>& getAddresses() const;
         bool isLoopback() const;
         bool operator==(Device& device) const;
+        void startListening();
+        void stopListening();
         void sendPacket(const shared_ptr<RawPacket>& packet);
 
     private:

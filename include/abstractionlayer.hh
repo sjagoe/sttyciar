@@ -52,8 +52,7 @@ class AbstractionLayer//: public NLLListener
         @param interfaces The InterfaceRoute object now containing full
         source/destination interface data.
         */
-        void sendDataLinkLayerPacket( shared_ptr<DataLinkLayerPacket>& packet,
-                                      shared_ptr<InterfaceRoute>& interfaces );
+        void sendDataLinkLayerPacket( shared_ptr<DataLinkLayerPacket>& packet);
 
         /*!
         send a network layer frame (i.e. the network layer [IP] header and
@@ -82,7 +81,7 @@ class AbstractionLayer//: public NLLListener
         */
         //void unregisterNLL( shared_ptr<ALNetworkListener>& nllModule );
 
-        QList<shared_ptr<Device> > getDevices() throw (DeviceNotFoundException);
+        QList<shared_ptr<Device> > getDevices();
        void activateDevice(shared_ptr<Device>& device);
         bool isDeviceActivated(shared_ptr<Device>& device);
         void startListening(int packetCaptureSize,int timeout);
@@ -110,7 +109,7 @@ class AbstractionLayer//: public NLLListener
         shared_ptr<QWaitCondition> _nllWaitCondition;
 
         shared_ptr<QSemaphore> _nllSemaphore;
-        //void retrieveDevices() throw (DeviceNotFoundException);
+        void retrieveDevices() throw (DeviceNotFoundException);
 
 };
 
