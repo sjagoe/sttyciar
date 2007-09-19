@@ -1,8 +1,6 @@
 #ifndef __PCAPTHREADTICKET_HH__
 #define __PCAPTHREADTICKET_HH__
 
-#include <QPair>
-
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
@@ -20,24 +18,21 @@ class PcapThreadTicket
         PcapThreadTicket( weak_ptr<ALNetworkListener> nll )
         {
             _networkLogicLayer = nll;
-            _receiveBuffer.reset( new LockableQueue<QPair<shared_ptr<RawPacket>,
-                shared_ptr<InterfaceRoute> > > );
+            _receiveBuffer.reset( new LockableQueue<shared_ptr<RawPacket> > );
             _networkLogicLayer.lock()->registerQueue( _receiveBuffer );
         };
 
-        void enqueue( shared_ptr<RawPacket> packet,
-            shared_ptr<Device> device )
+        void enqueue( const shared_ptr<RawPacket>& packet )
         {
-            shared_ptr<InterfaceRoute>
-                interfaces( new InterfaceRoute( device ) );
-            _receiveBuffer->push( qMakePair( packet, interfaces ) );
+            _receiveBuffer->push( packet );
             _networkLogicLayer.lock()->packetReceived();
         };
 
     private:
         weak_ptr<ALNetworkListener> _networkLogicLayer;
-        shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,
-            shared_ptr<InterfaceRoute> > > > _receiveBuffer;
+//        shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,
+//            shared_ptr<InterfaceRoute> > > > _receiveBuffer;
+        shared_ptr<LockableQueue<shared_ptr<RawPacket> > > _receiveBuffer;
 };
 
 #endif

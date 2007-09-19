@@ -53,8 +53,9 @@ void PcapThread::run() throw(CannotOpenDeviceException)
     {
         while (this->_listening && (result=pcap_next_ex(source,&pkt_header,&pkt_data) == 1))
         {
-            shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data));
-            this->_receiveBuffer->enqueue( rawPacket, this->_device );
+            shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data, this->_device));
+            //this->_receiveBuffer->enqueue( rawPacket, this->_device );
+            this->_receiveBuffer->enqueue( rawPacket );
             /* // the 3 lines below are replaced with the single line above, the PcapThreadTicket object
             interfaceRoute.reset(new InterfaceRoute(this->_device));
             this->_receiveBuffer->push(qMakePair(rawPacket,interfaceRoute));

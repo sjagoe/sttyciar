@@ -84,9 +84,12 @@ class NetworkLogicLayer:
 //            shared_ptr<Device>& device );
         void packetReceived();
 
+//        void
+//        registerQueue( shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,
+//            shared_ptr<InterfaceRoute> > > > queue );
         void
-        registerQueue( shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,
-            shared_ptr<InterfaceRoute> > > > queue );
+        registerQueue(
+            shared_ptr<LockableQueue<shared_ptr<RawPacket> > > queue );
 
     protected:
         list<shared_ptr<Device> > _devices;
@@ -103,8 +106,9 @@ class NetworkLogicLayer:
 
         @param packet A QPair containing the RawPacket data and InterfaceRoute.
         */
-        virtual void routePacket( shared_ptr<RawPacket> packet,
-            shared_ptr<InterfaceRoute>& interfaces ) = 0;
+//        virtual void routePacket( shared_ptr<RawPacket> packet,
+//            shared_ptr<InterfaceRoute>& interfaces ) = 0;
+        virtual void routePacket( shared_ptr<RawPacket> packet ) = 0;
 
         /*!
         A method to be used by specific NLL module implementations to obtain a
@@ -123,8 +127,10 @@ class NetworkLogicLayer:
 //        scoped_ptr<concurrent_queue<QPair<shared_ptr<RawPacket>,
 //            shared_ptr<InterfaceRoute> > > > _receiveBuffer;
 
-        scoped_ptr<LockableQueueGroup<QPair<shared_ptr<RawPacket>,
-            shared_ptr<InterfaceRoute> > > > _receiveBuffer;
+//        scoped_ptr<LockableQueueGroup<QPair<shared_ptr<RawPacket>,
+//            shared_ptr<InterfaceRoute> > > > _receiveBuffer;
+
+        scoped_ptr<LockableQueueGroup<shared_ptr<RawPacket> > > _receiveBuffer;
 
         //! the QWaitCondition used to wake up the thread once a packet is on
         //! the receive buffer

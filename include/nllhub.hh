@@ -15,6 +15,7 @@ using boost::shared_ptr;
 
 // forward declerations
 class AbstractionLayer;
+class RawPacket;
 
 class NLLHub: public NetworkLogicLayer
 {
@@ -24,8 +25,7 @@ class NLLHub: public NetworkLogicLayer
         {};
 
     protected:
-        void routePacket( shared_ptr<RawPacket> packet,
-            shared_ptr<InterfaceRoute>& interfaces );
+        void routePacket( shared_ptr<RawPacket> packet );
 };
 
 #endif

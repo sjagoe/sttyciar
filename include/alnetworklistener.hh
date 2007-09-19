@@ -49,9 +49,12 @@ class ALNetworkListener
 
         virtual void packetReceived() = 0;
 
+//        virtual void
+//        registerQueue( shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,
+//            shared_ptr<InterfaceRoute> > > > queue ) = 0;
         virtual void
-        registerQueue( shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,
-            shared_ptr<InterfaceRoute> > > > queue ) = 0;
+        registerQueue(
+            shared_ptr<LockableQueue<shared_ptr<RawPacket> > > queue ) = 0;
 };
 
 #endif
