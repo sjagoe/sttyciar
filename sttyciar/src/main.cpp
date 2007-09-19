@@ -17,10 +17,11 @@ int main()
     shared_ptr<AbstractionLayer> abstractionLayer( new AbstractionLayer );
     shared_ptr<NetworkLogicLayer> networkLogicLayer( new NLLHub );
 
-    //weak_ptr<AbstractionLayer> weakAL( abstractionLayer );
+    weak_ptr<AbstractionLayer> weakAL( abstractionLayer );
     weak_ptr<ALNetworkListener> weakNLL( networkLogicLayer );
 
     abstractionLayer->registerNLL( weakNLL );
+    networkLogicLayer->registerAbstractionLayer( weakAL );
 
     list<shared_ptr<Device> > devices = abstractionLayer->getDevices();
 

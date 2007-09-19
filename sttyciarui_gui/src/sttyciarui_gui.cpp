@@ -1,8 +1,9 @@
 #include <QApplication>
+#include <QObject>
 
 #include "sttyciarui_gui.hh"
 #include "sttyciarui_gui_main.hh"
-
+#include "sttyciarui_gui_statistics.hh"
 
 SttyciarGUI::SttyciarGUI()
 {
@@ -17,7 +18,10 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    SttyciarGUI ui;
+    SttyciarGUIStatistics ui;
+    QObject::connect( &ui, SIGNAL(exit()), &app, SLOT(quit()) );
+
+    ui.show();
 
     return app.exec();
 }

@@ -10,7 +10,8 @@ using namespace std;
 
 const short SttyciarUI::HUB_TYPE;
 
-SttyciarGUIMain::SttyciarGUIMain()
+SttyciarGUIMain::SttyciarGUIMain(QWidget* parent)
+    : QMainWindow(parent)
 {
     _ui.setupUi(this);
     _ui.treeAvailableInterfaces->sortItems(0, Qt::AscendingOrder);

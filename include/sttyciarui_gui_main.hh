@@ -9,7 +9,7 @@ class SttyciarGUIMain: public QMainWindow
 {
     Q_OBJECT
     public:
-        SttyciarGUIMain();
+        SttyciarGUIMain(QWidget* parent = 0);
 
     private:
         Ui::FormSttyciarGUIMain _ui;

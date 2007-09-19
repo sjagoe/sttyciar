@@ -56,9 +56,11 @@
 		<Unit filename="../include/sttyciarui_common.hh" />
 		<Unit filename="../include/sttyciarui_gui.hh" />
 		<Unit filename="../include/sttyciarui_gui_main.hh" />
+		<Unit filename="../include/sttyciarui_gui_statistics.hh" />
 		<Unit filename="forms/main.ui" />
 		<Unit filename="src/sttyciarui_gui.cpp" />
 		<Unit filename="src/sttyciarui_gui_main.cpp" />
+		<Unit filename="src/sttyciarui_gui_statistics.cpp" />
 		<Unit filename="sttyciarui_gui.pro" />
 		<Extensions>
 			<code_completion />

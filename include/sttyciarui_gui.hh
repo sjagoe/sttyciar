@@ -7,6 +7,7 @@
 
 #include "sttyciarui_common.hh"
 #include "sttyciarui_gui_main.hh"
+#include "sttyciarui_gui_statistics.hh"
 
 using boost::scoped_ptr;
 
@@ -30,6 +31,7 @@ class SttyciarGUI: public SttyciarUI
 
     private:
         scoped_ptr<SttyciarGUIMain> _mainUI;
+        scoped_ptr<SttyciarGUIStatistics> _statisticsUI;
 };
 
 #endif
