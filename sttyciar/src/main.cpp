@@ -1,4 +1,4 @@
-#include <vector>
+//#include <vector>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -23,10 +23,10 @@ int main()
     abstractionLayer->registerNLL( weakNLL );
     networkLogicLayer->registerAbstractionLayer( weakAL );
 
-    list<shared_ptr<Device> > devices = abstractionLayer->getDevices();
+    QList<shared_ptr<Device> > devices = abstractionLayer->getDevices();
 
     int count = 0;
-    for (list<shared_ptr<Device> >::iterator iter = devices.begin(); iter != devices.end(); ++iter)
+    for (QList<shared_ptr<Device> >::iterator iter = devices.begin(); iter != devices.end(); ++iter)
     {
         std::cout << count++ << ": "<<(*iter)->getName() << " ["<<(*iter)->getDescription()<<"] "<<std::endl;
         //deviceAddresses = (*iter)->getAddresses();
@@ -41,7 +41,7 @@ int main()
     iss >> deviceNo;
 
     count = 0;
-    for (list<shared_ptr<Device> >::iterator iter = devices.begin(); iter != devices.end(); ++iter)
+    for (QList<shared_ptr<Device> >::iterator iter = devices.begin(); iter != devices.end(); ++iter)
     {
         if (count++==deviceNo)
         {

@@ -15,7 +15,7 @@ class StatisticsLayer: public QObject, public ALStatisticsListener
 
         void updateStatistics( InterfaceRoute& interfaces );
 
-        void availableInterfaces( list<shared_ptr<Device> >& devices );
+        void availableInterfaces( QList<shared_ptr<Device> >& devices );
 
     private:
         QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, long long> > _traffic;

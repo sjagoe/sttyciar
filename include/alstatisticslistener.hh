@@ -3,7 +3,7 @@
 
 #include <boost/shared_ptr.hpp>
 
-#include <list>
+#include <QList>
 
 using boost::shared_ptr;
 using std::list;
@@ -42,7 +42,7 @@ class ALStatisticsListener
         to allow users to easily configure the routing infrastructure.
         */
         virtual void
-        availableInterfaces( list<shared_ptr<Device> >& devices ) = 0;
+        availableInterfaces( QList<shared_ptr<Device> >& devices ) = 0;
 };
 
 #endif

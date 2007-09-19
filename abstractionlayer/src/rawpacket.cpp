@@ -42,18 +42,18 @@ void RawPacket::initialisePacket ( const u_int32_t& length )
     _pcapHeader->caplen = length;
 }
 
-void RawPacket::insert( const vector<u_char>& data,
-    const bpf_u_int32& from_position, const bpf_u_int32& length,
-    const bpf_u_int32& position )
-{
-    if ( ( data.size() >= (length + from_position) ) &&
-        ( _pcapHeader->len >= (position + length) ) )
-    {
-        vector<u_char>::const_iterator from = data.begin() + from_position;
-        u_char* to = _packet.get() + position;
-        __gnu_cxx::copy_n( from, length, to );
-    }
-}
+//void RawPacket::insert( const vector<u_char>& data,
+//    const bpf_u_int32& from_position, const bpf_u_int32& length,
+//    const bpf_u_int32& position )
+//{
+//    if ( ( data.size() >= (length + from_position) ) &&
+//        ( _pcapHeader->len >= (position + length) ) )
+//    {
+//        vector<u_char>::const_iterator from = data.begin() + from_position;
+//        u_char* to = _packet.get() + position;
+//        __gnu_cxx::copy_n( from, length, to );
+//    }
+//}
 
 void RawPacket::addDestination( const shared_ptr<Device>& destinationInterface )
 {

@@ -10,10 +10,10 @@ void StatisticsLayer::updateStatistics( InterfaceRoute& interfaces )
 
 }
 
-void StatisticsLayer::availableInterfaces( list<shared_ptr<Device> >& devices )
+void StatisticsLayer::availableInterfaces( QList<shared_ptr<Device> >& devices )
 {
-    list<shared_ptr<Device> >::const_iterator main_iter = devices.begin();
-    list<shared_ptr<Device> >::const_iterator secondary_iter = devices.begin();
+    QList<shared_ptr<Device> >::const_iterator main_iter = devices.begin();
+    QList<shared_ptr<Device> >::const_iterator secondary_iter = devices.begin();
 
     for (; main_iter != devices.end(); main_iter++)
     {

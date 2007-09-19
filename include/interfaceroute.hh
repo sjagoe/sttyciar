@@ -2,7 +2,7 @@
 #define __INTERFACEROUTE_HH__
 
 // STL
-#include <list>
+#include <QList>
 
 // boost
 #include <boost/shared_ptr.hpp>
@@ -27,7 +27,7 @@ class InterfaceRoute
 {
     private:
         shared_ptr<Device> _sourceInterface;
-        list<shared_ptr<Device> > _destinationInterfaces;
+        QList<shared_ptr<Device> > _destinationInterfaces;
 
     public:
         /*!
@@ -51,7 +51,7 @@ class InterfaceRoute
         /*!
         Return the list of destination Devices.
         */
-        inline const list<shared_ptr<Device> >& getDestinations() const
+        inline const QList<shared_ptr<Device> >& getDestinations() const
         {
             return _destinationInterfaces;
         };

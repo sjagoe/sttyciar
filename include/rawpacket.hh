@@ -2,7 +2,7 @@
 #define __RAWPACKET_HH__
 
 // STL
-#include <vector>
+//#include <vector>
 #include <iterator>
 
 // boost
@@ -13,7 +13,7 @@
 // pcap
 #include <pcap.h>
 
-using std::vector;
+//using std::vector;
 using boost::shared_array;
 using boost::shared_ptr;
 using boost::scoped_ptr;
@@ -49,19 +49,17 @@ class RawPacket
                     const shared_array<u_char>& packet,
                     const shared_ptr<Device>& sourceDevice );
 
-        /*
-        void setPacket( bpf_u_int32 length, vector<u_char> packet );
-        void append(vector<u_char> data);
-        void append(u_char data);
-        */
+//        void setPacket( bpf_u_int32 length, vector<u_char> packet );
+//        void append(vector<u_char> data);
+//        void append(u_char data);
 
         void setPacket ( const pcap_pkthdr* head, const u_char* packet );
 
         void initialisePacket ( const u_int32_t& length );
 
-        void insert( const vector<u_char>& data,
-            const bpf_u_int32& from_position, const bpf_u_int32& length,
-            const bpf_u_int32& position );
+//        void insert( const vector<u_char>& data,
+//            const bpf_u_int32& from_position, const bpf_u_int32& length,
+//            const bpf_u_int32& position );
 
         void addDestination( const shared_ptr<Device>& destinationInterface );
 

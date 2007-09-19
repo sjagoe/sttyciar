@@ -2,8 +2,10 @@
 #define __ABSTRACTIONLAYER_HH__
 
 // STL
-#include <vector>
-#include <list>
+//#include <vector>
+
+// Qt
+#include <QList>
 
 // boost
 #include <boost/shared_ptr.hpp>
@@ -17,7 +19,7 @@
 #include "exceptions.hh"
 
 // import specific types from namespaces
-using std::vector;
+//using std::vector;
 using std::list;
 using boost::shared_ptr;
 using boost::weak_ptr;
@@ -80,7 +82,7 @@ class AbstractionLayer//: public NLLListener
         */
         //void unregisterNLL( shared_ptr<ALNetworkListener>& nllModule );
 
-        list<shared_ptr<Device> > getDevices() throw(DeviceNotFoundException);
+        QList<shared_ptr<Device> > getDevices() throw(DeviceNotFoundException);
 
         void activateDevice(shared_ptr<Device>& device);
         bool isDeviceActivated(shared_ptr<Device>& device);
@@ -99,8 +101,8 @@ class AbstractionLayer//: public NLLListener
     private:
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
 
-        list<shared_ptr<Device> > _activatedDevices;
-        list<shared_ptr<PcapThread> > _pcapThreads;
+        QList<shared_ptr<Device> > _activatedDevices;
+        QList<shared_ptr<PcapThread> > _pcapThreads;
 
         bool _listening;
         weak_ptr<ALNetworkListener> _networkLogicLayer;

@@ -3,7 +3,7 @@
 
 
 #include <sys/types.h>
-#include <vector>
+//#include <vector>
 
 #include <boost/shared_array.hpp>
 #include <boost/shared_ptr.hpp>
@@ -12,7 +12,7 @@
 
 #include "datalinklayerpacket.hh"
 
-using std::vector;
+//using std::vector;
 using boost::shared_array;
 using boost::shared_ptr;
 

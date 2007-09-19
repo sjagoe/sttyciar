@@ -43,7 +43,7 @@ void PcapThread::run() throw(CannotOpenDeviceException)
     const u_char *pkt_data;
     int result=0;
     bool noterror=true;
-    list<DeviceAddress>  addresslist = (*(this->_device)).getAddresses();
+    QList<DeviceAddress>  addresslist = (*(this->_device)).getAddresses();
     std::string ipaddress = addresslist.front().getAddress().toIPString();
     shared_ptr<InterfaceRoute> interfaceRoute;
     //int count = 0;

@@ -12,7 +12,7 @@
 #include <boost/shared_ptr.hpp>
 
 // STL
-#include <list>
+#include <QList>
 
 // local includes
 #include "abstractionlayer.hh"
@@ -90,7 +90,7 @@ class NetworkLogicLayer:
             shared_ptr<LockableQueue<shared_ptr<RawPacket> > > queue );
 
     protected:
-        list<shared_ptr<Device> > _devices;
+        QList<shared_ptr<Device> > _devices;
 
         /*!
         virtual method provided by QThread, where the actual thread loop is

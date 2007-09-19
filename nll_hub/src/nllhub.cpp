@@ -12,7 +12,7 @@
 void NLLHub::routePacket( shared_ptr<RawPacket> packet )
 {
 
-//    list<shared_ptr<Device> >::const_iterator iter = _devices.begin();
+//    QList<shared_ptr<Device> >::const_iterator iter = _devices.begin();
 //
 //    for (; iter != _devices.end(); iter++)
 //    {

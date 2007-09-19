@@ -2,7 +2,7 @@
 #define DEVICE_H
 
 #include <string>
-#include <list>
+#include <QList>
 #include <boost/shared_ptr.hpp>
 #include <pcap.h>
 #include "deviceaddress.hh"
@@ -21,7 +21,7 @@ class Device
         void setContents(pcap_if* pcapDevice);
         string getName() const;
         string getDescription() const;
-        const list<DeviceAddress>& getAddresses() const;
+        const QList<DeviceAddress>& getAddresses() const;
         bool isLoopback() const;
         bool operator==(Device& device) const;
         void sendPacket(shared_ptr<Packet>& packet);
@@ -29,7 +29,7 @@ class Device
     private:
         string _name;
         string _description;
-        list<DeviceAddress> _addresses;
+        QList<DeviceAddress> _addresses;
         PcapSendThread _pcapSendThread;
         unsigned int _flags;
         void createAddressList(pcap_if* pcapDevice);

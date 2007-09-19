@@ -28,7 +28,7 @@ string Device::getDescription() const
     return this->_description;
 }
 
-const list<DeviceAddress>& Device::getAddresses() const
+const QList<DeviceAddress>& Device::getAddresses() const
 {
     return this->_addresses;
 }

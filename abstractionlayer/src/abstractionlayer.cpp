@@ -36,13 +36,13 @@ void AbstractionLayer::registerNLL( weak_ptr<ALNetworkListener>& nllModule )
     _networkLogicLayer = nllModule;
 }
 
-list<shared_ptr<Device> > AbstractionLayer::getDevices() throw(DeviceNotFoundException)
+QList<shared_ptr<Device> > AbstractionLayer::getDevices() throw(DeviceNotFoundException)
 {
     pcap_if *pcapAllDevices;
 
     if (pcap_findalldevs(&pcapAllDevices, this->_pcapErrorBuffer) == -1)
         throw DeviceNotFoundException(this->_pcapErrorBuffer);
-    list<shared_ptr<Device> > devices;
+    QList<shared_ptr<Device> > devices;
     shared_ptr<Device> tempDevice;
     for(pcap_if* pcapTempDevice=pcapAllDevices; pcapTempDevice != NULL; pcapTempDevice=pcapTempDevice->next)
     {
@@ -62,7 +62,7 @@ void AbstractionLayer::activateDevice(shared_ptr<Device>& device)
 
 bool AbstractionLayer::isDeviceActivated(shared_ptr<Device>& device)
 {
-    for (list<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end(); ++iter)
+    for (QList<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end(); ++iter)
         if (**iter==*device)
             return true;
     return false;
@@ -75,14 +75,14 @@ void AbstractionLayer::startListening(int packetCaptureSize,int timeout)
     shared_ptr<PcapThread> tempPcapThread;
 
     //store the thread objects
-    for (list<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end(); ++iter)
+    for (QList<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end(); ++iter)
     {
         tempPcapThread.reset(new PcapThread(*iter,packetCaptureSize,timeout,this->_networkLogicLayer));
         this->_pcapThreads.push_back(tempPcapThread);
     }
 
     //start the thread objects running
-    for (list<shared_ptr<PcapThread> >::iterator iter=this->_pcapThreads.begin(); iter!=this->_pcapThreads.end(); ++iter)
+    for (QList<shared_ptr<PcapThread> >::iterator iter=this->_pcapThreads.begin(); iter!=this->_pcapThreads.end(); ++iter)
     {
         (*iter)->start();
     }
@@ -90,7 +90,7 @@ void AbstractionLayer::startListening(int packetCaptureSize,int timeout)
 
 void AbstractionLayer::stopListening()
 {
-    for (list<shared_ptr<PcapThread> >::iterator iter=this->_pcapThreads.begin(); iter!=this->_pcapThreads.end(); ++iter)
+    for (QList<shared_ptr<PcapThread> >::iterator iter=this->_pcapThreads.begin(); iter!=this->_pcapThreads.end(); ++iter)
     {
         (*iter)->stopListening();
         (*iter)->wait();

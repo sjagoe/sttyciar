@@ -1,7 +1,7 @@
 #ifndef __IPV4DATAGRAM_HH__
 #define __IPV4DATAGRAM_HH__
 
-#include <vector>
+//#include <vector>
 #include <boost/shared_ptr.hpp>
 
 #include "packetaccess.hh"
@@ -11,7 +11,7 @@
 typedef struct four_byte ip_t;
 typedef struct two_byte two_byte;
 
-using std::vector;
+//using std::vector;
 using boost::shared_ptr;
 using std::pair;
 
