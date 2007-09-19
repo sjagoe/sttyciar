@@ -39,9 +39,9 @@ void NetworkLogicLayer::registerAbstractionLayer(
         // get the Semaphore for the NLL
         _waitingPackets = lockedAL->getNLLSemaphore();
         // enable the NLL
-        _runningMutex.lock();
+        //_runningMutex.lock();
         _running = true;
-        _runningMutex.unlock();
+        //_runningMutex.unlock();
     } else {
         // No AL exists, we should throw an exception
     }
@@ -50,9 +50,9 @@ void NetworkLogicLayer::registerAbstractionLayer(
 void NetworkLogicLayer::exitNow()
 {
     // prevent the thread loop from running once woken
-    _runningMutex.lock();
+    //_runningMutex.lock();
     _running = false;
-    _runningMutex.unlock();
+    //_runningMutex.unlock();
     // wake the thread so that it can run the final loop and exit
     _wait->wakeAll();
 }
@@ -61,7 +61,7 @@ void NetworkLogicLayer::packetReceived()
 {
     _waitingPackets->release();
     _wait->wakeAll();
-    std::cout << " - Packet Rx: " << endl;
+    //std::cout << " - Packet Rx: " << endl;
 }
 
 void NetworkLogicLayer::registerQueue(
@@ -73,19 +73,20 @@ void NetworkLogicLayer::registerQueue(
 void NetworkLogicLayer::run()
 {
     // loop the thread
-    _runningMutex.lock();
+    //_runningMutex.lock();
     while( _running)
     {
-        _runningMutex.unlock();
+        //_runningMutex.unlock();
         // wait for packets when the queue is empty
         _waitMutex.lock();
         _wait->wait( &_waitMutex );
+        _waitMutex.unlock();
         // once woken up, loop for all packets on the queue
         // if _running becomes false while in this loop, exit.
-        _runningMutex.lock();
+        //_runningMutex.lock();
         while (( _waitingPackets->tryAcquire() ) && (_running) )
         {
-            _runningMutex.unlock();
+            //_runningMutex.unlock();
             // pop a packet/interfaceroute QPair from the receive buffer
             shared_ptr<RawPacket> packet;
             _receiveBuffer->pop( packet );
@@ -93,12 +94,12 @@ void NetworkLogicLayer::run()
             //routePacket( pair.first, pair.second );
             routePacket( packet );
             _waitingPackets->tryAcquire();
-            _runningMutex.lock();
+            //_runningMutex.lock();
         }
-        _runningMutex.unlock();
-        _runningMutex.lock();
+        //_runningMutex.unlock();
+        //_runningMutex.lock();
     }
-    _runningMutex.unlock();
+    //_runningMutex.unlock();
 }
 
 shared_ptr<AbstractionLayer> NetworkLogicLayer::getAbstractionLayer()

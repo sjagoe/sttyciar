@@ -49,6 +49,7 @@ int main()
         }
     }
     abstractionLayer->startListening(65535,3000);
+    networkLogicLayer->start();
     std::cout << "Push any button to stop listening...";
     cin.sync();
     char a;
