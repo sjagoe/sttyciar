@@ -14,8 +14,8 @@
 		</MakeCommands>
 		<Build>
 			<Target title="debug">
-				<Option output="../bin/Debug/libabstractionlayer" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
+				<Option output="..\bin\Debug\libabstractionlayer" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -32,8 +32,8 @@
 				</MakeCommands>
 			</Target>
 			<Target title="release">
-				<Option output="../bin/Release/libabstractionlayer" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
+				<Option output="..\bin\Release\libabstractionlayer" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -47,52 +47,55 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<VirtualTargets>
+			<Add alias="all" targets="debug;release;" />
+		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add option="-D_REENTRANT" />
 			<Add option="-D_DLL" />
-			<Add directory="../include" />
-			<Add directory="../resources/WpdPack_4_0_1/WpdPack/Include" />
+			<Add directory="..\include" />
+			<Add directory="..\resources\WpdPack_4_0_1\WpdPack\Include" />
 		</Compiler>
 		<Linker>
 			<Add library="packet" />
 			<Add library="wpcap" />
-			<Add directory="../resources/WpdPack/Lib/" />
-			<Add directory="../bin/Debug" />
-			<Add directory="../fakelib" />
+			<Add directory="..\resources\WpdPack\Lib\" />
+			<Add directory="..\bin\Debug" />
+			<Add directory="..\fakelib" />
 		</Linker>
 		<Unit filename="abstractionlayer.pro" />
-		<Unit filename="src/abstractionlayer.cpp" />
-		<Unit filename="src/address.cpp" />
-		<Unit filename="src/device.cpp" />
-		<Unit filename="src/deviceaddress.cpp" />
-		<Unit filename="src/ethernetiiframe.cpp" />
-		<Unit filename="src/exceptions.cpp" />
-		<Unit filename="src/interfaceroute.cpp" />
-		<Unit filename="src/ipv4datagram.cpp" />
-		<Unit filename="src/pcapsendthread.cpp" />
-		<Unit filename="src/pcapthread.cpp" />
-		<Unit filename="src/rawpacket.cpp" />
-		<Unit filename="../include/abstractionlayer.hh" />
-		<Unit filename="../include/address.hh" />
-		<Unit filename="../include/alnetworklistener.hh" />
-		<Unit filename="../include/alstatisticslistener.hh" />
-		<Unit filename="../include/datalinklayerpacket.hh" />
-		<Unit filename="../include/device.hh" />
-		<Unit filename="../include/deviceaddress.hh" />
-		<Unit filename="../include/ethernetiiframe.hh" />
-		<Unit filename="../include/exceptions.hh" />
-		<Unit filename="../include/interfaceroute.hh" />
-		<Unit filename="../include/ipv4datagram.hh" />
-		<Unit filename="../include/lockablequeue.hh" />
-		<Unit filename="../include/networklayerpacket.hh" />
-		<Unit filename="../include/packet.hh" />
-		<Unit filename="../include/packetaccess.hh" />
-		<Unit filename="../include/pcapsendthread.hh" />
-		<Unit filename="../include/pcapthread.hh" />
-		<Unit filename="../include/pcapthreadticket.hh" />
-		<Unit filename="../include/rawpacket.hh" />
+		<Unit filename="src\abstractionlayer.cpp" />
+		<Unit filename="src\address.cpp" />
+		<Unit filename="src\device.cpp" />
+		<Unit filename="src\deviceaddress.cpp" />
+		<Unit filename="src\ethernetiiframe.cpp" />
+		<Unit filename="src\exceptions.cpp" />
+		<Unit filename="src\interfaceroute.cpp" />
+		<Unit filename="src\ipv4datagram.cpp" />
+		<Unit filename="src\pcapsendthread.cpp" />
+		<Unit filename="src\pcapthread.cpp" />
+		<Unit filename="src\rawpacket.cpp" />
+		<Unit filename="..\include\abstractionlayer.hh" />
+		<Unit filename="..\include\address.hh" />
+		<Unit filename="..\include\alnetworklistener.hh" />
+		<Unit filename="..\include\alstatisticslistener.hh" />
+		<Unit filename="..\include\datalinklayerpacket.hh" />
+		<Unit filename="..\include\device.hh" />
+		<Unit filename="..\include\deviceaddress.hh" />
+		<Unit filename="..\include\ethernetiiframe.hh" />
+		<Unit filename="..\include\exceptions.hh" />
+		<Unit filename="..\include\interfaceroute.hh" />
+		<Unit filename="..\include\ipv4datagram.hh" />
+		<Unit filename="..\include\lockablequeue.hh" />
+		<Unit filename="..\include\networklayerpacket.hh" />
+		<Unit filename="..\include\packet.hh" />
+		<Unit filename="..\include\packetaccess.hh" />
+		<Unit filename="..\include\pcapsendthread.hh" />
+		<Unit filename="..\include\pcapthread.hh" />
+		<Unit filename="..\include\pcapthreadticket.hh" />
+		<Unit filename="..\include\rawpacket.hh" />
 		<Extensions>
 			<code_completion />
 			<debugger />

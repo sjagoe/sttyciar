@@ -14,8 +14,8 @@
 		</MakeCommands>
 		<Build>
 			<Target title="debug">
-				<Option output="../bin/Debug/libsttyciarui" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
+				<Option output="..\bin\Debug\libsttyciarui" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -31,8 +31,8 @@
 				</MakeCommands>
 			</Target>
 			<Target title="release">
-				<Option output="../bin/Release/libsttyciarui" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
+				<Option output="..\bin\Release\libsttyciarui" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -51,22 +51,26 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<VirtualTargets>
+			<Add alias="all" targets="debug;release;" />
+		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="../include/sllistener.hh" />
-		<Unit filename="../include/sttyciarui_cli.hh" />
-		<Unit filename="../include/sttyciarui_cli_main.hh" />
-		<Unit filename="../include/sttyciarui_cli_statistics.hh" />
-		<Unit filename="../include/sttyciarui_common.hh" />
-		<Unit filename="../include/uilistener.hh" />
-		<Unit filename="src/sttyciarui_cli.cpp" />
-		<Unit filename="src/sttyciarui_cli_main.cpp" />
-		<Unit filename="src/sttyciarui_cli_statistics.cpp" />
+		<Unit filename="..\include\sllistener.hh" />
+		<Unit filename="..\include\sttyciarui_cli.hh" />
+		<Unit filename="..\include\sttyciarui_cli_main.hh" />
+		<Unit filename="..\include\sttyciarui_cli_statistics.hh" />
+		<Unit filename="..\include\sttyciarui_common.hh" />
+		<Unit filename="..\include\uilistener.hh" />
+		<Unit filename="src\sttyciarui_cli.cpp" />
+		<Unit filename="src\sttyciarui_cli_main.cpp" />
+		<Unit filename="src\sttyciarui_cli_statistics.cpp" />
 		<Unit filename="sttyciarui_cli.pro" />
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
