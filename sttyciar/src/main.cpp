@@ -130,8 +130,6 @@ int main()
 
     abstractionLayer->sendDataLinkLayerPacket(dllp);
 
-    delete data;
-
     std::cout << "Push any button to stop listening...";
     cout.flush();
     cin.sync();

@@ -102,9 +102,9 @@ void NetworkLogicLayer::run()
     //_runningMutex.unlock();
 }
 
-//shared_ptr<AbstractionLayer> NetworkLogicLayer::getAbstractionLayer()
-//{
-//    // obtain a lock on the abstraction layer (i.e. get a shared_ptr with
-//    // a reference count
-//    return _abstractionLayer.lock();
-//}
+shared_ptr<AbstractionLayer> NetworkLogicLayer::getAbstractionLayer()
+{
+    // obtain a lock on the abstraction layer (i.e. get a shared_ptr with
+    // a reference count
+    return _abstractionLayer.lock();
+}
