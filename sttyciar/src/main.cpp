@@ -35,8 +35,8 @@
 const u_char pingPacketData[] =
 {
     // MAC Header
-    0x00, 0x13, 0x20, 0x79, 0x08, 0x3B, // destination MAC
-    0x00, 0x0f, 0xb0, 0xe2, 0x80, 0x41, // source MAC // simon-laptop-wired
+    0x00, 0x0f, 0xb0, 0xe2, 0x80, 0x41, // destination MAC// simon-laptop-wired
+    0x00, 0x08, 0xa1, 0x2c, 0x31, 0xa2, // source MAC
     0x08, 0x00, // ethertype (IP)
     // IPv4 header
     0x45, // version (0x4) | header length (0x5)
@@ -122,12 +122,15 @@ int main()
     }
 
     shared_ptr<RawPacket> raw( new RawPacket );
-    raw->setPacket( data, 102 );
+    raw->setPacket( data, size );
 
     shared_ptr<DataLinkLayerPacket> dllp( new EthernetIIFrame( raw ) );
     dllp->addDestination(dev);
 
-    abstractionLayer->sendDataLinkLayerPacket(dllp);
+    for (int flood = 0; flood < 100; flood++)
+    {
+        abstractionLayer->sendDataLinkLayerPacket(dllp);
+    }
 
     std::cout << "Push any button to stop listening...";
     cout.flush();
