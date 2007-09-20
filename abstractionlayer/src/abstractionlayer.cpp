@@ -89,16 +89,10 @@ void AbstractionLayer::startListening(int packetCaptureSize,int timeout)
     //store the thread objects
     for (QList<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end(); ++iter)
     {
-        tempPcapThread.reset(new PcapThread(*iter,packetCaptureSize,timeout,this->_networkLogicLayer));
+        (*iter)->startListening(packetCaptureSize,timeout);
+        tempPcapThread.reset(new PcapThread(*iter,this->_networkLogicLayer));
+        tempPcapThread->start();
         this->_pcapThreads.push_back(tempPcapThread);
-
-        (*iter)->startListening();
-    }
-
-    //start the thread objects running
-    for (QList<shared_ptr<PcapThread> >::iterator iter=this->_pcapThreads.begin(); iter!=this->_pcapThreads.end(); ++iter)
-    {
-        (*iter)->start();
     }
 
 }

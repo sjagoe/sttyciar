@@ -111,7 +111,7 @@ class NetworkLogicLayer:
         A method to be used by specific NLL module implementations to obtain a
         lock (in the boost::weak_ptr sense) on the abstraction layer.
         */
-        inline shared_ptr<AbstractionLayer> getAbstractionLayer(){ return _abstractionLayer.lock();};
+        inline shared_ptr<AbstractionLayer> getAbstractionLayer();
 
     private:
 

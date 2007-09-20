@@ -6,16 +6,13 @@
 
 #include "pcapthreadticket.hh"
 
-PcapThread::PcapThread(const shared_ptr<Device>& device,int packetCaptureSize,
-                        int timeout,weak_ptr<ALNetworkListener> alNetworkListener) throw (CannotOpenDeviceException) : _listening(false)
+PcapThread::PcapThread( const shared_ptr<Device>& device,
+                        weak_ptr<ALNetworkListener> alNetworkListener) throw (CannotOpenDeviceException) : _listening(false)
 {
     this->_device=device;
-    this->_pcapPacketCaptureSize=packetCaptureSize;
-    this->_pcapTimeout=timeout;
     this->_alNetworkListener = alNetworkListener;
 
-    this->_receiveBuffer.reset(
-        new PcapThreadTicket( this->_alNetworkListener ) );
+    this->_receiveBuffer.reset(new PcapThreadTicket( this->_alNetworkListener ));
 }
 
 PcapThread::~PcapThread()
@@ -31,13 +28,8 @@ void PcapThread::stopListening()
 void PcapThread::run() throw(CannotOpenDeviceException)
 
 {
-    pcap_t* source=NULL;
+    pcap_t* source=this->_device->getPcapDevice();
     this->_listening = true;
-
-    if ((source=pcap_open_live(this->_device->getName().c_str(),this->_pcapPacketCaptureSize,
-                            true,this->_pcapTimeout,this->_pcapErrorBuffer))==NULL)
-        this->_listening = false;
-
 
     struct pcap_pkthdr *pkt_header;
     const u_char *pkt_data;
@@ -46,7 +38,7 @@ void PcapThread::run() throw(CannotOpenDeviceException)
     QList<DeviceAddress>  addresslist = (*(this->_device)).getAddresses();
     std::string ipaddress = addresslist.front().getAddress().toIPString();
     shared_ptr<InterfaceRoute> interfaceRoute;
-    int count = 0;
+    //int count = 0;
     while (this->_listening && noterror)
     {
         while (this->_listening && (result=pcap_next_ex(source,&pkt_header,&pkt_data) == 1))
@@ -61,8 +53,6 @@ void PcapThread::run() throw(CannotOpenDeviceException)
             noterror=false;
         }
     }
-
-    pcap_close(source);
 //    delete pkt_header;
 //    delete pkt_data;
 

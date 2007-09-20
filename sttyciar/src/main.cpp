@@ -5,7 +5,6 @@
 #include <pcap.h>
 #include "boost/shared_ptr.hpp"
 #include <boost/weak_ptr.hpp>
-
 #include "abstractionlayer.hh"
 #include "device.hh"
 #include "deviceaddress.hh"
