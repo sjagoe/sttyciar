@@ -25,8 +25,8 @@ class PcapThread : public QThread
     Q_OBJECT
 
     public:
-        PcapThread(const shared_ptr<Device>& device,int packetCaptureSize,
-                    int timeout,weak_ptr<ALNetworkListener> alNetworkListener) throw(CannotOpenDeviceException);
+        PcapThread( const shared_ptr<Device>& device,
+                    weak_ptr<ALNetworkListener> alNetworkListener) throw(CannotOpenDeviceException);
         ~PcapThread();
         void stopListening();
 

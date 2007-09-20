@@ -16,7 +16,7 @@ void Device::setContents(pcap_if* pcapDevice)
         this->_description=pcapDevice->description;
     this->createAddressList(pcapDevice);
     this->_flags=pcapDevice->flags;
-    this->_pcapSendThread.setDeviceName(this->_name);
+
 }
 
 string Device::getName() const
@@ -50,14 +50,19 @@ void Device::createAddressList(pcap_if* pcapDevice)
     }
 }
 
-void Device::startListening()
+void Device::startListening(int packetCaptureSize,int timeout) throw (CannotOpenDeviceException)
 {
+    if ((this->_pcapDevice = pcap_open_live(this->getName().c_str(),packetCaptureSize,true,timeout,this->_pcapErrorBuffer))==NULL)
+        throw CannotOpenDeviceException(this->_pcapErrorBuffer);
+
+    this->_pcapSendThread.setDevice(this->_pcapDevice);
     this->_pcapSendThread.start();
 }
 
 void Device::stopListening()
 {
     this->_pcapSendThread.stopRunning();
+    pcap_close(this->_pcapDevice);
 }
 
 void Device::sendPacket(const shared_ptr<RawPacket>& packet)
@@ -70,3 +75,7 @@ bool Device::operator==(Device& device) const
     return this->getName()==device.getName();
 }
 
+pcap_t* Device::getPcapDevice()
+{
+    return this->_pcapDevice;
+}

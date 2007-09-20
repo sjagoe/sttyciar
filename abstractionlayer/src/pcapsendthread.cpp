@@ -6,19 +6,19 @@ PcapSendThread::PcapSendThread()
     this->_running = false;
 }
 
-PcapSendThread::PcapSendThread(const string& deviceName)
+PcapSendThread::PcapSendThread(pcap_t* device)
 {
     this->_running = false;
-    this->_deviceName = deviceName;
+    this->_device = device;
 }
 
 PcapSendThread::~PcapSendThread()
 {
 }
 
-void PcapSendThread::setDeviceName(const string& deviceName)
+void PcapSendThread::setDevice(pcap_t* device)
 {
-    this->_deviceName = deviceName;
+    this->_device = device;
 }
 
 void PcapSendThread::addPacket(const shared_ptr<RawPacket>& packet)
@@ -36,10 +36,7 @@ void PcapSendThread::stopRunning()
 
 void PcapSendThread::run()
 {
-    pcap_t* source=NULL;
     this->_running = true;
-    if ((source=pcap_open_live(this->_deviceName.c_str(),65535,true,3000,this->_pcapErrorBuffer))==NULL)
-        this->_running = false;
 
     shared_ptr<RawPacket> rawPacket;
     while (this->_running)
@@ -47,7 +44,7 @@ void PcapSendThread::run()
         if (!this->_packetQueue.isEmpty())
         {
             _packetQueue.pop(rawPacket);
-            pcap_sendpacket(source,rawPacket->getPacketPointer(),rawPacket->getPacketLength());
+            pcap_sendpacket(this->_device,rawPacket->getPacketPointer(),rawPacket->getPacketLength());
         }
         else
         {
@@ -57,5 +54,5 @@ void PcapSendThread::run()
         }
 
     }
-    pcap_close(source);
+    //pcap_close(source);
 }

@@ -9,6 +9,7 @@
 #include "lockablequeue.hh"
 #include "rawpacket.hh"
 #include "pcapsendthread.hh"
+#include "exceptions.hh"
 
 using namespace std;
 using boost::shared_ptr;
@@ -24,9 +25,10 @@ class Device
         const QList<DeviceAddress>& getAddresses() const;
         bool isLoopback() const;
         bool operator==(Device& device) const;
-        void startListening();
+        void startListening(int packetCaptureSize,int timeout) throw (CannotOpenDeviceException);
         void stopListening();
         void sendPacket(const shared_ptr<RawPacket>& packet);
+        pcap_t* getPcapDevice();
 
     private:
         string _name;
@@ -35,6 +37,8 @@ class Device
         PcapSendThread _pcapSendThread;
         unsigned int _flags;
         void createAddressList(pcap_if* pcapDevice);
+        pcap_t* _pcapDevice;
+        char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
 };
 
 #endif // DEVICE_H

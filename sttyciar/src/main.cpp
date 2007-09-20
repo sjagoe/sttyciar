@@ -4,7 +4,6 @@
 #include <string>
 #include "boost/shared_ptr.hpp"
 #include <boost/weak_ptr.hpp>
-
 #include "abstractionlayer.hh"
 #include "device.hh"
 #include "deviceaddress.hh"
@@ -48,7 +47,7 @@ int main()
             abstractionLayer->activateDevice(*iter);
         }
     }
-    abstractionLayer->startListening(65535,50);
+    abstractionLayer->startListening(65535,5000);
     networkLogicLayer->start();
     std::cout << "Push any button to stop listening...";
     cin.sync();
