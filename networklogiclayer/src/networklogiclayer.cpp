@@ -93,7 +93,7 @@ void NetworkLogicLayer::run()
             // call the method that performs the actual routing
             //routePacket( pair.first, pair.second );
             routePacket( packet );
-            _waitingPackets->tryAcquire();
+            //_waitingPackets->tryAcquire();
             //_runningMutex.lock();
         }
         //_runningMutex.unlock();

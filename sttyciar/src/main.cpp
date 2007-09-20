@@ -127,7 +127,7 @@ int main()
     shared_ptr<DataLinkLayerPacket> dllp( new EthernetIIFrame( raw ) );
     dllp->addDestination(dev);
 
-    for (int flood = 0; flood < 100; flood++)
+    for (int flood = 0; flood < 10; flood++)
     {
         abstractionLayer->sendDataLinkLayerPacket(dllp);
     }
