@@ -18,9 +18,9 @@ class PcapSendThread : public QThread
 
     public:
         PcapSendThread();
-        PcapSendThread(pcap_t* device);
+        PcapSendThread(pcap_t* pcapDevice);
         ~PcapSendThread();
-        void setDevice(pcap_t* device);
+        void setDevice(pcap_t* pcapdevice);
         void addPacket(const shared_ptr<RawPacket>& packet);
         void stopRunning();
     protected:
@@ -31,7 +31,7 @@ class PcapSendThread : public QThread
         bool _running;
         QWaitCondition _waitCondition;
         QMutex _mutex;
-        pcap_t *_device;
+        pcap_t *_pcapDevice;
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
 
 };
