@@ -52,7 +52,7 @@ void PcapSendThread::run()
         else
         {
             this->_mutex.lock();
-            this->_waitCondition.wait(&this->_mutex,ULONG_MAX);
+            this->_waitCondition.wait(&this->_mutex);
             this->_mutex.unlock();
         }
 

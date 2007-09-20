@@ -13,13 +13,15 @@
 // pcap
 #include <pcap.h>
 
+#include "interfaceroute.hh"
+
 //using std::vector;
 using boost::shared_array;
 using boost::shared_ptr;
 using boost::scoped_ptr;
 
 class Device;
-class InterfaceRoute;
+//class InterfaceRoute;
 
 /*!
 The Packet class provides a pointer-free encapsulation of (most of) the data
@@ -55,6 +57,8 @@ class RawPacket
 //        void append(u_char data);
 
         void setPacket ( const pcap_pkthdr* head, const u_char* packet );
+
+        void setPacket ( const u_char* packet, const u_int32_t& length );
 
         void initialisePacket ( const u_int32_t& length );
 

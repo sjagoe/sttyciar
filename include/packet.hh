@@ -5,7 +5,9 @@
 
 using boost::shared_ptr;
 
-class RawPacket;
+//class RawPacket;
+#include "rawpacket.hh"
+class Device;
 
 class Packet
 {
@@ -28,6 +30,11 @@ class Packet
         {
             return _rawPacket;
         };
+
+        void addDestination( const shared_ptr<Device>& destinationInterface )
+        {
+            _rawPacket->addDestination( destinationInterface );
+        }
 
 };
 

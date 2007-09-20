@@ -27,7 +27,7 @@ void AbstractionLayer::sendDataLinkLayerPacket(
 {
     //is this inefficient?
     shared_ptr<QList<shared_ptr<Device> > > destinations = packet->getRawPacket()->getInterfaceRoute()->getDestinations();
-    for (QList<shared_ptr<Device> >::iterator iter = destinations->begin(); iter != destinations->begin(); iter++)
+    for (QList<shared_ptr<Device> >::iterator iter = destinations->begin(); iter != destinations->end(); iter++)
     {
         (*iter)->sendPacket(packet->getRawPacket());
 

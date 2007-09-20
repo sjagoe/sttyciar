@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'sttyciar_gui_main.ui'
 **
-** Created: Wed 19. Sep 22:37:15 2007
+** Created: Thu Sep 20 15:28:35 2007
 **      by: Qt User Interface Compiler version 4.3.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!

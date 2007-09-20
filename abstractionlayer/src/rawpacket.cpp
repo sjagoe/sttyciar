@@ -39,6 +39,12 @@ void RawPacket::setPacket ( const pcap_pkthdr* head, const u_char* packet )
     _packet.reset ( ( u_char* ) packet );
 }
 
+void RawPacket::setPacket ( const u_char* packet, const u_int32_t& length )
+{
+    initialisePacket( length );
+    _packet.reset ( ( u_char* ) packet );
+}
+
 void RawPacket::initialisePacket ( const u_int32_t& length )
 {
     _packet.reset ( new u_char[length] );
