@@ -35,8 +35,8 @@
 const u_char pingPacketData[] =
 {
     // MAC Header
-    0x00, 0x0f, 0xb0, 0xe2, 0x80, 0x41, // destination MAC// simon-laptop-wired
-    0x00, 0x08, 0xa1, 0x2c, 0x31, 0xa2, // source MAC
+    0x00, 0x50, 0xbf, 0xec, 0x7b, 0x2b, // destination MAC// simon-laptop-wired
+    0x01, 0x13, 0xa9, 0x09, 0xdd, 0xce, // source MAC
     0x08, 0x00, // ethertype (IP)
     // IPv4 header
     0x45, // version (0x4) | header length (0x5)
@@ -109,7 +109,7 @@ int main()
         }
     }
 
-    abstractionLayer->startListening(65535,50);
+    abstractionLayer->startListening(65535,5000);
     networkLogicLayer->start();
 
     u_char* data = new u_char[size];

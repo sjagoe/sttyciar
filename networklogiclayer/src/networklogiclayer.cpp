@@ -108,3 +108,4 @@ shared_ptr<AbstractionLayer> NetworkLogicLayer::getAbstractionLayer()
     // a reference count
     return _abstractionLayer.lock();
 }
+

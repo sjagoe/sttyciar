@@ -27,9 +27,7 @@ void NLLHub::routePacket( shared_ptr<RawPacket> packet )
 
     EthernetIIFrame e( packet );
     IPv4Datagram d( e );
-
     ip_t ip = d.getSourceAddress();
-
     std::cout << " - Packet Received from "
         << (int) ip.U_main.S_uchar.b1 << "."
         << (int) ip.U_main.S_uchar.b2 << "."

@@ -6,19 +6,19 @@ PcapSendThread::PcapSendThread()
     this->_running = false;
 }
 
-PcapSendThread::PcapSendThread(pcap_t* device)
+PcapSendThread::PcapSendThread(pcap_t* pcapDevice)
 {
     this->_running = false;
-    this->_device = device;
+    this->_pcapDevice = pcapDevice;
 }
 
 PcapSendThread::~PcapSendThread()
 {
 }
 
-void PcapSendThread::setDevice(pcap_t* device)
+void PcapSendThread::setDevice(pcap_t* pcapDevice)
 {
-    this->_device = device;
+    this->_pcapDevice = pcapDevice;
 }
 
 void PcapSendThread::addPacket(const shared_ptr<RawPacket>& packet)
@@ -32,6 +32,9 @@ void PcapSendThread::addPacket(const shared_ptr<RawPacket>& packet)
 void PcapSendThread::stopRunning()
 {
     this->_running = false;
+    this->_mutex.lock();
+    this->_mutex.unlock();
+    this->_waitCondition.wakeAll();
 }
 
 void PcapSendThread::run()
@@ -44,13 +47,13 @@ void PcapSendThread::run()
         if (!this->_packetQueue.isEmpty())
         {
             _packetQueue.pop(rawPacket);
-            pcap_sendpacket(this->_device,rawPacket->getPacketPointer(),rawPacket->getPacketLength());
+            pcap_sendpacket(this->_pcapDevice,rawPacket->getPacketPointer(),rawPacket->getPacketLength());
         }
         else
         {
             this->_mutex.lock();
             this->_waitCondition.wait(&this->_mutex);
-            this->_mutex.unlock();
+            //this->_mutex.unlock();
         }
 
     }

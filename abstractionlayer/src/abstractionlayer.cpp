@@ -105,6 +105,11 @@ void AbstractionLayer::stopListening()
         (*iter)->wait();
     }
     this->_pcapThreads.clear();
+
+    for (QList<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end();iter++)
+    {
+        (*iter)->stopListening();
+    }
 }
 
 shared_ptr<QWaitCondition>& AbstractionLayer::getNLLWaitCondition()
