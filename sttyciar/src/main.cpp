@@ -109,7 +109,7 @@ int main()
         }
     }
 
-    abstractionLayer->startListening(65535,5000);
+    abstractionLayer->startListening(65535,50);
     networkLogicLayer->start();
 
     u_char* data = new u_char[size];
