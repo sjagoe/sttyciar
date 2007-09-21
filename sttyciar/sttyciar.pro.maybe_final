@@ -40,11 +40,13 @@ win32 {
     #LIBS += -lpcap
 }
 
-#LIBS += -labstractionlayer
-#LIBS += -lnetworklogiclayer
-#LIBS += -lnll_hub
+LIBS += -labstractionlayer
+LIBS += -lnetworklogiclayer
+LIBS += -lnll_hub
 
 LIBS += -lsttyciarrunner
+LIBS += -lsttyciarui
+LIBS += -lstatisticslayer
 
 TARGET = sttyciar_gui
 
