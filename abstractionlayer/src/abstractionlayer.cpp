@@ -23,7 +23,7 @@ AbstractionLayer::AbstractionLayer()
 }
 
 void AbstractionLayer::sendDataLinkLayerPacket(
-    shared_ptr<DataLinkLayerPacket>& packet)
+    shared_ptr<DataLinkLayerPacket> packet)
 {
     //is this inefficient?
     shared_ptr<QList<shared_ptr<Device> > > destinations = packet->getRawPacket()->getInterfaceRoute()->getDestinations();
@@ -35,8 +35,7 @@ void AbstractionLayer::sendDataLinkLayerPacket(
 }
 
 void AbstractionLayer::sendNetworkLayerPacket(
-    shared_ptr<NetworkLayerPacket>& packet,
-    shared_ptr<InterfaceRoute>& interfaces )
+    shared_ptr<NetworkLayerPacket> packet )
 {
 
 }

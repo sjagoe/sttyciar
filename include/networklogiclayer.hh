@@ -105,7 +105,7 @@ class NetworkLogicLayer:
         @param packet A RawPacket containing the raw packet data and
         InterfaceRoute.
         */
-        virtual void routePacket( shared_ptr<RawPacket> packet ) = 0;
+        virtual void routePacket( shared_ptr<RawPacket>& packet ) = 0;
 
         /*!
         A method to be used by specific NLL module implementations to obtain a

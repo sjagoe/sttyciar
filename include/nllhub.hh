@@ -25,7 +25,7 @@ class NLLHub: public NetworkLogicLayer
         {};
 
     protected:
-        void routePacket( shared_ptr<RawPacket> packet );
+        void routePacket( shared_ptr<RawPacket>& packet );
 };
 
 #endif

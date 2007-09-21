@@ -22,6 +22,7 @@ RawPacket::RawPacket ( const pcap_pkthdr* head, const u_char* packet,
 
     _pcapHeader.reset ( newHead );
     _packet.reset ( newPacket );
+    _interfaceRoute->setSource( sourceDevice );
 }
 
 RawPacket::RawPacket ( const shared_ptr<pcap_pkthdr>& head,
@@ -31,6 +32,7 @@ RawPacket::RawPacket ( const shared_ptr<pcap_pkthdr>& head,
     RawPacket();
     _pcapHeader = head;
     _packet = packet;
+    _interfaceRoute->setSource( sourceDevice );
 }
 
 void RawPacket::setPacket ( const pcap_pkthdr* head, const u_char* packet )
