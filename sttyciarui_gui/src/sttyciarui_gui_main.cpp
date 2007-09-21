@@ -76,6 +76,14 @@ void SttyciarGUIMain::setDevices( const QList<shared_ptr<Device> >& devices )
     _ui->treeAvailableInterfaces->sortItems(0, Qt::AscendingOrder);
 }
 
+void SttyciarGUIMain::setNetworkDevices( QMap<int, QString> networkDevices )
+{
+    for (int i = 0; i < networkDevices.size(); i++)
+    {
+        _ui->comboNetworkDevices->addItem( networkDevices[i] );
+    }
+}
+
 void SttyciarGUIMain::on_btnStart_clicked()
 {
     shared_ptr<QStringList> devices(new QStringList);
@@ -89,7 +97,7 @@ void SttyciarGUIMain::on_btnStart_clicked()
             std::cout << devName.toStdString() << std::endl;
             *devices << devName;
         }
-        emit startSttyciar(SttyciarUI::HUB_TYPE, devices);
+        //emit startSttyciar(SttyciarUI::HUB_TYPE, devices);
     }
     else
     {

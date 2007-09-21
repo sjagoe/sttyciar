@@ -19,7 +19,7 @@ class SttyciarGUI: public SttyciarUI
 {
     Q_OBJECT
     public:
-        SttyciarGUI();
+        SttyciarGUI(QMap<int, QString>& networkDevices);
 
     public slots:
         void sttyciarRunning();
@@ -33,13 +33,14 @@ class SttyciarGUI: public SttyciarUI
     protected slots:
         void exit();
 
-        void startSttyciarSlot(short deviceType, shared_ptr<QStringList> devices);
+        void startSttyciarSlot(QString deviceType, shared_ptr<QStringList> devices);
 
         void stopSttyciarSlot();
 
     private:
         scoped_ptr<SttyciarGUIMain> _mainUI;
         scoped_ptr<SttyciarGUIStatistics> _statisticsUI;
+        QMap<int, QString> _availableNetworkDevices;
 };
 
 #endif

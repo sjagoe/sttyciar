@@ -24,6 +24,7 @@ class SttyciarGUIMain: public QMainWindow
         SttyciarGUIMain(QWidget* parent = 0);
 
         void setDevices( const QList<shared_ptr<Device> >& devices );
+        void setNetworkDevices( QMap<int, QString> networkDevices );
 
     private:
         Ui::FormSttyciarGUIMain* _ui;
@@ -47,7 +48,7 @@ class SttyciarGUIMain: public QMainWindow
             QTreeWidget* destinationInterfaceTree);
 
     signals:
-        void startSttyciar(short deviceType, shared_ptr<QStringList> devices);
+        void startSttyciar(QString deviceType, shared_ptr<QStringList> devices);
         void exit();
 };
 

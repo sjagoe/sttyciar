@@ -4,8 +4,9 @@
 
 #include "sttyciarui_gui.hh"
 
-SttyciarGUI::SttyciarGUI()
+SttyciarGUI::SttyciarGUI(QMap<int, QString>& networkDevices)
 {
+    _availableNetworkDevices = networkDevices;
     _mainUI.reset( new SttyciarGUIMain );
     _statisticsUI.reset( new SttyciarGUIStatistics );
 
@@ -51,7 +52,7 @@ void SttyciarGUI::exit()
     emit exitSttyciar();
 }
 
-void SttyciarGUI::startSttyciarSlot(short deviceType, shared_ptr<QStringList> devices)
+void SttyciarGUI::startSttyciarSlot(QString deviceType, shared_ptr<QStringList> devices)
 {
     emit startSttyciar(deviceType, devices);
 }

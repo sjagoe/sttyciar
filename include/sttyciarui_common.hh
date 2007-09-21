@@ -28,7 +28,7 @@ class SttyciarUI: public QObject
 
     signals:
         void exitSttyciar();
-        void startSttyciar(short deviceType, shared_ptr<QStringList> devices);
+        void startSttyciar(QString deviceType, shared_ptr<QStringList> devices);
         void stopSttyciar();
 };
 

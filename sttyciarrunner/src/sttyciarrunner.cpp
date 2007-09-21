@@ -15,41 +15,45 @@ const int SttyciarRunner::PCAP_READ_TIMEOUT;
 
 SttyciarRunner::SttyciarRunner()
 {
+    _availableDevices.insert( 1, QString("Ethernet Hub") );
+
     _abstractionLayer.reset( new AbstractionLayer );
-    _ui.reset( new SttyciarGUI );
+
+    _ui.reset( new SttyciarGUI( _availableDevices ) );
+
     connect( _ui.get(), SIGNAL(exitSttyciar()), this, SLOT(exitSttyciar()));
 
     connect( _ui.get(),
-        SIGNAL( startSttyciar(short, shared_ptr<QStringList>) ),
-        this, SLOT( startSttyciar(short, shared_ptr<QStringList>) ) );
+        SIGNAL( startSttyciar(QString, shared_ptr<QStringList>) ),
+        this, SLOT( startSttyciar(QString, shared_ptr<QStringList>) ) );
 
     connect( _ui.get(), SIGNAL( stopSttyciar() ), this, SLOT( stopSttyciar() ) );
 
     _ui->receiveDevices( _abstractionLayer->getDevices() );
 }
 
-void SttyciarRunner::startSttyciar(short deviceType,
+void SttyciarRunner::startSttyciar(QString deviceType,
     shared_ptr<QStringList> devices)
 {
-    switch ( deviceType )
-    {
-        case SttyciarUI::HUB_TYPE:
-        {
-            _networkLogicLayer.reset( new NLLHub );
-            weak_ptr<ALNetworkListener> weakNLL(_networkLogicLayer);
-            _abstractionLayer->registerNLL(weakNLL);
-            weak_ptr<AbstractionLayer> weakAL(_abstractionLayer);
-            _networkLogicLayer->registerAbstractionLayer(weakAL);
-
-            _abstractionLayer->activateDevices( devices );
-
-            _networkLogicLayer->start();
-            _abstractionLayer->startListening(PACKET_CAPTURE_SIZE,
-                                              PCAP_READ_TIMEOUT);
-            _ui->sttyciarRunning();
-            break;
-        }
-    }
+//    switch ( deviceType )
+//    {
+//        case SttyciarUI::HUB_TYPE:
+//        {
+//            _networkLogicLayer.reset( new NLLHub );
+//            weak_ptr<ALNetworkListener> weakNLL(_networkLogicLayer);
+//            _abstractionLayer->registerNLL(weakNLL);
+//            weak_ptr<AbstractionLayer> weakAL(_abstractionLayer);
+//            _networkLogicLayer->registerAbstractionLayer(weakAL);
+//
+//            _abstractionLayer->activateDevices( devices );
+//
+//            _networkLogicLayer->start();
+//            _abstractionLayer->startListening(PACKET_CAPTURE_SIZE,
+//                                              PCAP_READ_TIMEOUT);
+//            _ui->sttyciarRunning();
+//            break;
+//        }
+//    }
 }
 
 void SttyciarRunner::stopSttyciar()

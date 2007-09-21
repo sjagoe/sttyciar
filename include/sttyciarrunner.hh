@@ -22,14 +22,15 @@ class SttyciarRunner: public QObject
 
     private:
         static const int PACKET_CAPTURE_SIZE = 65535;
-        static const int PCAP_READ_TIMEOUT = 100;
+        static const int PCAP_READ_TIMEOUT = 50;
+        QMap<int, QString> _availableDevices;
 
         scoped_ptr<SttyciarUI> _ui;
         shared_ptr<AbstractionLayer> _abstractionLayer;
         shared_ptr<NetworkLogicLayer> _networkLogicLayer;
 
     private slots:
-        void startSttyciar(short deviceType, shared_ptr<QStringList> devices);
+        void startSttyciar(QString deviceType, shared_ptr<QStringList> devices);
         void stopSttyciar();
         void exitSttyciar();
 
