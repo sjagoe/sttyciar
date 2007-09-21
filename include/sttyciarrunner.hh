@@ -29,7 +29,7 @@ class SttyciarRunner: public QObject
         shared_ptr<NetworkLogicLayer> _networkLogicLayer;
 
     private slots:
-        void startSttyciar(short deviceType);
+        void startSttyciar(short deviceType, shared_ptr<QStringList> devices);
         void stopSttyciar();
         void exitSttyciar();
 

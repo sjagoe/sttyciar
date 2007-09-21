@@ -6,6 +6,7 @@
 
 // Qt
 #include <QList>
+#include <QStringList>
 
 // boost
 #include <boost/shared_ptr.hpp>
@@ -81,12 +82,19 @@ class AbstractionLayer//: public NLLListener
         //void unregisterNLL( shared_ptr<ALNetworkListener>& nllModule );
 
         QList<shared_ptr<Device> > getDevices();
-       void activateDevice(shared_ptr<Device>& device);
+
+        void activateDevice(shared_ptr<Device>& device);
+
+        void activateDevices( shared_ptr<QStringList> devices );
+
         bool isDeviceActivated(shared_ptr<Device>& device);
+
         void startListening(int packetCaptureSize,int timeout);
+
         void stopListening();
 
         shared_ptr<QWaitCondition>& getNLLWaitCondition();
+
         shared_ptr<QSemaphore>& getNLLSemaphore();
 
     protected:

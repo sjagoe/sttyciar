@@ -71,6 +71,17 @@ void AbstractionLayer::activateDevice(shared_ptr<Device>& device)
         this->_activatedDevices.push_back(device);
 }
 
+void AbstractionLayer::activateDevices( shared_ptr<QStringList> devices )
+{
+    foreach ( shared_ptr<Device> device, _devices )
+    {
+        if (devices->contains( QString(device->getName().data()) ) )
+        {
+            activateDevice( device );
+        }
+    }
+}
+
 bool AbstractionLayer::isDeviceActivated(shared_ptr<Device>& device)
 {
     for (QList<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end(); ++iter)

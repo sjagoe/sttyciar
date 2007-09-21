@@ -1,4 +1,4 @@
-#include <iostream>
+//#include <iostream>
 
 #include "abstractionlayer.hh"
 #include "alnetworklistener.hh"
@@ -17,22 +17,38 @@ SttyciarRunner::SttyciarRunner()
 {
     _abstractionLayer.reset( new AbstractionLayer );
     _ui.reset( new SttyciarGUI );
-    connect( _ui.get(), SIGNAL(exitSttyciar()), this, SIGNAL(exit()));
+    connect( _ui.get(), SIGNAL(exitSttyciar()), this, SLOT(exitSttyciar()));
+
+    connect( _ui.get(),
+        SIGNAL( startSttyciar(short, shared_ptr<QStringList>) ),
+        this, SLOT( startSttyciar(short, shared_ptr<QStringList>) ) );
+
+    connect( _ui.get(), SIGNAL( stopSttyciar() ), this, SLOT( stopSttyciar() ) );
+
     _ui->receiveDevices( _abstractionLayer->getDevices() );
 }
 
-void SttyciarRunner::startSttyciar(short deviceType)
+void SttyciarRunner::startSttyciar(short deviceType,
+    shared_ptr<QStringList> devices)
 {
-    if ( deviceType == SttyciarUI::HUB_TYPE )
+    switch ( deviceType )
     {
-        _networkLogicLayer.reset( new NLLHub );
-        weak_ptr<ALNetworkListener> weakNLL(_networkLogicLayer);
-        _abstractionLayer->registerNLL(weakNLL);
-        weak_ptr<AbstractionLayer> weakAL(_abstractionLayer);
-        _networkLogicLayer->registerAbstractionLayer(weakAL);
-        _networkLogicLayer->start();
-        _abstractionLayer->startListening(PACKET_CAPTURE_SIZE,
-                                          PCAP_READ_TIMEOUT);
+        case SttyciarUI::HUB_TYPE:
+        {
+            _networkLogicLayer.reset( new NLLHub );
+            weak_ptr<ALNetworkListener> weakNLL(_networkLogicLayer);
+            _abstractionLayer->registerNLL(weakNLL);
+            weak_ptr<AbstractionLayer> weakAL(_abstractionLayer);
+            _networkLogicLayer->registerAbstractionLayer(weakAL);
+
+            _abstractionLayer->activateDevices( devices );
+
+            _networkLogicLayer->start();
+            _abstractionLayer->startListening(PACKET_CAPTURE_SIZE,
+                                              PCAP_READ_TIMEOUT);
+            _ui->sttyciarRunning();
+            break;
+        }
     }
 }
 
@@ -42,13 +58,17 @@ void SttyciarRunner::stopSttyciar()
     _abstractionLayer->stopListening();
     // stop the NLL from processing packets
     _networkLogicLayer->exitNow();
+    _networkLogicLayer->wait();
     // destroy the AL and NLL objects
     _networkLogicLayer.reset();
+    // notify the UI
+    _ui->sttyciarStopped();
 }
 
 void SttyciarRunner::exitSttyciar()
 {
     stopSttyciar();
-    _abstractionLayer.reset();
-    _ui.reset();
+    emit exit();
+//    _abstractionLayer.reset();
+//    _ui.reset();
 }

@@ -1,4 +1,4 @@
-#include <iostream>
+//#include <iostream>
 #include "pcapthread.hh"
 #include "alnetworklistener.hh"
 #include "rawpacket.hh"
@@ -45,7 +45,6 @@ void PcapThread::run() throw(CannotOpenDeviceException)
         {
             shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data, this->_device));
             this->_receiveBuffer->enqueue( rawPacket );
-
             //std::cout << count++ << ": " << ipaddress << std::endl;
         }
         if (result<0)

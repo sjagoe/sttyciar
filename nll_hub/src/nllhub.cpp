@@ -18,15 +18,15 @@ void NLLHub::routePacket( shared_ptr<RawPacket>& packet )
 
     for (; iter != _devices.end(); iter++)
     {
-        if ( packet->getInterfaceRoute()->getSource().get() != iter->get() )
+        if ( frame->getRawPacket()->getInterfaceRoute()->getSource().get() != iter->get() )
         {
-            packet->getInterfaceRoute()->addDestination( *iter );
+            frame->getRawPacket()->getInterfaceRoute()->addDestination( *iter );
         }
     }
 
     getAbstractionLayer()->sendDataLinkLayerPacket( frame );
 
-//
+
 //    EthernetIIFrame e( packet );
 //    IPv4Datagram d( e );
 //    ip_t ip = d.getSourceAddress();

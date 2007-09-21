@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include "sttyciarui_common.hh"
 #include "sttyciarui_gui_main.hh"
@@ -12,6 +13,7 @@
 #include "device.hh"
 
 using boost::scoped_ptr;
+using boost::shared_ptr;
 
 class SttyciarGUI: public SttyciarUI
 {
@@ -31,9 +33,9 @@ class SttyciarGUI: public SttyciarUI
     protected slots:
         void exit();
 
-        void startSttyciar(short deviceType);
+        void startSttyciarSlot(short deviceType, shared_ptr<QStringList> devices);
 
-        void stopSttyciar();
+        void stopSttyciarSlot();
 
     private:
         scoped_ptr<SttyciarGUIMain> _mainUI;

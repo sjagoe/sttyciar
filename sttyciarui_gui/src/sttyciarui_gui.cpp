@@ -9,9 +9,16 @@ SttyciarGUI::SttyciarGUI()
     _mainUI.reset( new SttyciarGUIMain );
     _statisticsUI.reset( new SttyciarGUIStatistics );
 
-    connect( _mainUI.get(), SIGNAL(startSttyciar(short)), this, SLOT(startSttyciar(short)) );
+    connect( _mainUI.get(),
+        SIGNAL(startSttyciar(short, shared_ptr<QStringList>)),
+        this, SLOT(startSttyciarSlot(short, shared_ptr<QStringList>)) );
+
     connect( _mainUI.get(), SIGNAL(exit()), this, SLOT(exit()) );
+
     connect( _statisticsUI.get(), SIGNAL(exit()), this, SLOT(exit()) );
+
+    connect( _statisticsUI.get(), SIGNAL(stopSttyciar()),
+        this, SLOT(stopSttyciarSlot()) );
 
     _mainUI->show();
 }
@@ -44,12 +51,12 @@ void SttyciarGUI::exit()
     emit exitSttyciar();
 }
 
-void SttyciarGUI::startSttyciar(short deviceType)
+void SttyciarGUI::startSttyciarSlot(short deviceType, shared_ptr<QStringList> devices)
 {
-    emit startSttyciar(deviceType);
+    emit startSttyciar(deviceType, devices);
 }
 
-void SttyciarGUI::stopSttyciar()
+void SttyciarGUI::stopSttyciarSlot()
 {
     emit stopSttyciar();
 }
