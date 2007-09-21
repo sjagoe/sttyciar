@@ -80,7 +80,10 @@ void SttyciarGUIMain::setNetworkDevices( QMap<int, QString> networkDevices )
 {
     for (int i = 0; i < networkDevices.size(); i++)
     {
-        _ui->comboNetworkDevices->addItem( networkDevices[i] );
+        if (!networkDevices[i].isEmpty())
+        {
+            _ui->comboNetworkDevices->addItem( networkDevices[i] );
+        }
     }
 }
 
@@ -93,11 +96,9 @@ void SttyciarGUIMain::on_btnStart_clicked()
         for (int i = 0; i < numDevices; i++)
         {
             QTreeWidgetItem* topLevelItem = _ui->treeUsedInterfaces->topLevelItem(i);
-            QString devName = topLevelItem->text(0);
-            std::cout << devName.toStdString() << std::endl;
-            *devices << devName;
+            *devices << topLevelItem->text(0);
         }
-        //emit startSttyciar(SttyciarUI::HUB_TYPE, devices);
+        emit startSttyciar(_ui->comboNetworkDevices->currentText(), devices);
     }
     else
     {

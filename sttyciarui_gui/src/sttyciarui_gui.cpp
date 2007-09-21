@@ -8,11 +8,14 @@ SttyciarGUI::SttyciarGUI(QMap<int, QString>& networkDevices)
 {
     _availableNetworkDevices = networkDevices;
     _mainUI.reset( new SttyciarGUIMain );
+
+    _mainUI->setNetworkDevices( networkDevices );
+
     _statisticsUI.reset( new SttyciarGUIStatistics );
 
     connect( _mainUI.get(),
-        SIGNAL(startSttyciar(short, shared_ptr<QStringList>)),
-        this, SLOT(startSttyciarSlot(short, shared_ptr<QStringList>)) );
+        SIGNAL(startSttyciar(QString, shared_ptr<QStringList>)),
+        this, SLOT(startSttyciarSlot(QString, shared_ptr<QStringList>)) );
 
     connect( _mainUI.get(), SIGNAL(exit()), this, SLOT(exit()) );
 

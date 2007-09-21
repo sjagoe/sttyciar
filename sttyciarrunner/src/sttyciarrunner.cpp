@@ -1,4 +1,4 @@
-//#include <iostream>
+#include <iostream>
 
 #include "abstractionlayer.hh"
 #include "alnetworklistener.hh"
@@ -8,14 +8,14 @@
 #include "sttyciarui_gui.hh"
 #include "nllhub.hh"
 
-const short SttyciarUI::HUB_TYPE;
+const short SttyciarRunner::HUB_TYPE;
 
 const int SttyciarRunner::PACKET_CAPTURE_SIZE;
 const int SttyciarRunner::PCAP_READ_TIMEOUT;
 
 SttyciarRunner::SttyciarRunner()
 {
-    _availableDevices.insert( 1, QString("Ethernet Hub") );
+    _availableDevices.insert( HUB_TYPE, QString("Ethernet Hub") );
 
     _abstractionLayer.reset( new AbstractionLayer );
 
@@ -35,34 +35,40 @@ SttyciarRunner::SttyciarRunner()
 void SttyciarRunner::startSttyciar(QString deviceType,
     shared_ptr<QStringList> devices)
 {
-//    switch ( deviceType )
-//    {
-//        case SttyciarUI::HUB_TYPE:
-//        {
-//            _networkLogicLayer.reset( new NLLHub );
-//            weak_ptr<ALNetworkListener> weakNLL(_networkLogicLayer);
-//            _abstractionLayer->registerNLL(weakNLL);
-//            weak_ptr<AbstractionLayer> weakAL(_abstractionLayer);
-//            _networkLogicLayer->registerAbstractionLayer(weakAL);
-//
-//            _abstractionLayer->activateDevices( devices );
-//
-//            _networkLogicLayer->start();
-//            _abstractionLayer->startListening(PACKET_CAPTURE_SIZE,
-//                                              PCAP_READ_TIMEOUT);
-//            _ui->sttyciarRunning();
-//            break;
-//        }
-//    }
+    //std::cout << deviceType.toStdString() << std::endl;
+    int type = _availableDevices.key( deviceType );
+    switch ( type )
+    {
+        case SttyciarUI::HUB_TYPE:
+        {
+            _networkLogicLayer.reset( new NLLHub );
+            weak_ptr<ALNetworkListener> weakNLL(_networkLogicLayer);
+            _abstractionLayer->registerNLL(weakNLL);
+            weak_ptr<AbstractionLayer> weakAL(_abstractionLayer);
+            _networkLogicLayer->registerAbstractionLayer(weakAL);
+
+            _abstractionLayer->activateDevices( devices );
+
+            _networkLogicLayer->start();
+            _abstractionLayer->startListening(PACKET_CAPTURE_SIZE,
+                                              PCAP_READ_TIMEOUT);
+            _ui->sttyciarRunning();
+            break;
+        }
+    }
 }
 
 void SttyciarRunner::stopSttyciar()
 {
     // stop the abstractionlayer from listeneing for packets
-    _abstractionLayer->stopListening();
+    if (_abstractionLayer.get() != 0)
+        _abstractionLayer->stopListening();
     // stop the NLL from processing packets
-    _networkLogicLayer->exitNow();
-    _networkLogicLayer->wait();
+    if (_networkLogicLayer.get() != 0)
+    {
+        _networkLogicLayer->exitNow();
+        _networkLogicLayer->wait();
+    }
     // destroy the AL and NLL objects
     _networkLogicLayer.reset();
     // notify the UI
