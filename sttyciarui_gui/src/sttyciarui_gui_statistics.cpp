@@ -25,7 +25,7 @@ SttyciarGUIStatistics::SttyciarGUIStatistics( QWidget* parent )
 
     connect( _exitButton, SIGNAL( clicked() ), this, SIGNAL( exit() ) );
     connect( _stopButton, SIGNAL( clicked() ),
-            this, SIGNAL( stopListening() ) );
+            this, SIGNAL( stopSttyciar() ) );
 }
 
 void SttyciarGUIStatistics::setupTabWidget()

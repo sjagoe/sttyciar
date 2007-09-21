@@ -3,6 +3,7 @@
 #include <QList>
 #include <QTreeWidgetItem>
 #include <QTreeWidget>
+#include <QMessageBox>
 
 #include "ui_sttyciar_gui_main.h"
 
@@ -20,7 +21,7 @@ SttyciarGUIMain::SttyciarGUIMain(QWidget* parent)
 {
     _ui = new Ui::FormSttyciarGUIMain;
     _ui->setupUi(this);
-    _ui->treeAvailableInterfaces->sortItems(0, Qt::AscendingOrder);
+    _ui->treeAvailableInterfaces->clear();
     _ui->treeAvailableInterfaces->setColumnWidth(0, 150);
     _ui->treeUsedInterfaces->setColumnWidth(0, 150);
 }
@@ -32,7 +33,9 @@ void SttyciarGUIMain::setDevices( const QList<shared_ptr<Device> >& devices )
 
     QTreeWidgetItem* rootItem;
     QTreeWidgetItem* subItem;
+#if defined (WIN32)
     QTreeWidgetItem* subsubItem;
+#endif
 
     //QList<shared_ptr<Device> >::const_iterator iter = devices->begin();
     //for (; iter != devices->end(); iter++)
@@ -40,7 +43,10 @@ void SttyciarGUIMain::setDevices( const QList<shared_ptr<Device> >& devices )
     {
         rootItem = new QTreeWidgetItem( _ui->treeAvailableInterfaces );
         rootItem->setText(0, device->getName().data());
-        rootItem->setText(1, device->getDescription().data());
+        QString description = device->getDescription().data();
+        if (description == QString())
+            description = "[No description available]";
+        rootItem->setText(1, description);
 
         QList<DeviceAddress> addrList = device->getAddresses();
 
@@ -50,6 +56,7 @@ void SttyciarGUIMain::setDevices( const QList<shared_ptr<Device> >& devices )
             subItem = new QTreeWidgetItem( rootItem );
             subItem->setText(0, tr("IP Address"));
             subItem->setText(1, address.getAddress().toIPString().data());
+#if defined (WIN32)
             // Net Mask
             subsubItem = new QTreeWidgetItem( subItem );
             subsubItem->setText(0, tr("Netmask"));
@@ -58,6 +65,7 @@ void SttyciarGUIMain::setDevices( const QList<shared_ptr<Device> >& devices )
             subsubItem = new QTreeWidgetItem( subItem );
             subsubItem->setText(0, tr("Broadcast Address"));
             subsubItem->setText(1, address.getBroadcastAddress().toIPString().data());
+#endif
             // Destination Address
 //            subsubItem = new QTreeWidgetItem( subItem );
 //            subsubItem->setText(0, tr("Destination Address"));
@@ -65,11 +73,37 @@ void SttyciarGUIMain::setDevices( const QList<shared_ptr<Device> >& devices )
 //            cout << "9" << endl;
         }
     }
+    _ui->treeAvailableInterfaces->sortItems(0, Qt::AscendingOrder);
+}
+
+void SttyciarGUIMain::setNetworkDevices( QMap<int, QString> networkDevices )
+{
+    for (int i = 0; i < networkDevices.size(); i++)
+    {
+        if (!networkDevices[i].isEmpty())
+        {
+            _ui->comboNetworkDevices->addItem( networkDevices[i] );
+        }
+    }
 }
 
 void SttyciarGUIMain::on_btnStart_clicked()
 {
-    emit startSttyciar(SttyciarUI::HUB_TYPE);
+    shared_ptr<QStringList> devices(new QStringList);
+    int numDevices = _ui->treeUsedInterfaces->topLevelItemCount();
+    if (numDevices > 0)
+    {
+        for (int i = 0; i < numDevices; i++)
+        {
+            QTreeWidgetItem* topLevelItem = _ui->treeUsedInterfaces->topLevelItem(i);
+            *devices << topLevelItem->text(0);
+        }
+        emit startSttyciar(_ui->comboNetworkDevices->currentText(), devices);
+    }
+    else
+    {
+        QMessageBox::critical( this, tr("Error"), tr("Please bind network interfaces to the device.") );
+    }
 }
 
 void SttyciarGUIMain::on_btnAddAllDevices_clicked()

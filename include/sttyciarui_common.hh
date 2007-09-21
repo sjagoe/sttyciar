@@ -17,16 +17,18 @@ class SttyciarUI: public QObject
         static const short HUB_TYPE = 1;
 
     public slots:
+        virtual void sttyciarRunning() = 0;
+        virtual void sttyciarStopped() = 0;
         virtual void updateStatistics() = 0;
         virtual void receiveDevices(
-            const QList<shared_ptr<Device> >& devices ) {};
+            const QList<shared_ptr<Device> >& devices ) = 0;
 
     protected slots:
         virtual void exit() = 0;
 
     signals:
         void exitSttyciar();
-        void startSttyciar(short deviceType);
+        void startSttyciar(QString deviceType, shared_ptr<QStringList> devices);
         void stopSttyciar();
 };
 

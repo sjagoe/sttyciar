@@ -29,7 +29,7 @@ class SttyciarGUIStatistics: public QMainWindow
 
         QTabWidget* _tabs;
 
-        QGroupBox* _grpTextualLoad;
+//        QGroupBox* _grpTextualLoad;
         QTableWidget* _tblTextualLoad;
 
         QGroupBox* _grpRates;
@@ -45,7 +45,7 @@ class SttyciarGUIStatistics: public QMainWindow
 
     signals:
         void exit();
-        void stopListening();
+        void stopSttyciar();
 };
 
 #endif

@@ -6,6 +6,7 @@
 
 // Qt
 #include <QList>
+#include <QStringList>
 
 // boost
 #include <boost/shared_ptr.hpp>
@@ -52,7 +53,7 @@ class AbstractionLayer//: public NLLListener
         @param interfaces The InterfaceRoute object now containing full
         source/destination interface data.
         */
-        void sendDataLinkLayerPacket( shared_ptr<DataLinkLayerPacket>& packet);
+        void sendDataLinkLayerPacket( shared_ptr<DataLinkLayerPacket> packet);
 
         /*!
         send a network layer frame (i.e. the network layer [IP] header and
@@ -62,8 +63,7 @@ class AbstractionLayer//: public NLLListener
         @param interfaces The InterfaceRoute object now containing full
         source/destination interface data.
         */
-        void sendNetworkLayerPacket( shared_ptr<NetworkLayerPacket>& packet,
-                                     shared_ptr<InterfaceRoute>& interfaces );
+        void sendNetworkLayerPacket( shared_ptr<NetworkLayerPacket> packet );
 
         /*!
         register an ALNetworkListener (i.e. NLL module) with the AL.
@@ -82,12 +82,19 @@ class AbstractionLayer//: public NLLListener
         //void unregisterNLL( shared_ptr<ALNetworkListener>& nllModule );
 
         QList<shared_ptr<Device> > getDevices();
-       void activateDevice(shared_ptr<Device>& device);
+
+        void activateDevice(shared_ptr<Device>& device);
+
+        void activateDevices( shared_ptr<QStringList> devices );
+
         bool isDeviceActivated(shared_ptr<Device>& device);
+
         void startListening(int packetCaptureSize,int timeout);
+
         void stopListening();
 
         shared_ptr<QWaitCondition>& getNLLWaitCondition();
+
         shared_ptr<QSemaphore>& getNLLSemaphore();
 
     protected:
