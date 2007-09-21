@@ -22,6 +22,8 @@ class SttyciarGUI: public SttyciarUI
     public slots:
         void sttyciarRunning();
 
+        void sttyciarStopped();
+
         void updateStatistics();
 
         void receiveDevices( const QList<shared_ptr<Device> >& devices );
@@ -30,6 +32,8 @@ class SttyciarGUI: public SttyciarUI
         void exit();
 
         void startSttyciar(short deviceType);
+
+        void stopSttyciar();
 
     private:
         scoped_ptr<SttyciarGUIMain> _mainUI;

@@ -1,5 +1,5 @@
-#include <iostream>
-#include <QApplication>
+//#include <iostream>
+//#include <QApplication>
 #include <QObject>
 
 #include "sttyciarui_gui.hh"
@@ -22,6 +22,12 @@ void SttyciarGUI::sttyciarRunning()
     _statisticsUI->show();
 }
 
+void SttyciarGUI::sttyciarStopped()
+{
+    _statisticsUI->hide();
+    _mainUI->show();
+}
+
 void SttyciarGUI::updateStatistics()
 {
 
@@ -40,15 +46,20 @@ void SttyciarGUI::exit()
 
 void SttyciarGUI::startSttyciar(short deviceType)
 {
-    //std::cout << deviceType << std::endl;
+    emit startSttyciar(deviceType);
 }
 
-int main(int argc, char* argv[])
+void SttyciarGUI::stopSttyciar()
 {
-    QApplication app(argc, argv);
-
-    SttyciarGUI ui;
-    QObject::connect( &ui, SIGNAL(exitSttyciar()), &app, SLOT(quit()) );
-
-    return app.exec();
+    emit stopSttyciar();
 }
+
+//int main(int argc, char* argv[])
+//{
+//    QApplication app(argc, argv);
+//
+//    SttyciarGUI ui;
+//    QObject::connect( &ui, SIGNAL(exitSttyciar()), &app, SLOT(quit()) );
+//
+//    return app.exec();
+//}
