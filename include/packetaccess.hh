@@ -33,10 +33,10 @@ struct two_byte
         {
             u_char high,low;
         } S_uchar;
-        struct
-        {
-            u_short eType;
-        } S_ushort;
+//        struct
+//        {
+//            u_short eType;
+//        } S_ushort;
     } U_main;
 };
 

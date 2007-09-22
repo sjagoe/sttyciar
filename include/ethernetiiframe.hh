@@ -41,7 +41,8 @@ class EthernetIIFrame: public DataLinkLayerPacket
         static const int ETHERNETII_HEAD_LENGTH = 14;
         static const int ETHERNETII_MAC_LENGTH = 6;
 
-        mac_t* _sourceMAC, *_destMAC;
+        mac_t* _sourceMAC;
+        mac_t* _destMAC;
         ethertype_t* _etherType;
 
     public:
@@ -64,20 +65,15 @@ class EthernetIIFrame: public DataLinkLayerPacket
             return ETHERNETII_HEAD_LENGTH;
         };
 
-        inline const mac_t& getSourceMAC() const
-        {
-            return *_sourceMAC;
-        };
+        const mac_t& getSourceMAC() const;
 
-        inline const mac_t& getDestinationMAC() const
-        {
-            return *_destMAC;
-        };
+        const mac_t& getDestinationMAC() const;
 
-        inline const ethertype_t& getEtherType() const
-        {
-            return *_etherType;
-        };
+        const ethertype_t& getEtherType() const;
+
+        // EtherTypes
+        static const u_short ETHERTYPE_IPV4 = 0x0800;
+        static const u_short ETHERTYPE_ARP = 0x0806;
 
 };
 

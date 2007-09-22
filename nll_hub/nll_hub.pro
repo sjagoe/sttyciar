@@ -37,8 +37,8 @@ win32 {
 
 INCLUDEPATH += ../../resources/tbb/include
 
-LIBS += -lnetworklogiclayer
 LIBS += -labstractionlayer
+LIBS += -lnetworklogiclayer
 
 TARGET = nll_hub
 

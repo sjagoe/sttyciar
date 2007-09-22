@@ -32,7 +32,8 @@ void PcapThread::run() throw(CannotOpenDeviceException)
 
 {
     //std::cout << "\nreceive: start - thread number: " << thread_number << std::endl;
-    pcap_t* source=this->_device->getPcapDevice();
+    pcap_t* source = 0;
+    source=this->_device->getPcapDevice();
     this->_listening = true;
 
     struct pcap_pkthdr *pkt_header;

@@ -83,7 +83,7 @@ class RawPacket
             return _interfaceRoute;
         };
 
-        inline const u_char* getPacketPointer() const
+        inline u_char* getPacketPointer()
         {
             return _packet.get();
         };
