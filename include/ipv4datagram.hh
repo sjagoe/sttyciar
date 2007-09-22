@@ -17,6 +17,15 @@ using std::pair;
 
 class RawPacket;
 
+/*!
+IPv4Datagram encapsulates the IP version 4 Datagram header and payload with an
+easy to use interface.
+
+This class provides an interface to IP version 4 Datagram headers stored in the
+encapsulated RawPacket.
+
+\author Simon Jagoe
+*/
 class IPv4Datagram: public NetworkLayerPacket
 {
     private:

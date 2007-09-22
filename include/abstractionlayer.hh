@@ -49,8 +49,8 @@ class AbstractionLayer//: public NLLListener
         send a data link layer frame (i.e. all headers and payload is
         contained, and the AL can send it without modification)
 
-        @param packet The DataLinkLayerPacket object containing the data.
-        @param interfaces The InterfaceRoute object now containing full
+        \param packet The DataLinkLayerPacket object containing the data.
+        \param interfaces The InterfaceRoute object now containing full
         source/destination interface data.
         */
         void sendDataLinkLayerPacket( shared_ptr<DataLinkLayerPacket> packet);
@@ -59,8 +59,8 @@ class AbstractionLayer//: public NLLListener
         send a network layer frame (i.e. the network layer [IP] header and
         payload is contained, and the AL needs to calculate the DLL header)
 
-        @param packet The NetworkLayerPacket object containing the data.
-        @param interfaces The InterfaceRoute object now containing full
+        \param packet The NetworkLayerPacket object containing the data.
+        \param interfaces The InterfaceRoute object now containing full
         source/destination interface data.
         */
         void sendNetworkLayerPacket( shared_ptr<NetworkLayerPacket> packet );
@@ -68,7 +68,7 @@ class AbstractionLayer//: public NLLListener
         /*!
         register an ALNetworkListener (i.e. NLL module) with the AL.
 
-        @param nllModule A NLL module (i.e. ALNetworkListener) that the AL can
+        \param nllModule A NLL module (i.e. ALNetworkListener) that the AL can
         send messages to.
         */
         void registerNLL( weak_ptr<ALNetworkListener>& nllModule );
@@ -76,7 +76,7 @@ class AbstractionLayer//: public NLLListener
         /* !
         Unregister an ALNetworkListener (i.e. NLL module) with the AL.
 
-        @param nllModule A NLL module (i.e. ALNetworkListener) that the AL can
+        \param nllModule A NLL module (i.e. ALNetworkListener) that the AL can
         send messages to.
         */
         //void unregisterNLL( shared_ptr<ALNetworkListener>& nllModule );

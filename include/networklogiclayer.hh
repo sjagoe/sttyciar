@@ -38,7 +38,7 @@ is provided for the specific NLL module implementation. This method must be
 overridden by each specific NLL module implementation to provide the routing
 logic of the device being emulated.
 
-@author Simon Jagoe
+\author Simon Jagoe
 */
 class NetworkLogicLayer:
     public QThread,
@@ -75,8 +75,8 @@ class NetworkLogicLayer:
         Method provided by the ALNetworkListener for the AL to push a received
         packet onto the receive buffer.
 
-        @param packet A shared_ptr to the RawPacket received by the AL.
-        @param interfaces A shared_ptr to the InterfaceRoute describing where
+        \param packet A shared_ptr to the RawPacket received by the AL.
+        \param interfaces A shared_ptr to the InterfaceRoute describing where
         the packet came from.
         */
         /*!
@@ -102,7 +102,7 @@ class NetworkLogicLayer:
         A pure virtual method for specific NLL modules to override and provide
         the routing logic specific to the device.
 
-        @param packet A RawPacket containing the raw packet data and
+        \param packet A RawPacket containing the raw packet data and
         InterfaceRoute.
         */
         virtual void routePacket( shared_ptr<RawPacket>& packet ) = 0;

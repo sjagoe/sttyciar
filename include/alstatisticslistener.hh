@@ -16,7 +16,7 @@ The ALStatisticsListener is a (pure virtual) public interface that must be
 implemented by the StatisticsLayer to make statistical data available to the
 user.
 
-@author Simon Jagoe
+\author Simon Jagoe
 */
 class ALStatisticsListener
 {
@@ -32,7 +32,7 @@ class ALStatisticsListener
         The SL processes the data received through this method, and passes the
         processed information to the user interface for displaying.
 
-        @param interfaces The InterfaceRoute object passed to the AL after
+        \param interfaces The InterfaceRoute object passed to the AL after
         routing, containing complete source/destination interface data.
         */
         virtual void updateStatistics( InterfaceRoute& interfaces ) = 0;

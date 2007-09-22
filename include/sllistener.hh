@@ -6,7 +6,7 @@ The SLListener is a (pure virtual) public interface that is implemented by the
 User Interface so that the Statistics Layer can pass meaningful information
 to it.
 
-@author Simon Jagoe
+\author Simon Jagoe
 */
 class SLListener
 {

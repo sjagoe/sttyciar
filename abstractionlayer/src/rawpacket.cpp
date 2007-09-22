@@ -5,6 +5,7 @@
 
 RawPacket::RawPacket()
 {
+    _pcapHeader.reset( new pcap_pkthdr );
     _interfaceRoute.reset( new InterfaceRoute() );
 }
 

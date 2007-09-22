@@ -21,7 +21,7 @@ InterfaceRoute contains a source device, used by the NLL to help determine a
 route, and a list of destination devices, used by the AL to identify which
 devices to use to transmit a packet.
 
-@author Simon Jagoe
+\author Simon Jagoe
 */
 class InterfaceRoute
 {

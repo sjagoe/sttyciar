@@ -9,28 +9,55 @@ using boost::shared_ptr;
 #include "rawpacket.hh"
 class Device;
 
+
+/*!
+The Packet Class forms a base class for all packet types.
+
+This class is inherited by classes such as the DataLinkLayerPacket and
+NetworkLayerPacket, which are inherited by classes forming the packet structure
+for specific protocols
+
+\author Simon Jagoe
+*/
 class Packet
 {
     private:
-        shared_ptr<RawPacket> _rawPacket;
+        shared_ptr<RawPacket> _rawPacket; //! A pointer to the RawPacket containing the actual packet data
 
     protected:
+        /*!
+        Set the pointer to the raw packet data.
+
+        \param rawPacket A Boost::shared_ptr to the RawPacket
+        **/
         void setRawPacket( const shared_ptr<RawPacket>& rawPacket )
         {
             _rawPacket = rawPacket;
         };
 
     public:
-        ~Packet()
+        /*!
+        Virtual destructor, resetting the boost::shared_ptr.
+        */
+        virtual ~Packet()
         {
             _rawPacket.reset();
         };
 
+        /*!
+        Return a const reference to the RawPacket shared_ptr.
+        */
         const shared_ptr<RawPacket>& getRawPacket() const
         {
             return _rawPacket;
         };
 
+        /*!
+        Add a destination to the routing information contained in the RawPacket.
+
+        \param destinationInterface A shared_ptr to the destination Device
+        (interface).
+        */
         void addDestination( const shared_ptr<Device>& destinationInterface )
         {
             _rawPacket->addDestination( destinationInterface );
