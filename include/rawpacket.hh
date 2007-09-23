@@ -1,10 +1,6 @@
 #ifndef __RAWPACKET_HH__
 #define __RAWPACKET_HH__
 
-// STL
-//#include <vector>
-#include <iterator>
-
 // boost
 #include <boost/shared_ptr.hpp>
 #include <boost/shared_array.hpp>
@@ -15,13 +11,11 @@
 
 #include "interfaceroute.hh"
 
-//using std::vector;
 using boost::shared_array;
 using boost::shared_ptr;
 using boost::scoped_ptr;
 
 class Device;
-//class InterfaceRoute;
 
 /*!
 The Packet class provides a pointer-free encapsulation of (most of) the data

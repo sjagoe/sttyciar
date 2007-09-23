@@ -1,8 +1,6 @@
 #ifndef __ETHERNETIIFRAME_HH__
 #define __ETHERNETIIFRAME_HH__
 
-//#include <sys/types.h>
-
 #include <boost/shared_array.hpp>
 #include <boost/shared_ptr.hpp>
 
@@ -10,7 +8,6 @@
 
 #include "datalinklayerpacket.hh"
 
-//using std::vector;
 using boost::shared_array;
 using boost::shared_ptr;
 

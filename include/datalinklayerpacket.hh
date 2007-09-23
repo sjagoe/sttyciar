@@ -1,5 +1,5 @@
-#ifndef __LINKLAYERPACKET_HH__
-#define __LINKLAYERPACKET_HH__
+#ifndef __DATALINKLAYERPACKET_HH__
+#define __DATALINKLAYERPACKET_HH__
 
 #include <pcap.h>
 
