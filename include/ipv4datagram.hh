@@ -29,54 +29,54 @@ encapsulated RawPacket.
 class IPv4Datagram: public NetworkLayerPacket
 {
     private:
-        static const short IPV4_TYPEOFSERVICE_OFFSET = 1;
-        static const short IPV4_HEADERLENGTH_OFFSET = 2;
-        static const short IPV4_IDENTIFICATION_OFFSET = 4;
-        static const short IPV4_FLAGS_FRAG_OFFSET = 6;
-        static const short IPV4_TIMETOLIVE_OFFSET = 8;
-        static const short IPV4_PROTOCOL_OFFSET = 9;
-        static const short IPV4_CHECKSUM_OFFSET = 10;
-        static const short IPV4_SOURCEADDRESS_OFFSET = 12;
-        static const short IPV4_DESTINATIONADDRESS_OFFSET = 16;
+        static const short IPV4_TYPEOFSERVICE_OFFSET = 1; //! TOS field offset from the start of the IPv4 Header
+        static const short IPV4_HEADERLENGTH_OFFSET = 2; //! Header Length field offset from the start of the IPv4 Header
+        static const short IPV4_IDENTIFICATION_OFFSET = 4; //! ID field offset from the start of the IPv4 Header
+        static const short IPV4_FLAGS_FRAG_OFFSET = 6; //! (Flags & Fragment Offset) field offset from the start of the IPv4 Header
+        static const short IPV4_TIMETOLIVE_OFFSET = 8; //! TTL field offset from the start of the IPv4 Header
+        static const short IPV4_PROTOCOL_OFFSET = 9; //! Protocol field offset from the start of the IPv4 Header
+        static const short IPV4_CHECKSUM_OFFSET = 10; //! Header Checksum field offset from the start of the IPv4 Header
+        static const short IPV4_SOURCEADDRESS_OFFSET = 12; //! Source IP field offset from the start of the IPv4 Header
+        static const short IPV4_DESTINATIONADDRESS_OFFSET = 16; //! Destination IP field offset from the start of the IPv4 Header
 
-        static const short IPV4_VERSION_AND_VALUE = 0xF0;
-        static const short IPV4_VERSION_SHIFT = 4;
+        static const short IPV4_VERSION_AND_VALUE = 0xF0; //! Logical AND value to extract the Version from the first Byte
+        static const short IPV4_VERSION_SHIFT = 4; //! Logical shift amount to extract the Version from the first Byte
 
-        static const short IPV4_HEADERLENGTH_AND_VALUE = 0x0F;
+        static const short IPV4_HEADERLENGTH_AND_VALUE = 0x0F; //! Logical AND value to extract the Header Length from the first Byte
 
-        static const short IPV4_FLAGS_AND_VALUE = 0xE0;
-        static const short IPV4_FLAGS_SHIFT = 5;
+        static const short IPV4_FLAGS_AND_VALUE = 0xE0; //! Logical AND value to extract the Flags from the Flags & Frag Offset bytes
+        static const short IPV4_FLAGS_SHIFT = 5; //! Logical shift amount to extract the Flags from the Flags & Frag Offset bytes
 
-        static const short IPV4_OFFSET_AND_VALUE = 0x1F;
+        static const short IPV4_OFFSET_AND_VALUE = 0x1F; //! Logical AND value to extract the Fragmentation Offset from the Flags & Frag Offset bytes
 
-        static const unsigned short IPV4_MINIMUM_LENGTH = 20;
+        static const unsigned short IPV4_MINIMUM_LENGTH = 20; //! The minimum size in bytes of an IPv4 header.
 
-        u_char _version;
-        u_char _headerLength;
+        u_char _version; //! The version field of the header
+        u_char _headerLength; //! The length (in 32-bit words) of the header
 
-        u_char* _typeOfService;
+        u_char* _typeOfService; //! Access to the Type Of Service field
 
-        two_byte* _totalLength;
+        two_byte* _totalLength; //! Access to the Total Length field
 
-        two_byte* _identification;
+        two_byte* _identification; //! Access to the ID Field
 
-        u_char _flags;
+        u_char _flags; //! The Flags field
 
-        two_byte _fragmentationOffset;
+        two_byte _fragmentationOffset; //! The Fragmentation offset
 
-        u_char* _timeToLive;
+        u_char* _timeToLive; //! Access to the TTL field
 
-        u_char* _protocol;
+        u_char* _protocol; //! Access to the Protocol field
 
-        two_byte* _checksum;
+        two_byte* _checksum; //! Access to the Checksum Field
 
-        ip_t* _sourceIP;
+        ip_t* _sourceIP; //! Access to the Source IP
 
-        ip_t* _destinationIP;
+        ip_t* _destinationIP; //! Access to the Destination IP
 
-        u_char* _options;
+        u_char* _options; //! Access to the Options field
 
-        int _payloadOffset;
+        int _payloadOffset; //! Offset of the payload in Bytes
 
     public:
         IPv4Datagram( DataLinkLayerPacket& packet );
