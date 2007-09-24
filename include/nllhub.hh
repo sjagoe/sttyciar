@@ -22,10 +22,17 @@ class NLLHub: public NetworkLogicLayer
     public:
         NLLHub()
             : NetworkLogicLayer()
-        {};
+        {
+            c1 = 0;
+            c2 = 0;
+        };
 
     protected:
         void routePacket( shared_ptr<RawPacket>& packet );
+
+    private:
+        long long c1;
+        long long c2;
 };
 
 #endif
