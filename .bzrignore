@@ -15,3 +15,4 @@ Sttyciar.workspace
 *.Release
 *.layout.backup
 *.workspace.backup
+sttyciarui_gui/ui_sttyciar_gui_main.h
