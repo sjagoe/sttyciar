@@ -2,7 +2,7 @@
 #define __PCAPSENDTHREAD_HH__
 
 #include <string>
-#include <iostream>
+//#include <iostream>
 #include <QtCore>
 #include <boost/shared_ptr.hpp>
 #include "pcap.h"

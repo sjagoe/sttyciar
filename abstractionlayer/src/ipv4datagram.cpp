@@ -1,6 +1,6 @@
-#include <iostream>
-#include <ext/algorithm>
-#include <algorithm>
+//#include <iostream>
+//#include <ext/algorithm>
+//#include <algorithm>
 
 #include "ipv4datagram.hh"
 
@@ -8,8 +8,8 @@
 
 #include "ethernetiiframe.hh"
 
-using std::cout;
-using std::endl;
+//using std::cout;
+//using std::endl;
 
 const short IPv4Datagram::IPV4_TYPEOFSERVICE_OFFSET;
 const short IPv4Datagram::IPV4_HEADERLENGTH_OFFSET;

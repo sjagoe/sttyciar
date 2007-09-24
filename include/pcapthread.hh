@@ -2,7 +2,7 @@
 #define __PCAPTHREAD_HH__
 
 #include <QtCore>
-#include <iostream>
+//#include <iostream>
 #include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/weak_ptr.hpp>

@@ -1,4 +1,4 @@
-#include <iostream>
+//#include <iostream>
 
 #include "abstractionlayer.hh"
 #include "alnetworklistener.hh"
@@ -41,13 +41,13 @@ void SttyciarRunner::startSttyciar(QString deviceType,
     {
         case SttyciarUI::HUB_TYPE:
         {
+            _abstractionLayer->activateDevices( devices );
+
             _networkLogicLayer.reset( new NLLHub );
             weak_ptr<ALNetworkListener> weakNLL(_networkLogicLayer);
             _abstractionLayer->registerNLL(weakNLL);
             weak_ptr<AbstractionLayer> weakAL(_abstractionLayer);
             _networkLogicLayer->registerAbstractionLayer(weakAL);
-
-            _abstractionLayer->activateDevices( devices );
 
             _networkLogicLayer->start();
             _abstractionLayer->startListening(PACKET_CAPTURE_SIZE,

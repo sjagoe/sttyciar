@@ -1,6 +1,6 @@
 #include <QWaitCondition>
 #include <QSemaphore>
-#include <iostream>
+//#include <iostream>
 
 #include "abstractionlayer.hh"
 
@@ -68,7 +68,10 @@ void AbstractionLayer::retrieveDevices() throw(DeviceNotFoundException)
 void AbstractionLayer::activateDevice(shared_ptr<Device>& device)
 {
     if (!this->isDeviceActivated(device))
+    {
+        //std::cout << "AbstractionLayer::activateDevice" << std::endl;
         this->_activatedDevices.push_back(device);
+    }
 }
 
 void AbstractionLayer::activateDevices( shared_ptr<QStringList> devices )

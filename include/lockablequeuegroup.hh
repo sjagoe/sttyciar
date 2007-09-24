@@ -16,11 +16,15 @@ class LockableQueueGroup
 
         void pop(T& element)
         {
-            _queues[_currentQueue]->pop(element);
-            if (++_currentQueue >= _queues.size())
+            int temp = _currentQueue;
+            do
             {
-                _currentQueue = 0;
+                {
+                    _queues[_currentQueue]->pop(element);
+                }
+                _currentQueue = (_currentQueue + 1) % _queues.size();
             }
+            while ((_currentQueue != temp));
         };
 
         void registerQueue(shared_ptr<LockableQueue<T> >& queue)

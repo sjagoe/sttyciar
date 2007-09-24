@@ -1,7 +1,7 @@
 #ifndef __STTYCIARUI_GUI_HH__
 #define __STTYCIARUI_GUI_HH__
 
-#include <iostream>
+//#include <iostream>
 
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>

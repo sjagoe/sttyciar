@@ -1,7 +1,7 @@
 #ifndef __STTYCIARUI_GUI_STATISTICS_HH__
 #define __STTYCIARUI_GUI_STATISTICS_HH__
 
-#include <iostream>
+//#include <iostream>
 
 #include <QMainWindow>
 #include <QPushButton>

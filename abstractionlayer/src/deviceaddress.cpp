@@ -1,9 +1,9 @@
-#include <iostream>
+//#include <iostream>
 
 #include "deviceaddress.hh"
 
-using std::cout;
-using std::endl;
+//using std::cout;
+//using std::endl;
 
 const int DeviceAddress::DEFAULT_ADDRESS_LENGTH;
 

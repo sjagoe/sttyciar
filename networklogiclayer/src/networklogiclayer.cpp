@@ -1,4 +1,4 @@
-#include <iostream>
+//#include <iostream>
 
 #include "networklogiclayer.hh"
 #include "interfaceroute.hh"
@@ -33,7 +33,8 @@ void NetworkLogicLayer::registerAbstractionLayer(
     if ( lockedAL.get() )
     {
         // get the devices
-        _devices = lockedAL->getDevices();
+        _devices = lockedAL->getActivateDevices();
+//        std::cout << "Number of Activated Devices: " << _devices.size() << std::endl;
         // get the WaitCondition for the NLL
         _wait = lockedAL->getNLLWaitCondition();
         // get the Semaphore for the NLL
@@ -73,33 +74,32 @@ void NetworkLogicLayer::registerQueue(
 void NetworkLogicLayer::run()
 {
     // loop the thread
-    //_runningMutex.lock();
     while( _running)
     {
-        //_runningMutex.unlock();
         // wait for packets when the queue is empty
         _waitMutex.lock();
         _wait->wait( &_waitMutex );
         _waitMutex.unlock();
         // once woken up, loop for all packets on the queue
         // if _running becomes false while in this loop, exit.
-        //_runningMutex.lock();
+        //while (( _waitingPackets->tryAcquire() ) && (_running) )
         while (( _waitingPackets->tryAcquire() ) && (_running) )
         {
-            //_runningMutex.unlock();
             // pop a packet/interfaceroute QPair from the receive buffer
             shared_ptr<RawPacket> packet;
             _receiveBuffer->pop( packet );
-            // call the method that performs the actual routing
-            //routePacket( pair.first, pair.second );
-            routePacket( packet );
-            //_waitingPackets->tryAcquire();
-            //_runningMutex.lock();
+            if (packet.get() != 0)
+            {
+                // call the method that performs the actual routing
+                //routePacket( pair.first, pair.second );
+                routePacket( packet );
+            }
+//            else
+//            {
+//                std::cout << "Null pointer in NLL::run()" << std::endl;
+//            }
         }
-        //_runningMutex.unlock();
-        //_runningMutex.lock();
     }
-    //_runningMutex.unlock();
 }
 
 shared_ptr<AbstractionLayer> NetworkLogicLayer::getAbstractionLayer()

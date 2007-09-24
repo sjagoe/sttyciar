@@ -1,6 +1,8 @@
 #ifndef __PCAPTHREADTICKET_HH__
 #define __PCAPTHREADTICKET_HH__
 
+//#include <iostream>
+
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 
@@ -25,6 +27,10 @@ class PcapThreadTicket
         void enqueue( const shared_ptr<RawPacket>& packet )
         {
             _receiveBuffer->push( packet );
+//            if (packet.get() == 0)
+//                std::cout << "Null pointer in PcapThreadTicket::enqueue()" << std::endl;
+//            else
+//                std::cout << "Non-Null pointer in PcapThreadTicket::enqueue()" << std::endl;
             _networkLogicLayer.lock()->packetReceived();
         };
 

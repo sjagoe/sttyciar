@@ -49,7 +49,15 @@ void PcapThread::run() throw(CannotOpenDeviceException)
         while (this->_listening && (result=pcap_next_ex(source,&pkt_header,&pkt_data) == 1))
         {
             shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data, this->_device));
+//            if (rawPacket.get() == 0)
+//                std::cout << "Null Pointer in PcapThread::run() - 1" << std::endl;
+//            else
+//                std::cout << "Non-Null Pointer in PcapThread::run() - 1" << std::endl;
             this->_receiveBuffer->enqueue( rawPacket );
+//            if (rawPacket.get() == 0)
+//                std::cout << "Null Pointer in PcapThread::run() - 2" << std::endl;
+//            else
+//                std::cout << "Non-Null Pointer in PcapThread::run() - 2" << std::endl;
             //std::cout << count++ << ": " << ipaddress << std::endl;
         }
         if (result<0)
@@ -57,7 +65,7 @@ void PcapThread::run() throw(CannotOpenDeviceException)
             noterror=false;
         }
     }
-    std::cout << "\nreceive: finish - thread number: " << thread_number << std::endl;
+//    std::cout << "\nreceive: finish - thread number: " << thread_number << std::endl;
 //    delete pkt_header;
 //    delete pkt_data;
 

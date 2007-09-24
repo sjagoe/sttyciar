@@ -7,7 +7,7 @@ macx {
 }
 
 TEMPLATE = app
-QT = core
+#QT = core
 
 DEPENDPATH += . src
 INCLUDEPATH += . ../include
@@ -32,21 +32,23 @@ win32 {
     CONFIG += dll
     CONFIG += rtti
     CONFIG += exceptions
-    INCLUDEPATH += ../../resources/WpdPack/Include
-    LIBS += -L../../resources/WpdPack/Lib
-    LIBS += -lpacket
-    LIBS += -lwpcap
-} else {
-    LIBS += -lpcap
+    #INCLUDEPATH += ../../resources/WpdPack/Include
+    #LIBS += -L../../resources/WpdPack/Lib
+    #LIBS += -lpacket
+    #LIBS += -lwpcap
+#} else {
+    #LIBS += -lpcap
 }
-
-INCLUDEPATH += ../../resources/tbb/include
 
 LIBS += -labstractionlayer
 LIBS += -lnetworklogiclayer
 LIBS += -lnll_hub
 
-TARGET = sttyciar
+LIBS += -lsttyciarrunner
+LIBS += -lsttyciarui
+LIBS += -lstatisticslayer
+
+TARGET = sttyciar_gui
 
 # Input
 SOURCES += src/main.cpp
