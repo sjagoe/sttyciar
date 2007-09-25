@@ -1,12 +1,14 @@
 #include "device.hh"
 #include <ext/algorithm>
+#include <iostream>
 
 Device::Device()
 {
+    this->_pcapSendThread.reset(new PcapSendThread());
+    this->_pcapReceiveThread.reset(new PcapReceiveThread());
 }
 
-/*customized copy constructor to stop device from trying to copy PcapReceiveThread and PcapSendThread which cannot do due to
-the fact the QThreads cannot be copied or assigned*/
+/*customized copy constructor to esnure that the error buffer is a copy and not just a pointer to the same error buffer*/
 Device::Device(const Device& device)
 {
     this->_name = device._name;
@@ -15,12 +17,16 @@ Device::Device(const Device& device)
     this->_flags = device._flags;
     this->_pcapSource = device._pcapSource;
     __gnu_cxx::copy_n(device._pcapErrorBuffer,PCAP_ERRBUF_SIZE,this->_pcapErrorBuffer);
+    this->_pcapSendThread = device._pcapSendThread;
+    this->_pcapReceiveThread = device._pcapReceiveThread;
 
 }
 
 Device::Device(pcap_if* pcapDevice)
 {
     this->setContents(pcapDevice);
+    this->_pcapSendThread.reset(new PcapSendThread());
+    this->_pcapReceiveThread.reset(new PcapReceiveThread());
 }
 
 void Device::setContents(pcap_if* pcapDevice)
@@ -76,26 +82,26 @@ void Device::startListening(int packetCaptureSize,int timeout,weak_ptr<ALNetwork
         throw CannotOpenDeviceException(this->_pcapErrorBuffer);
 
 
-    this->_pcapSendThread.setSource(this->_pcapSource);
+    this->_pcapSendThread->setSource(this->_pcapSource);
 
     shared_ptr<Device> tempDeviceCopy(new Device(*this));
-    this->_pcapReceiveThread.setDevice(tempDeviceCopy);
-    this->_pcapReceiveThread.setALNetworkListener(alNetworkListener);
+    this->_pcapReceiveThread->setDevice(tempDeviceCopy);
+    this->_pcapReceiveThread->setALNetworkListener(alNetworkListener);
 
-    this->_pcapSendThread.start();
-    this->_pcapReceiveThread.start();
+    this->_pcapSendThread->start();
+    this->_pcapReceiveThread->start();
 }
 
 void Device::stopListening()
 {
-    this->_pcapSendThread.stopRunning();
-    this->_pcapReceiveThread.stopListening();
+    this->_pcapSendThread->stopRunning();
+    this->_pcapReceiveThread->stopListening();
     pcap_close(this->_pcapSource);
 }
 
 void Device::sendPacket(const shared_ptr<RawPacket>& packet)
 {
-    this->_pcapSendThread.addPacket(packet);
+    this->_pcapSendThread->addPacket(packet);
 }
 
 bool Device::operator==(Device& device) const

@@ -38,8 +38,8 @@ class Device
         string _name;
         string _description;
         QList<DeviceAddress> _addresses;
-        PcapSendThread _pcapSendThread;
-        PcapReceiveThread _pcapReceiveThread;
+        shared_ptr<PcapSendThread> _pcapSendThread;
+        shared_ptr<PcapReceiveThread> _pcapReceiveThread;
         unsigned int _flags;
         pcap_t* _pcapSource;
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
