@@ -61,6 +61,7 @@ void Device::startListening(int packetCaptureSize,int timeout) throw (CannotOpen
     #endif
         throw CannotOpenDeviceException(this->_pcapErrorBuffer);
 
+
     this->_pcapSendThread.setDevice(this->_pcapDevice);
     this->_pcapSendThread.start();
 }

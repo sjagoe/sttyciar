@@ -59,7 +59,7 @@ HEADERS += ../include/abstractionlayer.hh \
            ../include/ipv4datagram.hh \
            ../include/networklayerpacket.hh \
            ../include/packet.hh \
-           ../include/pcapthread.hh \
+           ../include/pcapreceivethread.hh \
            ../include/rawpacket.hh \
            ../include/packetaccess.hh \
            ../include/pcapsendthread.hh
@@ -74,5 +74,5 @@ SOURCES += src/abstractionlayer.cpp \
            src/exceptions.cpp \
            src/interfaceroute.cpp \
            src/ipv4datagram.cpp \
-           src/pcapthread.cpp \
+           src/pcapreceivethread.cpp \
            src/rawpacket.cpp
