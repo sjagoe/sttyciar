@@ -28,7 +28,7 @@ class Device
         void startListening(int packetCaptureSize,int timeout) throw (CannotOpenDeviceException);
         void stopListening();
         void sendPacket(const shared_ptr<RawPacket>& packet);
-        pcap_t* getPcapDevice();
+        pcap_t* getPcapSource();
 
     private:
         string _name;
@@ -37,7 +37,7 @@ class Device
         PcapSendThread _pcapSendThread;
         unsigned int _flags;
         void createAddressList(pcap_if* pcapDevice);
-        pcap_t* _pcapDevice;
+        pcap_t* _pcapSource;
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
 };
 

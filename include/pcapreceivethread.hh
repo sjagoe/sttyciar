@@ -30,7 +30,6 @@ class PcapReceiveThread : public QThread
                     weak_ptr<ALNetworkListener> alNetworkListener) throw(CannotOpenDeviceException);
         ~PcapReceiveThread();
         void stopListening();
-        int thread_number;
 
     protected:
         void run() throw(CannotOpenDeviceException);
@@ -42,7 +41,6 @@ class PcapReceiveThread : public QThread
         bool _listening;
         weak_ptr<ALNetworkListener> _alNetworkListener;
         scoped_ptr<PcapThreadTicket> _receiveBuffer;
-        static int thread_counter;
 };
 
 #endif // __PCAPRECEIVETHREAD_HH__

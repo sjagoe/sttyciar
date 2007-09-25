@@ -53,23 +53,23 @@ void Device::createAddressList(pcap_if* pcapDevice)
 void Device::startListening(int packetCaptureSize,int timeout) throw (CannotOpenDeviceException)
 {
     #if defined(WIN32)
-    if((this->_pcapDevice = pcap_open(this->getName().c_str(),packetCaptureSize,
+    if((this->_pcapSource = pcap_open(this->getName().c_str(),packetCaptureSize,
 							 PCAP_OPENFLAG_PROMISCUOUS | PCAP_OPENFLAG_NOCAPTURE_LOCAL | PCAP_OPENFLAG_MAX_RESPONSIVENESS,
 							 timeout, NULL,this->_pcapErrorBuffer)) == NULL)
     #else
-    if ((this->_pcapDevice = pcap_open_live(this->getName().c_str(),packetCaptureSize,true,timeout,this->_pcapErrorBuffer))==NULL)
+    if ((this->_pcapSource = pcap_open_live(this->getName().c_str(),packetCaptureSize,true,timeout,this->_pcapErrorBuffer))==NULL)
     #endif
         throw CannotOpenDeviceException(this->_pcapErrorBuffer);
 
 
-    this->_pcapSendThread.setDevice(this->_pcapDevice);
+    this->_pcapSendThread.setSource(this->_pcapSource);
     this->_pcapSendThread.start();
 }
 
 void Device::stopListening()
 {
     this->_pcapSendThread.stopRunning();
-    pcap_close(this->_pcapDevice);
+    pcap_close(this->_pcapSource);
 }
 
 void Device::sendPacket(const shared_ptr<RawPacket>& packet)
@@ -82,7 +82,7 @@ bool Device::operator==(Device& device) const
     return this->getName()==device.getName();
 }
 
-pcap_t* Device::getPcapDevice()
+pcap_t* Device::getPcapSource()
 {
-    return this->_pcapDevice;
+    return this->_pcapSource;
 }
