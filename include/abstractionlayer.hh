@@ -34,7 +34,7 @@ class InterfaceRoute;
 class QWaitCondition;
 class QSemaphore;
 class RawPacket;
-class PcapReceiveThread;
+class PcapThread;
 
 class AbstractionLayer//: public NLLListener
 {
@@ -110,7 +110,7 @@ class AbstractionLayer//: public NLLListener
 
         QList<shared_ptr<Device> > _devices;
         QList<shared_ptr<Device> > _activatedDevices;
-        QList<shared_ptr<PcapReceiveThread> > _pcapThreads;
+        QList<shared_ptr<PcapThread> > _pcapThreads;
 
         bool _listening;
         weak_ptr<ALNetworkListener> _networkLogicLayer;

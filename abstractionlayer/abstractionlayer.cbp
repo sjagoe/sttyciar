@@ -74,8 +74,8 @@
 		<Unit filename="src\exceptions.cpp" />
 		<Unit filename="src\interfaceroute.cpp" />
 		<Unit filename="src\ipv4datagram.cpp" />
-		<Unit filename="src\pcapreceivethread.cpp" />
 		<Unit filename="src\pcapsendthread.cpp" />
+		<Unit filename="src\pcapthread.cpp" />
 		<Unit filename="src\rawpacket.cpp" />
 		<Unit filename="..\include\abstractionlayer.hh" />
 		<Unit filename="..\include\address.hh" />
@@ -92,8 +92,8 @@
 		<Unit filename="..\include\networklayerpacket.hh" />
 		<Unit filename="..\include\packet.hh" />
 		<Unit filename="..\include\packetaccess.hh" />
-		<Unit filename="..\include\pcapreceivethread.hh" />
 		<Unit filename="..\include\pcapsendthread.hh" />
+		<Unit filename="..\include\pcapthread.hh" />
 		<Unit filename="..\include\pcapthreadticket.hh" />
 		<Unit filename="..\include\rawpacket.hh" />
 		<Extensions>

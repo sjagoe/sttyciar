@@ -1,5 +1,5 @@
-#ifndef __PCAPRECEIVETHREAD_HH__
-#define __PCAPRECEIVETHREAD_HH__
+#ifndef __PCAPTHREAD_HH__
+#define __PCAPTHREAD_HH__
 
 #include <QtCore>
 //#include <iostream>
@@ -21,15 +21,16 @@ class InterfaceRoute;
 
 class PcapThreadTicket;
 
-class PcapReceiveThread : public QThread
+class PcapThread : public QThread
 {
     Q_OBJECT
 
     public:
-        PcapReceiveThread( const shared_ptr<Device>& device,
+        PcapThread( const shared_ptr<Device>& device,
                     weak_ptr<ALNetworkListener> alNetworkListener) throw(CannotOpenDeviceException);
-        ~PcapReceiveThread();
+        ~PcapThread();
         void stopListening();
+        int thread_number;
 
     protected:
         void run() throw(CannotOpenDeviceException);
@@ -41,6 +42,7 @@ class PcapReceiveThread : public QThread
         bool _listening;
         weak_ptr<ALNetworkListener> _alNetworkListener;
         scoped_ptr<PcapThreadTicket> _receiveBuffer;
+        static int thread_counter;
 };
 
-#endif // __PCAPRECEIVETHREAD_HH__
+#endif // PCAPTHREAD_HH
