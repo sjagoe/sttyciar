@@ -1,7 +1,21 @@
 #include "device.hh"
+#include <ext/algorithm>
 
 Device::Device()
 {
+}
+
+/*customized copy constructor to stop device from trying to copy PcapReceiveThread and PcapSendThread which cannot do due to
+the fact the QThreads cannot be copied or assigned*/
+Device::Device(const Device& device)
+{
+    this->_name = device._name;
+    this->_description = device._description;
+    this->_addresses = device._addresses;
+    this->_flags = device._flags;
+    this->_pcapSource = device._pcapSource;
+    __gnu_cxx::copy_n(device._pcapErrorBuffer,PCAP_ERRBUF_SIZE,this->_pcapErrorBuffer);
+
 }
 
 Device::Device(pcap_if* pcapDevice)
@@ -50,7 +64,7 @@ void Device::createAddressList(pcap_if* pcapDevice)
     }
 }
 
-void Device::startListening(int packetCaptureSize,int timeout) throw (CannotOpenDeviceException)
+void Device::startListening(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>& alNetworkListener) throw (CannotOpenDeviceException)
 {
     #if defined(WIN32)
     if((this->_pcapSource = pcap_open(this->getName().c_str(),packetCaptureSize,
@@ -63,12 +77,19 @@ void Device::startListening(int packetCaptureSize,int timeout) throw (CannotOpen
 
 
     this->_pcapSendThread.setSource(this->_pcapSource);
+
+    shared_ptr<Device> tempDeviceCopy(new Device(*this));
+    this->_pcapReceiveThread.setDevice(tempDeviceCopy);
+    this->_pcapReceiveThread.setALNetworkListener(alNetworkListener);
+
     this->_pcapSendThread.start();
+    this->_pcapReceiveThread.start();
 }
 
 void Device::stopListening()
 {
     this->_pcapSendThread.stopRunning();
+    this->_pcapReceiveThread.stopListening();
     pcap_close(this->_pcapSource);
 }
 

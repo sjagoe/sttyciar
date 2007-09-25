@@ -40,6 +40,8 @@ void PcapSendThread::stopRunning()
 //    this->_mutex.lock();
 //    this->_mutex.unlock();
     this->_waitCondition.wakeAll();
+    this->wait();
+
 }
 
 void PcapSendThread::run()

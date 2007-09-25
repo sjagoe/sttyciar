@@ -8,16 +8,20 @@
 #include "deviceaddress.hh"
 #include "lockablequeue.hh"
 #include "rawpacket.hh"
+#include "pcapreceivethread.hh"
 #include "pcapsendthread.hh"
 #include "exceptions.hh"
+#include "alnetworklistener.hh"
 
 using namespace std;
 using boost::shared_ptr;
+using boost::weak_ptr;
 
 class Device
 {
     public:
         Device();
+        Device(const Device& device);
         Device(pcap_if* pcapDevice);
         void setContents(pcap_if* pcapDevice);
         string getName() const;
@@ -25,7 +29,7 @@ class Device
         const QList<DeviceAddress>& getAddresses() const;
         bool isLoopback() const;
         bool operator==(Device& device) const;
-        void startListening(int packetCaptureSize,int timeout) throw (CannotOpenDeviceException);
+        void startListening(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>& alNetworkListener) throw (CannotOpenDeviceException);
         void stopListening();
         void sendPacket(const shared_ptr<RawPacket>& packet);
         pcap_t* getPcapSource();
@@ -35,10 +39,11 @@ class Device
         string _description;
         QList<DeviceAddress> _addresses;
         PcapSendThread _pcapSendThread;
+        PcapReceiveThread _pcapReceiveThread;
         unsigned int _flags;
-        void createAddressList(pcap_if* pcapDevice);
         pcap_t* _pcapSource;
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
+        void createAddressList(pcap_if* pcapDevice);
 };
 
 #endif // DEVICE_H

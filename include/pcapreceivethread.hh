@@ -7,7 +7,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 #include "pcap.h"
-#include "device.hh"
+//#include "device.hh"
 #include "exceptions.hh"
 #include "lockablequeue.hh"
 
@@ -18,6 +18,7 @@ using boost::weak_ptr;
 class ALNetworkListener;
 class RawPacket;
 class InterfaceRoute;
+class Device;
 
 class PcapThreadTicket;
 
@@ -26,9 +27,12 @@ class PcapReceiveThread : public QThread
     Q_OBJECT
 
     public:
+        PcapReceiveThread();
         PcapReceiveThread( const shared_ptr<Device>& device,
                     weak_ptr<ALNetworkListener> alNetworkListener) throw(CannotOpenDeviceException);
         ~PcapReceiveThread();
+        void setDevice(shared_ptr<Device>& device);
+        void setALNetworkListener(weak_ptr<ALNetworkListener>& alNetworkListener);
         void stopListening();
 
     protected:
