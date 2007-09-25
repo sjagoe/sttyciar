@@ -8,7 +8,7 @@
 
 #include "rawpacket.hh"
 
-#include "pcapthread.hh"
+#include "pcapreceivethread.hh"
 
 #include "datalinklayerpacket.hh"
 
@@ -102,22 +102,22 @@ QList<shared_ptr<Device> > AbstractionLayer::getActivateDevices()
 void AbstractionLayer::startListening(int packetCaptureSize,int timeout)
 {
     this->_pcapThreads.clear();
-    shared_ptr<PcapThread> tempPcapThread;
+    shared_ptr<PcapReceiveThread> tempPcapReceiveThread;
 
     //store the thread objects
     for (QList<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end(); ++iter)
     {
         (*iter)->startListening(packetCaptureSize,timeout);
-        tempPcapThread.reset(new PcapThread(*iter,this->_networkLogicLayer));
-        tempPcapThread->start();
-        this->_pcapThreads.push_back(tempPcapThread);
+        tempPcapReceiveThread.reset(new PcapReceiveThread(*iter,this->_networkLogicLayer));
+        tempPcapReceiveThread->start();
+        this->_pcapThreads.push_back(tempPcapReceiveThread);
     }
 
 }
 
 void AbstractionLayer::stopListening()
 {
-    for (QList<shared_ptr<PcapThread> >::iterator iter=this->_pcapThreads.begin(); iter!=this->_pcapThreads.end(); ++iter)
+    for (QList<shared_ptr<PcapReceiveThread> >::iterator iter=this->_pcapThreads.begin(); iter!=this->_pcapThreads.end(); ++iter)
     {
         (*iter)->stopListening();
         (*iter)->wait();
