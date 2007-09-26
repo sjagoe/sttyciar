@@ -23,6 +23,7 @@ class Device
         Device();
         Device(const Device& device);
         Device(pcap_if* pcapDevice);
+        void setSelf(weak_ptr<Device>& self);
         void setContents(pcap_if* pcapDevice);
         string getName() const;
         string getDescription() const;
@@ -42,6 +43,7 @@ class Device
         shared_ptr<PcapReceiveThread> _pcapReceiveThread;
         unsigned int _flags;
         pcap_t* _pcapSource;
+        weak_ptr<Device> _self;
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
         void createAddressList(pcap_if* pcapDevice);
 };

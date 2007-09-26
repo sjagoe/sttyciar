@@ -31,14 +31,14 @@ class PcapReceiveThread : public QThread
         PcapReceiveThread( const shared_ptr<Device>& device,
                     weak_ptr<ALNetworkListener> alNetworkListener) throw(CannotOpenDeviceException);
         ~PcapReceiveThread();
-        void setDevice(shared_ptr<Device>& device);
+        void setDevice(weak_ptr<Device>& device);
         void setALNetworkListener(weak_ptr<ALNetworkListener>& alNetworkListener);
         void stopListening();
 
     protected:
         void run() throw(CannotOpenDeviceException);
     private:
-        shared_ptr<Device> _device;
+        weak_ptr<Device> _device;
         int _pcapPacketCaptureSize;
         int _pcapTimeout;
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];

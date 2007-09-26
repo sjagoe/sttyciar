@@ -22,7 +22,7 @@ PcapReceiveThread::~PcapReceiveThread()
 {
 }
 
-void PcapReceiveThread::setDevice(shared_ptr<Device>& device)
+void PcapReceiveThread::setDevice(weak_ptr<Device>& device)
 {
     this->_device = device;
 }
@@ -43,15 +43,16 @@ void PcapReceiveThread::stopListening()
 void PcapReceiveThread::run() throw(CannotOpenDeviceException)
 
 {
+    shared_ptr<Device> tempDevice = this->_device.lock();
     pcap_t* source = 0;
-    source=this->_device->getPcapSource();
+    source=tempDevice->getPcapSource();
     this->_listening = true;
 
     struct pcap_pkthdr *pkt_header;
     const u_char *pkt_data;
     int result=0;
     bool noterror=true;
-    QList<DeviceAddress>  addresslist = (*(this->_device)).getAddresses();
+    QList<DeviceAddress>  addresslist = (*(tempDevice)).getAddresses();
     std::string ipaddress = addresslist.front().getAddress().toIPString();
     shared_ptr<InterfaceRoute> interfaceRoute;
 
@@ -59,7 +60,7 @@ void PcapReceiveThread::run() throw(CannotOpenDeviceException)
     {
         while (this->_listening && (result=pcap_next_ex(source,&pkt_header,&pkt_data) == 1))
         {
-            shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data, this->_device));
+            shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data, tempDevice));
             this->_receiveBuffer->enqueue( rawPacket );
 
         }

@@ -56,9 +56,12 @@ void AbstractionLayer::retrieveDevices() throw(DeviceNotFoundException)
     if (pcap_findalldevs(&pcapAllDevices, this->_pcapErrorBuffer) == -1)
         throw DeviceNotFoundException(this->_pcapErrorBuffer);
     shared_ptr<Device> tempDevice;
+    weak_ptr<Device> tempDeviceSelf;
     for(pcap_if* pcapTempDevice=pcapAllDevices; pcapTempDevice != NULL; pcapTempDevice=pcapTempDevice->next)
     {
         tempDevice.reset(new Device(pcapTempDevice));
+        tempDeviceSelf=tempDevice;
+        tempDevice->setSelf(tempDeviceSelf);
         this->_devices.push_back(tempDevice);
     }
 

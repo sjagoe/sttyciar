@@ -19,7 +19,6 @@ Device::Device(const Device& device)
     __gnu_cxx::copy_n(device._pcapErrorBuffer,PCAP_ERRBUF_SIZE,this->_pcapErrorBuffer);
     this->_pcapSendThread = device._pcapSendThread;
     this->_pcapReceiveThread = device._pcapReceiveThread;
-
 }
 
 Device::Device(pcap_if* pcapDevice)
@@ -27,6 +26,11 @@ Device::Device(pcap_if* pcapDevice)
     this->setContents(pcapDevice);
     this->_pcapSendThread.reset(new PcapSendThread());
     this->_pcapReceiveThread.reset(new PcapReceiveThread());
+}
+
+void Device::setSelf(weak_ptr<Device>& self)
+{
+    _self = self;
 }
 
 void Device::setContents(pcap_if* pcapDevice)
@@ -84,8 +88,7 @@ void Device::startListening(int packetCaptureSize,int timeout,weak_ptr<ALNetwork
 
     this->_pcapSendThread->setSource(this->_pcapSource);
 
-    shared_ptr<Device> tempDeviceCopy(new Device(*this));
-    this->_pcapReceiveThread->setDevice(tempDeviceCopy);
+    this->_pcapReceiveThread->setDevice(this->_self);
     this->_pcapReceiveThread->setALNetworkListener(alNetworkListener);
 
     this->_pcapSendThread->start();
