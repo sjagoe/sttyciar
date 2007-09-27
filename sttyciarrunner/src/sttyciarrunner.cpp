@@ -42,6 +42,8 @@ void SttyciarRunner::startSttyciar(QString deviceType,
         case SttyciarUI::HUB_TYPE:
         {
             _abstractionLayer->activateDevices( devices );
+            QList<shared_ptr<Device> > activatedDevices = _abstractionLayer->getActivateDevices();
+            _ui->receiveActivatedDevices( activatedDevices );
 
             _networkLogicLayer.reset( new NLLHub );
             weak_ptr<ALNetworkListener> weakNLL(_networkLogicLayer);

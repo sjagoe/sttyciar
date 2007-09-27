@@ -50,6 +50,12 @@ void SttyciarGUI::receiveDevices(
     _mainUI->setDevices( devices );
 }
 
+void SttyciarGUI::receiveActivatedDevices(
+    const QList<shared_ptr<Device> >& devices )
+{
+    _statisticsUI->receiveActivatedDevices( devices );
+}
+
 void SttyciarGUI::exit()
 {
     emit exitSttyciar();

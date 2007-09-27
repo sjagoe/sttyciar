@@ -30,6 +30,9 @@ class SttyciarGUI: public SttyciarUI
 
         void receiveDevices( const QList<shared_ptr<Device> >& devices );
 
+        void receiveActivatedDevices(
+            const QList<shared_ptr<Device> >& devices );
+
     protected slots:
         void exit();
 
