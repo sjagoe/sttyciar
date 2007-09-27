@@ -25,13 +25,20 @@ CONFIG(debug, debug|release) {
 } else {
     DESTDIR = ../bin/Release
     DEPENDPATH += ../bin/Release
+    #LIBS += -L../bin/Release
 }
 
 win32 {
     CONFIG += dll
     CONFIG += rtti
     CONFIG += exceptions
+    #INCLUDEPATH += ../../resources/WpdPack/Include
+    #LIBS += -L../../resources/WpdPack/Lib
+    #LIBS += -lpacket
+    #LIBS += -lwpcap
 }
+
+#LIBS += -labstractionlayer
 
 TARGET = statisticslayer
 
@@ -39,6 +46,8 @@ TARGET = statisticslayer
 HEADERS += ../include/statisticslayer.hh \
            ../include/alstatisticslistener.hh \
            ../include/sllistener.hh \
-           ../include/interfaceroute.hh
+           ../include/interfaceroute.hh \
+           ../include/statistics.hh
 
 SOURCES += src/statisticslayer.cpp
+SOURCES += src/statistics.cpp

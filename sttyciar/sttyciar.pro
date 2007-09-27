@@ -32,12 +32,12 @@ win32 {
     CONFIG += dll
     CONFIG += rtti
     CONFIG += exceptions
-    #INCLUDEPATH += ../../resources/WpdPack/Include
-    #LIBS += -L../../resources/WpdPack/Lib
-    #LIBS += -lpacket
-    #LIBS += -lwpcap
-#} else {
-    #LIBS += -lpcap
+    INCLUDEPATH += ../../resources/WpdPack/Include
+    LIBS += -L../../resources/WpdPack/Lib
+    LIBS += -lpacket
+    LIBS += -lwpcap
+} else {
+    LIBS += -lpcap
 }
 
 LIBS += -labstractionlayer

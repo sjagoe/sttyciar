@@ -42,7 +42,7 @@ class ALStatisticsListener
         to allow users to easily configure the routing infrastructure.
         */
         virtual void
-        availableInterfaces( QList<shared_ptr<Device> >& devices ) = 0;
+        initializeTable( QList<shared_ptr<Device> >& devices ) = 0;
 };
 
 #endif
