@@ -2,7 +2,17 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 
+#include <QPushButton>
+#include <QWidget>
+#include <QTabWidget>
+#include <QGroupBox>
+#include <QTableWidget>
+#include <QLabel>
+#include <QLineEdit>
+
 #include "sttyciarui_gui_statistics.hh"
+
+#include "loadcanvas.hh"
 
 SttyciarGUIStatistics::SttyciarGUIStatistics( QWidget* parent )
     : QMainWindow( parent )
@@ -28,13 +38,22 @@ SttyciarGUIStatistics::SttyciarGUIStatistics( QWidget* parent )
             this, SIGNAL( stopSttyciar() ) );
 }
 
+void SttyciarGUIStatistics::receiveActivatedDevices(
+    const QList<shared_ptr<Device> >& devices )
+{
+    this->_graphLoad->setLabels( devices );
+}
+
 void SttyciarGUIStatistics::setupTabWidget()
 {
     _tabs = new QTabWidget;
 
+    _graphLoad = new LoadCanvas;
+
 //    _grpTextualLoad = new QGroupBox( QString( "Load Balance" ) );
     _tblTextualLoad = new QTableWidget;
 
+    _tabs->addTab( _graphLoad, QString( "Load Balance (Graphical)" ) );
     _tabs->addTab( _tblTextualLoad, QString( "Load Balance (Table)" ) );
 }
 

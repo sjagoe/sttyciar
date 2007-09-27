@@ -44,8 +44,13 @@ FORMS += forms/sttyciar_gui_main.ui
 HEADERS += ../include/sttyciarui_common.hh \
            ../include/sttyciarui_gui.hh \
            ../include/sttyciarui_gui_main.hh \
-           ../include/sttyciarui_gui_statistics.hh
+           ../include/sttyciarui_gui_statistics.hh \
+           ../include/renderable.hh \
+           ../include/loadlabel.hh \
+           ../include/loadcanvas.hh
 
 SOURCES += src/sttyciarui_gui.cpp \
            src/sttyciarui_gui_main.cpp \
-           src/sttyciarui_gui_statistics.cpp
+           src/sttyciarui_gui_statistics.cpp \
+           src/loadlabel.cpp \
+           src/loadcanvas.cpp

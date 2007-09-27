@@ -22,6 +22,8 @@ class SttyciarUI: public QObject
         virtual void updateStatistics() = 0;
         virtual void receiveDevices(
             const QList<shared_ptr<Device> >& devices ) = 0;
+        virtual void receiveActivatedDevices(
+            const QList<shared_ptr<Device> >& devices ) = 0;
 
     protected slots:
         virtual void exit() = 0;

@@ -4,23 +4,34 @@
 //#include <iostream>
 
 #include <QMainWindow>
-#include <QPushButton>
-#include <QWidget>
-#include <QTabWidget>
-#include <QGroupBox>
-#include <QTableWidget>
-#include <QLabel>
-#include <QLineEdit>
 
+#include <boost/shared_ptr.hpp>
+
+using boost::shared_ptr;
+
+// Qt Forward Declerations
 class QHBoxLayout;
+class QPushButton;
+class QWidget;
+class QTabWidget;
+class QGroupBox;
+class QTableWidget;
+class QLabel;
+class QLineEdit;
 
-//#include "ui_textstatisticswidget.h"
+// Local Forward Declerations
+class LoadCanvas;
+class Device;
 
 class SttyciarGUIStatistics: public QMainWindow
 {
     Q_OBJECT
     public:
         SttyciarGUIStatistics(QWidget* parent = 0);
+
+    public slots:
+        void receiveActivatedDevices(
+            const QList<shared_ptr<Device> >& devices );
 
     private:
         void setupTabWidget();
@@ -29,7 +40,7 @@ class SttyciarGUIStatistics: public QMainWindow
 
         QTabWidget* _tabs;
 
-//        QGroupBox* _grpTextualLoad;
+        LoadCanvas* _graphLoad;
         QTableWidget* _tblTextualLoad;
 
         QGroupBox* _grpRates;
