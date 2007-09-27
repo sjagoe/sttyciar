@@ -35,6 +35,7 @@ win32 {
 }
 
 LIBS += -labstractionlayer
+LIBS += -lstatisticslayer
 
 TARGET = sttyciarui
 

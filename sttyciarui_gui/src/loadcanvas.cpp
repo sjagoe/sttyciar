@@ -74,53 +74,6 @@ QSize LoadCanvas::sizeHint() const
     return QSize(SIZE_HINT, SIZE_HINT);
 }
 
-//void LoadCanvas::setLabels( const QMap<shared_ptr<Device>, QStringList>& labels )
-//{
-//    // get the number of labels so that they can be spaced correctly
-//    int size = labels.size();
-//    double angleIncrement = 2*PI/size;
-//    double angle = 0;
-//
-//    // QFontMetrics to get the text dimensions
-//    QFontMetrics fm = this->fontMetrics();
-//    int baseHeight = fm.lineSpacing();
-//
-//    // Iterator to iterate through each of the devices and labels
-//    QMapIterator<shared_ptr<Device>, QStringList> iter(labels);
-//
-//    // Iterate through all labels
-//    while (iter.hasNext())
-//    {
-//        // get the next label
-//        iter.next();
-//        // create a QPair to put into the LoadLabel map
-//        QPair<double, shared_ptr<LoadLabel> > value;
-//
-//        // set the angle that the label will be at on the circle.
-//        value.first = angle;
-//        // create a LoadLabel object and initialise it with the label string
-//        QString separator( "\n" );
-//        QString oneLineLabel = iter.value().join(separator);
-//        value.second.reset(new LoadLabel(oneLineLabel));
-//
-//        // set the width of the label
-//        int w = 0;
-//        foreach (QString labelPart, iter.value())
-//        {
-//            w = max(w, fm.width(labelPart));
-//        }
-//        value.second->setWidth(w);
-//
-//        // set the height of the label
-//        int h = baseHeight * iter.value().size();
-//        value.second->setHeight(h);
-//
-//        this->_labels.insert( iter.key(), value );
-//
-//        angle += angleIncrement;
-//    }
-//}
-
 void LoadCanvas::setLabels( const QList<shared_ptr<Device> >& devices )
 {
     // get the number of labels so that they can be spaced correctly
@@ -172,6 +125,11 @@ void LoadCanvas::setLabels( const QList<shared_ptr<Device> >& devices )
 
         angle += angleIncrement;
     }
+}
+
+void LoadCanvas::updateStatistics( shared_ptr<Statistics> stats )
+{
+    this->_statistics = stats;
 }
 
 void LoadCanvas::paintEvent( QPaintEvent* /* event */ )
@@ -246,6 +204,33 @@ void LoadCanvas::paintEvent( QPaintEvent* /* event */ )
     foreach (label, _labels)
     {
         label.second->draw(painter);
+    }
+
+    // draw the lines
+    QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > >::const_iterator row = this->_labels.begin();
+
+    for (; row != this->_labels.end(); row++)
+    {
+        QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > >::const_iterator column = this->_labels.begin();
+
+        for (; column != this->_labels.end(); column++)
+        {
+            if (row.key().get() != column.key().get())
+            {
+                double total = this->_statistics->getTrafficPercentage( row.key(), column.key() );
+                total += this->_statistics->getTrafficPercentage( column.key(), row.key() );
+
+                double startAngle = this->_labels.value( row.key() ).first;
+                double endAngle = this->_labels.value( column.key() ).first;
+
+                QPoint start;
+                start.setX( (int)((double)this->_radius * cos(startAngle)) );
+                start.setY( -1*(int)((double)this->_radius * sin(startAngle)) );
+                QPoint end;
+                end.setX( (int)((double)this->_radius * cos(endAngle)) );
+                end.setY( -1*(int)((double)this->_radius * cos(endAngle)) );
+            }
+        }
     }
 }
 

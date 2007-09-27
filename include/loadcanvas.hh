@@ -15,6 +15,7 @@
 // Local
 #include "loadlabel.hh"
 #include "device.hh"
+#include "statistics.hh"
 
 using boost::shared_ptr;
 
@@ -63,9 +64,18 @@ class LoadCanvas: public QWidget
         */
         void setLabels( const QList<shared_ptr<Device> >& devices );
 
+        /*!
+        Update the statistics display with the values contained in the
+        Statistics object passed.
+
+        \param stats Statistics object containing the information to display.
+        */
+        void updateStatistics( shared_ptr<Statistics> stats );
+
     protected:
         /*!
-        Over-ridden Qt method that is called when the main event loop needs to redraw the widget.
+        Over-ridden Qt method that is called when the main event loop needs to
+        redraw the widget.
         */
         void paintEvent( QPaintEvent* event );
 
@@ -84,6 +94,8 @@ class LoadCanvas: public QWidget
         static const double PI = 3.141593; //! constant pi, used in polar coordinate conversions
 
         static const int MAX_PEN_WIDTH = 20; //! The pen width depicting maximum/all traffic
+
+        shared_ptr<Statistics> _statistics;
 
         /*!
         Check if the widget has been resized, and store the new size in class variables.

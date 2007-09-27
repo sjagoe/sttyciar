@@ -47,7 +47,8 @@ HEADERS += ../include/statisticslayer.hh \
            ../include/alstatisticslistener.hh \
            ../include/sllistener.hh \
            ../include/interfaceroute.hh \
-           ../include/statistics.hh
+           ../include/statistics.hh \
+           ../include/device.hh
 
 SOURCES += src/statisticslayer.cpp
 SOURCES += src/statistics.cpp
