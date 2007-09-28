@@ -14,9 +14,22 @@
 using boost::shared_ptr;
 using boost::weak_ptr;
 
+/*!
+A container class for the actual LockableQueue used by the PcapReceiveThread.
+
+The purpose of this class it to hide the complexity of the LockableQueue from
+the PcapReceiveThread.
+
+\author Simon Jagoe
+*/
 class PcapThreadTicket
 {
     public:
+        /*!
+        Construct a PcapThreadTicket with a weak pointer to the NLL.
+
+        This creates the LockableQueue and registers it with the NLL.
+        */
         PcapThreadTicket( weak_ptr<ALNetworkListener> nll )
         {
             _networkLogicLayer = nll;
@@ -24,21 +37,21 @@ class PcapThreadTicket
             _networkLogicLayer.lock()->registerQueue( _receiveBuffer );
         };
 
+        /*!
+        Enqueue a packet onto the LockableQueue and notify the NLL that a packet
+        has been received.
+
+        \param packet Packet received by the PcapReceiveThread
+        */
         void enqueue( const shared_ptr<RawPacket>& packet )
         {
             _receiveBuffer->push( packet );
-//            if (packet.get() == 0)
-//                std::cout << "Null pointer in PcapThreadTicket::enqueue()" << std::endl;
-//            else
-//                std::cout << "Non-Null pointer in PcapThreadTicket::enqueue()" << std::endl;
             _networkLogicLayer.lock()->packetReceived();
         };
 
     private:
-        weak_ptr<ALNetworkListener> _networkLogicLayer;
-//        shared_ptr<LockableQueue<QPair<shared_ptr<RawPacket>,
-//            shared_ptr<InterfaceRoute> > > > _receiveBuffer;
-        shared_ptr<LockableQueue<shared_ptr<RawPacket> > > _receiveBuffer;
+        weak_ptr<ALNetworkListener> _networkLogicLayer; //! Weak pointer to the NLL to notify on packet receipt (weak pointer avoids cyclic dependencies and memory leaks).
+        shared_ptr<LockableQueue<shared_ptr<RawPacket> > > _receiveBuffer; //! LockableQueue used by the thread containing this ticket.
 };
 
 #endif

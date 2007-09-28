@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="networklogiclayer" />
+		<Option title="nll_switch" />
 		<Option makefile_is_custom="1" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
@@ -14,7 +14,7 @@
 		</MakeCommands>
 		<Build>
 			<Target title="debug">
-				<Option output="../bin/Debug/libnetworklogiclayer" prefix_auto="1" extension_auto="1" />
+				<Option output="../bin/Debug/libnll_switch" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -31,7 +31,7 @@
 				</MakeCommands>
 			</Target>
 			<Target title="release">
-				<Option output="../bin/Release/libnetworklogiclayer" prefix_auto="1" extension_auto="1" />
+				<Option output="../bin/Release/libnll_switch" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="3" />
 				<Option compiler="gcc" />
@@ -57,32 +57,13 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="../include/abstractionlayer.hh" />
-		<Unit filename="../include/address.hh" />
-		<Unit filename="../include/alnetworklistener.hh" />
-		<Unit filename="../include/alstatisticslistener.hh" />
-		<Unit filename="../include/datalinklayerpacket.hh" />
-		<Unit filename="../include/device.hh" />
-		<Unit filename="../include/deviceaddress.hh" />
-		<Unit filename="../include/ethernetiiframe.hh" />
-		<Unit filename="../include/exceptions.hh" />
-		<Unit filename="../include/interfaceroute.hh" />
-		<Unit filename="../include/ipv4datagram.hh" />
-		<Unit filename="../include/lockablequeue.hh" />
-		<Unit filename="../include/lockablequeuegroup.hh" />
-		<Unit filename="../include/networklayerpacket.hh" />
-		<Unit filename="../include/networklogiclayer.hh" />
-		<Unit filename="../include/packet.hh" />
-		<Unit filename="../include/pcapthread.hh" />
-		<Unit filename="../include/rawpacket.hh" />
-		<Unit filename="../include/sllistener.hh" />
-		<Unit filename="../include/statisticslayer.hh" />
-		<Unit filename="../include/uilistener.hh" />
-		<Unit filename="networklogiclayer.pro" />
-		<Unit filename="src/networklogiclayer.cpp" />
+		<Unit filename="../include/maclookup.hh" />
+		<Unit filename="../include/nllswitch.hh" />
+		<Unit filename="nll_switch.pro" />
+		<Unit filename="src/maclookup.cpp" />
+		<Unit filename="src/nllswitch.cpp" />
 		<Extensions>
 			<code_completion />
-			<envvars />
 			<debugger />
 		</Extensions>
 	</Project>

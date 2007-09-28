@@ -20,6 +20,7 @@ const double LoadCanvas::PI;
 LoadCanvas::LoadCanvas(QWidget* parent)
     : QWidget(parent)
 {
+    this->_statistics.reset( new Statistics );
     // get the width and height of the canvas
     this->_width = width();
     this->_height = height();
@@ -74,53 +75,6 @@ QSize LoadCanvas::sizeHint() const
     return QSize(SIZE_HINT, SIZE_HINT);
 }
 
-//void LoadCanvas::setLabels( const QMap<shared_ptr<Device>, QStringList>& labels )
-//{
-//    // get the number of labels so that they can be spaced correctly
-//    int size = labels.size();
-//    double angleIncrement = 2*PI/size;
-//    double angle = 0;
-//
-//    // QFontMetrics to get the text dimensions
-//    QFontMetrics fm = this->fontMetrics();
-//    int baseHeight = fm.lineSpacing();
-//
-//    // Iterator to iterate through each of the devices and labels
-//    QMapIterator<shared_ptr<Device>, QStringList> iter(labels);
-//
-//    // Iterate through all labels
-//    while (iter.hasNext())
-//    {
-//        // get the next label
-//        iter.next();
-//        // create a QPair to put into the LoadLabel map
-//        QPair<double, shared_ptr<LoadLabel> > value;
-//
-//        // set the angle that the label will be at on the circle.
-//        value.first = angle;
-//        // create a LoadLabel object and initialise it with the label string
-//        QString separator( "\n" );
-//        QString oneLineLabel = iter.value().join(separator);
-//        value.second.reset(new LoadLabel(oneLineLabel));
-//
-//        // set the width of the label
-//        int w = 0;
-//        foreach (QString labelPart, iter.value())
-//        {
-//            w = max(w, fm.width(labelPart));
-//        }
-//        value.second->setWidth(w);
-//
-//        // set the height of the label
-//        int h = baseHeight * iter.value().size();
-//        value.second->setHeight(h);
-//
-//        this->_labels.insert( iter.key(), value );
-//
-//        angle += angleIncrement;
-//    }
-//}
-
 void LoadCanvas::setLabels( const QList<shared_ptr<Device> >& devices )
 {
     // get the number of labels so that they can be spaced correctly
@@ -174,66 +128,17 @@ void LoadCanvas::setLabels( const QList<shared_ptr<Device> >& devices )
     }
 }
 
+void LoadCanvas::updateStatistics( shared_ptr<Statistics> stats )
+{
+    this->_statistics = stats;
+}
+
 void LoadCanvas::paintEvent( QPaintEvent* /* event */ )
 {
     // calculate the positions for the labels and the radius.
     if (this->checkResized())
     {
-        QFontMetrics fm = this->fontMetrics();
-        //int fontHeight = fm.lineSpacing() * 2;
-        int fontHeight = 0;
-
-        int fontWidth = 0;
-        QPair<double, shared_ptr<LoadLabel> > item;
-        foreach ( item, _labels )
-        {
-            //fontWidth = std::max( fontWidth, fm.width( item.second->getLabel() ) );
-            fontWidth = std::max( fontWidth, item.second->getWidth() );
-            fontHeight = std::max( fontHeight, item.second->getHeight() );
-            if ( item.first < 0 )
-            {
-                item.first += ( 2 * PI );
-            }
-        }
-        fontWidth += fm.maxWidth();
-        fontHeight += fm.lineSpacing();
-
-        int radiusHeight = (int)floor( this->_height/2 ) - fontHeight;
-        int radiusWidth = (int)floor( this->_width/2 ) - fontWidth;
-
-        this->_radius = std::min( radiusWidth, radiusHeight );
-
-        int tempRadius = this->_radius + (fm.lineSpacing()/2);
-
-        foreach( item, _labels )
-        {
-            // get the angle
-            double angle = item.first;
-            // get the LoadLabel
-            shared_ptr<LoadLabel> label = item.second;
-            // determine the X value of the position
-            int x = (int)( (double)tempRadius * cos( angle ) );
-            // correct for the width of the text
-            int halfWidth = label->getWidth()/2;
-            x -= halfWidth;
-            // place outside of the circle based on angle
-            x += (int)( (double)halfWidth * cos( angle ) );
-
-            // determine the Y value of the position
-            int y = -1*(int)( (double)tempRadius * sin( angle ) );
-            // correct for the height of the text
-            int halfHeight = label->getHeight()/2;
-            y -= halfHeight;
-            // place outside of the circle based on angle
-            y += -1*(int)( (double)halfHeight * sin( angle ) );
-
-            // create the position QPoint and translate it relative to the centre of the canvas
-            QPoint position( x, y );
-            position += _centre;
-            // set the LoadLabel object's position
-            label->setPosition( position );
-
-        }
+        this->recalculateCanvasSize();
     }
 
     QPainter painter(this);
@@ -246,6 +151,36 @@ void LoadCanvas::paintEvent( QPaintEvent* /* event */ )
     foreach (label, _labels)
     {
         label.second->draw(painter);
+    }
+
+    // draw the lines
+    QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > >::const_iterator row = this->_labels.begin();
+
+    for (; row != this->_labels.end(); row++)
+    {
+        std::cout << "1" << std::endl;
+        QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > >::const_iterator column = this->_labels.begin();
+
+        for (; column != this->_labels.end(); column++)
+        {
+            std::cout << "2" << std::endl;
+            if (row.key().get() != column.key().get())
+            {
+                std::cout << "3" << std::endl;
+                double total = this->_statistics->getTrafficPercentage( row.key(), column.key() );
+                total += this->_statistics->getTrafficPercentage( column.key(), row.key() );
+
+                double startAngle = this->_labels.value( row.key() ).first;
+                double endAngle = this->_labels.value( column.key() ).first;
+
+                QPoint start;
+                start.setX( (int)((double)this->_radius * cos(startAngle)) );
+                start.setY( -1*(int)((double)this->_radius * sin(startAngle)) );
+                QPoint end;
+                end.setX( (int)((double)this->_radius * cos(endAngle)) );
+                end.setY( -1*(int)((double)this->_radius * cos(endAngle)) );
+            }
+        }
     }
 }
 
@@ -275,4 +210,63 @@ bool LoadCanvas::checkResized()
         changed = true;
     }
     return changed;
+}
+
+void LoadCanvas::recalculateCanvasSize()
+{
+    QFontMetrics fm = this->fontMetrics();
+    //int fontHeight = fm.lineSpacing() * 2;
+    int fontHeight = 0;
+
+    int fontWidth = 0;
+    QPair<double, shared_ptr<LoadLabel> > item;
+    foreach ( item, _labels )
+    {
+        //fontWidth = std::max( fontWidth, fm.width( item.second->getLabel() ) );
+        fontWidth = std::max( fontWidth, item.second->getWidth() );
+        fontHeight = std::max( fontHeight, item.second->getHeight() );
+        if ( item.first < 0 )
+        {
+            item.first += ( 2 * PI );
+        }
+    }
+    fontWidth += fm.maxWidth();
+    fontHeight += fm.lineSpacing();
+
+    int radiusHeight = (int)floor( this->_height/2 ) - fontHeight;
+    int radiusWidth = (int)floor( this->_width/2 ) - fontWidth;
+
+    this->_radius = std::min( radiusWidth, radiusHeight );
+
+    int tempRadius = this->_radius + (fm.lineSpacing()/2);
+
+    foreach( item, _labels )
+    {
+        // get the angle
+        double angle = item.first;
+        // get the LoadLabel
+        shared_ptr<LoadLabel> label = item.second;
+        // determine the X value of the position
+        int x = (int)( (double)tempRadius * cos( angle ) );
+        // correct for the width of the text
+        int halfWidth = label->getWidth()/2;
+        x -= halfWidth;
+        // place outside of the circle based on angle
+        x += (int)( (double)halfWidth * cos( angle ) );
+
+        // determine the Y value of the position
+        int y = -1*(int)( (double)tempRadius * sin( angle ) );
+        // correct for the height of the text
+        int halfHeight = label->getHeight()/2;
+        y -= halfHeight;
+        // place outside of the circle based on angle
+        y += -1*(int)( (double)halfHeight * sin( angle ) );
+
+        // create the position QPoint and translate it relative to the centre of the canvas
+        QPoint position( x, y );
+        position += _centre;
+        // set the LoadLabel object's position
+        label->setPosition( position );
+
+    }
 }

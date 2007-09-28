@@ -79,30 +79,97 @@ class IPv4Datagram: public NetworkLayerPacket
         int _payloadOffset; //! Offset of the payload in Bytes
 
     public:
+        /*!
+        Construct an IPv4 datagram from a specific DataLinkLayerPacket.
+        This takes a DLL packet because it needs to extract the DLL packet
+        payload offset.
+
+        \param packet DataLinkLayerPacket to extract IPv4 header information from
+        */
         IPv4Datagram( DataLinkLayerPacket& packet );
 
+        /*!
+        Return the IP version...
+
+        \return Version field of the IP header.
+        */
         const u_char& getVersion() const;
 
+        /*!
+        Return the IP header length.
+
+        \return Header Length field of the IP header.
+        */
         const u_char& getHeaderLength() const;
 
+        /*!
+        Return the Type of Service
+
+        \return Type of Service field of the IP header.
+        */
         const u_char& getTypeOfService() const;
 
+        /*!
+        Return the Datagram Length
+
+        \return Total Length field of the IP header.
+        */
         const two_byte& getDatagramLength() const;
 
+        /*!
+        Return the Identification field
+
+        \return Identification field of the IP header.
+        */
         const two_byte& getIdentification() const;
 
+        /*!
+        Return the Flags
+
+        \return Flags field of the IP header.
+        */
         const u_char& getFlags() const;
 
+        /*!
+        Return the Fragmentation Offset
+
+        \return Fragmentation Offset field of the IP header.
+        */
         const two_byte& getFragmentationOffset() const;
 
+        /*!
+        Return the Time To Live
+
+        \return Time To Live field of the IP header.
+        */
         const u_char& getTimeToLive() const;
 
+        /*!
+        Return the Transport Layer protocol ID
+
+        \return Protocol field of the IP header.
+        */
         const u_char& getProtocol() const;
 
+        /*!
+        Return the Checksum
+
+        \return Checksum field of the IP header.
+        */
         const two_byte& getChecksum() const;
 
+        /*!
+        Return the Source IP Address
+
+        \return Source Address field of the IP header.
+        */
         const ip_t& getSourceAddress() const;
 
+        /*!
+        Return the Destination IP Address
+
+        \return Destination Address field of the IP header.
+        */
         const ip_t& getDestinationAddress() const;
 };
 

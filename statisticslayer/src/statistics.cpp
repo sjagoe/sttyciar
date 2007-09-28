@@ -1,4 +1,5 @@
 #include "statistics.hh"
+#include "device.hh"
 
 Statistics::Statistics(shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > >& traffic,
                        int totalPackets)
@@ -33,3 +34,6 @@ void Statistics::calculateTrafficPercentage(shared_ptr<QMap<shared_ptr<Device>,Q
         this->_totalPackets = totalPackets;
     }
 }
+
+double Statistics::getTrafficPercentage(shared_ptr<Device> source, shared_ptr<Device> destination)
+{}

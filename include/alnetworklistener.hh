@@ -32,6 +32,9 @@ class ALNetworkListener
         */
         virtual ~ALNetworkListener() {};
 
+        /*!
+        Tell the NetworkLogicLayer thread to exit.
+        */
         virtual void exitNow() = 0;
 
         /* !
@@ -49,6 +52,11 @@ class ALNetworkListener
         */
         virtual void packetReceived() = 0;
 
+        /*!
+        Register a PcapReceiveThread's queue (from a PcapThreadTicket) with the LockableQueueGroup in the NLL.
+
+        \param queue LockableQueue to register.
+        */
         virtual void
         registerQueue(
             shared_ptr<LockableQueue<shared_ptr<RawPacket> > > queue ) = 0;

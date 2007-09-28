@@ -39,9 +39,9 @@ void SttyciarGUI::sttyciarStopped()
     _mainUI->show();
 }
 
-void SttyciarGUI::updateStatistics()
+void SttyciarGUI::updateStatistics( shared_ptr<Statistics> stats )
 {
-
+    _statisticsUI->updateStatistics( stats );
 }
 
 void SttyciarGUI::receiveDevices(

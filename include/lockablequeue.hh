@@ -3,12 +3,29 @@
 
 #include <QtCore>
 
+/*!
+LockableQueue provides a threadsafe interface to a QQueue (through the use of
+the QMutex class). Any queue operation is preceded by a QMutex.lock(), and
+followed by a QMutex.unlock().
+
+\author Simon Jagoe
+*/
 template <class T>
 class LockableQueue
 {
     public:
+        /*!
+        Empty constructor.
+        */
         LockableQueue(){};
 
+        /*!
+        Enqueue an element onto the QQueue.
+
+        The method was named push() for compatibility with the tbb::concurrent_queue.
+
+        \param element The element to enqueue.
+        */
         void push(const T& element)
         {
             _queueMutex.lock();
@@ -16,6 +33,13 @@ class LockableQueue
             _queueMutex.unlock();
         };
 
+        /*!
+        Dequeue an element from the queue.
+
+        The method was named pop() for compatibility with the tbb::concurrent_queue.
+
+        \param element The dequeued element is returned in the paramater (again for compatibility with tbb::concurrent_queue).
+        */
         void pop(T& element)
         {
             _queueMutex.lock();
@@ -24,14 +48,19 @@ class LockableQueue
             _queueMutex.unlock();
         };
 
+        /*!
+        Check if the queue is empty.
+
+        \return true if the queue is empty, false otherwise. See QQueue Documentation
+        */
         bool isEmpty()
         {
             return _queue.isEmpty();
         };
 
     private:
-        QQueue<T> _queue;
-        QMutex _queueMutex;
+        QQueue<T> _queue; //! QQueue instance to form the basis of the LockableQueue.
+        QMutex _queueMutex; //! QMutex used to lock the QQueue.
 
 //        long long _pushes;
 //        long long _pops;

@@ -32,17 +32,18 @@ win32 {
     CONFIG += dll
     CONFIG += rtti
     CONFIG += exceptions
-    INCLUDEPATH += ../../resources/WpdPack/Include
-    LIBS += -L../../resources/WpdPack/Lib
-    LIBS += -lpacket
-    LIBS += -lwpcap
-} else {
-    LIBS += -lpcap
+#    INCLUDEPATH += ../../resources/WpdPack/Include
+#    LIBS += -L../../resources/WpdPack/Lib
+#    LIBS += -lpacket
+#    LIBS += -lwpcap
+#} else {
+#    LIBS += -lpcap
 }
 
 LIBS += -labstractionlayer
 LIBS += -lnetworklogiclayer
 LIBS += -lnll_hub
+LIBS += -lnll_switch
 
 LIBS += -lsttyciarrunner
 LIBS += -lsttyciarui
@@ -51,4 +52,6 @@ LIBS += -lstatisticslayer
 TARGET = sttyciar_gui
 
 # Input
+HEADERS += ../include/loadcanvas.hh
+
 SOURCES += src/main.cpp

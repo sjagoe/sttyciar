@@ -35,7 +35,7 @@ void AbstractionLayer::sendDataLinkLayerPacket(
 }
 
 void AbstractionLayer::sendNetworkLayerPacket(
-    shared_ptr<NetworkLayerPacket> packet )
+    shared_ptr<NetworkLayerPacket> /* packet */ ) // uncomment the paramater when implementing the function. It is commented to avoid the annoying warning.
 {
 
 }
