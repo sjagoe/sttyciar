@@ -103,6 +103,11 @@ class LoadCanvas: public QWidget
         \return true if the widget has been resized, false otherwise.
         */
         bool checkResized();
+
+        /*!
+        Recalculate the positions od size of objects on the canvas when the
+        canvas has been resized.
+        */
         void recalculateCanvasSize();
 };
 

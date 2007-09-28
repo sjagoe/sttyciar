@@ -7,6 +7,8 @@
 #include <boost/shared_ptr.hpp>
 
 //#include "ui_sttyciar_gui_main.h"
+
+//!Forward decleration of the GUI Form (Ui namespace from Qt form generator).
 namespace Ui
 {
     class FormSttyciarGUIMain;
@@ -17,6 +19,12 @@ using boost::shared_ptr;
 class Device;
 class QTreeWidget;
 
+/*!
+The main window if the Sttyciar GUI, allowing users to select devices to bind
+to the system, and the type of network hardware to implement.
+
+\author Simon Jagoe
+*/
 class SttyciarGUIMain: public QMainWindow
 {
     Q_OBJECT
