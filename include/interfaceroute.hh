@@ -26,23 +26,33 @@ devices to use to transmit a packet.
 class InterfaceRoute
 {
     private:
-        shared_ptr<Device> _sourceInterface;
-        shared_ptr<QList<shared_ptr<Device> > > _destinationInterfaces;
+        shared_ptr<Device> _sourceInterface; //! The interface that the associated packet was received on (Objects of this classreside in the associated RawPacket)
+        shared_ptr<QList<shared_ptr<Device> > > _destinationInterfaces; //! interfaces that the associated packet will be transmitted on
 
     public:
+        /*!
+        Create an InterfaceRoute with empty source and destination interfaces.
+        */
         InterfaceRoute();
         /*!
         Create an InterfaceRoute with a specified source device.
 
-        The only time a source device can be set is at creation time (i.e.
-        the source cannot be modified in the NLL).
+        \param sourceInterface The Device to store as the packet's source.
         */
         InterfaceRoute( const shared_ptr<Device>& sourceInterface );
 
+        /*!
+        Set a source interface.
+
+        \param sourceInterface The Device to store as the packet's source.
+        */
         void setSource( const shared_ptr<Device>& sourceInterface );
 
         /*!
         Add a destination to the list of destination devices.
+
+        \param destinationInterface The Device to add to the list of destination
+        interfaces.
         */
         void addDestination( const shared_ptr<Device>& destinationInterface );
 
@@ -53,6 +63,8 @@ class InterfaceRoute
 
         /*!
         Return the list of destination Devices.
+
+        \return QList of destination devices
         */
         inline const shared_ptr<QList<shared_ptr<Device> > >& getDestinations() const
         {
@@ -61,6 +73,8 @@ class InterfaceRoute
 
         /*!
         Return the source Device.
+
+        \return Source device
         */
         inline const shared_ptr<Device>& getSource() const
         {
