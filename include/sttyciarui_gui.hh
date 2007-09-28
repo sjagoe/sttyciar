@@ -26,7 +26,7 @@ class SttyciarGUI: public SttyciarUI
 
         void sttyciarStopped();
 
-        void updateStatistics();
+        void updateStatistics( shared_ptr<Statistics> stats );
 
         void receiveDevices( const QList<shared_ptr<Device> >& devices );
 

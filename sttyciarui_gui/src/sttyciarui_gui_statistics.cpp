@@ -44,6 +44,11 @@ void SttyciarGUIStatistics::receiveActivatedDevices(
     this->_graphLoad->setLabels( devices );
 }
 
+void SttyciarGUIStatistics::updateStatistics( shared_ptr<Statistics> stats )
+{
+    _graphLoad->updateStatistics( stats );
+}
+
 void SttyciarGUIStatistics::setupTabWidget()
 {
     _tabs = new QTabWidget;

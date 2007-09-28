@@ -15,7 +15,7 @@ const int SttyciarRunner::PCAP_READ_TIMEOUT;
 
 SttyciarRunner::SttyciarRunner()
 {
-    _availableDevices.insert( HUB_TYPE, QString("Ethernet Hub") );
+    _availableDevices.insert( SttyciarRunner::HUB_TYPE, QString("Ethernet Hub") );
 
     _abstractionLayer.reset( new AbstractionLayer );
 
@@ -39,7 +39,7 @@ void SttyciarRunner::startSttyciar(QString deviceType,
     int type = _availableDevices.key( deviceType );
     switch ( type )
     {
-        case SttyciarUI::HUB_TYPE:
+        case SttyciarRunner::HUB_TYPE:
         {
             _abstractionLayer->activateDevices( devices );
             QList<shared_ptr<Device> > activatedDevices = _abstractionLayer->getActivateDevices();

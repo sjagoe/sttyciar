@@ -14,7 +14,7 @@
 
 using namespace std;
 
-const short SttyciarUI::HUB_TYPE;
+//const short SttyciarUI::HUB_TYPE;
 
 SttyciarGUIMain::SttyciarGUIMain(QWidget* parent)
     : QMainWindow(parent)

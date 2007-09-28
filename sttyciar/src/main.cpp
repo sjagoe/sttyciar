@@ -1,8 +1,8 @@
-//#include <QApplication>
-//#include "sttyciarrunner.hh"
-#include <iostream>
-#include "statisticslayer.hh"
-#include "abstractionlayer.hh"
+#include <QApplication>
+#include "sttyciarrunner.hh"
+//#include <iostream>
+//#include "statisticslayer.hh"
+//#include "abstractionlayer.hh"
 
 //#include <vector>
 //#include <iostream>
@@ -20,35 +20,42 @@
 
 int main(int argc, char* argv[])
 {
-    StatisticsLayer sl;
-    AbstractionLayer al;
-    QList<shared_ptr<Device> > devices = al.getDevices();
-    sl.initializeTable(devices);
-
-    for (QList<shared_ptr<Device > >::iterator iter = devices.begin(); iter != devices.end(); iter++)
-    {
-        std::cout << (*iter)->getName() << std::endl;
-    }
-    std::cout << std::endl;
-
-    InterfaceRoute ir;
-    ir.setSource(devices[0]);
-    ir.addDestination(devices[1]);
-    ir.addDestination(devices[2]);
-    sl.updateStatistics(ir);
-
-    ir.clearDestinations();
-    ir.setSource(devices[1]);
-    ir.addDestination(devices[2]);
-    ir.addDestination(devices[0]);
-    sl.updateStatistics(ir);
-
-
-    std::cout << sl.toString();
-    /*QApplication app(argc, argv);
+    // Actual main
+    QApplication app(argc, argv);
     SttyciarRunner runner;
     QObject::connect(&runner, SIGNAL(exit()), &app, SLOT(quit()));
-    return app.exec();*/
+    return app.exec();
+
+// testing stuff goes here is you comment out the actual main!
+
+//    StatisticsLayer sl;
+//    AbstractionLayer al;
+//    QList<shared_ptr<Device> > devices = al.getDevices();
+//    sl.initializeTable(devices);
+//
+//    for (QList<shared_ptr<Device > >::iterator iter = devices.begin(); iter != devices.end(); iter++)
+//    {
+//        std::cout << (*iter)->getName() << std::endl;
+//    }
+//    std::cout << std::endl;
+//
+//    InterfaceRoute ir;
+//    ir.setSource(devices[0]);
+//    ir.addDestination(devices[1]);
+//    ir.addDestination(devices[2]);
+//    sl.updateStatistics(ir);
+//
+//    ir.clearDestinations();
+//    ir.setSource(devices[1]);
+//    ir.addDestination(devices[2]);
+//    ir.addDestination(devices[0]);
+//    sl.updateStatistics(ir);
+//
+//
+//    std::cout << sl.toString();
+
+
+
 
 
 //    shared_ptr<AbstractionLayer> abstractionLayer( new AbstractionLayer );

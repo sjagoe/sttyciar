@@ -22,6 +22,7 @@ class QLineEdit;
 // Local Forward Declerations
 class LoadCanvas;
 class Device;
+class Statistics;
 
 class SttyciarGUIStatistics: public QMainWindow
 {
@@ -32,6 +33,8 @@ class SttyciarGUIStatistics: public QMainWindow
     public slots:
         void receiveActivatedDevices(
             const QList<shared_ptr<Device> >& devices );
+
+        void updateStatistics( shared_ptr<Statistics> stats );
 
     private:
         void setupTabWidget();
