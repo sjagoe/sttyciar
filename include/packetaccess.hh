@@ -12,7 +12,41 @@ A structure containing siz bytes, used to access MAC addresses in packets.
 */
 struct six_byte
 {
-    u_char b1,b2,b3,b4,b5,b6; //! Bytes of the address.
+    union
+    {
+        struct
+        {
+            u_char b1,b2,b3,b4,b5,b6; //! Bytes of the address.
+        } S_uchar;
+        struct
+        {
+            u_short high; //! High two bytes
+            u_long low; //! low four bytes
+        } S_ulong;
+    } U_main;
+
+    /*!
+    less-than operator so that the struct can be used in associative comtainers
+    */
+    bool operator<( const struct six_byte& other ) const
+    {
+        u_short h = (this->U_main.S_uchar.b1 << 8) || this->U_main.S_uchar.b2;
+        u_long l = (this->U_main.S_uchar.b3 << 16)
+                        || (this->U_main.S_uchar.b4 << 12)
+                        || (this->U_main.S_uchar.b5 << 8)
+                        || (this->U_main.S_uchar.b6);
+
+        u_short oh = (other.U_main.S_uchar.b1 << 8) || other.U_main.S_uchar.b2;
+        u_long ol = (other.U_main.S_uchar.b3 << 16)
+                        || (other.U_main.S_uchar.b4 << 12)
+                        || (other.U_main.S_uchar.b5 << 8)
+                        || (other.U_main.S_uchar.b6);
+        if ( (h < oh) || ( (h == oh) && (l < ol) ) )
+        {
+            return true;
+        }
+        return false;
+    };
 };
 
 /*!

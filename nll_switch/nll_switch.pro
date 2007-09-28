@@ -47,6 +47,9 @@ HEADERS += ../include/abstractionlayer.hh \
            ../include/nllswitch.hh \
            ../include/networklogiclayer.hh \
            ../include/device.hh \
-           ../include/interfaceroute.hh
+           ../include/interfaceroute.hh \
+           ../include/maclookup.cpp \
+           ../include/ethernetiiframe.hh
 
-SOURCES += src/nllswitch.cpp
+SOURCES += src/nllswitch.cpp \
+           src/maclookup.cpp

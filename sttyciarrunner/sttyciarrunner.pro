@@ -32,6 +32,7 @@ CONFIG(debug, debug|release) {
 LIBS += -labstractionlayer
 LIBS += -lnetworklogiclayer
 LIBS += -lnll_hub
+LIBS += -lnll_switch
 LIBS += -lstatisticslayer
 LIBS += -lsttyciarui
 

@@ -54,8 +54,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="../include/maclookup.hh" />
 		<Unit filename="../include/nllswitch.hh" />
 		<Unit filename="nll_switch.pro" />
+		<Unit filename="src/maclookup.cpp" />
 		<Unit filename="src/nllswitch.cpp" />
 		<Extensions>
 			<code_completion />

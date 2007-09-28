@@ -43,6 +43,7 @@ win32 {
 LIBS += -labstractionlayer
 LIBS += -lnetworklogiclayer
 LIBS += -lnll_hub
+LIBS += -lnll_switch
 
 LIBS += -lsttyciarrunner
 LIBS += -lsttyciarui

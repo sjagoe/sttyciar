@@ -91,6 +91,15 @@ class NetworkLogicLayer:
         registerQueue(
             shared_ptr<LockableQueue<shared_ptr<RawPacket> > > queue );
 
+    public slots:
+        /*!
+        A virtual method that can be overridden to allow timer-based events to
+        occur in the NLL.
+
+        \param secondsElapsed Time in seconds since the last event
+        */
+        virtual void update( int secondsElapsed ) {};
+
     protected:
         QList<shared_ptr<Device> > _devices; //! activated devices used for routing information
 
