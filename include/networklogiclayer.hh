@@ -4,12 +4,10 @@
 // Qt includes
 #include <QtCore>
 
-//// Intel TBB includes
-//#include <tbb/concurrent_queue.h>
-
 // boost includes
 #include <boost/weak_ptr.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/scoped_ptr.hpp>
 
 // STL
 #include <QList>
@@ -24,6 +22,7 @@
 
 using boost::weak_ptr;
 using boost::shared_ptr;
+using boost::scoped_ptr;
 
 using std::list;
 
@@ -85,12 +84,15 @@ class NetworkLogicLayer:
         */
         void packetReceived();
 
+        /*!
+        Overridden method \see ALNetworkListener.
+        */
         void
         registerQueue(
             shared_ptr<LockableQueue<shared_ptr<RawPacket> > > queue );
 
     protected:
-        QList<shared_ptr<Device> > _devices;
+        QList<shared_ptr<Device> > _devices; //! activated devices used for routing information
 
         /*!
         virtual method provided by QThread, where the actual thread loop is
@@ -114,39 +116,19 @@ class NetworkLogicLayer:
         shared_ptr<AbstractionLayer> getAbstractionLayer();
 
     private:
+        weak_ptr<AbstractionLayer> _abstractionLayer; //! A weak_ptr to the abstraction layer - the weak_ptr prevents cyclic dependencies and memory leaks.
 
-        //! A weak_ptr to the abstraction layer - the weak_ptr prevents cyclic
-        //! dependencies and memory leaks.
-        weak_ptr<AbstractionLayer> _abstractionLayer;
+        scoped_ptr<LockableQueueGroup<shared_ptr<RawPacket> > > _receiveBuffer; //! The LockableQueueGroup that the NLL receives packets from
 
-//        //! The concurrent_queue used as a receive buffer - a scoped_ptr
-//        //! prevents it from being copied outside of this class.
-//        scoped_ptr<concurrent_queue<QPair<shared_ptr<RawPacket>,
-//            shared_ptr<InterfaceRoute> > > > _receiveBuffer;
+        shared_ptr<QWaitCondition> _wait;//! the QWaitCondition used to wake up the thread once a packet is on the receive buffer
 
-//        scoped_ptr<LockableQueueGroup<QPair<shared_ptr<RawPacket>,
-//            shared_ptr<InterfaceRoute> > > > _receiveBuffer;
+        shared_ptr<QSemaphore> _waitingPackets; //! A QSemaphore to signal how many packets are waiting to be processed
 
-        scoped_ptr<LockableQueueGroup<shared_ptr<RawPacket> > > _receiveBuffer;
+        QMutex _waitMutex; //! A mutex used by the QWaitCondition
 
-        //! the QWaitCondition used to wake up the thread once a packet is on
-        //! the receive buffer
-        shared_ptr<QWaitCondition> _wait;
+        static QMutex _runningMutex; //! A static mutex (i.e. shared by all instances of the class) to prevent corrupting of the _running boolean
 
-        //! A QSemaphore to signal how many packets are waiting to be processed
-        shared_ptr<QSemaphore> _waitingPackets;
-
-        //! A mutex used by the QWaitCondition
-        QMutex _waitMutex;
-
-        //! A static mutex (i.e. shared by all instances of the class) to
-        //! prevent corrupting of the _running boolean
-        static QMutex _runningMutex;
-
-        //! A static bool (shared by all instances of the class) to enable or
-        //! disable *all* running NLL modules (currently only one instance is
-        //! supported, but extension is possible. It depends on the AL).
-        static bool _running;
+        static bool _running; //! A static bool (shared by all instances of the class) to enable or disable *all* running NLL modules (currently only one instance is supported, but extension is possible. It depends on the AL).
 };
 
 #endif
