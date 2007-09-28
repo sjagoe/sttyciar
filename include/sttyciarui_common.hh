@@ -51,15 +51,42 @@ class SttyciarUI: public QObject
         */
         virtual void receiveDevices(
             const QList<shared_ptr<Device> >& devices ) = 0;
+
+        /*!
+        Send a list of activated devices (being used in the running software
+        system) for display on the statistics UI, allowing easy use of the
+        statistics view.
+
+        \param devices A QList of Device shared pointers
+        */
         virtual void receiveActivatedDevices(
             const QList<shared_ptr<Device> >& devices ) = 0;
 
     protected slots:
+        /*!
+        Clean up when an exit signal is received from the upper UI layers.
+        */
         virtual void exit() = 0;
 
     signals:
+        /*!
+        Signal emitted to stop the running system and exit the application.
+        */
         void exitSttyciar();
+
+        /*!
+        Signal emitted to start a system of the desired type, and bind to a
+        list of devices (network interfaces).
+
+        \param deviceType The type of system running (i.e. Hub, Switch, etc),
+        this string is initially specified by the SttyciarRunner.
+        \param devices Network (interface) devices available to be bound to the system.
+        */
         void startSttyciar(QString deviceType, shared_ptr<QStringList> devices);
+
+        /*!
+        Signal emitted when the system is to be stopped but not exited.
+        */
         void stopSttyciar();
 };
 
