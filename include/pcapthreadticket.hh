@@ -14,6 +14,9 @@
 using boost::shared_ptr;
 using boost::weak_ptr;
 
+/*!
+
+*/
 class PcapThreadTicket
 {
     public:
