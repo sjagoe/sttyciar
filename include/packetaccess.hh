@@ -5,33 +5,48 @@
 #include <winsock2.h>
 #endif
 
+/*!
+A structure containing siz bytes, used to access MAC addresses in packets.
+
+\author Simon Jagoe
+*/
 struct six_byte
 {
-    u_char b1,b2,b3,b4,b5,b6;
+    u_char b1,b2,b3,b4,b5,b6; //! Bytes of the address.
 };
 
+/*!
+A structure containing four bytes, used to access IP addresses in packets.
+
+\author Simon Jagoe
+*/
 struct four_byte
 {
     union
     {
         struct
         {
-            u_char b1,b2,b3,b4;
+            u_char b1,b2,b3,b4; //! Four individual bytes
         } S_uchar;
         struct
         {
-            unsigned long address;
+            unsigned long address; //! A four-byte long integer.
         } S_uint32;
     } U_main;
 };
 
+/*!
+A struct containing two bytes, used to access all two-byte long fields in headers.
+
+\author Simon Jagoe
+*/
 struct two_byte
 {
     union
     {
         struct
         {
-            u_char high,low;
+            u_char high,low; //! Individual bytes
         } S_uchar;
 //        struct
 //        {
