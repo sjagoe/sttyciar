@@ -10,6 +10,8 @@
 using std::string;
 using std::ostringstream;
 
+class Statistics;
+
 class StatisticsLayer: public QObject, public ALStatisticsListener
 {
     Q_OBJECT
@@ -18,10 +20,19 @@ class StatisticsLayer: public QObject, public ALStatisticsListener
         void updateStatistics(InterfaceRoute& interfaceRoute);
         void initializeTable(QList<shared_ptr<Device> >& devices);
         void clearTable();
+        shared_ptr<Statistics> getStatistics();
         string toString();
 
     private:
-        QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> > _traffic;
+        shared_ptr<QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> > > _traffic;
+        int _totalPackets;
+
+    public slots:
+        void calculate();
+
+    signals:
+        void sendStats(shared_ptr<Statistics>& slots);
+
 };
 
 #endif

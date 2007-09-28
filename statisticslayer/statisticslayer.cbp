@@ -66,6 +66,7 @@
 			<Add directory="..\fakelib" />
 		</Linker>
 		<Unit filename="..\include\alstatisticslistener.hh" />
+		<Unit filename="..\include\device.hh" />
 		<Unit filename="..\include\interfaceroute.hh" />
 		<Unit filename="..\include\sllistener.hh" />
 		<Unit filename="..\include\statistics.hh" />

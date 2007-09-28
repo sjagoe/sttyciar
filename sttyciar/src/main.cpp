@@ -3,6 +3,7 @@
 #include <iostream>
 #include "statisticslayer.hh"
 #include "abstractionlayer.hh"
+#include "statistics.hh"
 
 //#include <vector>
 //#include <iostream>
@@ -42,9 +43,26 @@ int main(int argc, char* argv[])
     ir.addDestination(devices[2]);
     ir.addDestination(devices[0]);
     sl.updateStatistics(ir);
+    //sl.updateStatistics(ir);
 
 
     std::cout << sl.toString();
+
+    shared_ptr<Statistics> stats(sl.getStatistics());
+    std::cout << "total packets: " << stats->getTotalPackets() << endl;
+    std::cout << "Percentages: \n";
+    for (int i = 0 ; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (i!=j)
+            {
+
+                std::cout << stats->getTrafficPercentage(devices[i],devices[j]) << " ";
+            }
+        }
+        std::cout << std::endl;
+    }
     /*QApplication app(argc, argv);
     SttyciarRunner runner;
     QObject::connect(&runner, SIGNAL(exit()), &app, SLOT(quit()));
