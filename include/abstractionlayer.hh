@@ -89,7 +89,7 @@ class AbstractionLayer//: public NLLListener
 
         bool isDeviceActivated(shared_ptr<Device>& device);
 
-        QList<shared_ptr<Device> > getActivateDevices();
+        QList<shared_ptr<Device> > getActivatedDevices();
 
         void startListening(int packetCaptureSize,int timeout);
 

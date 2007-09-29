@@ -33,7 +33,7 @@ void NetworkLogicLayer::registerAbstractionLayer(
     if ( lockedAL.get() )
     {
         // get the devices
-        _devices = lockedAL->getActivateDevices();
+        _devices = lockedAL->getActivatedDevices();
 //        std::cout << "Number of Activated Devices: " << _devices.size() << std::endl;
         // get the WaitCondition for the NLL
         _wait = lockedAL->getNLLWaitCondition();

@@ -97,7 +97,7 @@ bool AbstractionLayer::isDeviceActivated(shared_ptr<Device>& device)
 
 }
 
-QList<shared_ptr<Device> > AbstractionLayer::getActivateDevices()
+QList<shared_ptr<Device> > AbstractionLayer::getActivatedDevices()
 {
     return this->_activatedDevices;
 }

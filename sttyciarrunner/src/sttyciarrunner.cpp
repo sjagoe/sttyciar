@@ -72,7 +72,7 @@ void SttyciarRunner::startSttyciar(QString deviceType,
             this->_abstractionLayer->activateDevices( devices );
             // get the activated device list
             QList<shared_ptr<Device> > activatedDevices =
-                this->_abstractionLayer->getActivateDevices();
+                this->_abstractionLayer->getActivatedDevices();
             // send the activated devices to the UI
             this->_ui->receiveActivatedDevices( activatedDevices );
 
@@ -87,7 +87,7 @@ void SttyciarRunner::startSttyciar(QString deviceType,
             this->_abstractionLayer->activateDevices( devices );
             // get the activated device list
             QList<shared_ptr<Device> > activatedDevices =
-                this->_abstractionLayer->getActivateDevices();
+                this->_abstractionLayer->getActivatedDevices();
             // send the activated devices to the UI
             this->_ui->receiveActivatedDevices( activatedDevices );
 

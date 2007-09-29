@@ -24,16 +24,40 @@ class LoadCanvas;
 class Device;
 class Statistics;
 
+/*!
+A Qt QMainWindow subclass that provides the statistics view form.
+
+\author Simon Jagoe
+*/
 class SttyciarGUIStatistics: public QMainWindow
 {
     Q_OBJECT
     public:
+        /*!
+        Default constructor to set up the UI layout and connect the signals and
+        slots. The \a parent parameter is passed to the \c QMainWindow
+        constructor.
+
+        \param parent QWidget parent of the object, passed to the \c QMainWindow
+        constructor.
+        */
         SttyciarGUIStatistics(QWidget* parent = 0);
 
     public slots:
+        /*!
+        Pass the activated Devices to the UI to extract lavels for the
+        visualisation.
+
+        \param devices a \c QList of \c Device \c shared_ptrs that have been
+        activated in the AbstractionLayer (and obtained using
+        AbstractionLayer::getActivatedDevices()).
+        */
         void receiveActivatedDevices(
             const QList<shared_ptr<Device> >& devices );
 
+        /*!
+
+        */
         void updateStatistics( shared_ptr<Statistics> stats );
 
     private:
@@ -41,21 +65,21 @@ class SttyciarGUIStatistics: public QMainWindow
         void setupRates();
         QHBoxLayout* setupButtons();
 
-        QTabWidget* _tabs;
+        QTabWidget* _tabs; //! A QTabWidget providing a tabbed pane to select a statistics view/set.
 
-        LoadCanvas* _graphLoad;
-        QTableWidget* _tblTextualLoad;
+        LoadCanvas* _graphLoad; //! A LoadCanvas object to draw a graphical visualisation of the traffic load in the device.
+        QTableWidget* _tblTextualLoad; //! A QTableWidget to provide the load information in tabular form.
 
-        QGroupBox* _grpRates;
-        QLabel* _lblPacketsPerSecond;
-        QLineEdit* _edtPacketsPerSecond;
-        QLabel* _lblBytesPerSecond;
-        QLineEdit* _edtBytesPerSecond;
+        QGroupBox* _grpRates; //! A QGroupBox to lay out the rates section (packets per second and bytes per second)
+        QLabel* _lblPacketsPerSecond; //! A QLabel to label the packets per second field
+        QLineEdit* _edtPacketsPerSecond; //! A QLineEdit to display the Packets per Second value
+        QLabel* _lblBytesPerSecond; //! A QLabel to label the bytes per second field
+        QLineEdit* _edtBytesPerSecond; //! A QLineEdit to display the Bytes per Second value
 
-        QPushButton* _exitButton;
-        QPushButton* _stopButton;
+        QPushButton* _exitButton; //! QPushButton to exit the application
+        QPushButton* _stopButton; //! QPushButton to stop the application
 
-        QWidget* _centralWidget;
+        QWidget* _centralWidget; //! A dummy widget used to layout the form correctly.
 
     signals:
         void exit();
