@@ -56,13 +56,20 @@ class SttyciarGUIStatistics: public QMainWindow
             const QList<shared_ptr<Device> >& devices );
 
         /*!
+        Slot called by the statistics layer when updated statistics are
+        available. This slot updates all of the views on the form.
 
+        \param stats The \a Statistics object that contains the information to
+        be displayed.
         */
         void updateStatistics( shared_ptr<Statistics> stats );
 
     private:
+        //! Lay out the TabWidget
         void setupTabWidget();
+        //! Lay out the Rates group box
         void setupRates();
+        //! Lay out the buttons
         QHBoxLayout* setupButtons();
 
         QTabWidget* _tabs; //! A QTabWidget providing a tabbed pane to select a statistics view/set.
@@ -82,7 +89,9 @@ class SttyciarGUIStatistics: public QMainWindow
         QWidget* _centralWidget; //! A dummy widget used to layout the form correctly.
 
     signals:
+        //! Signal emitted when the Exit button is clicked
         void exit();
+        //! Signal emitted when the Stop button is clicked
         void stopSttyciar();
 };
 
