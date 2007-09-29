@@ -4,6 +4,12 @@
 #include "networklogiclayer.hh"
 #include "maclookup.hh"
 
+/*!
+The subclass of NetworkLogicLayer that provides an implementation of an
+Ethernet Switch.
+
+\author Simon Jagoe
+*/
 class NLLSwitch: public NetworkLogicLayer
 {
     public:
