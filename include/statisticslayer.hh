@@ -28,7 +28,7 @@ class StatisticsLayer: public QObject, public ALStatisticsListener
         int _totalPackets;
 
     public slots:
-        void calculate();
+        void calculate(int timePeriodMillis);
 
     signals:
         void sendStats(shared_ptr<Statistics>& slots);

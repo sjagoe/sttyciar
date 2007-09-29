@@ -1,5 +1,6 @@
-//#include <QApplication>
-//#include "sttyciarrunner.hh"
+#include <QApplication>
+#include "sttyciarrunner.hh"
+
 #include <iostream>
 #include "statisticslayer.hh"
 #include "abstractionlayer.hh"
@@ -21,7 +22,7 @@
 
 int main(int argc, char* argv[])
 {
-    StatisticsLayer sl;
+    /*StatisticsLayer sl;
     AbstractionLayer al;
     QList<shared_ptr<Device> > devices = al.getDevices();
     sl.initializeTable(devices);
@@ -62,11 +63,12 @@ int main(int argc, char* argv[])
             }
         }
         std::cout << std::endl;
-    }
-    /*QApplication app(argc, argv);
+    }*/
+
+    QApplication app(argc, argv);
     SttyciarRunner runner;
     QObject::connect(&runner, SIGNAL(exit()), &app, SLOT(quit()));
-    return app.exec();*/
+    return app.exec();
 
 
 

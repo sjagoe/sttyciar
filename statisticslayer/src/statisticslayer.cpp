@@ -73,7 +73,7 @@ std::string StatisticsLayer::toString()
     return osstream.str();
 }
 
-void StatisticsLayer::calculate()
+void StatisticsLayer::calculate(int timePeriodMillis)
 {
     shared_ptr<Statistics> statistics(new Statistics(this->_traffic,this->_totalPackets));
     this->clearTable();

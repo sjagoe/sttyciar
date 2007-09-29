@@ -38,7 +38,10 @@ class RawPacket;
 class PcapReceiveThread;
 
 /*!
-This class provides the interface to the pcap library.
+This class provides the interface to the libpcap library. It is used to retrieve information about netwrok
+devices attached to the current system. It also provides the mechanism for sending and receiving packets to and
+from the network and for defining which implementation of the ALNetworkListener interface will handle the routing
+of packets.
 
 \author Simon Jagoe
 \author Doron Horwitz
@@ -111,27 +114,53 @@ class AbstractionLayer//: public NLLListener
 
         /*!
         Add a device that will be listened on when the abstraction layer starts running with
-        a call to the AbstractionLayer::startListening(int,int) function.
+        a call to the AbstractionLayer::startListening(int,int) function. If the device is already
+        activated nothing will happen.
 
-        \param device A list of pointers to Devices in the system
+        \param device A device to be activated. This device must have the same name (given by the
+        Device::getName() function) as a device in the system
         */
         void activateDevice(shared_ptr<Device>& device);
 
+        /*!
+        Activate a list of devices according to names. These activated devices will be
+        used by the AbstractionLayer when AbstractionLayer::startListening(int,int) is called.
+
+        \param devices A list of names of devices to be activated. The devices in this list will
+        be activated if they actually exist in the system.
+        */
         void activateDevices( shared_ptr<QStringList> devices );
 
+        /*!
+        Check whether a device has been activated or not.
+
+        \return true if the device has been activated, false otherwise
+        */
         bool isDeviceActivated(shared_ptr<Device>& device);
 
+        /*! Get a list of pointers to the devices that have been activated
+
+        \return a list of pointers to the activated devices
+        */
         QList<shared_ptr<Device> > getActivatedDevices();
 
         /*!
-        Add a device that will be listened on when the abstraction layer starts running with
-        a call to the AbstractionLayer::startListening() function.
+        Start listening on all activated devices. This function must be called before
+        attempting to send messages. Also, all packets arriving from the network will be processed
+        once this function has been called.
 
-        \param packetCaptureSize A list of pointers to Devices in the system
-        \param timeout A list of pointers to Devices in the system
+        \param packetCaptureSize The maximum size of the packet to be captured. If a packet contains
+        more than <i>packetCaptureSize</i> bytes, it will be ignored.
+        \param timeout How long to wait for packets to arrive before they are processed. This parameter
+        also affects how long it takes for AbstractionLayer::stopListening() function to execute as it will
+        block until the timeout has occured.
         */
         void startListening(int packetCaptureSize,int timeout);
 
+        /*!
+        Stop listening for send and received packets. This function blocks until the timeout
+        specified in the AbstractionLayer::startListening has elapsed.
+        */
         void stopListening();
 
         shared_ptr<QWaitCondition>& getNLLWaitCondition();
@@ -139,26 +168,35 @@ class AbstractionLayer//: public NLLListener
         shared_ptr<QSemaphore>& getNLLSemaphore();
 
     protected:
+        /*!
+        Get a pointer to the ALNetworkListener currently registered to handle packets received
+        from the network
+
+        \return A shared pointer to the currently registered ALNetworkListener
+        */
         inline shared_ptr<ALNetworkListener> getNLL()
         {
             return _networkLogicLayer.lock();
         };
 
     private:
-        char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
+        char _pcapErrorBuffer[PCAP_ERRBUF_SIZE]; //! A buffer used by libpcap to contain an error message generated from any libpcap fucntion
 
-        QList<shared_ptr<Device> > _devices;
-        QList<shared_ptr<Device> > _activatedDevices;
-        QList<shared_ptr<PcapReceiveThread> > _pcapThreads;
+        QList<shared_ptr<Device> > _devices; //!The devices attached to the system when the AbstracionLayer is created (i.e. this list is only filled when the constructor is called
+        QList<shared_ptr<Device> > _activatedDevices; //!A list of devices which will be used to send and receive packet
 
-        bool _listening;
-        weak_ptr<ALNetworkListener> _networkLogicLayer;
-        shared_ptr<ALStatisticsListener> _statisticsLayer;
+        weak_ptr<ALNetworkListener> _networkLogicLayer; //!A pointer to the ALNetworkListener registered to handle packets received from the network
+        shared_ptr<ALStatisticsListener> _statisticsLayer; //!A pointer to the ALStatisticsListener registered to handle routing statistics. This defaults to an implementation with empty overridden virtual functions
 
         shared_ptr<QWaitCondition> _nllWaitCondition;
-
         shared_ptr<QSemaphore> _nllSemaphore;
-        void retrieveDevices() throw (DeviceNotFoundException);
+
+        /*!
+        Used to initialize a list of network devices which are currently attached to the system. This function is called by
+        the constructor and it is for that reason, that the list of devices does not change for the lifetime of an AbstractionLayer
+        object.
+        */
+        void retrieveDevices() throw (DeviceNotFoundException); //!Used to re
 
 };
 

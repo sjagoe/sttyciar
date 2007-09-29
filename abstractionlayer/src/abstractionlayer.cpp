@@ -22,7 +22,6 @@ AbstractionLayer::AbstractionLayer()
 {
     this->_nllWaitCondition.reset( new QWaitCondition );
     this->_nllSemaphore.reset( new QSemaphore );
-    this->_listening = false;
     this->_statisticsLayer.reset(new DefaultStatisticsLayer());
     this->retrieveDevices();
 }

@@ -13,6 +13,13 @@
 #include <string>
 #include <boost/shared_array.hpp>
 
+
+/*!
+A struct containing an IP address in 3 different formats in a union called s_un
+1) S_un_b contains four bytes of an IP Address: s_b1, s_b2, s_b3, s_b4
+2) S_un_w contains the IP address in 2 16 bit numbers: s_w1, s_w2
+3) S_addr contains the IP address in a single 32 bits number
+*/
 struct in_addr_windows
 {
     union
@@ -32,11 +39,30 @@ struct in_addr_windows
 using namespace std;
 using boost::shared_array;
 
+/*!
+This is a generic container for a network address (eg MAC or IP) of any length.
+*/
 class Address
 {
     public:
+
+        /*!
+        The defaul constructor which does nothing
+        */
         Address();
+
+        /*!
+        Constructs an Address based on a system defined IPv4 sockaddr_in struct
+
+        \param socketAddress a sockaddr_in representation of the address
+        */
         Address(sockaddr_in* socketAddress);
+
+        /*!
+        Constructs an Address based on a system defined sockaddr struct
+
+        \param socketAddress a sockaddr representation of the address
+        */
         Address(sockaddr* socketAddress);
         Address(uint8_t* address,int size);
         //static const int DEFAULT_ADDRESS_LENGTH = 16;
