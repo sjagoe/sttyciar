@@ -6,9 +6,9 @@
 
 #include "ethernetiiframe.hh"
 
-void NLLSwitch::update( int secondsElapsed )
+void NLLSwitch::update( int millisecondsElapsed )
 {
-    this->_lookupTable.updateTime( secondsElapsed );
+    this->_lookupTable.updateTime( millisecondsElapsed );
 }
 
 void NLLSwitch::routePacket( shared_ptr<RawPacket>& packet )

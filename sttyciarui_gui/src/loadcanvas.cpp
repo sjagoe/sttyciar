@@ -20,7 +20,7 @@ const double LoadCanvas::PI;
 LoadCanvas::LoadCanvas(QWidget* parent)
     : QWidget(parent)
 {
-    this->_statistics.reset( new Statistics );
+    //this->_statistics.reset( new Statistics );
     // get the width and height of the canvas
     this->_width = width();
     this->_height = height();
@@ -130,7 +130,8 @@ void LoadCanvas::setLabels( const QList<shared_ptr<Device> >& devices )
 
 void LoadCanvas::updateStatistics( shared_ptr<Statistics> stats )
 {
-    this->_statistics = stats;
+    if (this->_statistics.get() != stats.get())
+        this->_statistics = stats;
 }
 
 void LoadCanvas::paintEvent( QPaintEvent* /* event */ )
@@ -154,31 +155,34 @@ void LoadCanvas::paintEvent( QPaintEvent* /* event */ )
     }
 
     // draw the lines
-    QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > >::const_iterator row = this->_labels.begin();
-
-    for (; row != this->_labels.end(); row++)
+    if (this->_statistics.get() != 0)
     {
-        std::cout << "1" << std::endl;
-        QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > >::const_iterator column = this->_labels.begin();
+        QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > >::const_iterator row = this->_labels.begin();
 
-        for (; column != this->_labels.end(); column++)
+        for (; row != this->_labels.end(); row++)
         {
-            std::cout << "2" << std::endl;
-            if (row.key().get() != column.key().get())
+            std::cout << "1" << std::endl;
+            QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > >::const_iterator column = this->_labels.begin();
+
+            for (; column != this->_labels.end(); column++)
             {
-                std::cout << "3" << std::endl;
-                double total = this->_statistics->getTrafficPercentage( row.key(), column.key() );
-                total += this->_statistics->getTrafficPercentage( column.key(), row.key() );
+                std::cout << "2" << std::endl;
+                if (row.key().get() != column.key().get())
+                {
+                    std::cout << "3" << std::endl;
+                    double total = this->_statistics->getTrafficPercentage( row.key(), column.key() );
+                    total += this->_statistics->getTrafficPercentage( column.key(), row.key() );
 
-                double startAngle = this->_labels.value( row.key() ).first;
-                double endAngle = this->_labels.value( column.key() ).first;
+                    double startAngle = this->_labels.value( row.key() ).first;
+                    double endAngle = this->_labels.value( column.key() ).first;
 
-                QPoint start;
-                start.setX( (int)((double)this->_radius * cos(startAngle)) );
-                start.setY( -1*(int)((double)this->_radius * sin(startAngle)) );
-                QPoint end;
-                end.setX( (int)((double)this->_radius * cos(endAngle)) );
-                end.setY( -1*(int)((double)this->_radius * cos(endAngle)) );
+                    QPoint start;
+                    start.setX( (int)((double)this->_radius * cos(startAngle)) );
+                    start.setY( -1*(int)((double)this->_radius * sin(startAngle)) );
+                    QPoint end;
+                    end.setX( (int)((double)this->_radius * cos(endAngle)) );
+                    end.setY( -1*(int)((double)this->_radius * cos(endAngle)) );
+                }
             }
         }
     }

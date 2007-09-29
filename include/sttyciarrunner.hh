@@ -44,13 +44,13 @@ class SttyciarRunner: public QObject
         void exitSttyciar();
 
         void nllUpdateTimeout();
-        //void statisticsUpdateTimeout();
+        void statisticsUpdateTimeout();
 
     signals:
         void exit();
 
-        void updateNLL( int seconds );
-        void updateStatistics();
+        void updateNLL( int milliseconds );
+        void updateStatistics( int milliseconds );
 };
 
 #endif

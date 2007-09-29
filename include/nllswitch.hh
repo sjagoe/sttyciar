@@ -17,7 +17,7 @@ class NLLSwitch: public NetworkLogicLayer
 
         \see NetworkLogicLayer
         */
-        void update( int secondsElapsed );
+        void update( int millisecondsElapsed );
 
     protected:
         /*!

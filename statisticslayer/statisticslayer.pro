@@ -32,7 +32,7 @@ win32 {
     CONFIG += dll
     CONFIG += rtti
     CONFIG += exceptions
-    #INCLUDEPATH += ../../resources/WpdPack/Include
+    INCLUDEPATH += ../../resources/WpdPack/Include
     #LIBS += -L../../resources/WpdPack/Lib
     #LIBS += -lpacket
     #LIBS += -lwpcap

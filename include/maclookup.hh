@@ -47,12 +47,12 @@ class MACLookup
 
         \param secondsElapsed Time to subtract from the life time.
         */
-        void updateTime(const int& secondsElapsed);
+        void updateTime(const int& millisecondsElapsed);
 
     private:
-        QMap<mac_t, QPair<shared_ptr<Device>, int> > _lookupTable; //! lookup table to get Device from mac_t.
-        int _aliveTime; //! time that an entry will remain in the table (seconds)
-        static const int DEFAULT_ALIVE_TIME = 90; //! default time an entry is in the table (seconds)
+        QMap<mac_t, QPair<shared_ptr<Device>, long> > _lookupTable; //! lookup table to get Device from mac_t.
+        long _aliveTime; //! time that an entry will remain in the table (milliseconds)
+        static const int DEFAULT_ALIVE_TIME = 90000; //! default time an entry is in the table (milliseconds)
 };
 
 #endif

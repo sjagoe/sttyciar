@@ -32,7 +32,7 @@ win32 {
     CONFIG += dll
     CONFIG += rtti
     CONFIG += exceptions
-    #INCLUDEPATH += ../../resources/WpdPack/Include
+    INCLUDEPATH += ../../resources/WpdPack/Include
 }
 
 INCLUDEPATH += ../../resources/tbb/include
@@ -48,7 +48,7 @@ HEADERS += ../include/abstractionlayer.hh \
            ../include/networklogiclayer.hh \
            ../include/device.hh \
            ../include/interfaceroute.hh \
-           ../include/maclookup.cpp \
+           ../include/maclookup.hh \
            ../include/ethernetiiframe.hh
 
 SOURCES += src/nllswitch.cpp \
