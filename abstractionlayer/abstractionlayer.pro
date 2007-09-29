@@ -51,6 +51,7 @@ HEADERS += ../include/abstractionlayer.hh \
            ../include/alnetworklistener.hh \
            ../include/alstatisticslistener.hh \
            ../include/datalinklayerpacket.hh \
+           ../include/defaultstatisticslayer.hh \
            ../include/device.hh \
            ../include/deviceaddress.hh \
            ../include/ethernetiiframe.hh \

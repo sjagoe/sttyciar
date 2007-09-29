@@ -35,7 +35,7 @@ class ALStatisticsListener
         \param interfaces The InterfaceRoute object passed to the AL after
         routing, containing complete source/destination interface data.
         */
-        virtual void updateStatistics( InterfaceRoute& interfaces ) = 0;
+        virtual void updateStatistics(shared_ptr<InterfaceRoute>& interfaces ) = 0;
 
         /*!
         A method to pass all available network interfaces to the user interface

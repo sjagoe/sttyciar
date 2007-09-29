@@ -17,7 +17,7 @@ class StatisticsLayer: public QObject, public ALStatisticsListener
     Q_OBJECT
     public:
         StatisticsLayer();
-        void updateStatistics(InterfaceRoute& interfaceRoute);
+        void updateStatistics(shared_ptr<InterfaceRoute>& interfaceRoute);
         void initializeTable(QList<shared_ptr<Device> >& devices);
         void clearTable();
         shared_ptr<Statistics> getStatistics();

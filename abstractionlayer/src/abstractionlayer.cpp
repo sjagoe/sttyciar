@@ -6,6 +6,8 @@
 
 #include "alnetworklistener.hh"
 
+#include "alstatisticslistener.hh"
+
 #include "rawpacket.hh"
 
 #include "pcapreceivethread.hh"
@@ -14,35 +16,43 @@
 
 #include "interfaceroute.hh"
 
+#include "defaultstatisticslayer.hh"
+
 AbstractionLayer::AbstractionLayer()
 {
-    _nllWaitCondition.reset( new QWaitCondition );
-    _nllSemaphore.reset( new QSemaphore );
+    this->_nllWaitCondition.reset( new QWaitCondition );
+    this->_nllSemaphore.reset( new QSemaphore );
     this->_listening = false;
+    this->_statisticsLayer.reset(new DefaultStatisticsLayer());
     this->retrieveDevices();
 }
 
 void AbstractionLayer::sendDataLinkLayerPacket(
     shared_ptr<DataLinkLayerPacket> packet)
 {
+    this->_statisticsLayer->updateStatistics(packet->getRawPacket()->getInterfaceRoute());
+
     //is this inefficient?
     shared_ptr<QList<shared_ptr<Device> > > destinations = packet->getRawPacket()->getInterfaceRoute()->getDestinations();
     for (QList<shared_ptr<Device> >::iterator iter = destinations->begin(); iter != destinations->end(); iter++)
     {
         (*iter)->sendPacket(packet->getRawPacket());
-
     }
 }
 
 void AbstractionLayer::sendNetworkLayerPacket(
     shared_ptr<NetworkLayerPacket> /* packet */ ) // uncomment the paramater when implementing the function. It is commented to avoid the annoying warning.
 {
-
 }
 
 void AbstractionLayer::registerNLL( weak_ptr<ALNetworkListener>& nllModule )
 {
-    _networkLogicLayer = nllModule;
+    this->_networkLogicLayer = nllModule;
+}
+
+void AbstractionLayer::registerSL(shared_ptr<ALStatisticsListener> slModule)
+{
+    this->_statisticsLayer = slModule;
 }
 
 QList<shared_ptr<Device> > AbstractionLayer::getDevices()

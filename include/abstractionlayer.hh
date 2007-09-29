@@ -27,6 +27,7 @@ using boost::weak_ptr;
 
 // forward declerations
 class ALNetworkListener;
+class ALStatisticsListener;
 class DataLinkLayerPacket;
 class NetworkLayerPacket;
 class InterfaceRoute;
@@ -36,6 +37,12 @@ class QSemaphore;
 class RawPacket;
 class PcapReceiveThread;
 
+/*!
+This class provides the interface to the pcap library.
+
+\author Simon Jagoe
+\author Doron Horwitz
+*/
 class AbstractionLayer//: public NLLListener
 {
     public:
@@ -73,6 +80,14 @@ class AbstractionLayer//: public NLLListener
         */
         void registerNLL( weak_ptr<ALNetworkListener>& nllModule );
 
+        /*!
+        register an ALStatisticsListener (i.e. SLL module) with the AL.
+
+        \param slModule A SL module (i.e. ALStatisticsListener) that the AL can
+        send packet routing information to in order to update statistics.
+        */
+        void registerSL(shared_ptr<ALStatisticsListener> slModule);
+
         /* !
         Unregister an ALNetworkListener (i.e. NLL module) with the AL.
 
@@ -81,8 +96,25 @@ class AbstractionLayer//: public NLLListener
         */
         //void unregisterNLL( shared_ptr<ALNetworkListener>& nllModule );
 
+
+        /*!
+        Return a list of network devices on the current system. Not all of these devices
+        do not necessarily represent actual network devices. The returned list depends on
+        the operating system. The ordering of the devices in the list is undefined.
+        This list is remains constant for the lifetime if the abstractionlayer. So if new
+        devices are added to the system when the AbstractionLayer is alread in existence, this
+        function will return a list of devices <b>without</b> the newly added devices.
+
+        \return A list of pointers to Devices in the system
+        */
         QList<shared_ptr<Device> > getDevices();
 
+        /*!
+        Add a device that will be listened on when the abstraction layer starts running with
+        a call to the AbstractionLayer::startListening(int,int) function.
+
+        \param device A list of pointers to Devices in the system
+        */
         void activateDevice(shared_ptr<Device>& device);
 
         void activateDevices( shared_ptr<QStringList> devices );
@@ -91,6 +123,13 @@ class AbstractionLayer//: public NLLListener
 
         QList<shared_ptr<Device> > getActivatedDevices();
 
+        /*!
+        Add a device that will be listened on when the abstraction layer starts running with
+        a call to the AbstractionLayer::startListening() function.
+
+        \param packetCaptureSize A list of pointers to Devices in the system
+        \param timeout A list of pointers to Devices in the system
+        */
         void startListening(int packetCaptureSize,int timeout);
 
         void stopListening();
@@ -114,6 +153,7 @@ class AbstractionLayer//: public NLLListener
 
         bool _listening;
         weak_ptr<ALNetworkListener> _networkLogicLayer;
+        shared_ptr<ALStatisticsListener> _statisticsLayer;
 
         shared_ptr<QWaitCondition> _nllWaitCondition;
 

@@ -7,17 +7,17 @@ StatisticsLayer::StatisticsLayer()
 
 }
 
-void StatisticsLayer::updateStatistics(InterfaceRoute& interfaceRoute)
+void StatisticsLayer::updateStatistics(shared_ptr<InterfaceRoute>& interfaceRoute)
 {
-    QMap<shared_ptr<Device>,double> sourceRow = this->_traffic->value(interfaceRoute.getSource());
-    shared_ptr<QList<shared_ptr<Device> > > destinationDevices = interfaceRoute.getDestinations();
+    QMap<shared_ptr<Device>,double> sourceRow = this->_traffic->value(interfaceRoute->getSource());
+    shared_ptr<QList<shared_ptr<Device> > > destinationDevices = interfaceRoute->getDestinations();
 
     for (QList<shared_ptr<Device> >::const_iterator iter=destinationDevices->begin(); iter != destinationDevices->end(); iter++)
     {
         sourceRow.insert(*iter,sourceRow.value(*iter)+1);
     }
 
-    this->_traffic->insert(interfaceRoute.getSource(),sourceRow);
+    this->_traffic->insert(interfaceRoute->getSource(),sourceRow);
 
     this->_totalPackets += destinationDevices->size();
 

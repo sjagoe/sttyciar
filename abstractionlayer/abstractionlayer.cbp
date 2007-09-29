@@ -48,7 +48,7 @@
 			</Target>
 		</Build>
 		<VirtualTargets>
-			<Add alias="all" targets="debug;release;" />
+			<Add alias="all" targets="debug;release" />
 		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
@@ -82,6 +82,7 @@
 		<Unit filename="..\include\alnetworklistener.hh" />
 		<Unit filename="..\include\alstatisticslistener.hh" />
 		<Unit filename="..\include\datalinklayerpacket.hh" />
+		<Unit filename="..\include\defaultstatisticslayer.hh" />
 		<Unit filename="..\include\device.hh" />
 		<Unit filename="..\include\deviceaddress.hh" />
 		<Unit filename="..\include\ethernetiiframe.hh" />

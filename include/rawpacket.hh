@@ -13,7 +13,7 @@
 
 using boost::shared_array;
 using boost::shared_ptr;
-using boost::scoped_ptr;
+//using boost::scoped_ptr;
 
 class Device;
 
@@ -38,7 +38,7 @@ class RawPacket
 
         shared_ptr<pcap_pkthdr> _pcapHeader; //! a pcap_pktheader containing information about the packet (such as length)
 
-        scoped_ptr<InterfaceRoute> _interfaceRoute; //! An InterfaceRoute containing routing information for the packet
+        shared_ptr<InterfaceRoute> _interfaceRoute; //! An InterfaceRoute containing routing information for the packet
 
     public:
         /*!
@@ -135,9 +135,9 @@ class RawPacket
         The InterfaceRoute is stored in a boost::scoped_ptr, and cannot be
         copied.
 
-        \return A boost::scoped_ptr to the InterfaceRoute.
+        \return A boost::shared_ptr to the InterfaceRoute.
         */
-        inline scoped_ptr<InterfaceRoute>& getInterfaceRoute()
+        inline shared_ptr<InterfaceRoute>& getInterfaceRoute()
         {
             return _interfaceRoute;
         };
