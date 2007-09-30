@@ -87,7 +87,7 @@ class LoadCanvas: public QWidget
         int _radius; //! The radius of the circle in which the statistics are displayed
 
         QPen _pen; //! The QPen that will be used to render the view
-        QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > > _labels; //! Labels placed on the visualisation for each of the interfaces bound to the device
+        QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > > _labels; //! Labels placed on the visualisation for each of the interfaces bound to the device. Key == Device, Value.first == angle, Value.second == LoadLabel.
 
         static const int MINIMUM_SIZE_HINT = 300; //! Minimum size hint of the widget
         static const int SIZE_HINT = 500; //! Size hint of the widget

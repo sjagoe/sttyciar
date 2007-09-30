@@ -77,6 +77,14 @@ QSize LoadCanvas::sizeHint() const
 
 void LoadCanvas::setLabels( const QList<shared_ptr<Device> >& devices )
 {
+    // clear the old QMap of labels
+    this->_labels.clear();
+
+    // set the stored width and height to zero so that the checkResized()
+    // method returns true and the positions of the labels are recalculated.
+    this->_width = 0;
+    this->_height = 0;
+
     // get the number of labels so that they can be spaced correctly
     int size = devices.size();
     double angleIncrement = 2*PI/size;
