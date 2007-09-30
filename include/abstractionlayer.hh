@@ -150,7 +150,7 @@ class AbstractionLayer//: public NLLListener
         once this function has been called.
 
         \param packetCaptureSize The maximum size of the packet to be captured. If a packet contains
-        more than <i>packetCaptureSize</i> bytes, it will be ignored.
+        more than \e packetCaptureSize bytes, it will be ignored.
         \param timeout How long to wait for packets to arrive before they are processed. This parameter
         also affects how long it takes for AbstractionLayer::stopListening() function to execute as it will
         block until the timeout has occured.
