@@ -12,6 +12,7 @@ using std::ostringstream;
 
 
 class Statistics;
+class RawPacket;
 
 /*!
 A class used to process the statistics with regards to packets being processed by the
@@ -33,7 +34,7 @@ class StatisticsLayer: public QObject, public ALStatisticsListener
         Update the statistics using the latests routed packet
         \param interfaceRoute The InterfaceRoute containing information of how a packet was routed
         */
-        void updateStatistics(shared_ptr<InterfaceRoute>& interfaceRoute);
+        void updateStatistics(const shared_ptr<RawPacket>& rawPacket);
 
         /*!
         Set up the traffic matrix
@@ -60,7 +61,8 @@ class StatisticsLayer: public QObject, public ALStatisticsListener
 
     private:
         shared_ptr<QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> > > _traffic; //!The matrix indicating the percentage of traffic between each network Device
-        int _totalPackets;//!The total amount of packets routed in a specific time period
+        unsigned int _totalPackets;//!The total amount of packets routed in a specific time period
+        unsigned int _totalBytes; //!The total amount of bytes routed in a specific time period
 
     public slots:
         /*!

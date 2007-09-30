@@ -69,6 +69,7 @@
 		<Unit filename="..\include\defaultstatisticslayer.hh" />
 		<Unit filename="..\include\device.hh" />
 		<Unit filename="..\include\interfaceroute.hh" />
+		<Unit filename="..\include\rawpacket.hh" />
 		<Unit filename="..\include\sllistener.hh" />
 		<Unit filename="..\include\statistics.hh" />
 		<Unit filename="..\include\statisticslayer.hh" />

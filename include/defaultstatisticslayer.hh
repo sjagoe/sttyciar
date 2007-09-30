@@ -9,7 +9,7 @@
 using boost::shared_ptr;
 
 class Device;
-class InterfaceRoute;
+class RawPacket;
 /*!
 A default implementation of the ALStatisticsListener. This is here for efficiency purposes:
 It is possbile use the AbstractionLayer without statistics collection. This default implementation
@@ -34,7 +34,7 @@ class DefaultStatisticsLayer : public ALStatisticsListener
         /*!
         See declaration of ALStatisticsListener::updateStatistics(shared_ptr<InterfaceRoute>&)
         */
-        inline void updateStatistics(shared_ptr<InterfaceRoute>& interfaces ){}
+        inline void updateStatistics(const shared_ptr<RawPacket>& rawPacket ){}
 
         /*!
         See declaration of ALStatisticsListener::initializeTable(QList<shared_ptr<Device> >&)

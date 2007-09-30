@@ -29,7 +29,7 @@ AbstractionLayer::AbstractionLayer()
 void AbstractionLayer::sendDataLinkLayerPacket(
     shared_ptr<DataLinkLayerPacket> packet)
 {
-    this->_statisticsLayer->updateStatistics(packet->getRawPacket()->getInterfaceRoute());
+    this->_statisticsLayer->updateStatistics(packet->getRawPacket());
 
     //is this inefficient?
     shared_ptr<QList<shared_ptr<Device> > > destinations = packet->getRawPacket()->getInterfaceRoute()->getDestinations();

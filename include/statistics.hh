@@ -28,7 +28,7 @@ class Statistics
         \param totalPackets The total amount of packets routed in the predefined period
         */
         Statistics(shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > >& traffic,
-                   int totalPackets);
+                   unsigned int totalPackets,unsigned int totalBytes,unsigned int timePeriodMillis);
 
         /*!
         Get the percentage of the total traffic that passed between a source and destination Device
@@ -38,16 +38,18 @@ class Statistics
         */
         double getTrafficPercentage(shared_ptr<Device> source, shared_ptr<Device> destination);
 
-        /*!
+        /* !
         Get the total amount of packets that were routed in a specified time period
         \return The total amount of packets
         */
-        int getTotalPackets() const;
+        //int getTotalPackets() const;
 
     private:
 
         shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _percentageTraffic; //!The matrix indicating the percentage of traffic between each network Device
-        int _totalPackets; //!The total amount of packets routed in a specific time period
+        //int _totalPackets; //!The total amount of packets routed in a specific time period
+        double _packetsPerSecond; //!The rate of packets/sec for a given time period
+        double _bytesPerSecond; //!The rate of bytes/sec for a given time period
 
         /*!
         Generate the matrix of traffic percentages
@@ -56,7 +58,15 @@ class Statistics
         \param totalPackets The total amount of packets routed in the predefined period
         */
         void calculateTrafficPercentage(shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > >& traffic,
-                                        int totalPackets);
+                                        unsigned int totalPackets);
+
+        /*!
+        Calculate the different rates associated with the statistics
+        \param totalPackets The total amount of packets routed in the predefined period
+        \param totalBytes The total amount of bytes routed in the predefined period
+        \param timePeriodMillis The amount of time in milliseconds over which to calculate the rates
+        */
+        void calculateRates(unsigned int totalPackets,unsigned int totalBytes,unsigned int timePeriodMillis);
 };
 
 #endif // __STATISTICS_HH__

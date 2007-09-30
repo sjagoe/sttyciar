@@ -1,25 +1,27 @@
 #include "statisticslayer.hh"
 #include "interfaceroute.hh"
 #include "statistics.hh"
+#include "rawpacket.hh"
 
 StatisticsLayer::StatisticsLayer()
 {
 
 }
 
-void StatisticsLayer::updateStatistics(shared_ptr<InterfaceRoute>& interfaceRoute)
+void StatisticsLayer::updateStatistics(const shared_ptr<RawPacket>& rawPacket)
 {
-    QMap<shared_ptr<Device>,double> sourceRow = this->_traffic->value(interfaceRoute->getSource());
-    shared_ptr<QList<shared_ptr<Device> > > destinationDevices = interfaceRoute->getDestinations();
+    QMap<shared_ptr<Device>,double> sourceRow = this->_traffic->value(rawPacket->getInterfaceRoute()->getSource());
+    shared_ptr<QList<shared_ptr<Device> > > destinationDevices = rawPacket->getInterfaceRoute()->getDestinations();
 
     for (QList<shared_ptr<Device> >::const_iterator iter=destinationDevices->begin(); iter != destinationDevices->end(); iter++)
     {
         sourceRow.insert(*iter,sourceRow.value(*iter)+1);
     }
 
-    this->_traffic->insert(interfaceRoute->getSource(),sourceRow);
+    this->_traffic->insert(rawPacket->getInterfaceRoute()->getSource(),sourceRow);
 
     this->_totalPackets += destinationDevices->size();
+    this->_totalBytes += rawPacket->getPacketLength();
 
 }
 
@@ -38,6 +40,7 @@ void StatisticsLayer::initializeTable(QList<shared_ptr<Device> >& devices)
     }
 
     this->_totalPackets = 0;
+    this->_totalBytes = 0;
 }
 
 void StatisticsLayer::clearTable()
@@ -50,6 +53,7 @@ void StatisticsLayer::clearTable()
         }
     }
     this->_totalPackets = 0;
+    this->_totalBytes = 0;
 }
 
 /*shared_ptr<Statistics> StatisticsLayer::getStatistics()
@@ -75,7 +79,9 @@ std::string StatisticsLayer::toString()
 
 void StatisticsLayer::calculate(int timePeriodMillis)
 {
-    shared_ptr<Statistics> statistics(new Statistics(this->_traffic,this->_totalPackets));
+    shared_ptr<Statistics> statistics(new Statistics(this->_traffic,
+                                      this->_totalPackets,this->_totalBytes,
+                                      timePeriodMillis));
     this->clearTable();
     emit sendStats(statistics);
 }
