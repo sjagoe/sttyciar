@@ -41,6 +41,8 @@ using boost::shared_array;
 
 /*!
 This is a generic container for a network address (eg MAC or IP) of any length.
+
+\author Doron Horwitz
 */
 class Address
 {

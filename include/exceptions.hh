@@ -8,6 +8,8 @@ using namespace std;
 
 /*!
 An exception to indicate that no devices can be found by libpcap
+
+\author Doron Horwitz
 */
 class DeviceNotFoundException : public runtime_error
 {
@@ -22,6 +24,8 @@ class DeviceNotFoundException : public runtime_error
 
 /*!
 An exception to indicate that a device cannot be opened by libpcap to send and receive packets
+
+\author Doron Horwitz
 */
 class CannotOpenDeviceException : public runtime_error
 {

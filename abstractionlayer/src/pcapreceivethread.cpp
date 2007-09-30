@@ -10,8 +10,7 @@ PcapReceiveThread::PcapReceiveThread()
 {
 }
 
-PcapReceiveThread::PcapReceiveThread( const shared_ptr<Device>& device,
-                        weak_ptr<ALNetworkListener> alNetworkListener) throw (CannotOpenDeviceException) : _listening(false)
+PcapReceiveThread::PcapReceiveThread( const shared_ptr<Device>& device,weak_ptr<ALNetworkListener> alNetworkListener)
 {
     this->_device=device;
     this->_alNetworkListener = alNetworkListener;

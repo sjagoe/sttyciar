@@ -13,28 +13,69 @@ using std::string;
 
 class RawPacket;
 
+/*!
+The thread which handles sending pcakets to the network. A separate PcapSendThread is required for each
+Device which is sending data to the network. The thread is implemented as a <a href="http://doc.trolltech.com/4.0/qthread.html">QThread</a>
+which run a loop that continuously dequeues packets off a buffer and sends them to the network. Packets are added to the
+the buffer from an external thread.
+
+\author Doron Horwitz
+*/
 class PcapSendThread : public QThread
 {
     Q_OBJECT
 
     public:
+        /*!
+        Default constructor
+        */
         PcapSendThread();
+
+        /*!
+        A constructor which indicates which capture instance to use for sending packets
+
+        \param pcapSource The capture instance which represents the physical device which will be used to send packets
+        */
         PcapSendThread(pcap_t* pcapSource);
+
+        /*!
+        Destructor
+        */
         ~PcapSendThread();
+
+        /*!
+        Set the pcap capture instance which will be used for send packets.
+
+        \param pcapSource The capture instance which represents the physical device which will be used to send packets
+        */
         void setSource(pcap_t* pcapSource);
+
+        /*!
+        Add a packet to the buffer to be later processed and sent in the thread
+
+        \param packet The RawPacket to be sent to the network
+        */
         void addPacket(const shared_ptr<RawPacket>& packet);
+
+        /*!
+        Called from an external thread to stop the PcapSendThread running
+        */
         void stopRunning();
 
     protected:
+        /*!
+        The implemented run() function required by the <a href="http://doc.trolltech.com/4.0/qthread.html">QThread</a> class.
+        This function contains all the logic of sending packets using libpcap
+        */
         void run();
 
     private:
-        LockableQueue<shared_ptr<RawPacket> > _packetQueue;
-        bool _running;
-        QWaitCondition _waitCondition;
-        QMutex _mutex;
-        pcap_t *_pcapSource;
-        char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
+        LockableQueue<shared_ptr<RawPacket> > _packetQueue; //! The send buffer
+        bool _running; //!A flag used by the loop in the run() function to indicate that the thread must continue running. Can be made false using PcapReceiveThread::stopRunning()
+        QWaitCondition _waitCondition; //!Used to prevent deadlocks and other concurrent programming problems
+        QMutex _mutex; //!Used to prevent deadlocks and other concurrent programming problems
+        pcap_t *_pcapSource; //!The pcap capture interface used for sending packets
+        char _pcapErrorBuffer[PCAP_ERRBUF_SIZE]; //!The array buffer to be used by libpcap in the case of an error occuring
 };
 
 #endif // __PCAPSENDTHREAD_HH__

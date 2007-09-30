@@ -20,6 +20,8 @@ using boost::weak_ptr;
 /*!
 This class represents a device retrieved from the <a href="http://www.winpcap.org/docs/docs_40_1/html/group__wpcapfunc.html#g7b128eaeef627b408f6a6e2a2f5eb45d">pcap_findalldevs</a> function.
 A Device contains all the information retrieved from a <a href="http://www.winpcap.org/docs/docs_40_1/html/structpcap__if.html">pcap_if struct</a>.
+
+\author Doron Horwitz
 */
 class Device
 {

@@ -6,7 +6,7 @@
 #endif
 
 /*!
-A structure containing siz bytes, used to access MAC addresses in packets.
+A structure containing six bytes, used to access MAC addresses in packets.
 
 \author Simon Jagoe
 */
