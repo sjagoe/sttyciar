@@ -1,5 +1,5 @@
-#ifndef ADDRESS_H_INCLUDED
-#define ADDRESS_H_INCLUDED
+#ifndef __DEVICEADDRESS_H__
+#define __DEVICEADDRESS_H__
 
 #if defined(WIN32) // if Win32 platform
 #include <winsock.h>

@@ -53,7 +53,7 @@ class PcapReceiveThread : public QThread
         \param alNetworkListener The implementation of the network logic layer which will handle received packets
         */
         PcapReceiveThread( const shared_ptr<Device>& device,
-                    weak_ptr<ALNetworkListener> alNetworkListener)
+                    weak_ptr<ALNetworkListener> alNetworkListener);
 
 
         /*!

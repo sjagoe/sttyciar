@@ -52,12 +52,12 @@ void StatisticsLayer::clearTable()
     this->_totalPackets = 0;
 }
 
-shared_ptr<Statistics> StatisticsLayer::getStatistics()
+/*shared_ptr<Statistics> StatisticsLayer::getStatistics()
 {
     shared_ptr<Statistics> statistics(new Statistics(this->_traffic,this->_totalPackets));
     this->clearTable();
     return statistics;
-}
+}*/
 
 std::string StatisticsLayer::toString()
 {
