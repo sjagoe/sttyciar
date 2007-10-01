@@ -32,7 +32,8 @@ class LoadCanvas: public QWidget
     Q_OBJECT
     public:
         /*!
-        Construct the widget with no labels, but calculate the sizes and other paramaters.
+        Construct the widget with no labels, but calculate the sizes and other
+        paramaters.
 
         \param parent The parent widget, passed to the QWidget constructor.
         */
