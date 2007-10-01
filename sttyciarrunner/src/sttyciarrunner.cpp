@@ -123,12 +123,11 @@ void SttyciarRunner::stopSttyciar()
     // stop the abstractionlayer from listeneing for packets
     if (this->_abstractionLayer.get() != 0)
         this->_abstractionLayer->stopListening();
+
     // stop the NLL from processing packets
     if (this->_networkLogicLayer.get() != 0)
-    {
         this->_networkLogicLayer->exitNow();
-        this->_networkLogicLayer->wait();
-    }
+
     // destroy the AL and NLL objects
     this->_networkLogicLayer.reset();
     // notify the UI

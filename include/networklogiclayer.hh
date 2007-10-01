@@ -96,9 +96,9 @@ class NetworkLogicLayer:
         A virtual method that can be overridden to allow timer-based events to
         occur in the NLL.
 
-        \param secondsElapsed Time in seconds since the last event
+        \param millisecondsElapsed Time in milliseconds since the last event
         */
-        virtual void update( int secondsElapsed ) {};
+        virtual void update( int /*millisecondsElapsed*/ ) {};
 
     protected:
         QList<shared_ptr<Device> > _devices; //! activated devices used for routing information
