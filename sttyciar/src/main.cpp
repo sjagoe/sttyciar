@@ -1,10 +1,10 @@
 #include <QApplication>
 #include "sttyciarrunner.hh"
 
-#include <iostream>
-#include "statisticslayer.hh"
-#include "abstractionlayer.hh"
-#include "statistics.hh"
+//#include <iostream>
+//#include "statisticslayer.hh"
+//#include "abstractionlayer.hh"
+//#include "statistics.hh"
 
 //#include <vector>
 //#include <iostream>
@@ -22,53 +22,58 @@
 
 int main(int argc, char* argv[])
 {
-    /*StatisticsLayer sl;
-    AbstractionLayer al;
-    QList<shared_ptr<Device> > devices = al.getDevices();
-    sl.initializeTable(devices);
-
-    for (QList<shared_ptr<Device > >::iterator iter = devices.begin(); iter != devices.end(); iter++)
-    {
-        std::cout << (*iter)->getName() << std::endl;
-    }
-    std::cout << std::endl;
-
-    InterfaceRoute ir;
-    ir.setSource(devices[0]);
-    ir.addDestination(devices[1]);
-    ir.addDestination(devices[2]);
-    sl.updateStatistics(ir);
-
-    ir.clearDestinations();
-    ir.setSource(devices[1]);
-    ir.addDestination(devices[2]);
-    ir.addDestination(devices[0]);
-    sl.updateStatistics(ir);
-    //sl.updateStatistics(ir);
-
-
-    std::cout << sl.toString();
-
-    shared_ptr<Statistics> stats(sl.getStatistics());
-    std::cout << "total packets: " << stats->getTotalPackets() << endl;
-    std::cout << "Percentages: \n";
-    for (int i = 0 ; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            if (i!=j)
-            {
-
-                std::cout << stats->getTrafficPercentage(devices[i],devices[j]) << " ";
-            }
-        }
-        std::cout << std::endl;
-    }*/
-
     QApplication app(argc, argv);
     SttyciarRunner runner;
     QObject::connect(&runner, SIGNAL(exit()), &app, SLOT(quit()));
+    QObject::connect(&app, SIGNAL( lastWindowClosed() ), &runner, SLOT( exitSttyciar() ) );
     return app.exec();
+
+}
+
+//int main(int argc, char* argv[])
+//{
+//    StatisticsLayer sl;
+//    AbstractionLayer al;
+//    QList<shared_ptr<Device> > devices = al.getDevices();
+//    sl.initializeTable(devices);
+//
+//    for (QList<shared_ptr<Device > >::iterator iter = devices.begin(); iter != devices.end(); iter++)
+//    {
+//        std::cout << (*iter)->getName() << std::endl;
+//    }
+//    std::cout << std::endl;
+//
+//    InterfaceRoute ir;
+//    ir.setSource(devices[0]);
+//    ir.addDestination(devices[1]);
+//    ir.addDestination(devices[2]);
+//    sl.updateStatistics(ir);
+//
+//    ir.clearDestinations();
+//    ir.setSource(devices[1]);
+//    ir.addDestination(devices[2]);
+//    ir.addDestination(devices[0]);
+//    sl.updateStatistics(ir);
+//    //sl.updateStatistics(ir);
+//
+//
+//    std::cout << sl.toString();
+//
+//    shared_ptr<Statistics> stats(sl.getStatistics());
+//    std::cout << "total packets: " << stats->getTotalPackets() << endl;
+//    std::cout << "Percentages: \n";
+//    for (int i = 0 ; i < 3; i++)
+//    {
+//        for (int j = 0; j < 3; j++)
+//        {
+//            if (i!=j)
+//            {
+//
+//                std::cout << stats->getTrafficPercentage(devices[i],devices[j]) << " ";
+//            }
+//        }
+//        std::cout << std::endl;
+//    }
 
 
 
@@ -119,4 +124,4 @@ int main(int argc, char* argv[])
 //    std::cout << "Ping! Your waffles are ready!" << endl;
 //
 //    return 0;
-}
+//}

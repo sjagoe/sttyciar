@@ -46,7 +46,22 @@ void SttyciarGUIStatistics::receiveActivatedDevices(
 
 void SttyciarGUIStatistics::updateStatistics( shared_ptr<Statistics> stats )
 {
-    _graphLoad->updateStatistics( stats );
+    if ( this->_statistics.get() != stats.get() )
+    {
+        this->_statistics = stats;
+        this->_graphLoad->updateStatistics( this->_statistics );
+//        this->_tblLoad->updateStatistics( this->_statistics );
+//
+//        // update stats
+//        if ( this->_statistics.get() != 0 )
+//        {
+//            QString temp = QString("%1").arg( this->_statistics->getPacketsPerSecond() );
+//            this->_edtPacketsPerSecond->setText( temp );
+//
+//            temp = QString( "%1" ).arg( this->_statistics->getBytesPerSecond() );
+//            this->_edtBytesPerSecond->setText( temp );
+//        }
+    }
 }
 
 void SttyciarGUIStatistics::setupTabWidget()

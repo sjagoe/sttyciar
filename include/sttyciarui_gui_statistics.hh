@@ -88,6 +88,8 @@ class SttyciarGUIStatistics: public QMainWindow
 
         QWidget* _centralWidget; //! A dummy widget used to layout the form correctly.
 
+        shared_ptr<Statistics> _statistics;
+
     signals:
         //! Signal emitted when the Exit button is clicked
         void exit();

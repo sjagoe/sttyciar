@@ -136,10 +136,13 @@ void LoadCanvas::setLabels( const QList<shared_ptr<Device> >& devices )
     }
 }
 
-void LoadCanvas::updateStatistics( shared_ptr<Statistics> stats )
+void LoadCanvas::updateStatistics( shared_ptr<Statistics>& stats )
 {
-    if (this->_statistics.get() != stats.get())
+    if ( this->_statistics.get() != stats.get() )
+    {
         this->_statistics = stats;
+        this->update();
+    }
 }
 
 void LoadCanvas::paintEvent( QPaintEvent* /* event */ )
@@ -150,12 +153,17 @@ void LoadCanvas::paintEvent( QPaintEvent* /* event */ )
         this->recalculateCanvasSize();
     }
 
+    // set up the painter
     QPainter painter(this);
+    this->_pen.setWidth(2);
     painter.setPen(this->_pen);
+
+    // draw the circle (outline for the visualisation)
     painter.drawEllipse( (this->_centre.x() - this->_radius),
                          (this->_centre.y() - this->_radius),
                           this->_radius*2, this->_radius*2 );
 
+    // draw all of the labels
     QPair<double, shared_ptr<LoadLabel> > label;
     foreach (label, _labels)
     {
@@ -165,35 +173,89 @@ void LoadCanvas::paintEvent( QPaintEvent* /* event */ )
     // draw the lines
     if (this->_statistics.get() != 0)
     {
+        QPen linePen;
         QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > >::const_iterator row = this->_labels.begin();
 
         for (; row != this->_labels.end(); row++)
         {
-            std::cout << "1" << std::endl;
             QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > >::const_iterator column = this->_labels.begin();
 
             for (; column != this->_labels.end(); column++)
             {
-                std::cout << "2" << std::endl;
                 if (row.key().get() != column.key().get())
                 {
-                    std::cout << "3" << std::endl;
+                    // prevent the line form reaching the egde of the circle by
+                    // limiting the radius on which the end-points fall
+                    int lineRadius = (this->_radius - ( (int)( MAX_PEN_WIDTH * 0.75 ) ) );
+
+                    // get the total amount of traffic between two interfaces
+                    // (i.e. sum from A to B, and from B to A).
                     double total = this->_statistics->getTrafficPercentage( row.key(), column.key() );
                     total += this->_statistics->getTrafficPercentage( column.key(), row.key() );
 
+                    // get the start and end angle (referenced to 0 radians and
+                    // the centre of the circle)
                     double startAngle = this->_labels.value( row.key() ).first;
                     double endAngle = this->_labels.value( column.key() ).first;
 
+                    // calculate the start and end points of the line
                     QPoint start;
-                    start.setX( (int)((double)this->_radius * cos(startAngle)) );
-                    start.setY( -1*(int)((double)this->_radius * sin(startAngle)) );
+                    start.setX( (int)((double)lineRadius * cos(startAngle)) );
+                    start.setY( -1*(int)((double)lineRadius * sin(startAngle)) );
+                    start += this->_centre;
                     QPoint end;
-                    end.setX( (int)((double)this->_radius * cos(endAngle)) );
-                    end.setY( -1*(int)((double)this->_radius * cos(endAngle)) );
+                    end.setX( (int)((double)lineRadius * cos(endAngle)) );
+                    end.setY( -1*(int)((double)lineRadius * sin(endAngle)) );
+                    end += this->_centre;
+
+                    // calculate the width of the line
+                    int lineWidth = (int) (total * ((double) MAX_PEN_WIDTH) );
+                    linePen.setWidth( lineWidth );
+                    painter.setPen( linePen );
+
+                    // draw the line
+                    painter.drawLine( start, end );
                 }
             }
         }
     }
+//    QPen linePen;
+//
+//    double startAngle = 0;
+//    double endAngle = 2*PI/3;
+//
+//    int lineRadius = (this->_radius - ( MAX_PEN_WIDTH * 0.75 ) );
+//
+//    QPoint start;
+//    start.setX( (int)((double)lineRadius * cos(startAngle)) );
+//    start.setY( -1*(int)((double)lineRadius * sin(startAngle)) );
+//    start += this->_centre;
+//    QPoint end;
+//    end.setX( (int)((double)lineRadius * cos(endAngle)) );
+//    end.setY( -1*(int)((double)lineRadius * sin(endAngle)) );
+//    end += this->_centre;
+//
+//    int lineWidth = (int) (0.7 * ((double) MAX_PEN_WIDTH) );
+//    linePen.setWidth( lineWidth );
+//    painter.setPen( linePen );
+//    painter.drawLine( start, end );
+//
+//
+//    startAngle = 0;
+//    endAngle = 4*PI/3;
+//
+//    start.setX( (int)((double)lineRadius * cos(startAngle)) );
+//    start.setY( -1*(int)((double)lineRadius * sin(startAngle)) );
+//    start += this->_centre;
+//
+//    end.setX( (int)((double)lineRadius * cos(endAngle)) );
+//    end.setY( -1*(int)((double)lineRadius * sin(endAngle)) );
+//    end += this->_centre;
+//
+//    lineWidth = (int) (0.3 * ((double) MAX_PEN_WIDTH) );
+//    linePen.setWidth( lineWidth );
+//    painter.setPen( linePen );
+//    painter.drawLine( start, end );
 }
 
 bool LoadCanvas::checkResized()
@@ -231,10 +293,11 @@ void LoadCanvas::recalculateCanvasSize()
     int fontHeight = 0;
 
     int fontWidth = 0;
+
+    // determine the maximum label width and height
     QPair<double, shared_ptr<LoadLabel> > item;
     foreach ( item, _labels )
     {
-        //fontWidth = std::max( fontWidth, fm.width( item.second->getLabel() ) );
         fontWidth = std::max( fontWidth, item.second->getWidth() );
         fontHeight = std::max( fontHeight, item.second->getHeight() );
         if ( item.first < 0 )
@@ -245,12 +308,13 @@ void LoadCanvas::recalculateCanvasSize()
     fontWidth += fm.maxWidth();
     fontHeight += fm.lineSpacing();
 
+    // determine the correct radius (minimum of width and height)
     int radiusHeight = (int)floor( this->_height/2 ) - fontHeight;
     int radiusWidth = (int)floor( this->_width/2 ) - fontWidth;
-
     this->_radius = std::min( radiusWidth, radiusHeight );
 
-    int tempRadius = this->_radius + (fm.lineSpacing()/2);
+    // radius for placing labels around the perimiter
+    int tempRadius = this->_radius + (fm.lineSpacing());
 
     foreach( item, _labels )
     {

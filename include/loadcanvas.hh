@@ -71,7 +71,7 @@ class LoadCanvas: public QWidget
 
         \param stats Statistics object containing the information to display.
         */
-        void updateStatistics( shared_ptr<Statistics> stats );
+        void updateStatistics( shared_ptr<Statistics>& stats );
 
     protected:
         /*!
@@ -90,11 +90,11 @@ class LoadCanvas: public QWidget
         QPen _pen; //! The QPen that will be used to render the view
         QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > > _labels; //! Labels placed on the visualisation for each of the interfaces bound to the device. Key == Device, Value.first == angle, Value.second == LoadLabel.
 
-        static const int MINIMUM_SIZE_HINT = 300; //! Minimum size hint of the widget
+        static const int MINIMUM_SIZE_HINT = 400; //! Minimum size hint of the widget
         static const int SIZE_HINT = 500; //! Size hint of the widget
         static const double PI = 3.141593; //! constant pi, used in polar coordinate conversions
 
-        static const int MAX_PEN_WIDTH = 20; //! The pen width depicting maximum/all traffic
+        static const int MAX_PEN_WIDTH = 50; //! The pen width depicting maximum/all traffic
 
         shared_ptr<Statistics> _statistics;
 
