@@ -51,16 +51,23 @@ void SttyciarGUIStatistics::updateStatistics( shared_ptr<Statistics> stats )
         this->_statistics = stats;
         this->_graphLoad->updateStatistics( this->_statistics );
 //        this->_tblLoad->updateStatistics( this->_statistics );
-//
-//        // update stats
-//        if ( this->_statistics.get() != 0 )
-//        {
-//            QString temp = QString("%1").arg( this->_statistics->getPacketsPerSecond() );
-//            this->_edtPacketsPerSecond->setText( temp );
-//
-//            temp = QString( "%1" ).arg( this->_statistics->getBytesPerSecond() );
-//            this->_edtBytesPerSecond->setText( temp );
-//        }
+
+        // update stats
+        if ( this->_statistics.get() != 0 )
+        {
+            QString temp = QString("%1").arg( this->_statistics->getPacketsPerSecond() );
+            this->_edtPacketsPerSecond->setText( temp );
+
+            double kbytes = this->_statistics->getBytesPerSecond();
+
+            temp = QString( "%1" ).arg( kbytes );
+            this->_edtBytesPerSecond->setText( temp );
+
+            kbytes /= 1024;
+
+            temp = QString( "%1" ).arg( kbytes );
+            this->_edtKBytesPerSecond->setText( temp );
+        }
     }
 }
 
@@ -79,25 +86,31 @@ void SttyciarGUIStatistics::setupTabWidget()
 
 void SttyciarGUIStatistics::setupRates()
 {
-    _grpRates = new QGroupBox( QString("Data Rates") );
+    this->_grpRates = new QGroupBox( QString("Data Rates") );
 
-    _lblPacketsPerSecond = new QLabel( QString("Packets/Second:") );
-    _lblBytesPerSecond = new QLabel( QString("Bytes/Second:") );
+    this->_lblPacketsPerSecond = new QLabel( QString("Packets/Second:") );
+    this->_lblBytesPerSecond = new QLabel( QString("Bytes/Second:") );
+    this->_lblKBytesPerSecond = new QLabel( QString( "Kilobytes/Second:" ) );
 
-    _edtPacketsPerSecond = new QLineEdit;
-    _edtPacketsPerSecond->setReadOnly(true);
-    _edtBytesPerSecond = new QLineEdit;
-    _edtBytesPerSecond->setReadOnly(true);
+    this->_edtPacketsPerSecond = new QLineEdit;
+    this->_edtPacketsPerSecond->setReadOnly(true);
+    this->_edtBytesPerSecond = new QLineEdit;
+    this->_edtBytesPerSecond->setReadOnly(true);
+    this->_edtKBytesPerSecond = new QLineEdit;
+    this->_edtKBytesPerSecond->setReadOnly(true);
 
-    _lblPacketsPerSecond->setBuddy( _edtPacketsPerSecond );
-    _lblBytesPerSecond->setBuddy( _edtBytesPerSecond );
+    this->_lblPacketsPerSecond->setBuddy( this->_edtPacketsPerSecond );
+    this->_lblBytesPerSecond->setBuddy( this->_edtBytesPerSecond );
+    this->_lblKBytesPerSecond->setBuddy( this->_edtKBytesPerSecond );
 
     QGridLayout* layout = new QGridLayout;
 
-    layout->addWidget( _lblPacketsPerSecond, 0, 0 );
-    layout->addWidget( _edtPacketsPerSecond, 1, 0 );
-    layout->addWidget( _lblBytesPerSecond, 0, 1 );
-    layout->addWidget( _edtBytesPerSecond, 1, 1 );
+    layout->addWidget( this->_lblPacketsPerSecond, 0, 0 );
+    layout->addWidget( this->_edtPacketsPerSecond, 1, 0 );
+    layout->addWidget( this->_lblBytesPerSecond, 0, 1 );
+    layout->addWidget( this->_edtBytesPerSecond, 1, 1 );
+    layout->addWidget( this->_lblKBytesPerSecond, 0, 2 );
+    layout->addWidget( this->_edtKBytesPerSecond, 1, 2 );
 
     _grpRates->setLayout( layout );
 }

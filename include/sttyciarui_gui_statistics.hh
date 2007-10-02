@@ -82,6 +82,8 @@ class SttyciarGUIStatistics: public QMainWindow
         QLineEdit* _edtPacketsPerSecond; //! A QLineEdit to display the Packets per Second value
         QLabel* _lblBytesPerSecond; //! A QLabel to label the bytes per second field
         QLineEdit* _edtBytesPerSecond; //! A QLineEdit to display the Bytes per Second value
+        QLabel* _lblKBytesPerSecond; //! QLabel to label the kilobytes per second field
+        QLineEdit* _edtKBytesPerSecond; //! QLineEdit to display the kilobytes per second field
 
         QPushButton* _exitButton; //! QPushButton to exit the application
         QPushButton* _stopButton; //! QPushButton to stop the application

@@ -193,28 +193,31 @@ void LoadCanvas::paintEvent( QPaintEvent* /* event */ )
                     double total = this->_statistics->getTrafficPercentage( row.key(), column.key() );
                     total += this->_statistics->getTrafficPercentage( column.key(), row.key() );
 
-                    // get the start and end angle (referenced to 0 radians and
-                    // the centre of the circle)
-                    double startAngle = this->_labels.value( row.key() ).first;
-                    double endAngle = this->_labels.value( column.key() ).first;
+                    if (total > 0)
+                    {
+                        // get the start and end angle (referenced to 0 radians and
+                        // the centre of the circle)
+                        double startAngle = this->_labels.value( row.key() ).first;
+                        double endAngle = this->_labels.value( column.key() ).first;
 
-                    // calculate the start and end points of the line
-                    QPoint start;
-                    start.setX( (int)((double)lineRadius * cos(startAngle)) );
-                    start.setY( -1*(int)((double)lineRadius * sin(startAngle)) );
-                    start += this->_centre;
-                    QPoint end;
-                    end.setX( (int)((double)lineRadius * cos(endAngle)) );
-                    end.setY( -1*(int)((double)lineRadius * sin(endAngle)) );
-                    end += this->_centre;
+                        // calculate the start and end points of the line
+                        QPoint start;
+                        start.setX( (int)((double)lineRadius * cos(startAngle)) );
+                        start.setY( -1*(int)((double)lineRadius * sin(startAngle)) );
+                        start += this->_centre;
+                        QPoint end;
+                        end.setX( (int)((double)lineRadius * cos(endAngle)) );
+                        end.setY( -1*(int)((double)lineRadius * sin(endAngle)) );
+                        end += this->_centre;
 
-                    // calculate the width of the line
-                    int lineWidth = (int) (total * ((double) MAX_PEN_WIDTH) );
-                    linePen.setWidth( lineWidth );
-                    painter.setPen( linePen );
+                        // calculate the width of the line
+                        int lineWidth = (int) (total * ((double) MAX_PEN_WIDTH) );
+                        linePen.setWidth( lineWidth );
+                        painter.setPen( linePen );
 
-                    // draw the line
-                    painter.drawLine( start, end );
+                        // draw the line
+                        painter.drawLine( start, end );
+                    }
                 }
             }
         }

@@ -13,6 +13,7 @@ using boost::shared_ptr;
 using boost::scoped_ptr;
 
 class AbstractionLayer;
+class StatisticsLayer;
 class NetworkLogicLayer;
 
 /*!
@@ -35,7 +36,7 @@ class SttyciarRunner: public QObject
 
     private:
         static const int NLL_UPDATE_TIMEOUT_MSEC = 30000; //! Default time to update the NLL
-        static const int STAT_UPDATE_TIMEOUT_MSEC = 5000; //! Default time to update statistics
+        static const int STAT_UPDATE_TIMEOUT_MSEC = 1000; //! Default time to update statistics
 
         static const int PACKET_CAPTURE_SIZE = 65535; //! Maximum size of packets that can be captured
         static const int PCAP_READ_TIMEOUT = 50; //! Timeout of the pcap_next_ex method
@@ -49,6 +50,7 @@ class SttyciarRunner: public QObject
         scoped_ptr<SttyciarUI> _ui; //! The User Interface object
         shared_ptr<AbstractionLayer> _abstractionLayer; //! The AbstractionLayer object
         shared_ptr<NetworkLogicLayer> _networkLogicLayer; //! The NetworkLogicLayer object
+        shared_ptr<StatisticsLayer> _statisticsLayer; //! The SL Object
 
     private slots:
         /*!
