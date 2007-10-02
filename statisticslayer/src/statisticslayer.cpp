@@ -43,7 +43,7 @@ void StatisticsLayer::initializeTable(QList<shared_ptr<Device> >& devices)
     this->_totalBytes = 0;
 }
 
-void StatisticsLayer::clearTable()
+void StatisticsLayer::reset()
 {
     for (QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> >::iterator iter=this->_traffic->begin(); iter!=this->_traffic->end(); iter++)
     {
@@ -82,6 +82,6 @@ void StatisticsLayer::calculate(int timePeriodMillis)
     shared_ptr<Statistics> statistics(new Statistics(this->_traffic,
                                       this->_totalPackets,this->_totalBytes,
                                       timePeriodMillis));
-    this->clearTable();
+    this->reset();
     emit sendStats(statistics);
 }

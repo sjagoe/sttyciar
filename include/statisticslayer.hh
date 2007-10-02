@@ -45,7 +45,7 @@ class StatisticsLayer: public QObject, public ALStatisticsListener
         Reset the amount of traffic that has flowed between each Device to zero, in order to
         allow for statistics to be used in windowed time periods
         */
-        void clearTable();
+        void reset();
 
         /* !
 
