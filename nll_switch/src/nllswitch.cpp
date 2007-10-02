@@ -35,7 +35,6 @@ void NLLSwitch::routePacket( shared_ptr<RawPacket>& packet )
         {
             if ( frame->getRawPacket()->getInterfaceRoute()->getSource().get() != iter->get() )
             {
-    //            std::cout << "Destination added " << (*iter)->getName() << std::endl;
                 frame->getRawPacket()->getInterfaceRoute()->addDestination( *iter );
             }
         }

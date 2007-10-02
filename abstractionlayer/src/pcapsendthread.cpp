@@ -46,6 +46,7 @@ void PcapSendThread::stopRunning()
 
 void PcapSendThread::run()
 {
+//    std::cout << "PcapSendThread::run()" << std::endl;
     this->_running = true;
 
     shared_ptr<RawPacket> rawPacket;
@@ -54,6 +55,7 @@ void PcapSendThread::run()
         if (!this->_packetQueue.isEmpty())
         {
             _packetQueue.pop(rawPacket);
+//            std::cout << "sending NOW!" << std::endl;
             pcap_sendpacket(this->_pcapSource,rawPacket->getPacketPointer(),rawPacket->getPacketLength());
         }
         else

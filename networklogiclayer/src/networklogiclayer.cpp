@@ -94,6 +94,7 @@ void NetworkLogicLayer::run()
             {
                 // call the method that performs the actual routing
                 //routePacket( pair.first, pair.second );
+//                std::cout << "j" << std::endl;
                 this->routePacket( packet );
             }
 //            else

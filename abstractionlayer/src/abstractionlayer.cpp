@@ -29,12 +29,14 @@ AbstractionLayer::AbstractionLayer()
 void AbstractionLayer::sendDataLinkLayerPacket(
     shared_ptr<DataLinkLayerPacket> packet)
 {
+//    std::cout << "AbstractionLayer::sendDataLinkLayerPacket" << std::endl;
     this->_statisticsLayer->updateStatistics(packet->getRawPacket());
 
     //is this inefficient?
     shared_ptr<QList<shared_ptr<Device> > > destinations = packet->getRawPacket()->getInterfaceRoute()->getDestinations();
     for (QList<shared_ptr<Device> >::iterator iter = destinations->begin(); iter != destinations->end(); iter++)
     {
+//        std::cout << "send on an interface" << std::endl;
         (*iter)->sendPacket(packet->getRawPacket());
     }
 }

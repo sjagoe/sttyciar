@@ -30,7 +30,21 @@ class MACLookup
         \param mac The mac address key to add/update
         \param device The device that the client with specified mac is connected to.
         */
-        void addEntry( const mac_t& mac, const shared_ptr<Device>& device );
+        inline void addEntry( const mac_t& mac, const shared_ptr<Device>& device )
+        {
+        //    std::cout << "MACLookup::addEntry" << std::endl;
+        //    std::cout << sizeof(mac.U_main.S_ushort.high) << " - " << mac.U_main.S_ushort.high << std::endl;
+        //    std::cout << sizeof(mac.U_main.S_ushort.mid) << " - " << mac.U_main.S_ushort.mid << std::endl;
+        //    std::cout << sizeof(mac.U_main.S_ushort.low) << " - " << mac.U_main.S_ushort.low << std::endl;
+
+            QMap<u_short, QMap<u_short, QPair<shared_ptr<Device>, long> > > midMap =
+                this->_lookupTable.value( mac.U_main.S_ushort.high );
+            QMap<u_short, QPair<shared_ptr<Device>, long> > innerMap =
+                midMap.value( mac.U_main.S_ushort.mid );
+            innerMap[mac.U_main.S_ushort.low] = qMakePair( device, _aliveTime );
+            midMap[mac.U_main.S_ushort.mid] = innerMap;
+            this->_lookupTable[mac.U_main.S_ushort.high] = midMap;
+        };
 
         /*!
         Return the Device that a particular client is connected to, or an empty
@@ -39,7 +53,21 @@ class MACLookup
         \param mac Client to look up.
         \return Device that the client is connected to
         */
-        shared_ptr<Device> lookupEntry( const mac_t& mac );
+        inline shared_ptr<Device> lookupEntry( const mac_t& mac )
+        {
+            //    std::cout << "MACLookup::lookupEntry" << std::endl;
+            //    std::cout << sizeof(mac.U_main.S_ushort.high) << " - " << mac.U_main.S_ushort.high << std::endl;
+            //    std::cout << sizeof(mac.U_main.S_ushort.mid) << " - " << mac.U_main.S_ushort.mid << std::endl;
+            //    std::cout << sizeof(mac.U_main.S_ushort.low) << " - " << mac.U_main.S_ushort.low << std::endl;
+
+            QMap<u_short, QMap<u_short, QPair<shared_ptr<Device>, long> > > midMap =
+                this->_lookupTable.value( mac.U_main.S_ushort.high );
+            QMap<u_short, QPair<shared_ptr<Device>, long> > innerMap =
+                midMap.value( mac.U_main.S_ushort.mid );
+            QPair<shared_ptr<Device>, long> contents =
+                innerMap.value( mac.U_main.S_ushort.low );
+            return contents.first;
+        };
 
     public slots:
         /*!
@@ -50,9 +78,13 @@ class MACLookup
         void updateTime(const int& millisecondsElapsed);
 
     private:
-        QMap<mac_t, QPair<shared_ptr<Device>, long> > _lookupTable; //! lookup table to get Device from mac_t.
+        //QMap<mac_t, QPair<shared_ptr<Device>, long> > _lookupTable; //! lookup table to get Device from mac_t.
+        //QMap<u_short, QMap<u_long, QPair<shared_ptr<Device>, long> > > _lookupTable;
+        QMap<u_short, QMap<u_short, QMap<u_short, QPair<shared_ptr<Device>, long> > > > _lookupTable;
         long _aliveTime; //! time that an entry will remain in the table (milliseconds)
         static const int DEFAULT_ALIVE_TIME = 90000; //! default time an entry is in the table (milliseconds)
+
+//        void printTable();
 };
 
 #endif
