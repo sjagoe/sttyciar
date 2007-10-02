@@ -36,13 +36,25 @@ void Statistics::calculateTrafficPercentage(shared_ptr<QMap<shared_ptr<Device>,Q
     for (QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> >::const_iterator iter=traffic->begin(); iter!=traffic->end(); iter++)
     {
         QMap<shared_ptr<Device>,double> sourceRow;
-        for (QMap<shared_ptr<Device>,double>::const_iterator iter2=iter->begin(); iter2!=iter->end(); iter2++)
+        if (totalPackets != 0)
         {
-            //calculation is done here
-            sourceRow.insert(iter2.key(),iter2.value()/(double)totalPackets);
+
+            for (QMap<shared_ptr<Device>,double>::const_iterator iter2=iter->begin(); iter2!=iter->end(); iter2++)
+            {
+                //calculation is done here
+                sourceRow.insert(iter2.key(),iter2.value()/(double)totalPackets);
+            }
         }
-        this->_percentageTraffic->insert(iter.key(),sourceRow);
+        else
+        {
+            for (QMap<shared_ptr<Device>,double>::const_iterator iter2=iter->begin(); iter2!=iter->end(); iter2++)
+            {
+                //should this 0's source row be created repeatedly here? Inefficient!
+                sourceRow.insert(iter2.key(),(double)0);
+            }
+        }
         //this->_totalPackets = totalPackets;
+        this->_percentageTraffic->insert(iter.key(),sourceRow);
     }
 }
 
