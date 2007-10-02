@@ -19,6 +19,17 @@ double Statistics::getTrafficPercentage(shared_ptr<Device> source, shared_ptr<De
     return this->_totalPackets;
 }*/
 
+
+double Statistics::getPacketsPerSecond()
+{
+    return this->_packetsPerSecond;
+}
+
+double Statistics::getBytesPerSecond()
+{
+    return this->_bytesPerSecond;
+}
+
 void Statistics::calculateTrafficPercentage(shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > >& traffic,
                                             unsigned int totalPackets)
 {

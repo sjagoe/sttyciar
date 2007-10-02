@@ -44,6 +44,20 @@ class Statistics
         */
         //int getTotalPackets() const;
 
+        /*!
+        Get the rate of packets per second according to the specified time period.
+
+        \return The rate in packets/sec
+        */
+        double getPacketsPerSecond();
+
+        /*!
+        Get the rate of bytes per second according to the specified time period.
+
+        \return The rate in bytes/sec
+        */
+        double getBytesPerSecond();
+
     private:
 
         shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _percentageTraffic; //!The matrix indicating the percentage of traffic between each network Device
