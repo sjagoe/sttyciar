@@ -120,6 +120,16 @@ class RawPacket
         };
 
         /*!
+        Return the boost shared_ptr containing the pcap packet header
+
+        \return Reference to a boost::shared_ptr<pcap_pkthdr>
+        */
+        inline const shared_ptr<pcap_pkthdr>& getHeader() const
+        {
+            return _pcapHeader;
+        };
+
+        /*!
         Return the length of the packet specified in the pcap_pkthdr.
 
         \return A 32-bit unsigned integer specifying the length.
