@@ -54,7 +54,7 @@
 			</Target>
 		</Build>
 		<VirtualTargets>
-			<Add alias="all" targets="debug;release" />
+			<Add alias="all" targets="debug;release;" />
 		</VirtualTargets>
 		<Compiler>
 			<Add option="-Wall" />
@@ -68,11 +68,13 @@
 		<Unit filename="..\include\alstatisticslistener.hh" />
 		<Unit filename="..\include\defaultstatisticslayer.hh" />
 		<Unit filename="..\include\interfaceroute.hh" />
+		<Unit filename="..\include\packetdumper.hh" />
 		<Unit filename="..\include\lockablequeue.hh" />
 		<Unit filename="..\include\rawpacket.hh" />
 		<Unit filename="..\include\sllistener.hh" />
 		<Unit filename="..\include\statistics.hh" />
 		<Unit filename="..\include\statisticslayer.hh" />
+		<Unit filename="src\packetdumper.cpp" />
 		<Unit filename="src\statistics.cpp" />
 		<Unit filename="src\statisticslayer.cpp" />
 		<Unit filename="statisticslayer.pro" />

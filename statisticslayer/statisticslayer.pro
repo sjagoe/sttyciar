@@ -22,10 +22,11 @@ CONFIG += thread
 CONFIG(debug, debug|release) {
     DESTDIR = ../bin/Debug
     DEPENDPATH += ../bin/Debug
+    LIBS += -L../bin/Debug
 } else {
     DESTDIR = ../bin/Release
     DEPENDPATH += ../bin/Release
-    #LIBS += -L../bin/Release
+    LIBS += -L../bin/Release
 }
 
 win32 {
@@ -33,9 +34,9 @@ win32 {
     CONFIG += rtti
     CONFIG += exceptions
     INCLUDEPATH += ../../resources/WpdPack/Include
-    #LIBS += -L../../resources/WpdPack/Lib
-    #LIBS += -lpacket
-    #LIBS += -lwpcap
+    LIBS += -L../../resources/WpdPack/Lib
+    LIBS += -lpacket
+    LIBS += -lwpcap
 }
 
 #LIBS += -labstractionlayer
@@ -48,9 +49,11 @@ HEADERS += ../include/statisticslayer.hh \
            ../include/sllistener.hh \
            ../include/interfaceroute.hh \
            ../include/statistics.hh \
+           ../include/packetdumper.hh
            ../include/defaultstatisticslayer.hh \
            ../include/lockablequeue.hh \
            ../include/rawpacket.hh
 
-SOURCES += src/statisticslayer.cpp
-SOURCES += src/statistics.cpp
+SOURCES += src/statisticslayer.cpp \
+           src/statistics.cpp \
+           src/packetdumper.cpp
