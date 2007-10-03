@@ -46,12 +46,12 @@ SttyciarRunner::SttyciarRunner()
     this->_abstractionLayer.reset( new AbstractionLayer );
 
     // create the Statistics Layer
-    this->_statisticsLayer.reset( new StatisticsLayer );
+    //this->_statisticsLayer.reset( new StatisticsLayer );
 
-    shared_ptr<ALStatisticsListener> sl = this->_statisticsLayer;
-
-    // Register the SL with the AL
-    this->_abstractionLayer->registerSL( sl );
+//    shared_ptr<ALStatisticsListener> sl = this->_statisticsLayer;
+//
+//    // Register the SL with the AL
+//    this->_abstractionLayer->registerSL( sl );
 
     // create the user interface with the list of available devices
     // (hub, switch)
@@ -121,7 +121,10 @@ void SttyciarRunner::startSttyciar(QString deviceType,
         this->_networkLogicLayer->registerAbstractionLayer(weakAL);
 
         //initialize the map of devices using the currently activated devices
-        this->_statisticsLayer->initializeTable(activatedDevices);
+        this->_statisticsLayer.reset(new StatisticsLayer(activatedDevices));
+        shared_ptr<ALStatisticsListener> sl = this->_statisticsLayer;
+        // Register the SL with the AL
+        this->_abstractionLayer->registerSL( sl );
 
         this->_statisticsLayer->reset();
 
