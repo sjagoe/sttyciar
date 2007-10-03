@@ -1,9 +1,12 @@
-//#include <iostream>
+#include <iostream>
 
+#include <Qt>
 #include <QList>
 #include <QTreeWidgetItem>
 #include <QTreeWidget>
 #include <QMessageBox>
+#include <QFile>
+#include <QFileDialog>
 
 #include "ui_sttyciar_gui_main.h"
 
@@ -24,6 +27,8 @@ SttyciarGUIMain::SttyciarGUIMain(QWidget* parent)
     _ui->treeAvailableInterfaces->clear();
     _ui->treeAvailableInterfaces->setColumnWidth(0, 150);
     _ui->treeUsedInterfaces->setColumnWidth(0, 150);
+
+    connect( this->_ui->chkEnableDump, SIGNAL( stateChanged(int) ), this, SLOT( on_chkEnableDump_stateChanged() ) );
 }
 
 void SttyciarGUIMain::setDevices( const QList<shared_ptr<Device> >& devices )
@@ -95,10 +100,10 @@ void SttyciarGUIMain::on_btnStart_clicked()
     {
         for (int i = 0; i < numDevices; i++)
         {
-            QTreeWidgetItem* topLevelItem = _ui->treeUsedInterfaces->topLevelItem(i);
+            QTreeWidgetItem* topLevelItem = this->_ui->treeUsedInterfaces->topLevelItem(i);
             *devices << topLevelItem->text(0);
         }
-        emit startSttyciar(_ui->comboNetworkDevices->currentText(), devices);
+        emit startSttyciar(this->_ui->comboNetworkDevices->currentText(), devices, this->_ui->edtDump->text());
     }
     else
     {
@@ -129,6 +134,38 @@ void SttyciarGUIMain::on_btnRemoveAllDevices_clicked()
 void SttyciarGUIMain::on_btnExit_clicked()
 {
     emit exit();
+}
+
+void SttyciarGUIMain::on_chkEnableDump_stateChanged()
+{
+    // if the checkbox is checked (i.e. dump to file enabled)
+    if (this->_ui->chkEnableDump->checkState() == Qt::Checked)
+    {
+        // if there is no filename
+        if (this->_ui->edtDump->text() == QString())
+        {
+            this->on_btnBrowseDump_clicked();
+        }
+        if (this->_ui->edtDump->text() == QString())
+        {
+            this->_ui->chkEnableDump->setCheckState( Qt::Unchecked );
+        }
+    }
+    else if ( this->_ui->chkEnableDump->checkState() == Qt::Unchecked )
+    {
+        this->_ui->edtDump->clear(  );
+    }
+}
+
+void SttyciarGUIMain::on_btnBrowseDump_clicked()
+{
+    QString fileName =
+        QFileDialog::getSaveFileName( this, tr( "Packet Dump File" ),
+            QString(), tr( "Packet Capture Files (*.cap)" ) );
+    if (fileName != QString())
+    {
+        this->_ui->edtDump->setText(fileName);
+    }
 }
 
 void SttyciarGUIMain::moveAllDevices(QTreeWidget* sourceInterfaceTree,

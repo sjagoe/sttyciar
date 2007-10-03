@@ -33,18 +33,7 @@ PacketDumper::PacketDumper( int linkType,
 
 PacketDumper::~PacketDumper()
 {
-    // write all buffered data to file, and close the dump file
-    if ( this->_dumpFile != 0 )
-    {
-        pcap_dump_flush( this->_dumpFile );
-        pcap_dump_close( this->_dumpFile );
-        this->_dumpFile = 0;
-    }
-    if ( this->_dumpInterface != 0 )
-    {
-        pcap_close( this->_dumpInterface );
-        this->_dumpInterface = 0;
-    }
+
 }
 
 void PacketDumper::savePacket( const shared_ptr<RawPacket>& packet )
@@ -84,12 +73,26 @@ void PacketDumper::run()
             }
         }
     }
+    // write all buffered data to file, and close the dump file
+    if ( this->_dumpFile != 0 )
+    {
+        pcap_dump_flush( this->_dumpFile );
+        pcap_dump_close( this->_dumpFile );
+        this->_dumpFile = 0;
+    }
+    if ( this->_dumpInterface != 0 )
+    {
+        pcap_close( this->_dumpInterface );
+        this->_dumpInterface = 0;
+    }
 }
 
 void PacketDumper::stop()
 {
     // stop processing
     this->_running = false;
+    this->_wait.wakeAll();
+    this->wait();
 }
 
 int PacketDumper::waitingPackets()

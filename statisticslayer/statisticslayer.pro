@@ -49,7 +49,7 @@ HEADERS += ../include/statisticslayer.hh \
            ../include/sllistener.hh \
            ../include/interfaceroute.hh \
            ../include/statistics.hh \
-           ../include/packetdumper.hh
+           ../include/packetdumper.hh \
            ../include/defaultstatisticslayer.hh \
            ../include/lockablequeue.hh \
            ../include/rawpacket.hh

@@ -49,6 +49,8 @@ TARGET = sttyciarrunner
 HEADERS += ../include/sttyciarrunner.hh \
            ../include/abstractionlayer.hh \
            ../include/networklogiclayer.hh \
-           ../include/uilistener.hh
+           ../include/uilistener.hh \
+           ../include/statisticslayer.hh \
+           ../include/packetdumper.hh
 
 SOURCES += src/sttyciarrunner.cpp

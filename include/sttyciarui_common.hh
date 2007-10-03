@@ -82,7 +82,7 @@ class SttyciarUI: public QObject
         this string is initially specified by the SttyciarRunner.
         \param devices Network (interface) devices available to be bound to the system.
         */
-        void startSttyciar(QString deviceType, shared_ptr<QStringList> devices);
+        void startSttyciar(QString deviceType, shared_ptr<QStringList> devices, QString dumpFile);
 
         /*!
         Signal emitted when the system is to be stopped but not exited.

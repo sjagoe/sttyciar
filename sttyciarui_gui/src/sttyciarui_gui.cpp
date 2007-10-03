@@ -14,8 +14,8 @@ SttyciarGUI::SttyciarGUI(QMap<int, QString>& networkDevices)
     _statisticsUI.reset( new SttyciarGUIStatistics );
 
     connect( _mainUI.get(),
-        SIGNAL(startSttyciar(QString, shared_ptr<QStringList>)),
-        this, SLOT(startSttyciarSlot(QString, shared_ptr<QStringList>)) );
+        SIGNAL(startSttyciar(QString, shared_ptr<QStringList>, QString)),
+        this, SLOT(startSttyciarSlot(QString, shared_ptr<QStringList>, QString)) );
 
     connect( _mainUI.get(), SIGNAL(exit()), this, SLOT(exit()) );
 
@@ -61,9 +61,9 @@ void SttyciarGUI::exit()
     emit exitSttyciar();
 }
 
-void SttyciarGUI::startSttyciarSlot(QString deviceType, shared_ptr<QStringList> devices)
+void SttyciarGUI::startSttyciarSlot(QString deviceType, shared_ptr<QStringList> devices, QString dumpFile)
 {
-    emit startSttyciar(deviceType, devices);
+    emit startSttyciar(deviceType, devices, dumpFile);
 }
 
 void SttyciarGUI::stopSttyciarSlot()

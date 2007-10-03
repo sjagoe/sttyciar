@@ -97,6 +97,17 @@ class SttyciarGUIMain: public QMainWindow
         void on_btnExit_clicked();
 
         /*!
+        A method used to catch when the checkbox to enable/disable dump to file
+        has been toggled.
+        */
+        void on_chkEnableDump_stateChanged();
+
+        /*!
+        A method to handle when a user clicks on the browse button.
+        */
+        void on_btnBrowseDump_clicked();
+
+        /*!
         A method used to move all devices from one tree-widget to another
         */
         void moveAllDevices(QTreeWidget* sourceInterfaceTree,
@@ -113,7 +124,8 @@ class SttyciarGUIMain: public QMainWindow
         Signal emitted when the Start Device button is clicked to signal the
         SttyciarRunner to start Sttyciar.
         */
-        void startSttyciar(QString deviceType, shared_ptr<QStringList> devices);
+        void startSttyciar(QString deviceType, shared_ptr<QStringList> devices,
+            QString dumpFile);
 
         /*!
         Signal emitted when the Exit button is clicked, signalling the

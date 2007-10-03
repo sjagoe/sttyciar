@@ -4,6 +4,8 @@
 #include <QtCore>
 #include <QTimer>
 
+#include <pcap.h>
+
 #include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
 
@@ -14,6 +16,7 @@ using boost::scoped_ptr;
 
 class AbstractionLayer;
 class StatisticsLayer;
+class PacketDumper;
 class NetworkLogicLayer;
 
 /*!
@@ -42,6 +45,10 @@ class SttyciarRunner: public QObject
         static const int PCAP_READ_TIMEOUT = 50; //! Timeout of the pcap_next_ex method
         static const short HUB_TYPE = 1; //! Identifier for a Hub device
         static const short SWITCH_TYPE = 2; //! Identifier for a Switch device
+
+        static const int PDUMP_LINKTYPE = DLT_IEEE802; //! Link Type used to open the packet dump (Ethernet)
+        shared_ptr<PacketDumper> _packetDumper; //! The PacketDumper object that will dump raw packet data in the pcap file format
+
         QMap<int, QString> _availableDevices; //! Map of network system devices that can be created
 
         shared_ptr<QTimer> _nllUpdateTimer; //! QTimer to call the update slot of the NetworkLogicLayer
@@ -64,7 +71,8 @@ class SttyciarRunner: public QObject
         \param deviceType The network System to emulate.
         \param devices The Devices to bind to the system.
         */
-        void startSttyciar(QString deviceType, shared_ptr<QStringList> devices);
+        void startSttyciar(QString deviceType, shared_ptr<QStringList> devices,
+            QString dumpFile);
 
         /*!
         Slot signalled by the UI to stop Sttyciar and clean up back to the

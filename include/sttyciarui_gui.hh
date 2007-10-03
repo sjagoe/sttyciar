@@ -72,7 +72,7 @@ class SttyciarGUI: public SttyciarUI
 
         This emits the startSttyciar signal specified in the interface.
         */
-        void startSttyciarSlot(QString deviceType, shared_ptr<QStringList> devices);
+        void startSttyciarSlot(QString deviceType, shared_ptr<QStringList> devices, QString dumpFile);
 
         /*!
         Slot to be initiated by the main user interface to stop Sttyciar.

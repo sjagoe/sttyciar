@@ -52,6 +52,6 @@ LIBS += -lstatisticslayer
 TARGET = sttyciar_gui
 
 # Input
-HEADERS += ../include/loadcanvas.hh
+HEADERS += ../include/sttyciarrunner.hh
 
 SOURCES += src/main.cpp

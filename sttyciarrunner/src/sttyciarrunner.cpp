@@ -1,7 +1,11 @@
 //#include <iostream>
 
+#include <QFile>
+#include <QMessageBox>
+
 #include "abstractionlayer.hh"
 #include "statisticslayer.hh"
+#include "packetdumper.hh"
 #include "alnetworklistener.hh"
 #include "networklogiclayer.hh"
 
@@ -15,6 +19,8 @@ const int SttyciarRunner::STAT_UPDATE_TIMEOUT_MSEC;
 
 const short SttyciarRunner::HUB_TYPE;
 const short SttyciarRunner::SWITCH_TYPE;
+
+const int SttyciarRunner::PDUMP_LINKTYPE;
 
 const int SttyciarRunner::PACKET_CAPTURE_SIZE;
 const int SttyciarRunner::PCAP_READ_TIMEOUT;
@@ -61,94 +67,134 @@ SttyciarRunner::SttyciarRunner()
     connect( this->_ui.get(), SIGNAL(exitSttyciar()),
         this, SLOT(exitSttyciar()));
     connect( this->_ui.get(),
-        SIGNAL( startSttyciar(QString, shared_ptr<QStringList>) ),
-        this, SLOT( startSttyciar(QString, shared_ptr<QStringList>) ) );
+        SIGNAL( startSttyciar(QString, shared_ptr<QStringList>, QString) ),
+        this, SLOT( startSttyciar(QString, shared_ptr<QStringList>, QString) ) );
     connect( this->_ui.get(), SIGNAL( stopSttyciar() ),
         this, SLOT( stopSttyciar() ) );
-
-    // connect the Statistics Layer
-    connect( this, SIGNAL(updateStatistics(int)),
-        this->_statisticsLayer.get(), SLOT( calculate(int) ) );
-    connect( this->_statisticsLayer.get(),
-        SIGNAL( sendStats(shared_ptr<Statistics>&) ),
-        this->_ui.get(), SLOT( updateStatistics( shared_ptr<Statistics>& ) ) );
 
     // tell the UI about the available network interfaces
     this->_ui->receiveDevices( this->_abstractionLayer->getDevices() );
 }
 
 void SttyciarRunner::startSttyciar(QString deviceType,
-    shared_ptr<QStringList> devices)
+    shared_ptr<QStringList> devices, QString dumpFile)
 {
-    // activate the selected devices in the abstraction layer
-    this->_abstractionLayer->activateDevices( devices );
-    // get the activated device list
-    QList<shared_ptr<Device> > activatedDevices =
-        this->_abstractionLayer->getActivatedDevices();
-    // send the activated devices to the UI
-    this->_ui->receiveActivatedDevices( activatedDevices );
-
-    int type = this->_availableDevices.key( deviceType );
-    switch ( type )
+    // check if dumping is enabled, and prepare (delete existing) the dumpfile
+    bool dumpEnabled = true;
+    if (dumpFile == QString())
     {
-        case SttyciarRunner::HUB_TYPE:
-        {
-            // create the NLL
-            this->_networkLogicLayer.reset( new NLLHub );
+        dumpEnabled = false;
+    }
 
-            break;
+    bool startRunning = false;
+    if (!dumpEnabled)
+        startRunning = true;
+    else
+    {
+        QFile file(dumpFile);
+        if (file.exists())
+        {
+            startRunning = QMessageBox::warning( 0,
+                tr("Overwrite Dump File"),
+                tr( "The dump file will be overwritten. Continue?" ),
+                QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
+            if (startRunning)
+            {
+                file.remove();
+            }
         }
-        case SttyciarRunner::SWITCH_TYPE:
+        else
         {
-            // create the NLL
-            this->_networkLogicLayer.reset( new NLLSwitch );
-
-            break;
+            startRunning = true;
         }
     }
 
-    if (this->_networkLogicLayer.get() != 0)
+    if ( startRunning )
     {
-        // connect the signal to update the NLL
-        connect( this, SIGNAL( updateNLL(int) ), this->_networkLogicLayer.get(),
-            SLOT( update(int) ) );
+        // activate the selected devices in the abstraction layer
+        this->_abstractionLayer->activateDevices( devices );
+        // get the activated device list
+        QList<shared_ptr<Device> > activatedDevices =
+            this->_abstractionLayer->getActivatedDevices();
+        // send the activated devices to the UI
+        this->_ui->receiveActivatedDevices( activatedDevices );
 
-        // tell the AL and NLL about each other
-        weak_ptr<ALNetworkListener> weakNLL(this->_networkLogicLayer);
-        this->_abstractionLayer->registerNLL(weakNLL);
-        weak_ptr<AbstractionLayer> weakAL(this->_abstractionLayer);
+        int type = this->_availableDevices.key( deviceType );
+        switch ( type )
+        {
+            case SttyciarRunner::HUB_TYPE:
+            {
+                // create the NLL
+                this->_networkLogicLayer.reset( new NLLHub );
 
-        this->_networkLogicLayer->registerAbstractionLayer(weakAL);
+                break;
+            }
+            case SttyciarRunner::SWITCH_TYPE:
+            {
+                // create the NLL
+                this->_networkLogicLayer.reset( new NLLSwitch );
 
-        //initialize the map of devices using the currently activated devices
-        this->_statisticsLayer.reset(new StatisticsLayer(activatedDevices));
-        shared_ptr<ALStatisticsListener> sl = this->_statisticsLayer;
-        // Register the SL with the AL
-        this->_abstractionLayer->registerSL( sl );
+                break;
+            }
+        }
 
-        this->_statisticsLayer->reset();
+        if (this->_networkLogicLayer.get() != 0)
+        {
+            // connect the signal to update the NLL
+            connect( this, SIGNAL( updateNLL(int) ), this->_networkLogicLayer.get(),
+                SLOT( update(int) ) );
 
-        // store that we are now running
-        this->_sttyciarRunning = true;
+            // tell the AL and NLL about each other
+            weak_ptr<ALNetworkListener> weakNLL(this->_networkLogicLayer);
+            this->_abstractionLayer->registerNLL(weakNLL);
+            weak_ptr<AbstractionLayer> weakAL(this->_abstractionLayer);
+            this->_networkLogicLayer->registerAbstractionLayer(weakAL);
 
-        this->_networkLogicLayer->registerAbstractionLayer(weakAL);
+            // create the statistics layer and initialize the map of devices using
+            // the currently activated devices
+            this->_statisticsLayer.reset(new StatisticsLayer(activatedDevices));
+            shared_ptr<ALStatisticsListener> sl = this->_statisticsLayer;
+            // Register the SL with the AL
+            this->_abstractionLayer->registerSL( sl );
 
-        // start the system
-        this->_networkLogicLayer->start();
-        this->_abstractionLayer->startListening(PACKET_CAPTURE_SIZE,
-                                          PCAP_READ_TIMEOUT);
+            this->_statisticsLayer->reset();
 
-        this->_ui->sttyciarRunning();
+            // create the packet dumper
+            this->_packetDumper.reset( new PacketDumper( PDUMP_LINKTYPE,
+                PACKET_CAPTURE_SIZE, dumpFile, dumpEnabled ) );
 
-        this->_nllUpdateTimer->start();
-        this->_statisticsUpdateTimer->start();
-        this->_ui->sttyciarRunning();
+            // connect the Statistics Layer
+            connect( this, SIGNAL(updateStatistics(int)),
+                this->_statisticsLayer.get(), SLOT( calculate(int) ) );
+            connect( this->_statisticsLayer.get(),
+                SIGNAL( sendStats(shared_ptr<Statistics>&) ),
+                this->_ui.get(), SLOT( updateStatistics( shared_ptr<Statistics>& ) ) );
+
+            // store that we are now running
+            this->_sttyciarRunning = true;
+
+            // start the system
+            this->_networkLogicLayer->start();
+            this->_packetDumper->start();
+            this->_statisticsLayer->start();
+            this->_abstractionLayer->startListening(PACKET_CAPTURE_SIZE,
+                                              PCAP_READ_TIMEOUT);
+
+            this->_ui->sttyciarRunning();
+
+            this->_nllUpdateTimer->start();
+            this->_statisticsUpdateTimer->start();
+            this->_ui->sttyciarRunning();
+        }
     }
 }
 
 void SttyciarRunner::stopSttyciar()
 {
     this->_sttyciarRunning = false;
+    // stop the statisticslayer
+    if (this->_statisticsLayer.get() != 0)
+        this->_statisticsLayer->stopRunning();
     // stop the abstractionlayer from listeneing for packets
     if (this->_abstractionLayer.get() != 0)
         this->_abstractionLayer->stopListening();
@@ -156,6 +202,9 @@ void SttyciarRunner::stopSttyciar()
     // stop the NLL from processing packets
     if (this->_networkLogicLayer.get() != 0)
         this->_networkLogicLayer->exitNow();
+
+    if (this->_packetDumper.get() != 0)
+        this->_packetDumper->stop();
 
     // destroy the AL and NLL objects
     this->_networkLogicLayer.reset();
