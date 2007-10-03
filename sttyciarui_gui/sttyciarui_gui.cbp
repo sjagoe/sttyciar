@@ -15,7 +15,7 @@
 		<Build>
 			<Target title="debug">
 				<Option output="." prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
+				<Option object_output="obj\Debug\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
@@ -31,7 +31,7 @@
 			</Target>
 			<Target title="release">
 				<Option output="." prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
+				<Option object_output="obj\Release\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option use_console_runner="0" />
@@ -55,19 +55,21 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="../include/loadcanvas.hh" />
-		<Unit filename="../include/loadlabel.hh" />
-		<Unit filename="../include/renderable.hh" />
-		<Unit filename="../include/sttyciarui_common.hh" />
-		<Unit filename="../include/sttyciarui_gui.hh" />
-		<Unit filename="../include/sttyciarui_gui_main.hh" />
-		<Unit filename="../include/sttyciarui_gui_statistics.hh" />
-		<Unit filename="forms/sttyciar_gui_main.ui" />
-		<Unit filename="src/loadcanvas.cpp" />
-		<Unit filename="src/loadlabel.cpp" />
-		<Unit filename="src/sttyciarui_gui.cpp" />
-		<Unit filename="src/sttyciarui_gui_main.cpp" />
-		<Unit filename="src/sttyciarui_gui_statistics.cpp" />
+		<Unit filename="..\include\loadcanvas.hh" />
+		<Unit filename="..\include\loadlabel.hh" />
+		<Unit filename="..\include\loadtable.hh" />
+		<Unit filename="..\include\renderable.hh" />
+		<Unit filename="..\include\sttyciarui_common.hh" />
+		<Unit filename="..\include\sttyciarui_gui.hh" />
+		<Unit filename="..\include\sttyciarui_gui_main.hh" />
+		<Unit filename="..\include\sttyciarui_gui_statistics.hh" />
+		<Unit filename="forms\sttyciar_gui_main.ui" />
+		<Unit filename="src\loadcanvas.cpp" />
+		<Unit filename="src\loadlabel.cpp" />
+		<Unit filename="src\loadtable.cpp" />
+		<Unit filename="src\sttyciarui_gui.cpp" />
+		<Unit filename="src\sttyciarui_gui_main.cpp" />
+		<Unit filename="src\sttyciarui_gui_statistics.cpp" />
 		<Unit filename="sttyciarui_gui.pro" />
 		<Extensions>
 			<code_completion />

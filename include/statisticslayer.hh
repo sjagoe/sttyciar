@@ -64,6 +64,8 @@ class StatisticsLayer: public QObject, public ALStatisticsListener
         unsigned int _totalPackets;//!The total amount of packets routed in a specific time period
         unsigned int _totalBytes; //!The total amount of bytes routed in a specific time period
 
+        QMutex _mut;
+
     public slots:
         /*!
         A Qt slot which the StatisticsLayer uses to perform calculations on the statistics when required

@@ -48,10 +48,12 @@ HEADERS += ../include/sttyciarui_common.hh \
            ../include/sttyciarui_gui_statistics.hh \
            ../include/renderable.hh \
            ../include/loadlabel.hh \
-           ../include/loadcanvas.hh
+           ../include/loadcanvas.hh \
+           ../include/loadtable.hh
 
 SOURCES += src/sttyciarui_gui.cpp \
            src/sttyciarui_gui_main.cpp \
            src/sttyciarui_gui_statistics.cpp \
            src/loadlabel.cpp \
-           src/loadcanvas.cpp
+           src/loadcanvas.cpp \
+           src/loadtable.cpp

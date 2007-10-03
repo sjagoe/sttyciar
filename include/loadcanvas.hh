@@ -94,7 +94,7 @@ class LoadCanvas: public QWidget
         static const int SIZE_HINT = 500; //! Size hint of the widget
         static const double PI = 3.141593; //! constant pi, used in polar coordinate conversions
 
-        static const int MAX_PEN_WIDTH = 50; //! The pen width depicting maximum/all traffic
+        static const int MAX_PEN_WIDTH = 35; //! The pen width depicting maximum/all traffic
 
         shared_ptr<Statistics> _statistics;
 
