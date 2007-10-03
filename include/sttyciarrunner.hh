@@ -46,7 +46,7 @@ class SttyciarRunner: public QObject
         static const short HUB_TYPE = 1; //! Identifier for a Hub device
         static const short SWITCH_TYPE = 2; //! Identifier for a Switch device
 
-        static const int PDUMP_LINKTYPE = DLT_IEEE802; //! Link Type used to open the packet dump (Ethernet)
+        static const int PDUMP_LINKTYPE = DLT_EN10MB; //! Link Type used to open the packet dump (Ethernet)
         shared_ptr<PacketDumper> _packetDumper; //! The PacketDumper object that will dump raw packet data in the pcap file format
 
         QMap<int, QString> _availableDevices; //! Map of network system devices that can be created

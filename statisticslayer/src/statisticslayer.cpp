@@ -2,11 +2,13 @@
 #include "interfaceroute.hh"
 #include "statistics.hh"
 #include "rawpacket.hh"
+#include "packetdumper.hh"
 
-StatisticsLayer::StatisticsLayer(QList<shared_ptr<Device> >& activatedDevices)
+StatisticsLayer::StatisticsLayer(QList<shared_ptr<Device> >& activatedDevices, weak_ptr<PacketDumper>& dumper)
 {
     this->_running = false;
     this->initializeTable(activatedDevices);
+    this->_packetDumper = dumper;
 }
 
 void StatisticsLayer::addRawPacket(const shared_ptr<RawPacket>& rawPacket)
@@ -70,6 +72,11 @@ void StatisticsLayer::run()
         if (!this->_statisticsQueue.isEmpty())
         {
             this->_statisticsQueue.pop(rawPacket);
+            shared_ptr<PacketDumper> dumper = this->_packetDumper.lock();
+            if (dumper.get() != 0)
+            {
+                dumper->savePacket(rawPacket);
+            }
             this->_mutex.lock();
             this->updateStatistics(rawPacket);
             this->_mutex.unlock();

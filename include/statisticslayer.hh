@@ -5,15 +5,19 @@
 #include <QMap>
 #include <string>
 #include <sstream>
+
+#include <boost/weak_ptr.hpp>
+
 #include "alstatisticslistener.hh"
 #include "lockablequeue.hh"
 
 using std::string;
 using std::ostringstream;
-
+using boost::weak_ptr;
 
 class Statistics;
 class RawPacket;
+class PacketDumper;
 
 /*!
 A class used to process the statistics with regards to packets being processed by the
@@ -32,7 +36,7 @@ class StatisticsLayer: public QThread, public ALStatisticsListener
 
         \param activatedDevices A QList of the all the devices which are contributing statistics
         */
-        StatisticsLayer(QList<shared_ptr<Device> >& activatedDevices);
+        StatisticsLayer(QList<shared_ptr<Device> >& activatedDevices, weak_ptr<PacketDumper>& dumper);
 
         /*!
         Add a raw packet to the statistics layer's queue for processsing
@@ -74,6 +78,8 @@ class StatisticsLayer: public QThread, public ALStatisticsListener
         bool _running; //!A flag used by the loop in the run() function to indicate that the thread must continue running. Can be made false using PcapReceiveThread::stopRunning()
         QWaitCondition _waitCondition; //!Used to prevent deadlocks and other concurrent programming problems
         QMutex _mutex; //!Used to prevent deadlocks and other concurrent programming problems
+
+        weak_ptr<PacketDumper> _packetDumper;
 
         /*!
         Set up the traffic matrix

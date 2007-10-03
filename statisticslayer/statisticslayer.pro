@@ -39,7 +39,7 @@ win32 {
     LIBS += -lwpcap
 }
 
-#LIBS += -labstractionlayer
+LIBS += -labstractionlayer
 
 TARGET = statisticslayer
 

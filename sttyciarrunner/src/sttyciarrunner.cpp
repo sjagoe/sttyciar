@@ -150,18 +150,20 @@ void SttyciarRunner::startSttyciar(QString deviceType,
             weak_ptr<AbstractionLayer> weakAL(this->_abstractionLayer);
             this->_networkLogicLayer->registerAbstractionLayer(weakAL);
 
+            // create the packet dumper
+            this->_packetDumper.reset( new PacketDumper( PDUMP_LINKTYPE,
+                PACKET_CAPTURE_SIZE, dumpFile, dumpEnabled ) );
+
+            weak_ptr<PacketDumper> dumper( this->_packetDumper );
+
             // create the statistics layer and initialize the map of devices using
             // the currently activated devices
-            this->_statisticsLayer.reset(new StatisticsLayer(activatedDevices));
+            this->_statisticsLayer.reset(new StatisticsLayer(activatedDevices, dumper));
             shared_ptr<ALStatisticsListener> sl = this->_statisticsLayer;
             // Register the SL with the AL
             this->_abstractionLayer->registerSL( sl );
 
             this->_statisticsLayer->reset();
-
-            // create the packet dumper
-            this->_packetDumper.reset( new PacketDumper( PDUMP_LINKTYPE,
-                PACKET_CAPTURE_SIZE, dumpFile, dumpEnabled ) );
 
             // connect the Statistics Layer
             connect( this, SIGNAL(updateStatistics(int)),
