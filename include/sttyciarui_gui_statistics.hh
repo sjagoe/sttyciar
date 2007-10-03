@@ -21,6 +21,7 @@ class QLineEdit;
 
 // Local Forward Declerations
 class LoadCanvas;
+class LoadTable;
 class Device;
 class Statistics;
 
@@ -75,13 +76,16 @@ class SttyciarGUIStatistics: public QMainWindow
         QTabWidget* _tabs; //! A QTabWidget providing a tabbed pane to select a statistics view/set.
 
         LoadCanvas* _graphLoad; //! A LoadCanvas object to draw a graphical visualisation of the traffic load in the device.
-        QTableWidget* _tblTextualLoad; //! A QTableWidget to provide the load information in tabular form.
+        //QTableWidget* _tblTextualLoad; //! A QTableWidget to provide the load information in tabular form.
+        LoadTable* _tblLoad;
 
         QGroupBox* _grpRates; //! A QGroupBox to lay out the rates section (packets per second and bytes per second)
         QLabel* _lblPacketsPerSecond; //! A QLabel to label the packets per second field
         QLineEdit* _edtPacketsPerSecond; //! A QLineEdit to display the Packets per Second value
         QLabel* _lblBytesPerSecond; //! A QLabel to label the bytes per second field
         QLineEdit* _edtBytesPerSecond; //! A QLineEdit to display the Bytes per Second value
+        QLabel* _lblKBytesPerSecond; //! QLabel to label the kilobytes per second field
+        QLineEdit* _edtKBytesPerSecond; //! QLineEdit to display the kilobytes per second field
 
         QPushButton* _exitButton; //! QPushButton to exit the application
         QPushButton* _stopButton; //! QPushButton to stop the application

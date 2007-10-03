@@ -47,7 +47,7 @@ class SttyciarGUI: public SttyciarUI
         /*!
         Implement the updateStatistics() slot in \link sttyciarui_common.hh
         */
-        void updateStatistics( shared_ptr<Statistics> stats );
+        void updateStatistics( shared_ptr<Statistics>& stats );
 
         /*!
         Implement the receiveDevices() slot in \link sttyciarui_common.hh

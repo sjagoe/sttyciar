@@ -10,6 +10,8 @@ StatisticsLayer::StatisticsLayer()
 
 void StatisticsLayer::updateStatistics(const shared_ptr<RawPacket>& rawPacket)
 {
+    this->_mut.lock();
+
     QMap<shared_ptr<Device>,double> sourceRow = this->_traffic->value(rawPacket->getInterfaceRoute()->getSource());
     shared_ptr<QList<shared_ptr<Device> > > destinationDevices = rawPacket->getInterfaceRoute()->getDestinations();
 
@@ -23,6 +25,7 @@ void StatisticsLayer::updateStatistics(const shared_ptr<RawPacket>& rawPacket)
     this->_totalPackets += destinationDevices->size();
     this->_totalBytes += rawPacket->getPacketLength();
 
+    this->_mut.unlock();
 }
 
 void StatisticsLayer::initializeTable(QList<shared_ptr<Device> >& devices)
@@ -65,6 +68,8 @@ void StatisticsLayer::reset()
 
 std::string StatisticsLayer::toString()
 {
+    this->_mut.lock();
+
     ostringstream osstream;
     for (QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> >::const_iterator iter=this->_traffic->begin(); iter!=this->_traffic->end(); iter++)
     {
@@ -75,13 +80,19 @@ std::string StatisticsLayer::toString()
         osstream << std::endl;
     }
     return osstream.str();
+
+    this->_mut.unlock();
 }
 
 void StatisticsLayer::calculate(int timePeriodMillis)
 {
+    this->_mut.lock();
+
     shared_ptr<Statistics> statistics(new Statistics(this->_traffic,
                                       this->_totalPackets,this->_totalBytes,
                                       timePeriodMillis));
     this->reset();
     emit sendStats(statistics);
+
+    this->_mut.unlock();
 }

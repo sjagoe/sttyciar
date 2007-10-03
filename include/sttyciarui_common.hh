@@ -41,7 +41,7 @@ class SttyciarUI: public QObject
 
         \param stats A pointer to the Statistics object constructed by the StatisticsLayer.
         */
-        virtual void updateStatistics( shared_ptr<Statistics> stats ) = 0;
+        virtual void updateStatistics( shared_ptr<Statistics>& stats ) = 0;
 
         /*!
         Send a complete list of devices for display on the main UI, allowing
