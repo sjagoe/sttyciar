@@ -48,7 +48,9 @@ HEADERS += ../include/statisticslayer.hh \
            ../include/sllistener.hh \
            ../include/interfaceroute.hh \
            ../include/statistics.hh \
-           ../include/defaultstatisticslayer.hh
+           ../include/defaultstatisticslayer.hh \
+           ../include/lockablequeue.hh \
+           ../include/rawpacket.hh
 
 SOURCES += src/statisticslayer.cpp
 SOURCES += src/statistics.cpp

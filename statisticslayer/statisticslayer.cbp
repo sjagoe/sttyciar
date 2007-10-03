@@ -67,8 +67,8 @@
 		</Linker>
 		<Unit filename="..\include\alstatisticslistener.hh" />
 		<Unit filename="..\include\defaultstatisticslayer.hh" />
-		<Unit filename="..\include\device.hh" />
 		<Unit filename="..\include\interfaceroute.hh" />
+		<Unit filename="..\include\lockablequeue.hh" />
 		<Unit filename="..\include\rawpacket.hh" />
 		<Unit filename="..\include\sllistener.hh" />
 		<Unit filename="..\include\statistics.hh" />

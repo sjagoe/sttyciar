@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include "alstatisticslistener.hh"
+#include "lockablequeue.hh"
 
 using std::string;
 using std::ostringstream;
@@ -20,26 +21,24 @@ Sttyciar software. This class handles signals to update the statistics.
 
 \author Doron Horwitz
 */
-class StatisticsLayer: public QObject, public ALStatisticsListener
+class StatisticsLayer: public QThread, public ALStatisticsListener
 {
     Q_OBJECT
 
     public:
         /*!
-        Default constructor
+        Constructor takes currently activated devices from which the StatisticsLayer
+        should take statistics
+
+        \param activatedDevices A QList of the all the devices which are contributing statistics
         */
-        StatisticsLayer();
+        StatisticsLayer(QList<shared_ptr<Device> >& activatedDevices);
 
         /*!
-        Update the statistics using the latests routed packet
-        \param interfaceRoute The InterfaceRoute containing information of how a packet was routed
+        Add a raw packet to the statistics layer's queue for processsing
+        \param rawPacket The packet that is being routed
         */
-        void updateStatistics(const shared_ptr<RawPacket>& rawPacket);
-
-        /*!
-        Set up the traffic matrix
-        */
-        void initializeTable(QList<shared_ptr<Device> >& devices);
+        void addRawPacket(const shared_ptr<RawPacket>& rawPacket);
 
         /*!
         Reset the amount of traffic that has flowed between each Device to zero, in order to
@@ -59,12 +58,33 @@ class StatisticsLayer: public QObject, public ALStatisticsListener
         */
         string toString();
 
+        /*!
+        Stop the processing of packets in the StatisticsLayer
+        */
+        void stopRunning();
+
+    protected:
+        void run();
+
     private:
         shared_ptr<QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> > > _traffic; //!The matrix indicating the percentage of traffic between each network Device
         unsigned int _totalPackets;//!The total amount of packets routed in a specific time period
         unsigned int _totalBytes; //!The total amount of bytes routed in a specific time period
+        LockableQueue<shared_ptr<RawPacket> > _statisticsQueue; //!A queue of rawpackets awaiting processing by the statistics layer
+        bool _running; //!A flag used by the loop in the run() function to indicate that the thread must continue running. Can be made false using PcapReceiveThread::stopRunning()
+        QWaitCondition _waitCondition; //!Used to prevent deadlocks and other concurrent programming problems
+        QMutex _mutex; //!Used to prevent deadlocks and other concurrent programming problems
 
-        QMutex _mut;
+        /*!
+        Set up the traffic matrix
+        */
+        void initializeTable(const QList<shared_ptr<Device> >& activatedDevices);
+
+        /*!
+        Update the statistics using the latest routed packet
+        \param rawPacket The packet that is being routed
+        */
+        void updateStatistics(const shared_ptr<RawPacket>& rawPacket);
 
     public slots:
         /*!

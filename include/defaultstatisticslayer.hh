@@ -34,7 +34,7 @@ class DefaultStatisticsLayer : public ALStatisticsListener
         /*!
         See declaration of ALStatisticsListener::updateStatistics(shared_ptr<InterfaceRoute>&)
         */
-        inline void updateStatistics(const shared_ptr<RawPacket>& rawPacket ){}
+        inline void addRawPacket(const shared_ptr<RawPacket>& rawPacket ){}
 
         /*!
         See declaration of ALStatisticsListener::initializeTable(QList<shared_ptr<Device> >&)

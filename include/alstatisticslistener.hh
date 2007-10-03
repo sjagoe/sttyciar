@@ -35,14 +35,13 @@ class ALStatisticsListener
         \param interfaces The InterfaceRoute object passed to the AL after
         routing, containing complete source/destination interface data.
         */
-        virtual void updateStatistics(const shared_ptr<RawPacket>& rawPacket ) = 0;
+        virtual void addRawPacket(const shared_ptr<RawPacket>& rawPacket ) = 0;
 
-        /*!
+        /* !
         A method to pass all available network interfaces to the user interface
         to allow users to easily configure the routing infrastructure.
         */
-        virtual void
-        initializeTable( QList<shared_ptr<Device> >& devices ) = 0;
+        //virtual void initializeTable( QList<shared_ptr<Device> >& devices ) = 0;
 };
 
 #endif
