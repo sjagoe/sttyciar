@@ -27,7 +27,6 @@ int main(int argc, char* argv[])
     QObject::connect(&runner, SIGNAL(exit()), &app, SLOT(quit()));
     QObject::connect(&app, SIGNAL( lastWindowClosed() ), &runner, SLOT( exitSttyciar() ) );
     return app.exec();
-
 }
 
 //int main(int argc, char* argv[])
@@ -125,3 +124,12 @@ int main(int argc, char* argv[])
 //
 //    return 0;
 //}
+
+/*int main(int argc, char* argv[])
+{
+    uint8_t address[] = {255,255,255,0};
+    Address a(address,4);
+    cout << a.to_bpf_u_int32();
+
+}*/
+

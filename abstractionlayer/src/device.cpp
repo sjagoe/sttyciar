@@ -1,6 +1,7 @@
 #include "device.hh"
 #include <ext/algorithm>
 #include <iostream>
+#include <sstream>
 
 Device::Device()
 {
@@ -74,7 +75,7 @@ void Device::createAddressList(pcap_if* pcapDevice)
     }
 }
 
-void Device::startListening(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>& alNetworkListener) throw (CannotOpenDeviceException)
+void Device::startListening(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>& alNetworkListener,bool filterEnabled) throw (CannotOpenDeviceException)
 {
     #if defined(WIN32)
     if((this->_pcapSource = pcap_open(this->getName().c_str(),packetCaptureSize,
@@ -84,6 +85,9 @@ void Device::startListening(int packetCaptureSize,int timeout,weak_ptr<ALNetwork
     if ((this->_pcapSource = pcap_open_live(this->getName().c_str(),packetCaptureSize,true,timeout,this->_pcapErrorBuffer))==NULL)
     #endif
         throw CannotOpenDeviceException(this->_pcapErrorBuffer);
+
+    if (filterEnabled)
+        this->setFilter();
 
 
     this->_pcapSendThread->setSource(this->_pcapSource);
@@ -115,4 +119,37 @@ bool Device::operator==(Device& device) const
 pcap_t* Device::getPcapSource()
 {
     return this->_pcapSource;
+}
+
+void Device::setFilter() throw (PcapFilterException)
+{
+    std::ostringstream filterStringStream;
+    int count = 0;
+    filterStringStream << "not ( ";
+    for (QList<DeviceAddress>::const_iterator iter = this->_addresses.begin(); iter!=this->_addresses.end(); iter++)
+    {
+        if (count != 0)
+            filterStringStream << "or ";
+        filterStringStream << "dst host " << iter->getAddress().toIPString() << " ";
+    }
+    filterStringStream << ")";
+    struct bpf_program* compiledFilter = NULL;
+
+     //1 is added for null character
+    char* filterString = new char[filterStringStream.str().length()+1];
+    filterStringStream.str().copy(filterString,filterStringStream.str().length(),0);
+
+    // string::copy doesn't put in the null character, which is needed, so put it in manually
+    filterString[filterStringStream.str().length()] = '\0';
+
+    std::cout << filterString << std::endl;
+    if (pcap_compile(this->_pcapSource,compiledFilter,filterString,1,0)<0)
+        throw PcapFilterException(pcap_geterr(this->_pcapSource));
+
+    if(pcap_setfilter(this->_pcapSource,compiledFilter)<0)
+        throw PcapFilterException(pcap_geterr(this->_pcapSource));
+
+    pcap_freecode(compiledFilter);
+
+
 }

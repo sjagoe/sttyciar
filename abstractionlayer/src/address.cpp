@@ -90,3 +90,13 @@ uint8_t Address::operator[](const int i)
     return this->getAddressByte(i);
 }
 
+bpf_u_int32 Address::to_bpf_u_int32()
+{
+    bpf_u_int32 bpf_u_int32_address = 0;
+    for (int i = 0; i < this->getSize(); i++)
+    {
+        bpf_u_int32_address |= ((bpf_u_int32)getAddressByte(i)) << (8*(this->getSize()-1-i));
+    }
+    return bpf_u_int32_address;
+}
+

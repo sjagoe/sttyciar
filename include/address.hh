@@ -39,6 +39,8 @@ struct in_addr_windows
 using namespace std;
 using boost::shared_array;
 
+typedef u_int bpf_u_int32;
+
 /*!
 This is a generic container for a network address (eg MAC or IP) of any length.
 
@@ -142,6 +144,8 @@ class Address
         \return The byte value at the specified index
         */
         uint8_t operator[](const int i);
+
+        bpf_u_int32 to_bpf_u_int32();
 
     private:
         shared_array<uint8_t> _address; //! The bytes stored in the Address
