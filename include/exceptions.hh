@@ -38,4 +38,15 @@ class CannotOpenDeviceException : public runtime_error
         CannotOpenDeviceException(const string& what_arg);
 };
 
+class PcapFilterException : public runtime_error
+{
+    public:
+        /*!
+        Constructor
+
+        \param what_arg A string description of the error that occured
+        */
+        PcapFilterException(const string& what_arg);
+};
+
 #endif // EXCEPTIONS_H

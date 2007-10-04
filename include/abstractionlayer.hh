@@ -163,15 +163,13 @@ class AbstractionLayer//: public NLLListener
         */
         void stopListening();
 
-        /* !
-        Used by the NetworkLogicLayer to obtain the QWaitCondition that it will
-        wait on, and the AL will use to signal it to wake up.
+        /*!
+        Enable the pcap packet filter to force pcap to ignore any packets destined for
+        a device's ip address. Note: By default, the filter is disabled.
 
-        \return A QWaitCondition object to signal the NLL
+        \param filterEnabled True if filter must be enabled, false otherwise
         */
-//        shared_ptr<QWaitCondition>& getNLLWaitCondition();
-//
-//        shared_ptr<QSemaphore>& getNLLSemaphore();
+        void setFilterEnabled(bool filterEnabled);
 
     protected:
         /*!
@@ -194,8 +192,7 @@ class AbstractionLayer//: public NLLListener
         weak_ptr<ALNetworkListener> _networkLogicLayer; //!A pointer to the ALNetworkListener registered to handle packets received from the network
         shared_ptr<ALStatisticsListener> _statisticsLayer; //!A pointer to the ALStatisticsListener registered to handle routing statistics. This defaults to an implementation with empty overridden virtual functions
 
-//        shared_ptr<QWaitCondition> _nllWaitCondition;
-//        shared_ptr<QSemaphore> _nllSemaphore;
+        bool _filterEnabled;
 
         /*!
         Used to initialize a list of network devices which are currently attached to the system. This function is called by

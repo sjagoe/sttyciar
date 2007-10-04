@@ -24,6 +24,7 @@ AbstractionLayer::AbstractionLayer()
 //    this->_nllSemaphore.reset( new QSemaphore );
     this->_statisticsLayer.reset(new DefaultStatisticsLayer());
     this->retrieveDevices();
+    this->_filterEnabled = false;
 }
 
 void AbstractionLayer::sendDataLinkLayerPacket(
@@ -121,7 +122,7 @@ void AbstractionLayer::startListening(int packetCaptureSize,int timeout)
     //store the thread objects
     for (QList<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end(); ++iter)
     {
-        (*iter)->startListening(packetCaptureSize,timeout,this->_networkLogicLayer);
+        (*iter)->startListening(packetCaptureSize,timeout,this->_networkLogicLayer,this->_filterEnabled);
         //tempPcapReceiveThread.reset(new PcapReceiveThread(*iter,this->_networkLogicLayer));
         //tempPcapReceiveThread->start();
         //this->_pcapThreads.push_back(tempPcapReceiveThread);
@@ -144,12 +145,7 @@ void AbstractionLayer::stopListening()
     }
 }
 
-//shared_ptr<QWaitCondition>& AbstractionLayer::getNLLWaitCondition()
-//{
-//    return _nllWaitCondition;
-//}
-//
-//shared_ptr<QSemaphore>& AbstractionLayer::getNLLSemaphore()
-//{
-//    return _nllSemaphore;
-//}
+void AbstractionLayer::setFilterEnabled(bool filterEnabled)
+{
+    this->_filterEnabled = filterEnabled;
+}
