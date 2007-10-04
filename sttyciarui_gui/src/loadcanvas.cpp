@@ -1,6 +1,6 @@
 #include <math.h>
 #include <algorithm>
-#include <iostream>
+//#include <iostream>
 
 #include <QPainter>
 #include <QStringList>

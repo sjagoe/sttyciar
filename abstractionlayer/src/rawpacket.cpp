@@ -14,6 +14,7 @@ RawPacket::RawPacket ( const pcap_pkthdr* head, const u_char* packet,
 {
     _interfaceRoute.reset( new InterfaceRoute() );
     pcap_pkthdr* newHead = new pcap_pkthdr;
+    newHead->ts = head->ts;
     newHead->caplen = head->caplen;
     newHead->len = head->len;
 

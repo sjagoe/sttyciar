@@ -40,6 +40,8 @@ PacketDumper::~PacketDumper()
 
 void PacketDumper::savePacket( const shared_ptr<RawPacket>& packet )
 {
+//    pcap_pkthdr* head = packet->getHeader().get();
+//    std::cout << head->ts.tv_sec << "." << head->ts.tv_usec << std::endl;
     // if packet dumping is enabled, enqueue the packet for dumping
     if (this->_enabled)
     {

@@ -1,6 +1,6 @@
 //#include <Qt>
 #include <QRect>
-#include <iostream>
+//#include <iostream>
 
 #include "loadlabel.hh"
 

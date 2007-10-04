@@ -59,6 +59,7 @@ void PcapReceiveThread::run() throw(CannotOpenDeviceException)
     {
         while (this->_listening && (result=pcap_next_ex(source,&pkt_header,&pkt_data) == 1))
         {
+//            std::cout << pkt_header->ts.tv_sec << "." << pkt_header->ts.tv_usec << std::endl;
             shared_ptr<RawPacket> rawPacket(new RawPacket(pkt_header,pkt_data, tempDevice));
             this->_receiveBuffer->enqueue( rawPacket );
 
