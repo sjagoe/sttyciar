@@ -88,7 +88,8 @@ class SttyciarGUIStatistics: public QMainWindow
 
         LoadCanvas* _graphLoad; //! A LoadCanvas object to draw a graphical visualisation of the traffic load in the device.
         //QTableWidget* _tblTextualLoad; //! A QTableWidget to provide the load information in tabular form.
-        LoadTable* _tblLoad; //! A widget containing a table to display stats
+        LoadTable* _tblLoad; //! A widget containing a table to display percentage load stats
+        LoadTable* _tblPackets; //! A widget containing a table to display actual load (in number of packets) stats
 
         QGroupBox* _grpRates; //! A QGroupBox to lay out the rates section (packets per second and bytes per second)
         QLabel* _lblPacketsPerSecond; //! A QLabel to label the packets per second field
@@ -97,6 +98,9 @@ class SttyciarGUIStatistics: public QMainWindow
         QLineEdit* _edtBytesPerSecond; //! A QLineEdit to display the Bytes per Second value
         QLabel* _lblKBytesPerSecond; //! QLabel to label the kilobytes per second field
         QLineEdit* _edtKBytesPerSecond; //! QLineEdit to display the kilobytes per second field
+
+        QLabel* _lblDumpBuffer; //! label the Dump Buffer Contents field
+        QLineEdit* _edtDumpBuffer; //! QLineEdit to display the size of the packet dump buffer
 
         QPushButton* _exitButton; //! QPushButton to exit the application
         QPushButton* _stopButton; //! QPushButton to stop the application

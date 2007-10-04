@@ -1,3 +1,4 @@
+//#include <iostream>
 #include "statistics.hh"
 
 Statistics::Statistics(shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > >& traffic,
@@ -6,7 +7,11 @@ Statistics::Statistics(shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device
 {
     this->calculateTrafficPercentage(traffic,totalPackets);
     this->calculateRates(totalPackets,totalBytes,timePeriodMillis);
-    this->_amtPacketsTraffic = traffic;
+
+    this->_amtPacketsTraffic.reset(new QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> >( *traffic ) );
+//    this->_amtPacketsTraffic = traffic;
+
+
     this->_awaitingDumpedPackets = awaitingDumpedPackets;
 }
 
@@ -23,6 +28,16 @@ shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > Statistic
 
 shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > Statistics::getTrafficAmtPacketsTable()
 {
+//    QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> >::const_iterator iter = this->_amtPacketsTraffic->begin();
+//    for (; iter != this->_amtPacketsTraffic->end(); iter++)
+//    {
+//        QMap<shared_ptr<Device>,double>::const_iterator iter1 = iter.value().begin();
+//        for (; iter1 != iter.value().end(); iter1++)
+//        {
+//            std::cout << iter1.value() << " ";
+//        }
+//    }
+//    std::cout << std::endl << std::endl;
     return this->_amtPacketsTraffic;
 }
 

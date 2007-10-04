@@ -54,6 +54,7 @@ void SttyciarGUIStatistics::receiveActivatedDevices(
     this->_devices = deviceList;
     this->_graphLoad->setLabels( devices );
     this->_tblLoad->setLabels( devices );
+    this->_tblPackets->setLabels( devices );
     int i = this->_comboChangeDevice->findText( deviceType );
     this->_comboChangeDevice->setCurrentIndex(i);
     this->_dumpFile = dumpFile;
@@ -64,12 +65,14 @@ void SttyciarGUIStatistics::updateStatistics( shared_ptr<Statistics> stats )
     if ( this->_statistics.get() != stats.get() )
     {
         this->_statistics = stats;
-        this->_graphLoad->updateStatistics( this->_statistics );
-        this->_tblLoad->updateStatistics( this->_statistics );
 
         // update stats
         if ( this->_statistics.get() != 0 )
         {
+            this->_graphLoad->updateStatistics( this->_statistics );
+            this->_tblLoad->updateStatistics( this->_statistics->getTrafficPercentageTable() );
+            this->_tblPackets->updateStatistics( this->_statistics->getTrafficAmtPacketsTable() );
+
             QString temp = QString("%1").arg( this->_statistics->getPacketsPerSecond() );
             this->_edtPacketsPerSecond->setText( temp );
 
@@ -82,6 +85,9 @@ void SttyciarGUIStatistics::updateStatistics( shared_ptr<Statistics> stats )
 
             temp = QString( "%1" ).arg( kbytes );
             this->_edtKBytesPerSecond->setText( temp );
+
+            temp = QString( "%1" ).arg(this->_statistics->getAwaitingDumpedPackets());
+            this->_edtDumpBuffer->setText( temp );
         }
     }
 }
@@ -118,11 +124,13 @@ void SttyciarGUIStatistics::setupTabWidget()
 
 //    _grpTextualLoad = new QGroupBox( QString( "Load Balance" ) );
     //_tblTextualLoad = new QTableWidget;
-    _tblLoad = new LoadTable;
+    _tblLoad = new LoadTable(true); // The _tblLoad displays a percentage
+    _tblPackets = new LoadTable;
 
     _tabs->addTab( _graphLoad, QString( "Load Balance (Graphical)" ) );
 //    _tabs->addTab( _tblTextualLoad, QString( "Load Balance (Table)" ) );
     _tabs->addTab( _tblLoad, QString( "Load Balance (Table)" ) );
+    _tabs->addTab( _tblPackets, QString( "Packet Count (Table)" ) );
 }
 
 void SttyciarGUIStatistics::setupRates()
@@ -158,10 +166,17 @@ void SttyciarGUIStatistics::setupRates()
 
 QHBoxLayout* SttyciarGUIStatistics::setupButtons()
 {
+    _lblDumpBuffer = new QLabel( QString( "Dump Buffer:" ) );
+    _edtDumpBuffer = new QLineEdit;
+    _lblDumpBuffer->setBuddy(_edtDumpBuffer);
+    _edtDumpBuffer->setReadOnly(true);
+
     _exitButton = new QPushButton( QString( "&Exit" ) );
     _stopButton = new QPushButton( QString( "&Stop" ) );
 
     QHBoxLayout* hlayout = new QHBoxLayout;
+    hlayout->addWidget( _lblDumpBuffer );
+    hlayout->addWidget( _edtDumpBuffer );
     hlayout->addStretch();
     hlayout->addWidget(_stopButton);
     hlayout->addWidget(_exitButton);

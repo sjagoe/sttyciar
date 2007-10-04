@@ -1,3 +1,5 @@
+//#include <iostream>
+
 #include <Qt>
 #include <QTableWidget>
 #include <QTableWidgetItem>
@@ -10,9 +12,10 @@
 //#include "device.hh"
 #include "statistics.hh"
 
-LoadTable::LoadTable(QWidget* parent)
+LoadTable::LoadTable(bool percentage, QWidget* parent)
     : QWidget(parent)
 {
+    this->_percentage = percentage;
     this->_tblLoad = new QTableWidget;
     this->_tblLoad->verticalHeader()->setDefaultAlignment( Qt::AlignCenter );
     this->_tblLoad->setSelectionMode( QAbstractItemView::NoSelection );
@@ -99,37 +102,73 @@ void LoadTable::setLabels( const QList<shared_ptr<Device> >& devices )
     this->_tblLoad->setVerticalHeaderLabels( tableLabels );
 }
 
-void LoadTable::updateStatistics( shared_ptr<Statistics>& stats )
+void LoadTable::updateStatistics( shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > table )
 {
-    if (stats.get() != 0)
+    this->_table = table;
+    if (this->_table.get() != 0)
     {
-        //QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > >::const_iterator row = this->_labels.begin();
         QMap<shared_ptr<Device>, int>::const_iterator row = this->_devices.begin();
-
-        //for (; row != this->_labels.end(); row++)
         for (; row != this->_devices.end(); row++)
         {
-            //QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > >::const_iterator column = this->_labels.begin();
             QMap<shared_ptr<Device>, int>::const_iterator column = this->_devices.begin();
-
-            //for (; column != this->_labels.end(); column++)
             for (; column != this->_devices.end(); column++)
             {
-                //if (row.key().get() != column.key().get())
+                // get the amount of traffic between two interfaces
+                //double traffic = stats->getTrafficPercentage( row.key(), column.key() );
+                double traffic = this->_table->value( row.key() ).value( column.key() );
+                QString item;
+//                std::cout << traffic << " ";
+                if (this->_percentage)
                 {
-                    // get the amount of traffic between two interfaces
-                    double traffic = stats->getTrafficPercentage( row.key(), column.key() );
                     traffic *= 100;
-                    QString item = QString("%1%").arg(traffic, 0, 'f', 2);
-
-                    QTableWidgetItem* tableItem = this->_tblLoad->item( row.value(), column.value() );
-                    if (tableItem == 0)
-                        tableItem = new QTableWidgetItem;
-                    tableItem->setText(item);
-
-                    this->_tblLoad->setItem( row.value(), column.value(), tableItem);
+                    item = QString("%1%").arg(traffic, 0, 'f', 2);
                 }
+                else
+                {
+                    item = QString("%1").arg(traffic);//, 0, 'f', 2);
+                }
+
+                QTableWidgetItem* tableItem = this->_tblLoad->item( row.value(), column.value() );
+                if (tableItem == 0)
+                    tableItem = new QTableWidgetItem;
+                tableItem->setText(item);
+
+                this->_tblLoad->setItem( row.value(), column.value(), tableItem);
             }
         }
+//        std::cout << std::endl << std::endl;
     }
 }
+//{
+//    if (stats.get() != 0)
+//    {
+//        //QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > >::const_iterator row = this->_labels.begin();
+//        QMap<shared_ptr<Device>, int>::const_iterator row = this->_devices.begin();
+//
+//        //for (; row != this->_labels.end(); row++)
+//        for (; row != this->_devices.end(); row++)
+//        {
+//            //QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > >::const_iterator column = this->_labels.begin();
+//            QMap<shared_ptr<Device>, int>::const_iterator column = this->_devices.begin();
+//
+//            //for (; column != this->_labels.end(); column++)
+//            for (; column != this->_devices.end(); column++)
+//            {
+//                //if (row.key().get() != column.key().get())
+//                {
+//                    // get the amount of traffic between two interfaces
+//                    double traffic = stats->getTrafficPercentage( row.key(), column.key() );
+//                    traffic *= 100;
+//                    QString item = QString("%1%").arg(traffic, 0, 'f', 2);
+//
+//                    QTableWidgetItem* tableItem = this->_tblLoad->item( row.value(), column.value() );
+//                    if (tableItem == 0)
+//                        tableItem = new QTableWidgetItem;
+//                    tableItem->setText(item);
+//
+//                    this->_tblLoad->setItem( row.value(), column.value(), tableItem);
+//                }
+//            }
+//        }
+//    }
+//}

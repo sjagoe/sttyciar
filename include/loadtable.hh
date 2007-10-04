@@ -23,7 +23,7 @@ class LoadTable: public QWidget
 
         \param parent The parent widget, passed to the QWidget constructor.
         */
-        LoadTable(QWidget* parent = 0);
+        LoadTable(bool percentage = false, QWidget* parent = 0);
 
         /*!
         Return the preferred minimum size of the table.
@@ -49,14 +49,18 @@ class LoadTable: public QWidget
         Update the statistics display with the values contained in the
         Statistics object passed.
 
-        \param stats Statistics object containing the information to display.
+        \param table The QMap<QMap> table containing the statistics
         */
-        void updateStatistics( shared_ptr<Statistics>& stats );
+        void updateStatistics( shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > table );
 
     private:
-        QTableWidget* _tblLoad;
+        QTableWidget* _tblLoad; //! The table used to display the information
 
-        QMap<shared_ptr<Device>, int> _devices;
+        QMap<shared_ptr<Device>, int> _devices; //! Devices and corresponding row/column
+
+        shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _table; //! The table of data to display
+
+        bool _percentage; //! store whether or not to display as a percentage value
 };
 
 #endif
