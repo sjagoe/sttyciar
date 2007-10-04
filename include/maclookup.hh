@@ -80,7 +80,7 @@ class MACLookup
     private:
         //QMap<mac_t, QPair<shared_ptr<Device>, long> > _lookupTable; //! lookup table to get Device from mac_t.
         //QMap<u_short, QMap<u_long, QPair<shared_ptr<Device>, long> > > _lookupTable;
-        QMap<u_short, QMap<u_short, QMap<u_short, QPair<shared_ptr<Device>, long> > > > _lookupTable;
+        QMap<u_short, QMap<u_short, QMap<u_short, QPair<shared_ptr<Device>, long> > > > _lookupTable; //! lookup table to get Device from mac_t.
         long _aliveTime; //! time that an entry will remain in the table (milliseconds)
         static const int DEFAULT_ALIVE_TIME = 90000; //! default time an entry is in the table (milliseconds)
 

@@ -57,12 +57,6 @@ class Statistics
         */
         shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > getTrafficAmtPacketsTable();
 
-        /* !
-        Get the total amount of packets that were routed in a specified time period
-        \return The total amount of packets
-        */
-        //int getTotalPackets() const;
-
         /*!
         Get the rate of packets per second according to the specified time period.
 

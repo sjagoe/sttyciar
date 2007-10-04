@@ -81,11 +81,8 @@
 		<Unit filename="..\include\nllhub.hh" />
 		<Unit filename="..\include\packet.hh" />
 		<Unit filename="..\include\packetaccess.hh" />
-		<Unit filename="..\include\pcapthread.hh" />
 		<Unit filename="..\include\rawpacket.hh" />
-		<Unit filename="..\include\sllistener.hh" />
 		<Unit filename="..\include\statisticslayer.hh" />
-		<Unit filename="..\include\uilistener.hh" />
 		<Unit filename="nll_hub.pro" />
 		<Unit filename="src\nllhub.cpp" />
 		<Extensions>

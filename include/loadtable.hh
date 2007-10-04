@@ -14,6 +14,11 @@ class QTableWidget;
 
 class Statistics;
 
+/*!
+A Table widget to display statistics from the network device.
+
+\author Simon Jagoe
+*/
 class LoadTable: public QWidget
 {
     Q_OBJECT

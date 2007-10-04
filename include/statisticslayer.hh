@@ -50,11 +50,6 @@ class StatisticsLayer: public QThread, public ALStatisticsListener
         */
         void reset();
 
-        /* !
-
-        */
-        //shared_ptr<Statistics> getStatistics();
-
         /*!
         Get a string representation of the traffix matrix
 
@@ -80,7 +75,7 @@ class StatisticsLayer: public QThread, public ALStatisticsListener
         QMutex _waitMutex; //!Use to make the statistics layer sleep if there are no raw packets waiting to be processed
         QMutex _threadSafeMutex; //!Used to prevent deadlocks and other concurrent programming problems
 
-        weak_ptr<PacketDumper> _packetDumper;
+        weak_ptr<PacketDumper> _packetDumper; //! pointer to an object that dumps packets to file
 
         /*!
         Set up the traffic matrix

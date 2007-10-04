@@ -60,6 +60,12 @@ class NetworkLogicLayer:
         */
         virtual ~NetworkLogicLayer();
 
+        /*!
+        Register the AbstractionLayer with the NetworkLogicLayer so that
+        packets can be transmitted.
+
+        \param al The AbstractionLayer object to register
+        */
         void registerAbstractionLayer( weak_ptr<AbstractionLayer>& al );
 
         /*!
@@ -70,14 +76,6 @@ class NetworkLogicLayer:
         */
         void exitNow();
 
-        /* !
-        Method provided by the ALNetworkListener for the AL to push a received
-        packet onto the receive buffer.
-
-        \param packet A shared_ptr to the RawPacket received by the AL.
-        \param interfaces A shared_ptr to the InterfaceRoute describing where
-        the packet came from.
-        */
         /*!
         Method provided by the ALNetworkListener for the AL to notify the NLL
         that a packet has been received, and wake the NLL thread.

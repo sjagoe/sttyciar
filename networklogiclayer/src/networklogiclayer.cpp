@@ -26,6 +26,11 @@ void NetworkLogicLayer::registerAbstractionLayer(
     // set the pointer to the abstraction layer
     this->_abstractionLayer = al;
 
+    // get the WaitCondition for the NLL
+    this->_wait.reset( new QWaitCondition );
+    // get the Semaphore for the NLL
+    this->_waitingPackets.reset( new QSemaphore );
+
     // lock the AL as a shared_ptr (prevent it from being destroyed while we
     // are using it
     shared_ptr<AbstractionLayer> lockedAL = this->getAbstractionLayer();
@@ -36,10 +41,10 @@ void NetworkLogicLayer::registerAbstractionLayer(
         // get the devices
         this->_devices = lockedAL->getActivatedDevices();
 //        std::cout << "Number of Activated Devices: " << _devices.size() << std::endl;
-        // get the WaitCondition for the NLL
-        this->_wait = lockedAL->getNLLWaitCondition();
-        // get the Semaphore for the NLL
-        this->_waitingPackets = lockedAL->getNLLSemaphore();
+//        // get the WaitCondition for the NLL
+//        this->_wait = lockedAL->getNLLWaitCondition();
+//        // get the Semaphore for the NLL
+//        this->_waitingPackets = lockedAL->getNLLSemaphore();
         // enable the NLL
         //_runningMutex.lock();
         this->_running = true;

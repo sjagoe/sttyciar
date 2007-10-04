@@ -119,13 +119,13 @@ class SttyciarRunner: public QObject
         \param milliseconds The time since the last update in milliseconds.
         */
         void updateNLL( int milliseconds );
-        void updateStatistics( int milliseconds );
 
         /*!
         Signal the SL to update.
 
         \param milliseconds The time since the last update in milliseconds.
         */
+        void updateStatistics( int milliseconds );
 };
 
 #endif

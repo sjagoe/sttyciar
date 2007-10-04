@@ -76,9 +76,7 @@
 		<Unit filename="..\include\nllhub.hh" />
 		<Unit filename="..\include\packet.hh" />
 		<Unit filename="..\include\rawpacket.hh" />
-		<Unit filename="..\include\sllistener.hh" />
 		<Unit filename="..\include\statisticslayer.hh" />
-		<Unit filename="..\include\uilistener.hh" />
 		<Unit filename="src\main.cpp" />
 		<Unit filename="sttyciar.pro" />
 		<Extensions>

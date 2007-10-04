@@ -163,9 +163,15 @@ class AbstractionLayer//: public NLLListener
         */
         void stopListening();
 
-        shared_ptr<QWaitCondition>& getNLLWaitCondition();
+        /* !
+        Used by the NetworkLogicLayer to obtain the QWaitCondition that it will
+        wait on, and the AL will use to signal it to wake up.
 
-        shared_ptr<QSemaphore>& getNLLSemaphore();
+        \return A QWaitCondition object to signal the NLL
+        */
+//        shared_ptr<QWaitCondition>& getNLLWaitCondition();
+//
+//        shared_ptr<QSemaphore>& getNLLSemaphore();
 
     protected:
         /*!
@@ -188,15 +194,15 @@ class AbstractionLayer//: public NLLListener
         weak_ptr<ALNetworkListener> _networkLogicLayer; //!A pointer to the ALNetworkListener registered to handle packets received from the network
         shared_ptr<ALStatisticsListener> _statisticsLayer; //!A pointer to the ALStatisticsListener registered to handle routing statistics. This defaults to an implementation with empty overridden virtual functions
 
-        shared_ptr<QWaitCondition> _nllWaitCondition;
-        shared_ptr<QSemaphore> _nllSemaphore;
+//        shared_ptr<QWaitCondition> _nllWaitCondition;
+//        shared_ptr<QSemaphore> _nllSemaphore;
 
         /*!
         Used to initialize a list of network devices which are currently attached to the system. This function is called by
         the constructor and it is for that reason, that the list of devices does not change for the lifetime of an AbstractionLayer
         object.
         */
-        void retrieveDevices() throw (DeviceNotFoundException); //!Used to re
+        void retrieveDevices() throw (DeviceNotFoundException);
 
 };
 

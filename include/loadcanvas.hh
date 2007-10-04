@@ -96,7 +96,7 @@ class LoadCanvas: public QWidget
 
         static const int MAX_PEN_WIDTH = 35; //! The pen width depicting maximum/all traffic
 
-        shared_ptr<Statistics> _statistics;
+        shared_ptr<Statistics> _statistics; //! Statistics object that stores the data to display
 
         /*!
         Check if the widget has been resized, and store the new size in class variables.

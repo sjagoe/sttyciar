@@ -20,8 +20,8 @@
 
 AbstractionLayer::AbstractionLayer()
 {
-    this->_nllWaitCondition.reset( new QWaitCondition );
-    this->_nllSemaphore.reset( new QSemaphore );
+//    this->_nllWaitCondition.reset( new QWaitCondition );
+//    this->_nllSemaphore.reset( new QSemaphore );
     this->_statisticsLayer.reset(new DefaultStatisticsLayer());
     this->retrieveDevices();
 }
@@ -144,12 +144,12 @@ void AbstractionLayer::stopListening()
     }
 }
 
-shared_ptr<QWaitCondition>& AbstractionLayer::getNLLWaitCondition()
-{
-    return _nllWaitCondition;
-}
-
-shared_ptr<QSemaphore>& AbstractionLayer::getNLLSemaphore()
-{
-    return _nllSemaphore;
-}
+//shared_ptr<QWaitCondition>& AbstractionLayer::getNLLWaitCondition()
+//{
+//    return _nllWaitCondition;
+//}
+//
+//shared_ptr<QSemaphore>& AbstractionLayer::getNLLSemaphore()
+//{
+//    return _nllSemaphore;
+//}

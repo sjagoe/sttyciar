@@ -59,7 +59,6 @@
 		<Unit filename="..\include\alstatisticslistener.hh" />
 		<Unit filename="..\include\networklogiclayer.hh" />
 		<Unit filename="..\include\nllhub.hh" />
-		<Unit filename="..\include\sllistener.hh" />
 		<Unit filename="..\include\statisticslayer.hh" />
 		<Unit filename="..\include\sttyciarrunner.hh" />
 		<Unit filename="src\sttyciarrunner.cpp" />

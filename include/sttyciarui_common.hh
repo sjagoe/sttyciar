@@ -19,9 +19,6 @@ programming interface.
 class SttyciarUI: public QObject
 {
     Q_OBJECT
-    //public:
-        //static const short EXIT = 0; // ! Constant defining the exit signal
-        //static const short HUB_TYPE = 1;
 
     public slots:
         /*!
