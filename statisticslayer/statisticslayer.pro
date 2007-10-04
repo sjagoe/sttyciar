@@ -46,7 +46,6 @@ TARGET = statisticslayer
 # Input
 HEADERS += ../include/statisticslayer.hh \
            ../include/alstatisticslistener.hh \
-           ../include/sllistener.hh \
            ../include/interfaceroute.hh \
            ../include/statistics.hh \
            ../include/packetdumper.hh \
