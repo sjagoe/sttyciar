@@ -1,6 +1,6 @@
 #include "device.hh"
 #include <ext/algorithm>
-#include <iostream>
+//#include <iostream>
 #include <sstream>
 
 Device::Device()
@@ -87,7 +87,14 @@ void Device::startListening(int packetCaptureSize,int timeout,weak_ptr<ALNetwork
         throw CannotOpenDeviceException(this->_pcapErrorBuffer);
 
     if (filterEnabled)
-        this->setFilter();
+        try
+        {
+            this->setFilter();
+        }
+        catch (PcapFilterException pfe)
+        {
+            //std::cout << "error setting the filter\n";
+        }
 
 
     this->_pcapSendThread->setSource(this->_pcapSource);
@@ -131,9 +138,10 @@ void Device::setFilter() throw (PcapFilterException)
         if (count != 0)
             filterStringStream << "or ";
         filterStringStream << "dst host " << iter->getAddress().toIPString() << " ";
+        count++;
     }
     filterStringStream << ")";
-    struct bpf_program* compiledFilter = NULL;
+    struct bpf_program compiledFilter;
 
      //1 is added for null character
     char* filterString = new char[filterStringStream.str().length()+1];
@@ -142,14 +150,15 @@ void Device::setFilter() throw (PcapFilterException)
     // string::copy doesn't put in the null character, which is needed, so put it in manually
     filterString[filterStringStream.str().length()] = '\0';
 
-    std::cout << filterString << std::endl;
-    if (pcap_compile(this->_pcapSource,compiledFilter,filterString,1,0)<0)
+//    std::cout << filterString << std::endl;
+    if (pcap_compile(this->_pcapSource,&compiledFilter,filterString,1,0)<0)
         throw PcapFilterException(pcap_geterr(this->_pcapSource));
 
-    if(pcap_setfilter(this->_pcapSource,compiledFilter)<0)
+
+    if(pcap_setfilter(this->_pcapSource,&compiledFilter)<0)
         throw PcapFilterException(pcap_geterr(this->_pcapSource));
 
-    pcap_freecode(compiledFilter);
 
+    pcap_freecode(&compiledFilter);
 
 }

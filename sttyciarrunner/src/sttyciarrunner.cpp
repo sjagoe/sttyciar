@@ -185,6 +185,7 @@ void SttyciarRunner::startSttyciar(QString deviceType,
             this->_networkLogicLayer->start();
             this->_packetDumper->start();
             this->_statisticsLayer->start();
+//            this->_abstractionLayer->setFilterEnabled(true);
             this->_abstractionLayer->startListening(PACKET_CAPTURE_SIZE,
                                               PCAP_READ_TIMEOUT);
 
