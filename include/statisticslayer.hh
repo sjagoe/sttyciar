@@ -77,7 +77,8 @@ class StatisticsLayer: public QThread, public ALStatisticsListener
         LockableQueue<shared_ptr<RawPacket> > _statisticsQueue; //!A queue of rawpackets awaiting processing by the statistics layer
         bool _running; //!A flag used by the loop in the run() function to indicate that the thread must continue running. Can be made false using PcapReceiveThread::stopRunning()
         QWaitCondition _waitCondition; //!Used to prevent deadlocks and other concurrent programming problems
-        QMutex _mutex; //!Used to prevent deadlocks and other concurrent programming problems
+        QMutex _waitMutex; //!Use to make the statistics layer sleep if there are no raw packets waiting to be processed
+        QMutex _threadSafeMutex; //!Used to prevent deadlocks and other concurrent programming problems
 
         weak_ptr<PacketDumper> _packetDumper;
 

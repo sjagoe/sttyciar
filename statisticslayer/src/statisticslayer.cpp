@@ -39,7 +39,7 @@ void StatisticsLayer::reset()
 
 std::string StatisticsLayer::toString()
 {
-    this->_mutex.lock();
+    this->_threadSafeMutex.lock();
 
     ostringstream osstream;
     for (QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> >::const_iterator iter=this->_traffic->begin(); iter!=this->_traffic->end(); iter++)
@@ -52,7 +52,7 @@ std::string StatisticsLayer::toString()
     }
     return osstream.str();
 
-    this->_mutex.unlock();
+    this->_threadSafeMutex.unlock();
 }
 
 void StatisticsLayer::stopRunning()
@@ -77,15 +77,15 @@ void StatisticsLayer::run()
             {
                 dumper->savePacket(rawPacket);
             }
-            this->_mutex.lock();
+            this->_threadSafeMutex.lock();
             this->updateStatistics(rawPacket);
-            this->_mutex.unlock();
+            this->_threadSafeMutex.unlock();
         }
         else
         {
-            this->_mutex.lock();
-            this->_waitCondition.wait(&this->_mutex);
-            this->_mutex.unlock();
+            this->_waitMutex.lock();
+            this->_waitCondition.wait(&this->_waitMutex);
+            this->_waitMutex.unlock();
         }
     }
 }
@@ -129,14 +129,14 @@ void StatisticsLayer::updateStatistics(const shared_ptr<RawPacket>& rawPacket)
 
 void StatisticsLayer::calculate(int timePeriodMillis)
 {
-    this->_mutex.lock();
+    this->_threadSafeMutex.lock();
 
     shared_ptr<Statistics> statistics(new Statistics(this->_traffic,
                                       this->_totalPackets,this->_totalBytes,
-                                      timePeriodMillis));
+                                      timePeriodMillis,this->_packetDumper.lock()->waitingPackets()));
     this->reset();
     emit sendStats(statistics);
 
-    this->_mutex.unlock();
+    this->_threadSafeMutex.unlock();
 }
 

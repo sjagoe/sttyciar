@@ -1,17 +1,29 @@
 #include "statistics.hh"
 
 Statistics::Statistics(shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > >& traffic,
-                       unsigned int totalPackets,unsigned int totalBytes,unsigned int timePeriodMillis)
+                       unsigned int totalPackets,unsigned int totalBytes,unsigned int timePeriodMillis,
+                       int awaitingDumpedPackets)
 {
-    this->_percentageTraffic.reset(new QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> >());
     this->calculateTrafficPercentage(traffic,totalPackets);
     this->calculateRates(totalPackets,totalBytes,timePeriodMillis);
+    this->_amtPacketsTraffic = traffic;
+    this->_awaitingDumpedPackets = awaitingDumpedPackets;
 }
 
 double Statistics::getTrafficPercentage(shared_ptr<Device> source, shared_ptr<Device> destination)
 {
     QMap<shared_ptr<Device>,double> sourceRow = this->_percentageTraffic->value(source);
     return sourceRow.value(destination);
+}
+
+shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > Statistics::getTrafficPercentageTable()
+{
+    return this->_percentageTraffic;
+}
+
+shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > Statistics::getTrafficAmtPacketsTable()
+{
+    return this->_amtPacketsTraffic;
 }
 
 /*int Statistics::getTotalPackets() const
@@ -30,9 +42,14 @@ double Statistics::getBytesPerSecond()
     return this->_bytesPerSecond;
 }
 
+int Statistics::getAwaitingDumpedPackets()
+{
+    return this->_awaitingDumpedPackets;
+}
 void Statistics::calculateTrafficPercentage(shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > >& traffic,
                                             unsigned int totalPackets)
 {
+    this->_percentageTraffic.reset(new QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> >());
     for (QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> >::const_iterator iter=traffic->begin(); iter!=traffic->end(); iter++)
     {
         QMap<shared_ptr<Device>,double> sourceRow;
