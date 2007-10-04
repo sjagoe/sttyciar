@@ -15,6 +15,8 @@
 using boost::scoped_ptr;
 using boost::shared_ptr;
 
+class QStringList;
+
 /*!
 Subclass of SttyciarUI providing a Qt GUI interface to Sttyciar.
 
@@ -81,10 +83,17 @@ class SttyciarGUI: public SttyciarUI
         */
         void stopSttyciarSlot();
 
+        void restartSttyciarSlot(const QString& deviceType,
+            const shared_ptr<QStringList>& deviceList,
+            const QString& dumpFile);
+
     private:
         scoped_ptr<SttyciarGUIMain> _mainUI; //! Pointer to the SttyciarGUIMain object that displays the main form.
         scoped_ptr<SttyciarGUIStatistics> _statisticsUI; //! Pointer to the SttyciarGUIStatistics object that displays the statistics form.
         QMap<int, QString> _availableNetworkDevices; //! Available network devices to be implemented.
+        QString _deviceType; //! Device Type being emulated
+        QString _dumpFile; //! File to dump packets to
+        shared_ptr<QStringList> _deviceList; //! List of devices being emulated
 };
 
 #endif

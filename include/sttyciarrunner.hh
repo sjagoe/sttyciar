@@ -91,13 +91,23 @@ class SttyciarRunner: public QObject
         update.
         */
         void nllUpdateTimeout();
-        void statisticsUpdateTimeout();
 
         /*!
         Slot signalled by the StatisticsUpdateTimer so that the SttyciarRunner
         can signal the SL to update with the number of milliseconds since the
         last update.
         */
+        void statisticsUpdateTimeout();
+
+        /*!
+        Slot signalled by the UI to restart the device as a bew type
+
+        \param deviceType the type of device to emulate
+        \param devices List of device names being used
+        \param dumpFile The file to dump packets to
+        */
+        void restartSttyciar( const QString& deviceType,
+            const shared_ptr<QStringList>& devices, const QString& dumpFile );
 
     signals:
         //! Signal to tell the QApplication to exit.

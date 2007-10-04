@@ -1,4 +1,4 @@
-#include <iostream>
+//#include <iostream>
 #include "packetdumper.hh"
 
 #include "rawpacket.hh"
@@ -71,9 +71,9 @@ void PacketDumper::run()
                 pcap_pkthdr* head = rawPacket->getHeader().get();
                 u_char* packet = rawPacket->getPacket().get();
 
-                EthernetIIFrame f(rawPacket);
-                mac_t d = f.getDestinationMAC();
-                printf("%02X:%02X:%02X:%02X:%02X:%02X\n", d.U_main.S_uchar.b1, d.U_main.S_uchar.b2, d.U_main.S_uchar.b3, d.U_main.S_uchar.b4, d.U_main.S_uchar.b5, d.U_main.S_uchar.b6 );
+//                EthernetIIFrame f(rawPacket);
+//                mac_t d = f.getDestinationMAC();
+//                printf("%02X:%02X:%02X:%02X:%02X:%02X\n", d.U_main.S_uchar.b1, d.U_main.S_uchar.b2, d.U_main.S_uchar.b3, d.U_main.S_uchar.b4, d.U_main.S_uchar.b5, d.U_main.S_uchar.b6 );
 
                 // dump the packet
                 pcap_dump( (u_char*)this->_dumpFile, head, packet );

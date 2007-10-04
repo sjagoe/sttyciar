@@ -71,6 +71,12 @@ SttyciarRunner::SttyciarRunner()
         this, SLOT( startSttyciar(QString, shared_ptr<QStringList>, QString) ) );
     connect( this->_ui.get(), SIGNAL( stopSttyciar() ),
         this, SLOT( stopSttyciar() ) );
+    connect( this->_ui.get(), SIGNAL( restartSttyciar( const QString&,
+                                                const shared_ptr<QStringList>&,
+                                                const QString& ) ),
+        this, SLOT( restartSttyciar( const QString&,
+                                    const shared_ptr<QStringList>&,
+                                    const QString& ) ) );
 
     // tell the UI about the available network interfaces
     this->_ui->receiveDevices( this->_abstractionLayer->getDevices() );
@@ -233,4 +239,11 @@ void SttyciarRunner::nllUpdateTimeout()
 void SttyciarRunner::statisticsUpdateTimeout()
 {
     emit updateStatistics( this->_statisticsUpdateTimer->interval() );
+}
+
+void SttyciarRunner::restartSttyciar( const QString& deviceType,
+    const shared_ptr<QStringList>& devices, const QString& dumpFile )
+{
+    stopSttyciar();
+    startSttyciar( deviceType, devices, dumpFile );
 }

@@ -18,6 +18,8 @@ class QGroupBox;
 class QTableWidget;
 class QLabel;
 class QLineEdit;
+class QComboBox;
+class QStringList;
 
 // Local Forward Declerations
 class LoadCanvas;
@@ -42,7 +44,7 @@ class SttyciarGUIStatistics: public QMainWindow
         \param parent QWidget parent of the object, passed to the \c QMainWindow
         constructor.
         */
-        SttyciarGUIStatistics(QWidget* parent = 0);
+        SttyciarGUIStatistics(QMap<int, QString> networkDevices, QWidget* parent = 0);
 
     public slots:
         /*!
@@ -54,7 +56,10 @@ class SttyciarGUIStatistics: public QMainWindow
         AbstractionLayer::getActivatedDevices()).
         */
         void receiveActivatedDevices(
-            const QList<shared_ptr<Device> >& devices );
+            const QList<shared_ptr<Device> >& devices,
+            const QString& deviceType,
+            const shared_ptr<QStringList>& deviceList,
+            const QString& dumpFile );
 
         /*!
         Slot called by the statistics layer when updated statistics are
@@ -66,6 +71,8 @@ class SttyciarGUIStatistics: public QMainWindow
         void updateStatistics( shared_ptr<Statistics> stats );
 
     private:
+        //! lay out the device-switching section
+        void setupDeviceSelection(QMap<int, QString> networkDevices);
         //! Lay out the TabWidget
         void setupTabWidget();
         //! Lay out the Rates group box
@@ -73,11 +80,15 @@ class SttyciarGUIStatistics: public QMainWindow
         //! Lay out the buttons
         QHBoxLayout* setupButtons();
 
+        QGroupBox* _grpChangeDevice; //! Group box to contain the widgets that change the device type
+        QLabel* _lblChangeDevice; //! label displaying the function of the combo box
+        QComboBox* _comboChangeDevice; //! combo box to select the new device type
+
         QTabWidget* _tabs; //! A QTabWidget providing a tabbed pane to select a statistics view/set.
 
         LoadCanvas* _graphLoad; //! A LoadCanvas object to draw a graphical visualisation of the traffic load in the device.
         //QTableWidget* _tblTextualLoad; //! A QTableWidget to provide the load information in tabular form.
-        LoadTable* _tblLoad;
+        LoadTable* _tblLoad; //! A widget containing a table to display stats
 
         QGroupBox* _grpRates; //! A QGroupBox to lay out the rates section (packets per second and bytes per second)
         QLabel* _lblPacketsPerSecond; //! A QLabel to label the packets per second field
@@ -92,13 +103,26 @@ class SttyciarGUIStatistics: public QMainWindow
 
         QWidget* _centralWidget; //! A dummy widget used to layout the form correctly.
 
-        shared_ptr<Statistics> _statistics;
+        shared_ptr<Statistics> _statistics; //! Store a statistics object with the data to display
+
+        QString _dumpFile; //! File used to dump packets. Needed if the device is restarted
+        shared_ptr<QStringList> _devices; //! List to store the activated devices. Needed if the device is restarted
+
+    private slots:
+        /*!
+        catch combo-box changed events to emit a restart sttyciar signal.
+        */
+        void deviceChanged(const QString& text);
 
     signals:
         //! Signal emitted when the Exit button is clicked
         void exit();
         //! Signal emitted when the Stop button is clicked
         void stopSttyciar();
+        //! signal to restart the device as something else
+        void restartSttyciar( const QString& deviceType,
+            const shared_ptr<QStringList>& devices,
+            const QString& dumpFile );
 };
 
 #endif

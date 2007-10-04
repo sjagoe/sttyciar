@@ -88,6 +88,15 @@ class SttyciarUI: public QObject
         Signal emitted when the system is to be stopped but not exited.
         */
         void stopSttyciar();
+
+        /*!
+        Signal to restart Sttyciar as a new device type
+
+        \param device Device Type to emulate
+        */
+        void restartSttyciar( const QString& deviceType,
+            const shared_ptr<QStringList>& devices,
+            const QString& dumpFile );
 };
 
 #endif

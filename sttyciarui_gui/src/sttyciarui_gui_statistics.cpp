@@ -1,3 +1,5 @@
+//#include <iostream>
+
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGridLayout>
@@ -9,21 +11,25 @@
 #include <QTableWidget>
 #include <QLabel>
 #include <QLineEdit>
+#include <QComboBox>
+#include <QStringList>
 
 #include "sttyciarui_gui_statistics.hh"
 
 #include "loadcanvas.hh"
 #include "loadtable.hh"
 
-SttyciarGUIStatistics::SttyciarGUIStatistics( QWidget* parent )
+SttyciarGUIStatistics::SttyciarGUIStatistics( QMap<int, QString> networkDevices, QWidget* parent )
     : QMainWindow( parent )
 {
+    setupDeviceSelection(networkDevices);
     setupTabWidget();
     setupRates();
 
     QHBoxLayout* hlayout = setupButtons();
 
     QVBoxLayout* vlayout = new QVBoxLayout;
+    vlayout->addWidget( _grpChangeDevice );
     vlayout->addWidget( _tabs );
     vlayout->addWidget( _grpRates );
     vlayout->addLayout(hlayout);
@@ -40,10 +46,17 @@ SttyciarGUIStatistics::SttyciarGUIStatistics( QWidget* parent )
 }
 
 void SttyciarGUIStatistics::receiveActivatedDevices(
-    const QList<shared_ptr<Device> >& devices )
+    const QList<shared_ptr<Device> >& devices, const QString& deviceType,
+    const shared_ptr<QStringList>& deviceList,
+    const QString& dumpFile )
+
 {
+    this->_devices = deviceList;
     this->_graphLoad->setLabels( devices );
     this->_tblLoad->setLabels( devices );
+    int i = this->_comboChangeDevice->findText( deviceType );
+    this->_comboChangeDevice->setCurrentIndex(i);
+    this->_dumpFile = dumpFile;
 }
 
 void SttyciarGUIStatistics::updateStatistics( shared_ptr<Statistics> stats )
@@ -71,6 +84,30 @@ void SttyciarGUIStatistics::updateStatistics( shared_ptr<Statistics> stats )
             this->_edtKBytesPerSecond->setText( temp );
         }
     }
+}
+
+void SttyciarGUIStatistics::setupDeviceSelection(QMap<int, QString> networkDevices)
+{
+    this->_grpChangeDevice = new QGroupBox( QString("Change Device Type") );
+    this->_lblChangeDevice = new QLabel( QString("Device Type") );
+    this->_comboChangeDevice = new QComboBox;
+
+    QHBoxLayout* l = new QHBoxLayout;
+    l->addWidget(this->_lblChangeDevice);
+    l->addWidget(this->_comboChangeDevice);
+    l->setStretchFactor(this->_comboChangeDevice, 1);
+    this->_grpChangeDevice->setLayout(l);
+
+    for (int i = 0; i < networkDevices.size(); i++)
+    {
+        if (!networkDevices[i].isEmpty())
+        {
+            this->_comboChangeDevice->addItem( networkDevices[i] );
+        }
+    }
+
+    connect( this->_comboChangeDevice, SIGNAL(activated(const QString&)),
+        this, SLOT(deviceChanged(const QString&)));
 }
 
 void SttyciarGUIStatistics::setupTabWidget()
@@ -130,4 +167,9 @@ QHBoxLayout* SttyciarGUIStatistics::setupButtons()
     hlayout->addWidget(_exitButton);
 
     return hlayout;
+}
+
+void SttyciarGUIStatistics::deviceChanged(const QString& text)
+{
+    emit restartSttyciar( text, this->_devices, this->_dumpFile );
 }
