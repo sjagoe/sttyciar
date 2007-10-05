@@ -1,6 +1,6 @@
 #include "device.hh"
 #include <ext/algorithm>
-//#include <iostream>
+#include <iostream>
 #include <sstream>
 
 Device::Device()
@@ -108,8 +108,11 @@ void Device::open(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>&
 
 void Device::close()
 {
+    std::cout << "D: Device::close()" << std::endl;
     this->_isOpened = false;
+    std::cout << "D-1" << std::endl;
     pcap_close(this->_pcapSource);
+    std::cout << "D-2" << std::endl;
 }
 
 void Device::startListening() throw (CannotStartListeningException)

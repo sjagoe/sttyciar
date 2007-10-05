@@ -173,13 +173,18 @@ void AbstractionLayer::stopListening()
         (*iter)->wait();
     }
     this->_pcapThreads.clear();*/
+    std::cout << "A: AbstractionLayer::stopListening()" << std::endl;
     this->_devicesOpened = false;
     for (QList<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end();iter++)
     {
+        std::cout << "A-1: stopListening" << std::endl;
         (*iter)->stopListening();
     }
+    std::cout << "A-2" << std::endl;
     this->clearActivatedDevices();
+    std::cout << "A-3" << std::endl;
     this->restoreDefaultStatisticsLayer();
+    std::cout << "A-4" << std::endl;
 }
 
 void AbstractionLayer::setFilterEnabled(bool filterEnabled)
@@ -189,17 +194,24 @@ void AbstractionLayer::setFilterEnabled(bool filterEnabled)
 
 void AbstractionLayer::clearActivatedDevices()
 {
+    std::cout << "B: AbstractionLayer::clearActivatedDevices()" << std::endl;
     this->closeActivatedDevices();
+    std::cout << "B-1" << std::endl;
     this->_activatedDevices.clear();
+    std::cout << "B-2" << std::endl;
 }
 
 void AbstractionLayer::closeActivatedDevices()
 {
+    std::cout << "C: AbstractionLayer::closeActivatedDevices()" << std::endl;
     this->_devicesOpened = false;
     for (QList<shared_ptr<Device> >::iterator iter = this->_activatedDevices.begin(); iter != _activatedDevices.end(); iter++)
     {
+        std::cout << "C-1: close" << std::endl;
         (*iter)->close();
+        std::cout << "C-2: after close" << std::endl;
     }
+    std::cout << "C-3" << std::endl;
 }
 
 void AbstractionLayer::restoreDefaultStatisticsLayer()

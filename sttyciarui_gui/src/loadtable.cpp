@@ -53,6 +53,7 @@ QSize LoadTable::sizeHint() const
 void LoadTable::setLabels( const QList<shared_ptr<Device> >& devices )
 {
     int numDevices = devices.size();
+    this->_tblLoad->clear();
     this->_tblLoad->setRowCount(numDevices);
     this->_tblLoad->setColumnCount(numDevices);
     // QFontMetrics to get the text dimensions
