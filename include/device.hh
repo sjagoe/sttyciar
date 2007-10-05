@@ -112,6 +112,11 @@ class Device
         */
         void open(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>& alNetworkListener,bool filterEnabled) throw (CannotOpenDeviceException);
 
+        /*!
+        Close the Device if it has an open pcap capture interface.
+        */
+        void close();
+
         /*!Start the threads listening for send and receive requests. This function should not be called directly
         as it is called by AbstractionLayer::startListening(int,int)
 
@@ -123,6 +128,7 @@ class Device
         /*!
         Stop the device listening. This kills the threads which handle sent and received packets.
         This function should not be called directly as it is called by AbstractionLayer::stopListening().
+        This function also close the pcp capture instance.
         */
         void stopListening();
 

@@ -104,7 +104,12 @@ void Device::open(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>&
     this->_pcapReceiveThread->setDevice(this->_self);
     this->_pcapReceiveThread->setALNetworkListener(alNetworkListener);
     this->_isOpened = true;
+}
 
+void Device::close()
+{
+    this->_isOpened = false;
+    pcap_close(this->_pcapSource);
 }
 
 void Device::startListening() throw (CannotStartListeningException)
@@ -120,10 +125,9 @@ void Device::startListening() throw (CannotStartListeningException)
 
 void Device::stopListening()
 {
-    this->_isOpened = false;
     this->_pcapSendThread->stopRunning();
     this->_pcapReceiveThread->stopListening();
-    pcap_close(this->_pcapSource);
+    this->close();
 }
 
 void Device::sendPacket(const shared_ptr<RawPacket>& packet)

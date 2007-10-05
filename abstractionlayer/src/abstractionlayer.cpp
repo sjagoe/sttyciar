@@ -120,7 +120,6 @@ QList<shared_ptr<Device> > AbstractionLayer::getActivatedDevices()
 void AbstractionLayer::openActivatedDevices(int packetCaptureSize,int timeout)
 {
     QList<shared_ptr<Device> >::iterator iter = this->_activatedDevices.begin();
-
     while (iter != this->_activatedDevices.end())
     {
         try
@@ -179,9 +178,31 @@ void AbstractionLayer::stopListening()
     {
         (*iter)->stopListening();
     }
+    this->clearActivatedDevices();
+    this->restoreDefaultStatisticsLayer();
 }
 
 void AbstractionLayer::setFilterEnabled(bool filterEnabled)
 {
     this->_filterEnabled = filterEnabled;
+}
+
+void AbstractionLayer::clearActivatedDevices()
+{
+    this->closeActivatedDevices();
+    this->_activatedDevices.clear();
+}
+
+void AbstractionLayer::closeActivatedDevices()
+{
+    this->_devicesOpened = false;
+    for (QList<shared_ptr<Device> >::iterator iter = this->_activatedDevices.begin(); iter != _activatedDevices.end(); iter++)
+    {
+        (*iter)->close();
+    }
+}
+
+void AbstractionLayer::restoreDefaultStatisticsLayer()
+{
+    this->_statisticsLayer.reset(new DefaultStatisticsLayer());
 }
