@@ -204,3 +204,13 @@ void SttyciarGUIMain::moveDevice(QTreeWidget* sourceInterfaceTree,
         }
     }
 }
+
+void SttyciarGUIMain::on_treeAvailableInterfaces_itemDoubleClicked()
+{
+    moveDevice( _ui->treeAvailableInterfaces, _ui->treeUsedInterfaces );
+}
+
+void SttyciarGUIMain::on_treeUsedInterfaces_itemDoubleClicked()
+{
+    moveDevice( _ui->treeUsedInterfaces, _ui->treeAvailableInterfaces );
+}

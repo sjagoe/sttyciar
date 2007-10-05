@@ -119,6 +119,20 @@ class SttyciarGUIMain: public QMainWindow
         void moveDevice(QTreeWidget* sourceInterfaceTree,
             QTreeWidget* destinationInterfaceTree);
 
+        /*!
+        When a user double clicks on an item in the Available Interfaces tree,
+        the device will be moved to the Used Interfaces tree (i.e. it will be
+        activated when the system is started).
+        */
+        void on_treeAvailableInterfaces_itemDoubleClicked();
+
+        /*!
+        When a user double clicks on an item in the Used Interfaces tree,
+        the device will be moved to the Available Interfaces tree (i.e. it will
+        not be activated when the system is started).
+        */
+        void on_treeUsedInterfaces_itemDoubleClicked();
+
     signals:
         /*!
         Signal emitted when the Start Device button is clicked to signal the

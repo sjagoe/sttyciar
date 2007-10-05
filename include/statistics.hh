@@ -25,12 +25,15 @@ class Statistics
 
         \param traffic A matrix of signifying the amount of packets flowing between each of the
         network Devices in a specified time period
+        \param trafficBytes A matrix of signifying the number of bytes flowing between each of the
+        network Devices in a specified time period
         \param totalPackets The total amount of packets routed in the predefined period
         \param totalBytes The total amount of bytes routed in the predefined period
         \param timePeriodMillis The time period over which the statistics are to be calculated
         \param awaitingDumpedPackets The amount of packets waiting to be written to file the PacketDumper
         */
         Statistics(shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > >& traffic,
+                   shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > >& trafficBytes,
                    unsigned int totalPackets,unsigned int totalBytes,unsigned int timePeriodMillis,
                    int awaitingDumpedPackets);
 
@@ -58,6 +61,14 @@ class Statistics
         shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > getTrafficAmtPacketsTable();
 
         /*!
+        Get the table of traffic containing bytes per second
+
+        \param A table of the bytes per second as a QMap
+        */
+        shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > getTrafficAmtBytesPerSecondTable();
+
+
+        /*!
         Get the rate of packets per second according to the specified time period.
 
         \return The rate in packets/sec
@@ -82,6 +93,7 @@ class Statistics
 
         shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _percentageTraffic; //!The matrix indicating the percentage of traffic between each network Device
         shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _amtPacketsTraffic; //!The matrix indicating the traffic (in amount of packets) between each network Device
+        shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _amtBytesPerSecondTraffic; //!The matrix indicating the traffic (in number of bytes per second) between each network Device
         //int _totalPackets; // !The total amount of packets routed in a specific time period
         double _packetsPerSecond; //!The rate of packets/sec for a given time period
         double _bytesPerSecond; //!The rate of bytes/sec for a given time period
@@ -98,11 +110,13 @@ class Statistics
 
         /*!
         Calculate the different rates associated with the statistics
+        \param trafficBytes The number of bytes between each device since the last update
         \param totalPackets The total amount of packets routed in the predefined period
         \param totalBytes The total amount of bytes routed in the predefined period
         \param timePeriodMillis The amount of time in milliseconds over which to calculate the rates
         */
-        void calculateRates(unsigned int totalPackets,unsigned int totalBytes,unsigned int timePeriodMillis);
+        void calculateRates(shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > >& trafficBytes,
+                        unsigned int totalPackets,unsigned int totalBytes,unsigned int timePeriodMillis);
 };
 
 #endif // __STATISTICS_HH__

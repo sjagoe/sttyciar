@@ -90,6 +90,7 @@ class SttyciarGUIStatistics: public QMainWindow
         //QTableWidget* _tblTextualLoad; //! A QTableWidget to provide the load information in tabular form.
         LoadTable* _tblLoad; //! A widget containing a table to display percentage load stats
         LoadTable* _tblPackets; //! A widget containing a table to display actual load (in number of packets) stats
+        LoadTable* _tblBytesPerSecond; //! A widget containing a table to display load in bytes per second for each device
 
         QGroupBox* _grpRates; //! A QGroupBox to lay out the rates section (packets per second and bytes per second)
         QLabel* _lblPacketsPerSecond; //! A QLabel to label the packets per second field

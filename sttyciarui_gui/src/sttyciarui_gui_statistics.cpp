@@ -55,6 +55,7 @@ void SttyciarGUIStatistics::receiveActivatedDevices(
     this->_graphLoad->setLabels( devices );
     this->_tblLoad->setLabels( devices );
     this->_tblPackets->setLabels( devices );
+    this->_tblBytesPerSecond->setLabels( devices );
     int i = this->_comboChangeDevice->findText( deviceType );
     this->_comboChangeDevice->setCurrentIndex(i);
     this->_dumpFile = dumpFile;
@@ -72,6 +73,7 @@ void SttyciarGUIStatistics::updateStatistics( shared_ptr<Statistics> stats )
             this->_graphLoad->updateStatistics( this->_statistics );
             this->_tblLoad->updateStatistics( this->_statistics->getTrafficPercentageTable() );
             this->_tblPackets->updateStatistics( this->_statistics->getTrafficAmtPacketsTable() );
+            this->_tblBytesPerSecond->updateStatistics( this->_statistics->getTrafficAmtBytesPerSecondTable() );
 
             QString temp = QString("%1").arg( this->_statistics->getPacketsPerSecond() );
             this->_edtPacketsPerSecond->setText( temp );
@@ -126,11 +128,13 @@ void SttyciarGUIStatistics::setupTabWidget()
     //_tblTextualLoad = new QTableWidget;
     _tblLoad = new LoadTable(true); // The _tblLoad displays a percentage
     _tblPackets = new LoadTable;
+    _tblBytesPerSecond = new LoadTable;
 
     _tabs->addTab( _graphLoad, QString( "Load Balance (Graphical)" ) );
 //    _tabs->addTab( _tblTextualLoad, QString( "Load Balance (Table)" ) );
     _tabs->addTab( _tblLoad, QString( "Load Balance (Table)" ) );
-    _tabs->addTab( _tblPackets, QString( "Packet Count (Table)" ) );
+    _tabs->addTab( _tblPackets, QString( "Packet Count" ) );
+    _tabs->addTab( _tblBytesPerSecond, QString( "Bytes Per Second" ) );
 }
 
 void SttyciarGUIStatistics::setupRates()

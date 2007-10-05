@@ -67,6 +67,7 @@ class StatisticsLayer: public QThread, public ALStatisticsListener
 
     private:
         shared_ptr<QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> > > _traffic; //!The matrix indicating the percentage of traffic between each network Device
+        shared_ptr<QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> > > _trafficBytes; //!The matrix indicating the number of bytes between each network Device
         unsigned int _totalPackets;//!The total amount of packets routed in a specific time period
         unsigned int _totalBytes; //!The total amount of bytes routed in a specific time period
         LockableQueue<shared_ptr<RawPacket> > _statisticsQueue; //!A queue of rawpackets awaiting processing by the statistics layer

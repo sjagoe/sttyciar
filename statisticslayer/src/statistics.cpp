@@ -2,11 +2,12 @@
 #include "statistics.hh"
 
 Statistics::Statistics(shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > >& traffic,
+                       shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > >& trafficBytes,
                        unsigned int totalPackets,unsigned int totalBytes,unsigned int timePeriodMillis,
                        int awaitingDumpedPackets)
 {
     this->calculateTrafficPercentage(traffic,totalPackets);
-    this->calculateRates(totalPackets,totalBytes,timePeriodMillis);
+    this->calculateRates(trafficBytes,totalPackets,totalBytes,timePeriodMillis);
 
     this->_amtPacketsTraffic.reset(new QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> >( *traffic ) );
 //    this->_amtPacketsTraffic = traffic;
@@ -39,6 +40,11 @@ shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > Statistic
 //    }
 //    std::cout << std::endl << std::endl;
     return this->_amtPacketsTraffic;
+}
+
+shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > Statistics::getTrafficAmtBytesPerSecondTable()
+{
+    return this->_amtBytesPerSecondTraffic;
 }
 
 /*int Statistics::getTotalPackets() const
@@ -90,8 +96,34 @@ void Statistics::calculateTrafficPercentage(shared_ptr<QMap<shared_ptr<Device>,Q
     }
 }
 
-void Statistics::calculateRates(unsigned int totalPackets,unsigned int totalBytes,unsigned int timePeriodMillis)
+void Statistics::calculateRates(shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > >& trafficBytes,
+                        unsigned int totalPackets,unsigned int totalBytes,unsigned int timePeriodMillis)
 {
+    this->_amtBytesPerSecondTraffic.reset(new QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> >() );
+
+    for (QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> >::const_iterator iter=trafficBytes->begin(); iter!=trafficBytes->end(); iter++)
+    {
+        QMap<shared_ptr<Device>,double> sourceRow;
+        if (timePeriodMillis != 0)
+        {
+
+            for (QMap<shared_ptr<Device>,double>::const_iterator iter2=iter->begin(); iter2!=iter->end(); iter2++)
+            {
+                //calculation is done here
+                sourceRow.insert(iter2.key(),iter2.value()/(double)timePeriodMillis*1000);
+            }
+        }
+        else
+        {
+            for (QMap<shared_ptr<Device>,double>::const_iterator iter2=iter->begin(); iter2!=iter->end(); iter2++)
+            {
+                //should this 0's source row be created repeatedly here? Inefficient!
+                sourceRow.insert(iter2.key(),(double)0);
+            }
+        }
+        this->_amtBytesPerSecondTraffic->insert(iter.key(),sourceRow);
+    }
+
     this->_bytesPerSecond = (((double)totalBytes)/((double)timePeriodMillis))*1000;
     this->_packetsPerSecond = (((double)totalPackets)/((double)timePeriodMillis))*1000;
 }

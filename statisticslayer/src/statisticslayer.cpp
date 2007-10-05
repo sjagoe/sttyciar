@@ -26,6 +26,15 @@ void StatisticsLayer::reset()
             *iter2 = 0;
         }
     }
+
+    for (QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> >::iterator iter=this->_trafficBytes->begin(); iter!=this->_trafficBytes->end(); iter++)
+    {
+        for (QMap<shared_ptr<Device>,double>::iterator iter2=iter->begin(); iter2!=iter->end(); iter2++)
+        {
+            *iter2 = 0;
+        }
+    }
+
     this->_totalPackets = 0;
     this->_totalBytes = 0;
 }
@@ -104,21 +113,42 @@ void StatisticsLayer::initializeTable(const QList<shared_ptr<Device> >& activate
         this->_traffic->insert(*iter,temp);
     }
 
+    this->_trafficBytes.reset(new QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> >);
+    for (QList<shared_ptr<Device> >::const_iterator iter = activatedDevices.begin(); iter != activatedDevices.end(); iter++)
+    {
+        QMap<shared_ptr<Device>, double> temp;
+        for (QList<shared_ptr<Device> >::const_iterator iter2 = activatedDevices.begin(); iter2 != activatedDevices.end(); iter2++)
+        {
+            if (iter != iter2)
+                temp.insert(*iter2,0);
+        }
+        this->_trafficBytes->insert(*iter,temp);
+    }
+
     this->_totalPackets = 0;
     this->_totalBytes = 0;
 }
 
 void StatisticsLayer::updateStatistics(const shared_ptr<RawPacket>& rawPacket)
 {
+    // get the traffic table row for the source
     QMap<shared_ptr<Device>,double> sourceRow = this->_traffic->value(rawPacket->getInterfaceRoute()->getSource());
+    // get the traffic bytes table row representing the source
+    QMap<shared_ptr<Device>,double> sourceRowBytes = this->_trafficBytes->value(rawPacket->getInterfaceRoute()->getSource());
+    // get the list of destinations
     shared_ptr<QList<shared_ptr<Device> > > destinationDevices = rawPacket->getInterfaceRoute()->getDestinations();
 
     for (QList<shared_ptr<Device> >::const_iterator iter=destinationDevices->begin(); iter != destinationDevices->end(); iter++)
     {
+        // add 1 to the packet counter for each combination
         sourceRow.insert(*iter,sourceRow.value(*iter)+1);
+        // add the packet size to the byte counter for each combination
+        sourceRowBytes.insert( *iter, (sourceRowBytes.value( *iter ) + rawPacket->getPacketLength()) );
     }
 
+    // modify the rows in the tables
     this->_traffic->insert(rawPacket->getInterfaceRoute()->getSource(),sourceRow);
+    this->_trafficBytes->insert(rawPacket->getInterfaceRoute()->getSource(),sourceRowBytes);
 
     this->_totalPackets += destinationDevices->size();
 
@@ -132,6 +162,7 @@ void StatisticsLayer::calculate(int timePeriodMillis)
     this->_threadSafeMutex.lock();
 
     shared_ptr<Statistics> statistics(new Statistics(this->_traffic,
+                                      this->_trafficBytes,
                                       this->_totalPackets,this->_totalBytes,
                                       timePeriodMillis,this->_packetDumper.lock()->waitingPackets()));
     this->reset();
