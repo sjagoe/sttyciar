@@ -1,6 +1,6 @@
 #include <QWaitCondition>
 #include <QSemaphore>
-//#include <iostream>
+#include <iostream>
 
 #include "abstractionlayer.hh"
 
@@ -63,24 +63,6 @@ void AbstractionLayer::registerSL(shared_ptr<ALStatisticsListener> slModule)
 QList<shared_ptr<Device> > AbstractionLayer::getDevices()
 {
     return this->_devices;
-}
-
-void AbstractionLayer::retrieveDevices() throw(DeviceNotFoundException)
-{
-    pcap_if *pcapAllDevices;
-    if (pcap_findalldevs(&pcapAllDevices, this->_pcapErrorBuffer) == -1)
-        throw DeviceNotFoundException(this->_pcapErrorBuffer);
-    shared_ptr<Device> tempDevice;
-    weak_ptr<Device> tempDeviceSelf;
-    for(pcap_if* pcapTempDevice=pcapAllDevices; pcapTempDevice != NULL; pcapTempDevice=pcapTempDevice->next)
-    {
-        tempDevice.reset(new Device(pcapTempDevice));
-        tempDeviceSelf=tempDevice;
-        tempDevice->setSelf(tempDeviceSelf);
-        this->_devices.push_back(tempDevice);
-    }
-
-    pcap_freealldevs(pcapAllDevices);
 }
 
 void AbstractionLayer::activateDevice(shared_ptr<Device>& device)
@@ -205,4 +187,25 @@ void AbstractionLayer::closeActivatedDevices()
 void AbstractionLayer::restoreDefaultStatisticsLayer()
 {
     this->_statisticsLayer.reset(new DefaultStatisticsLayer());
+}
+
+void AbstractionLayer::retrieveDevices() throw(DeviceNotFoundException)
+{
+    pcap_if *pcapAllDevices;
+    if (pcap_findalldevs(&pcapAllDevices, this->_pcapErrorBuffer) == -1)
+        throw DeviceNotFoundException(this->_pcapErrorBuffer);
+    shared_ptr<Device> tempDevice;
+    weak_ptr<Device> tempDeviceSelf;
+    for(pcap_if* pcapTempDevice=pcapAllDevices; pcapTempDevice != NULL; pcapTempDevice=pcapTempDevice->next)
+    {
+        tempDevice.reset(new Device(pcapTempDevice));
+        if (tempDevice->isSupported())
+        {
+            tempDeviceSelf=tempDevice;
+            tempDevice->setSelf(tempDeviceSelf);
+            this->_devices.push_back(tempDevice);
+        }
+    }
+
+    pcap_freealldevs(pcapAllDevices);
 }

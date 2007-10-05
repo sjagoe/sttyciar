@@ -100,6 +100,13 @@ class Device
         bool operator==(Device& device) const;
 
         /*!
+        Check if the Device is supported. The result of this function is not completely guaranteed.
+
+        \return True if the Device is supported, false otherwise.
+        */
+        bool isSupported();
+
+        /*!
         Open the device for capturing and sets the pcap capture filter if required
         \param packetCaptureSize The maximum size of the packet to be captured. If a packet contains
         more than \e packetCaptureSize bytes, it will be ignored.

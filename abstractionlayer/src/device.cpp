@@ -78,6 +78,35 @@ void Device::createAddressList(pcap_if* pcapDevice)
     }
 }
 
+bool Device::isSupported()
+{
+    #if defined(WIN32)
+    pcap_t* testSource;
+    if((testSource=pcap_open(this->getName().c_str(),65535,
+				 PCAP_OPENFLAG_PROMISCUOUS | PCAP_OPENFLAG_NOCAPTURE_LOCAL | PCAP_OPENFLAG_MAX_RESPONSIVENESS,
+                 10, NULL,this->_pcapErrorBuffer)) == NULL)
+    #else
+    if ((testSource=pcap_open_live(this->getName().c_str(),65535,true,10,this->_pcapErrorBuffer))==NULL)
+    #endif
+        return false;
+
+    bool supported = false;
+    int* dlTypes;
+    int amtDlTypes = pcap_list_datalinks(testSource,&dlTypes);
+    for (int i = 0; i < amtDlTypes; i++)
+    {
+        if (dlTypes[i] == DLT_EN10MB)
+        {
+            supported = true;
+            break;
+        }
+    }
+
+    pcap_close(testSource);
+    delete dlTypes;
+    return supported;
+}
+
 void Device::open(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>& alNetworkListener,bool filterEnabled) throw (CannotOpenDeviceException)
 {
     #if defined(WIN32)
@@ -98,23 +127,6 @@ void Device::open(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>&
         {
             //std::cout << "error setting the filter\n";
         }
-
-//    std::cout << this->getName() << std::endl
-//        << this->getDescription() << std::endl << ": linktype = "
-//        << pcap_datalink( this->_pcapSource ) << std::endl;
-
-//    int* arr;
-//    int num = pcap_list_datalinks(this->_pcapSource, &arr);
-//
-//    std::cout << this->getName() << std::endl
-//        << this->getDescription() << std::endl << ": linktypes:" << std::endl;
-//
-//    int* tarr = arr;
-//    for (int i = 0; i < num; i++,tarr++)
-//    {
-//        std::cout << *tarr << std::endl;
-//    }
-//    std::cout << std::endl;
 
     this->_pcapSendThread->setSource(this->_pcapSource);
 
