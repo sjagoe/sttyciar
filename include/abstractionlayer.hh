@@ -114,7 +114,7 @@ class AbstractionLayer//: public NLLListener
 
         /*!
         Add a device that will be listened on when the abstraction layer starts running with
-        a call to the AbstractionLayer::startListening(int,int) function. If the device is already
+        a call to the AbstractionLayer::openActivatedDevices(int,int) and AbstractionLayer::startListening() function. If the device is already
         activated nothing will happen.
 
         \param device A device to be activated. This device must have the same name (given by the
@@ -145,17 +145,24 @@ class AbstractionLayer//: public NLLListener
         QList<shared_ptr<Device> > getActivatedDevices();
 
         /*!
-        Start listening on all activated devices. This function must be called before
-        attempting to send messages. Also, all packets arriving from the network will be processed
-        once this function has been called.
-
+        Open the devices for listening. This should be called before AbstractionLayer::startListening().
+        If opening one of the Devices fails, it is removed from the list of activated Devices.
         \param packetCaptureSize The maximum size of the packet to be captured. If a packet contains
         more than \e packetCaptureSize bytes, it will be ignored.
         \param timeout How long to wait for packets to arrive before they are processed. This parameter
         also affects how long it takes for AbstractionLayer::stopListening() function to execute as it will
         block until the timeout has occured.
         */
-        void startListening(int packetCaptureSize,int timeout);
+        void openActivatedDevices(int packetCaptureSize,int timeout);
+
+        /*!
+        Start listening on all activated devices. This function must be called before
+        attempting to send messages. Also, all packets arriving from the network will be processed
+        once this function has been called.
+
+        \throw CannotStartListeningException if a Device or Devices have not been opened before this was called
+        */
+        void startListening() throw (CannotStartListeningException);
 
         /*!
         Stop listening for send and received packets. This function blocks until the timeout
@@ -193,6 +200,7 @@ class AbstractionLayer//: public NLLListener
         shared_ptr<ALStatisticsListener> _statisticsLayer; //!A pointer to the ALStatisticsListener registered to handle routing statistics. This defaults to an implementation with empty overridden virtual functions
 
         bool _filterEnabled;
+        bool _devicesOpened;
 
         /*!
         Used to initialize a list of network devices which are currently attached to the system. This function is called by

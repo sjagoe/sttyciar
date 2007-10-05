@@ -1,6 +1,15 @@
 #include <QApplication>
 #include "sttyciarrunner.hh"
 
+int main(int argc, char* argv[])
+{
+    QApplication app(argc, argv);
+    SttyciarRunner runner;
+    QObject::connect(&runner, SIGNAL(exit()), &app, SLOT(quit()));
+    QObject::connect(&app, SIGNAL( lastWindowClosed() ), &runner, SLOT( exitSttyciar() ) );
+    return app.exec();
+}
+
 //#include <iostream>
 //#include "statisticslayer.hh"
 //#include "abstractionlayer.hh"
@@ -19,15 +28,6 @@
 //#include "address.hh"
 //
 //#include "nllhub.hh"
-
-int main(int argc, char* argv[])
-{
-    QApplication app(argc, argv);
-    SttyciarRunner runner;
-    QObject::connect(&runner, SIGNAL(exit()), &app, SLOT(quit()));
-    QObject::connect(&app, SIGNAL( lastWindowClosed() ), &runner, SLOT( exitSttyciar() ) );
-    return app.exec();
-}
 
 //int main(int argc, char* argv[])
 //{
@@ -130,6 +130,54 @@ int main(int argc, char* argv[])
     uint8_t address[] = {255,255,255,0};
     Address a(address,4);
     cout << a.to_bpf_u_int32();
-
 }*/
+/*#include <iostream>
+//#include <List>
+#include <QList>
+
+using namespace std;
+
+int main()
+{
+    QList<int> mylist;
+    mylist.push_back(3);
+    mylist.push_back(3);
+    mylist.push_back(3);
+    mylist.push_back(1);
+    mylist.push_back(2);
+    mylist.push_back(3);
+    mylist.push_back(3);
+    mylist.push_back(4);
+    mylist.push_back(5);
+    mylist.push_back(3);
+    mylist.push_back(2);
+    mylist.push_back(3);
+    mylist.push_back(3);
+
+    QList<int>::iterator i = mylist.begin();
+    while (i != mylist.end())
+    {
+        if (*i == 3)
+        {
+            i=mylist.erase(i);
+        }
+        else
+        {
+            i++;
+        }
+    }
+    / *for (QList<int>::iterator i = mylist.begin(); i != mylist.end(); i++)
+    {
+        if (*i == 3)
+        {
+            i=mylist.erase(i);
+        }
+    }*/
+
+/*    for (QList<int>::iterator i = mylist.begin(); i != mylist.end(); i++)
+    {
+        std::cout << *i;
+    }
+}*/
+
 

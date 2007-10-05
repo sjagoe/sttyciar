@@ -1,6 +1,6 @@
 #include <QWaitCondition>
 #include <QSemaphore>
-//#include <iostream>
+#include <iostream>
 
 #include "abstractionlayer.hh"
 
@@ -18,6 +18,8 @@
 
 #include "defaultstatisticslayer.hh"
 
+#include "exceptions.hh"
+
 AbstractionLayer::AbstractionLayer()
 {
 //    this->_nllWaitCondition.reset( new QWaitCondition );
@@ -25,6 +27,7 @@ AbstractionLayer::AbstractionLayer()
     this->_statisticsLayer.reset(new DefaultStatisticsLayer());
     this->retrieveDevices();
     this->_filterEnabled = false;
+    this->_devicesOpened = false;
 }
 
 void AbstractionLayer::sendDataLinkLayerPacket(
@@ -114,18 +117,51 @@ QList<shared_ptr<Device> > AbstractionLayer::getActivatedDevices()
     return this->_activatedDevices;
 }
 
-void AbstractionLayer::startListening(int packetCaptureSize,int timeout)
+void AbstractionLayer::openActivatedDevices(int packetCaptureSize,int timeout)
+{
+    QList<shared_ptr<Device> >::iterator iter = this->_activatedDevices.begin();
+
+    while (iter != this->_activatedDevices.end())
+    {
+        try
+        {
+            (*iter)->open(packetCaptureSize,timeout,this->_networkLogicLayer,this->_filterEnabled);
+            iter++;
+        }
+        catch (CannotOpenDeviceException code)
+        {
+            this->_activatedDevices.erase(iter);
+        }
+    }
+    this->_devicesOpened = true;
+}
+
+void AbstractionLayer::startListening() throw (CannotStartListeningException)
 {
     //this->_pcapThreads.clear();
     //shared_ptr<PcapReceiveThread> tempPcapReceiveThread;
 
     //store the thread objects
-    for (QList<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end(); ++iter)
+    if (this->_devicesOpened)
     {
-        (*iter)->startListening(packetCaptureSize,timeout,this->_networkLogicLayer,this->_filterEnabled);
-        //tempPcapReceiveThread.reset(new PcapReceiveThread(*iter,this->_networkLogicLayer));
-        //tempPcapReceiveThread->start();
-        //this->_pcapThreads.push_back(tempPcapReceiveThread);
+        for (QList<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end(); ++iter)
+        {
+            try
+            {
+                (*iter)->startListening();
+            }
+            catch (CannotStartListeningException csle)
+            {
+                throw CannotStartListeningException("A device has not been opened");
+            }
+            //tempPcapReceiveThread.reset(new PcapReceiveThread(*iter,this->_networkLogicLayer));
+            //tempPcapReceiveThread->start();
+            //this->_pcapThreads.push_back(tempPcapReceiveThread);
+        }
+    }
+    else
+    {
+        throw CannotStartListeningException("No devices have been opened");
     }
 
 }
@@ -138,7 +174,7 @@ void AbstractionLayer::stopListening()
         (*iter)->wait();
     }
     this->_pcapThreads.clear();*/
-
+    this->_devicesOpened = false;
     for (QList<shared_ptr<Device> >::iterator iter=this->_activatedDevices.begin(); iter!=this->_activatedDevices.end();iter++)
     {
         (*iter)->stopListening();
