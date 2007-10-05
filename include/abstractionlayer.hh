@@ -178,6 +178,22 @@ class AbstractionLayer//: public NLLListener
         */
         void setFilterEnabled(bool filterEnabled);
 
+        /*!
+        Clears all Devices from the activated devices list.
+        */
+        void clearActivatedDevices();
+
+        /*!
+        Close the pcap interface for any open devices.
+        */
+        void closeActivatedDevices();
+
+        /*!
+        Remove the currently registered StatisticsLayer and register a new DefaultStatisticsLayer
+        */
+        void restoreDefaultStatisticsLayer();
+
+
     protected:
         /*!
         Get a pointer to the ALNetworkListener currently registered to handle packets received
@@ -199,8 +215,8 @@ class AbstractionLayer//: public NLLListener
         weak_ptr<ALNetworkListener> _networkLogicLayer; //!A pointer to the ALNetworkListener registered to handle packets received from the network
         shared_ptr<ALStatisticsListener> _statisticsLayer; //!A pointer to the ALStatisticsListener registered to handle routing statistics. This defaults to an implementation with empty overridden virtual functions
 
-        bool _filterEnabled;
-        bool _devicesOpened;
+        bool _filterEnabled; //!A flag indicating whether to enable the pcap filter when listening for packets
+        bool _devicesOpened; //!A flag indicating that the pcap capture interfaces have been opened.
 
         /*!
         Used to initialize a list of network devices which are currently attached to the system. This function is called by
