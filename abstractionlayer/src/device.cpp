@@ -1,18 +1,19 @@
 #include "device.hh"
 #include <ext/algorithm>
-#include <iostream>
+//#include <iostream>
 #include <sstream>
 
 Device::Device()
 {
+    this->_pcapSource = NULL;
     this->_pcapSendThread.reset(new PcapSendThread());
     this->_pcapReceiveThread.reset(new PcapReceiveThread());
-    this->_isOpened = false;
 }
 
 /*customized copy constructor to esnure that the error buffer is a copy and not just a pointer to the same error buffer*/
 Device::Device(const Device& device)
 {
+    this->_pcapSource = NULL;
     this->_name = device._name;
     this->_description = device._description;
     this->_addresses = device._addresses;
@@ -21,15 +22,14 @@ Device::Device(const Device& device)
     __gnu_cxx::copy_n(device._pcapErrorBuffer,PCAP_ERRBUF_SIZE,this->_pcapErrorBuffer);
     this->_pcapSendThread = device._pcapSendThread;
     this->_pcapReceiveThread = device._pcapReceiveThread;
-    this->_isOpened = false;
 }
 
 Device::Device(pcap_if* pcapDevice)
 {
+    this->_pcapSource = NULL;
     this->setContents(pcapDevice);
     this->_pcapSendThread.reset(new PcapSendThread());
     this->_pcapReceiveThread.reset(new PcapReceiveThread());
-    this->_isOpened = false;
 }
 
 void Device::setSelf(weak_ptr<Device>& self)
@@ -103,21 +103,20 @@ void Device::open(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>&
 
     this->_pcapReceiveThread->setDevice(this->_self);
     this->_pcapReceiveThread->setALNetworkListener(alNetworkListener);
-    this->_isOpened = true;
 }
 
 void Device::close()
 {
-    std::cout << "D: Device::close()" << std::endl;
-    this->_isOpened = false;
-    std::cout << "D-1" << std::endl;
-    pcap_close(this->_pcapSource);
-    std::cout << "D-2" << std::endl;
+    if (this->_pcapSource != NULL)
+    {
+        pcap_close(this->_pcapSource);
+        this->_pcapSource = NULL;
+    }
 }
 
 void Device::startListening() throw (CannotStartListeningException)
 {
-    if (this->_isOpened)
+    if ( this->_pcapSource != NULL )
     {
         this->_pcapSendThread->start();
         this->_pcapReceiveThread->start();
@@ -130,7 +129,6 @@ void Device::stopListening()
 {
     this->_pcapSendThread->stopRunning();
     this->_pcapReceiveThread->stopListening();
-    this->close();
 }
 
 void Device::sendPacket(const shared_ptr<RawPacket>& packet)
