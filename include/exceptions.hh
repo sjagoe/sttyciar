@@ -38,6 +38,28 @@ class CannotOpenDeviceException : public runtime_error
         CannotOpenDeviceException(const string& what_arg);
 };
 
+
+/*!
+An exception to indicate that an error occured whilst trying to start device(s) listening
+
+\author Doron Horwitz
+*/
+class CannotStartListeningException : public runtime_error
+{
+    public:
+        /*!
+        Constructor
+
+        \param what_arg A string description of the error that occured
+        */
+        CannotStartListeningException(const string& what_arg);
+};
+
+/*!
+An exception to indicate that an error occured whilst trying to apply a pcap capture filter
+
+\author Doron Horwitz
+*/
 class PcapFilterException : public runtime_error
 {
     public:

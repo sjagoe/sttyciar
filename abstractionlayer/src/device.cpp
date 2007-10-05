@@ -7,6 +7,7 @@ Device::Device()
 {
     this->_pcapSendThread.reset(new PcapSendThread());
     this->_pcapReceiveThread.reset(new PcapReceiveThread());
+    this->_isOpened = false;
 }
 
 /*customized copy constructor to esnure that the error buffer is a copy and not just a pointer to the same error buffer*/
@@ -20,6 +21,7 @@ Device::Device(const Device& device)
     __gnu_cxx::copy_n(device._pcapErrorBuffer,PCAP_ERRBUF_SIZE,this->_pcapErrorBuffer);
     this->_pcapSendThread = device._pcapSendThread;
     this->_pcapReceiveThread = device._pcapReceiveThread;
+    this->_isOpened = false;
 }
 
 Device::Device(pcap_if* pcapDevice)
@@ -27,6 +29,7 @@ Device::Device(pcap_if* pcapDevice)
     this->setContents(pcapDevice);
     this->_pcapSendThread.reset(new PcapSendThread());
     this->_pcapReceiveThread.reset(new PcapReceiveThread());
+    this->_isOpened = false;
 }
 
 void Device::setSelf(weak_ptr<Device>& self)
@@ -75,7 +78,7 @@ void Device::createAddressList(pcap_if* pcapDevice)
     }
 }
 
-void Device::startListening(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>& alNetworkListener,bool filterEnabled) throw (CannotOpenDeviceException)
+void Device::open(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>& alNetworkListener,bool filterEnabled) throw (CannotOpenDeviceException)
 {
     #if defined(WIN32)
     if((this->_pcapSource = pcap_open(this->getName().c_str(),packetCaptureSize,
@@ -96,18 +99,28 @@ void Device::startListening(int packetCaptureSize,int timeout,weak_ptr<ALNetwork
             //std::cout << "error setting the filter\n";
         }
 
-
     this->_pcapSendThread->setSource(this->_pcapSource);
 
     this->_pcapReceiveThread->setDevice(this->_self);
     this->_pcapReceiveThread->setALNetworkListener(alNetworkListener);
+    this->_isOpened = true;
 
-    this->_pcapSendThread->start();
-    this->_pcapReceiveThread->start();
+}
+
+void Device::startListening() throw (CannotStartListeningException)
+{
+    if (this->_isOpened)
+    {
+        this->_pcapSendThread->start();
+        this->_pcapReceiveThread->start();
+    }
+    else
+        throw CannotStartListeningException("Cannot start listening: Device not started");
 }
 
 void Device::stopListening()
 {
+    this->_isOpened = false;
     this->_pcapSendThread->stopRunning();
     this->_pcapReceiveThread->stopListening();
     pcap_close(this->_pcapSource);

@@ -11,3 +11,7 @@ CannotOpenDeviceException::CannotOpenDeviceException(const string& what_arg) : r
 PcapFilterException::PcapFilterException(const string& what_arg) : runtime_error(what_arg)
 {
 }
+
+CannotStartListeningException::CannotStartListeningException(const string& what_arg) : runtime_error(what_arg)
+{
+}
