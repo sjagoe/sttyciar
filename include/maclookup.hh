@@ -1,6 +1,7 @@
 #ifndef __MACLOOKUP_HH__
 #define __MACLOOKUP_HH__
 
+#include <QMutex>
 #include <QMap>
 #include <QPair>
 
@@ -30,6 +31,7 @@ class MACLookup
         \param mac The mac address key to add/update
         \param device The device that the client with specified mac is connected to.
         */
+//        void addEntry( const mac_t& mac, const shared_ptr<Device>& device );
         inline void addEntry( const mac_t& mac, const shared_ptr<Device>& device )
         {
         //    std::cout << "MACLookup::addEntry" << std::endl;
@@ -37,6 +39,7 @@ class MACLookup
         //    std::cout << sizeof(mac.U_main.S_ushort.mid) << " - " << mac.U_main.S_ushort.mid << std::endl;
         //    std::cout << sizeof(mac.U_main.S_ushort.low) << " - " << mac.U_main.S_ushort.low << std::endl;
 
+            this->_tableLock.lock();
             QMap<u_short, QMap<u_short, QPair<shared_ptr<Device>, long> > > midMap =
                 this->_lookupTable.value( mac.U_main.S_ushort.high );
             QMap<u_short, QPair<shared_ptr<Device>, long> > innerMap =
@@ -44,6 +47,7 @@ class MACLookup
             innerMap[mac.U_main.S_ushort.low] = qMakePair( device, _aliveTime );
             midMap[mac.U_main.S_ushort.mid] = innerMap;
             this->_lookupTable[mac.U_main.S_ushort.high] = midMap;
+            this->_tableLock.unlock();
         };
 
         /*!
@@ -53,6 +57,7 @@ class MACLookup
         \param mac Client to look up.
         \return Device that the client is connected to
         */
+//        shared_ptr<Device> lookupEntry( const mac_t& mac );
         inline shared_ptr<Device> lookupEntry( const mac_t& mac )
         {
             //    std::cout << "MACLookup::lookupEntry" << std::endl;
@@ -78,6 +83,7 @@ class MACLookup
         void updateTime(const int& millisecondsElapsed);
 
     private:
+        QMutex _tableLock; //! Mutex to prevent the NLL and the update method from modifying the table at the same time
         //QMap<mac_t, QPair<shared_ptr<Device>, long> > _lookupTable; //! lookup table to get Device from mac_t.
         //QMap<u_short, QMap<u_long, QPair<shared_ptr<Device>, long> > > _lookupTable;
         QMap<u_short, QMap<u_short, QMap<u_short, QPair<shared_ptr<Device>, long> > > > _lookupTable; //! lookup table to get Device from mac_t.
