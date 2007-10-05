@@ -99,6 +99,23 @@ void Device::open(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>&
             //std::cout << "error setting the filter\n";
         }
 
+//    std::cout << this->getName() << std::endl
+//        << this->getDescription() << std::endl << ": linktype = "
+//        << pcap_datalink( this->_pcapSource ) << std::endl;
+
+//    int* arr;
+//    int num = pcap_list_datalinks(this->_pcapSource, &arr);
+//
+//    std::cout << this->getName() << std::endl
+//        << this->getDescription() << std::endl << ": linktypes:" << std::endl;
+//
+//    int* tarr = arr;
+//    for (int i = 0; i < num; i++,tarr++)
+//    {
+//        std::cout << *tarr << std::endl;
+//    }
+//    std::cout << std::endl;
+
     this->_pcapSendThread->setSource(this->_pcapSource);
 
     this->_pcapReceiveThread->setDevice(this->_self);

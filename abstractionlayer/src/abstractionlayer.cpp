@@ -129,7 +129,7 @@ void AbstractionLayer::openActivatedDevices(int packetCaptureSize,int timeout)
         }
         catch (CannotOpenDeviceException code)
         {
-            this->_activatedDevices.erase(iter);
+            iter = this->_activatedDevices.erase(iter);
         }
     }
     this->_devicesOpened = true;

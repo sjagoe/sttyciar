@@ -182,7 +182,7 @@ void SttyciarRunner::startSttyciar(QString deviceType,
                     SIGNAL( sendStats(shared_ptr<Statistics>&) ),
                     this->_ui.get(), SLOT( updateStatistics( shared_ptr<Statistics>& ) ) );
 
-//                this->_abstractionLayer->setFilterEnabled(true);
+//////                this->_abstractionLayer->setFilterEnabled(true);
 
                 // store that we are now running
                 this->_sttyciarRunning = true;

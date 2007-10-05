@@ -23,11 +23,12 @@ void NLLSwitch::routePacket( shared_ptr<RawPacket>& packet )
 
     shared_ptr<Device> destinationDevice = this->_lookupTable.lookupEntry( destination );
 
+    //if (( destinationDevice.get() != 0 ) && ( sourceDevice.get() != destinationDevice.get() ))
     if ( destinationDevice.get() != 0 )
     {
         frame->getRawPacket()->getInterfaceRoute()->addDestination( destinationDevice );
     }
-    else
+    else //if ( destinationDevice.get() == 0 )
     {
         QList<shared_ptr<Device> >::const_iterator iter = _devices.begin();
 
