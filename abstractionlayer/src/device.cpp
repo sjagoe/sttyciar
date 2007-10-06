@@ -44,7 +44,6 @@ void Device::setContents(pcap_if* pcapDevice)
         this->_description=pcapDevice->description;
     this->createAddressList(pcapDevice);
     this->_flags=pcapDevice->flags;
-
 }
 
 string Device::getName() const
@@ -80,8 +79,8 @@ void Device::createAddressList(pcap_if* pcapDevice)
 
 bool Device::isSupported()
 {
-    #if defined(WIN32)
     pcap_t* testSource;
+    #if defined(WIN32)
     if((testSource=pcap_open(this->getName().c_str(),65535,
 				 PCAP_OPENFLAG_PROMISCUOUS | PCAP_OPENFLAG_NOCAPTURE_LOCAL | PCAP_OPENFLAG_MAX_RESPONSIVENESS,
                  10, NULL,this->_pcapErrorBuffer)) == NULL)
@@ -103,7 +102,8 @@ bool Device::isSupported()
     }
 
     pcap_close(testSource);
-    delete dlTypes;
+    //delete dlTypes;
+    //free(dlTypes);
     return supported;
 }
 
