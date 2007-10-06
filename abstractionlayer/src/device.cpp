@@ -92,6 +92,7 @@ bool Device::isSupported()
     bool supported = false;
     int* dlTypes;
     int amtDlTypes = pcap_list_datalinks(testSource,&dlTypes);
+
     for (int i = 0; i < amtDlTypes; i++)
     {
         if (dlTypes[i] == DLT_EN10MB)
@@ -100,10 +101,11 @@ bool Device::isSupported()
             break;
         }
     }
+    if ( (amtDlTypes > 0) && (dlTypes != NULL) )
+        free(dlTypes);
 
     pcap_close(testSource);
-    //delete dlTypes;
-    //free(dlTypes);
+
     return supported;
 }
 

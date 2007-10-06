@@ -36,6 +36,9 @@ void PcapReceiveThread::stopListening()
 {
 
     this->_listening=false;
+#if !defined(WIN32)
+    this->terminate();
+#endif
     this->wait();
 }
 
