@@ -16,7 +16,7 @@ DEFINES += _REENTRANT
 DEFINES += _DLL
 
 CONFIG -= app_bundle
-CONFIG += console
+#CONFIG += console
 CONFIG += debug_and_release
 CONFIG += thread
 

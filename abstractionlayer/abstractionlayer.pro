@@ -17,7 +17,7 @@ DEFINES += _DLL
 DEFINES += HAVE_REMOTE
 
 CONFIG -= app_bundle
-CONFIG += console
+#CONFIG += console
 CONFIG += debug_and_release
 CONFIG += thread
 
