@@ -131,19 +131,19 @@ void LoadTable::updateStatistics( shared_ptr<QMap<shared_ptr<Device>,QMap<shared
                 }
                 else
                 {
-                    QString mult = "";
+                    QString suffix = "";
                     if (traffic >= this->_threshold)
                     {
                         traffic /= this->_threshold;
-                        mult = "k";
+                        suffix = "k";
                         if (traffic >= this->_threshold)
                         {
                             traffic /= this->_threshold;
-                            mult = "M";
+                            suffix = "M";
                         }
                     }
                     item = QString("%1").arg(traffic, 0, 'f', 2);
-                    item.append( mult );
+                    item.append(suffix);
                 }
 
                 QTableWidgetItem* tableItem = this->_tblLoad->item( row.value(), column.value() );

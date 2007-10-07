@@ -66,8 +66,7 @@ class LoadTable: public QWidget
         shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _table; //! The table of data to display
 
         bool _percentage; //! store whether or not to display as a percentage value
-
-        int _threshold; //! Threshold for when the display changes to xxxk, or xxxM etc.
+        int _threshold; //! threshold above which the value is divided by the threshold and displayed with a k or M suffix
 };
 
 #endif

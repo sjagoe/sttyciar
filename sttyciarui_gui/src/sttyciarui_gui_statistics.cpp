@@ -134,7 +134,7 @@ void SttyciarGUIStatistics::setupTabWidget()
     _tabs->addTab( _graphLoad, QString( "Load Balance (Graphical)" ) );
 //    _tabs->addTab( _tblTextualLoad, QString( "Load Balance (Table)" ) );
     _tabs->addTab( _tblLoad, QString( "Load Balance (Table)" ) );
-    _tabs->addTab( _tblPackets, QString( "Packets Per Second" ) );
+    _tabs->addTab( _tblPackets, QString( "Packet Count" ) );
     _tabs->addTab( _tblBytesPerSecond, QString( "Bytes Per Second" ) );
 }
 
