@@ -43,6 +43,8 @@ SttyciarGUIStatistics::SttyciarGUIStatistics( QMap<int, QString> networkDevices,
     connect( _exitButton, SIGNAL( clicked() ), this, SIGNAL( exit() ) );
     connect( _stopButton, SIGNAL( clicked() ),
             this, SIGNAL( stopSttyciar() ) );
+
+    this->setWindowTitle( "Sttyciar Traffic Statistics" );
 }
 
 void SttyciarGUIStatistics::receiveActivatedDevices(
