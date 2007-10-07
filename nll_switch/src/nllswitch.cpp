@@ -23,13 +23,14 @@ void NLLSwitch::routePacket( shared_ptr<RawPacket>& packet )
 
     shared_ptr<Device> destinationDevice = this->_lookupTable.lookupEntry( destination );
 
-//    if (( destinationDevice.get() != 0 ) && ( sourceDevice.get() != destinationDevice.get() ))
-    if ( destinationDevice.get() != 0 )
+    if (( destinationDevice.get() != 0 ) && ( sourceDevice.get() != destinationDevice.get() ))
+//    if ( destinationDevice.get() != 0 )
     {
         frame->getRawPacket()->getInterfaceRoute()->addDestination( destinationDevice );
+        getAbstractionLayer()->sendDataLinkLayerPacket( frame );
     }
-//    else if ( destinationDevice.get() == 0 )
-    else
+    else if ( destinationDevice.get() == 0 )
+//    else
     {
         QList<shared_ptr<Device> >::const_iterator iter = _devices.begin();
 
@@ -40,6 +41,7 @@ void NLLSwitch::routePacket( shared_ptr<RawPacket>& packet )
                 frame->getRawPacket()->getInterfaceRoute()->addDestination( *iter );
             }
         }
+        getAbstractionLayer()->sendDataLinkLayerPacket( frame );
     }
-    getAbstractionLayer()->sendDataLinkLayerPacket( frame );
+//    getAbstractionLayer()->sendDataLinkLayerPacket( frame );
 }

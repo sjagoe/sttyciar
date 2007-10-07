@@ -55,3 +55,6 @@ TARGET = sttyciar_gui
 HEADERS += ../include/sttyciarrunner.hh
 
 SOURCES += src/main.cpp
+
+RC_FILE = sttyciar.rc
+
