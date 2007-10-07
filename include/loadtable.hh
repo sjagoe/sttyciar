@@ -28,7 +28,7 @@ class LoadTable: public QWidget
 
         \param parent The parent widget, passed to the QWidget constructor.
         */
-        LoadTable(bool percentage = false, QWidget* parent = 0);
+        LoadTable(bool percentage = false, int threshold = -1, QWidget* parent = 0);
 
         /*!
         Return the preferred minimum size of the table.
@@ -66,6 +66,8 @@ class LoadTable: public QWidget
         shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _table; //! The table of data to display
 
         bool _percentage; //! store whether or not to display as a percentage value
+
+        int _threshold; //! Threshold for when the display changes to xxxk, or xxxM etc.
 };
 
 #endif

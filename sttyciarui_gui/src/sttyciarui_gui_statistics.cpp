@@ -128,13 +128,13 @@ void SttyciarGUIStatistics::setupTabWidget()
 //    _grpTextualLoad = new QGroupBox( QString( "Load Balance" ) );
     //_tblTextualLoad = new QTableWidget;
     _tblLoad = new LoadTable(true); // The _tblLoad displays a percentage
-    _tblPackets = new LoadTable;
-    _tblBytesPerSecond = new LoadTable;
+    _tblPackets = new LoadTable(false, 1000);
+    _tblBytesPerSecond = new LoadTable(false, 1024);
 
     _tabs->addTab( _graphLoad, QString( "Load Balance (Graphical)" ) );
 //    _tabs->addTab( _tblTextualLoad, QString( "Load Balance (Table)" ) );
     _tabs->addTab( _tblLoad, QString( "Load Balance (Table)" ) );
-    _tabs->addTab( _tblPackets, QString( "Packet Count" ) );
+    _tabs->addTab( _tblPackets, QString( "Packets Per Second" ) );
     _tabs->addTab( _tblBytesPerSecond, QString( "Bytes Per Second" ) );
 }
 
