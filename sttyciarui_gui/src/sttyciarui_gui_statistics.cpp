@@ -49,7 +49,6 @@ void SttyciarGUIStatistics::receiveActivatedDevices(
     const QList<shared_ptr<Device> >& devices, const QString& deviceType,
     const shared_ptr<QStringList>& deviceList,
     const QString& dumpFile )
-
 {
     this->_devices = deviceList;
     this->_graphLoad->setLabels( devices );
