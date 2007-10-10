@@ -5,14 +5,15 @@
 
 Device::Device()
 {
+    this->_pcapSource = NULL;
     this->_pcapSendThread.reset(new PcapSendThread());
     this->_pcapReceiveThread.reset(new PcapReceiveThread());
-    this->_isOpened = false;
 }
 
 /*customized copy constructor to esnure that the error buffer is a copy and not just a pointer to the same error buffer*/
 Device::Device(const Device& device)
 {
+    this->_pcapSource = NULL;
     this->_name = device._name;
     this->_description = device._description;
     this->_addresses = device._addresses;
@@ -21,15 +22,14 @@ Device::Device(const Device& device)
     __gnu_cxx::copy_n(device._pcapErrorBuffer,PCAP_ERRBUF_SIZE,this->_pcapErrorBuffer);
     this->_pcapSendThread = device._pcapSendThread;
     this->_pcapReceiveThread = device._pcapReceiveThread;
-    this->_isOpened = false;
 }
 
 Device::Device(pcap_if* pcapDevice)
 {
+    this->_pcapSource = NULL;
     this->setContents(pcapDevice);
     this->_pcapSendThread.reset(new PcapSendThread());
     this->_pcapReceiveThread.reset(new PcapReceiveThread());
-    this->_isOpened = false;
 }
 
 void Device::setSelf(weak_ptr<Device>& self)
@@ -44,7 +44,6 @@ void Device::setContents(pcap_if* pcapDevice)
         this->_description=pcapDevice->description;
     this->createAddressList(pcapDevice);
     this->_flags=pcapDevice->flags;
-
 }
 
 string Device::getName() const
@@ -78,6 +77,38 @@ void Device::createAddressList(pcap_if* pcapDevice)
     }
 }
 
+bool Device::isSupported()
+{
+    pcap_t* testSource;
+    #if defined(WIN32)
+    if((testSource=pcap_open(this->getName().c_str(),65535,
+				 PCAP_OPENFLAG_PROMISCUOUS | PCAP_OPENFLAG_NOCAPTURE_LOCAL | PCAP_OPENFLAG_MAX_RESPONSIVENESS,
+                 10, NULL,this->_pcapErrorBuffer)) == NULL)
+    #else
+    if ((testSource=pcap_open_live(this->getName().c_str(),65535,true,10,this->_pcapErrorBuffer))==NULL)
+    #endif
+        return false;
+
+    bool supported = false;
+    int* dlTypes;
+    int amtDlTypes = pcap_list_datalinks(testSource,&dlTypes);
+
+    for (int i = 0; i < amtDlTypes; i++)
+    {
+        if (dlTypes[i] == DLT_EN10MB)
+        {
+            supported = true;
+            break;
+        }
+    }
+    if ( (amtDlTypes > 0) && (dlTypes != NULL) )
+        free(dlTypes);
+
+    pcap_close(testSource);
+
+    return supported;
+}
+
 void Device::open(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>& alNetworkListener,bool filterEnabled) throw (CannotOpenDeviceException)
 {
     #if defined(WIN32)
@@ -103,18 +134,20 @@ void Device::open(int packetCaptureSize,int timeout,weak_ptr<ALNetworkListener>&
 
     this->_pcapReceiveThread->setDevice(this->_self);
     this->_pcapReceiveThread->setALNetworkListener(alNetworkListener);
-    this->_isOpened = true;
 }
 
 void Device::close()
 {
-    this->_isOpened = false;
-    pcap_close(this->_pcapSource);
+    if (this->_pcapSource != NULL)
+    {
+        pcap_close(this->_pcapSource);
+        this->_pcapSource = NULL;
+    }
 }
 
 void Device::startListening() throw (CannotStartListeningException)
 {
-    if (this->_isOpened)
+    if ( this->_pcapSource != NULL )
     {
         this->_pcapSendThread->start();
         this->_pcapReceiveThread->start();
@@ -127,7 +160,6 @@ void Device::stopListening()
 {
     this->_pcapSendThread->stopRunning();
     this->_pcapReceiveThread->stopListening();
-    this->close();
 }
 
 void Device::sendPacket(const shared_ptr<RawPacket>& packet)

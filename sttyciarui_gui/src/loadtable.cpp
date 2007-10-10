@@ -12,10 +12,11 @@
 //#include "device.hh"
 #include "statistics.hh"
 
-LoadTable::LoadTable(bool percentage, QWidget* parent)
+LoadTable::LoadTable(bool percentage, int threshold, QWidget* parent)
     : QWidget(parent)
 {
     this->_percentage = percentage;
+    this->_threshold = threshold;
     this->_tblLoad = new QTableWidget;
     this->_tblLoad->verticalHeader()->setDefaultAlignment( Qt::AlignCenter );
     this->_tblLoad->setSelectionMode( QAbstractItemView::NoSelection );
@@ -53,6 +54,7 @@ QSize LoadTable::sizeHint() const
 void LoadTable::setLabels( const QList<shared_ptr<Device> >& devices )
 {
     int numDevices = devices.size();
+    this->_tblLoad->clear();
     this->_tblLoad->setRowCount(numDevices);
     this->_tblLoad->setColumnCount(numDevices);
     // QFontMetrics to get the text dimensions
@@ -123,9 +125,25 @@ void LoadTable::updateStatistics( shared_ptr<QMap<shared_ptr<Device>,QMap<shared
                     traffic *= 100;
                     item = QString("%1%").arg(traffic, 0, 'f', 2);
                 }
-                else
+                else if (this->_threshold == -1)
                 {
                     item = QString("%1").arg(traffic);//, 0, 'f', 2);
+                }
+                else
+                {
+                    QString suffix = "";
+                    if (traffic >= this->_threshold)
+                    {
+                        traffic /= this->_threshold;
+                        suffix = "k";
+                        if (traffic >= this->_threshold)
+                        {
+                            traffic /= this->_threshold;
+                            suffix = "M";
+                        }
+                    }
+                    item = QString("%1").arg(traffic, 0, 'f', 2);
+                    item.append(suffix);
                 }
 
                 QTableWidgetItem* tableItem = this->_tblLoad->item( row.value(), column.value() );

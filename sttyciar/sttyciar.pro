@@ -15,7 +15,7 @@ INCLUDEPATH += . ../include
 DEFINES += _REENTRANT
 DEFINES += _DLL
 
-CONFIG += console
+#CONFIG += console
 CONFIG += debug_and_release
 
 CONFIG(debug, debug|release) {
@@ -55,3 +55,6 @@ TARGET = sttyciar_gui
 HEADERS += ../include/sttyciarrunner.hh
 
 SOURCES += src/main.cpp
+
+RC_FILE = sttyciar.rc
+

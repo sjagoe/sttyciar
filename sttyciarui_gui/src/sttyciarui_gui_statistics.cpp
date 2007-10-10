@@ -43,13 +43,14 @@ SttyciarGUIStatistics::SttyciarGUIStatistics( QMap<int, QString> networkDevices,
     connect( _exitButton, SIGNAL( clicked() ), this, SIGNAL( exit() ) );
     connect( _stopButton, SIGNAL( clicked() ),
             this, SIGNAL( stopSttyciar() ) );
+
+    this->setWindowTitle( "Sttyciar Traffic Statistics" );
 }
 
 void SttyciarGUIStatistics::receiveActivatedDevices(
     const QList<shared_ptr<Device> >& devices, const QString& deviceType,
     const shared_ptr<QStringList>& deviceList,
     const QString& dumpFile )
-
 {
     this->_devices = deviceList;
     this->_graphLoad->setLabels( devices );
@@ -127,8 +128,8 @@ void SttyciarGUIStatistics::setupTabWidget()
 //    _grpTextualLoad = new QGroupBox( QString( "Load Balance" ) );
     //_tblTextualLoad = new QTableWidget;
     _tblLoad = new LoadTable(true); // The _tblLoad displays a percentage
-    _tblPackets = new LoadTable;
-    _tblBytesPerSecond = new LoadTable;
+    _tblPackets = new LoadTable(false, 1000);
+    _tblBytesPerSecond = new LoadTable(false, 1024);
 
     _tabs->addTab( _graphLoad, QString( "Load Balance (Graphical)" ) );
 //    _tabs->addTab( _tblTextualLoad, QString( "Load Balance (Table)" ) );
