@@ -1,6 +1,6 @@
 #include <QWaitCondition>
 #include <QSemaphore>
-//#include <iostream>
+#include <iostream>
 
 #include "abstractionlayer.hh"
 
