@@ -66,17 +66,35 @@ class StatisticsLayer: public QThread, public ALStatisticsListener
         void run();
 
     private:
-        shared_ptr<QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> > > _traffic; //!The matrix indicating the percentage of traffic between each network Device
-        shared_ptr<QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> > > _trafficBytes; //!The matrix indicating the number of bytes between each network Device
-        unsigned int _totalPackets;//!The total amount of packets routed in a specific time period
-        unsigned int _totalBytes; //!The total amount of bytes routed in a specific time period
-        LockableQueue<shared_ptr<RawPacket> > _statisticsQueue; //!A queue of rawpackets awaiting processing by the statistics layer
-        bool _running; //!A flag used by the loop in the run() function to indicate that the thread must continue running. Can be made false using PcapReceiveThread::stopRunning()
-        QWaitCondition _waitCondition; //!Used to prevent deadlocks and other concurrent programming problems
-        QMutex _waitMutex; //!Use to make the statistics layer sleep if there are no raw packets waiting to be processed
-        QMutex _threadSafeMutex; //!Used to prevent deadlocks and other concurrent programming problems
+        //!The matrix indicating the percentage of traffic between each network Device
+        shared_ptr<QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> > > _traffic;
 
-        weak_ptr<PacketDumper> _packetDumper; //! pointer to an object that dumps packets to file
+        //!The matrix indicating the number of bytes between each network Device
+        shared_ptr<QMap<shared_ptr<Device>, QMap<shared_ptr<Device>, double> > > _trafficBytes;
+
+        //!The total amount of packets routed in a specific time period
+        unsigned int _totalPackets;
+
+        //!The total amount of bytes routed in a specific time period
+        unsigned int _totalBytes;
+
+        //!A queue of rawpackets awaiting processing by the statistics layer
+        LockableQueue<shared_ptr<RawPacket> > _statisticsQueue;
+
+        //!A flag used by the loop in the run() function to indicate that the thread must continue running. Can be made false using PcapReceiveThread::stopRunning()
+        bool _running;
+
+        //!Used to prevent deadlocks and other concurrent programming problems
+        QWaitCondition _waitCondition;
+
+        //!Use to make the statistics layer sleep if there are no raw packets waiting to be processed
+        QMutex _waitMutex;
+
+        //!Used to prevent deadlocks and other concurrent programming problems
+        QMutex _threadSafeMutex;
+
+        //! pointer to an object that dumps packets to file
+        weak_ptr<PacketDumper> _packetDumper;
 
         /*!
         Set up the traffic matrix

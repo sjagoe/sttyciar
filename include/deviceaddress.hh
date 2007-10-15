@@ -68,11 +68,20 @@ class DeviceAddress
         const Address& getDestinationAddress() const;
 
     private:
-        Address _addr; //! The IP address
-        Address _netmask; //! The netmask
-        Address _broadAddr; //! The broadcast address
-        Address _dstAddr; //! The destination address
-        static const int DEFAULT_ADDRESS_LENGTH = 14; //!Used by DeviceAddress::copySockAddr(sockaddr,sockaddr) to define the length of the address
+        //! The IP address
+        Address _addr;
+
+        //! The netmask
+        Address _netmask;
+
+        //! The broadcast address
+        Address _broadAddr;
+
+        //! The destination address
+        Address _dstAddr;
+
+        //!Used by DeviceAddress::copySockAddr(sockaddr,sockaddr) to define the length of the address
+        static const int DEFAULT_ADDRESS_LENGTH = 14;
 
         /*!Utility function to copy one <a href="http://msdn2.microsoft.com/en-us/library/ms740496.aspx">sockaddr struct</a> into another
 

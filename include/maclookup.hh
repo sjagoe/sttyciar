@@ -83,12 +83,19 @@ class MACLookup
         void updateTime(const int& millisecondsElapsed);
 
     private:
-        QMutex _tableLock; //! Mutex to prevent the NLL and the update method from modifying the table at the same time
+        //! Mutex to prevent the NLL and the update method from modifying the table at the same time
+        QMutex _tableLock;
         //QMap<mac_t, QPair<shared_ptr<Device>, long> > _lookupTable; //! lookup table to get Device from mac_t.
         //QMap<u_short, QMap<u_long, QPair<shared_ptr<Device>, long> > > _lookupTable;
-        QMap<u_short, QMap<u_short, QMap<u_short, QPair<shared_ptr<Device>, long> > > > _lookupTable; //! lookup table to get Device from mac_t.
-        long _aliveTime; //! time that an entry will remain in the table (milliseconds)
-        static const int DEFAULT_ALIVE_TIME = 90000; //! default time an entry is in the table (milliseconds)
+
+        //! lookup table to get Device from mac_t.
+        QMap<u_short, QMap<u_short, QMap<u_short, QPair<shared_ptr<Device>, long> > > > _lookupTable;
+
+        //! time that an entry will remain in the table (milliseconds)
+        long _aliveTime;
+
+        //! default time an entry is in the table (milliseconds)
+        static const int DEFAULT_ALIVE_TIME = 90000;
 
 //        void printTable();
 };

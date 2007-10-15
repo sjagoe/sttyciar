@@ -26,8 +26,11 @@ devices to use to transmit a packet.
 class InterfaceRoute
 {
     private:
-        shared_ptr<Device> _sourceInterface; //! The interface that the associated packet was received on (Objects of this classreside in the associated RawPacket)
-        shared_ptr<QList<shared_ptr<Device> > > _destinationInterfaces; //! interfaces that the associated packet will be transmitted on
+        //! The interface that the associated packet was received on (Objects of this classreside in the associated RawPacket)
+        shared_ptr<Device> _sourceInterface;
+
+        //! interfaces that the associated packet will be transmitted on
+        shared_ptr<QList<shared_ptr<Device> > > _destinationInterfaces;
 
     public:
         /*!

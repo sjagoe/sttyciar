@@ -37,35 +37,35 @@ class SttyciarGUI: public SttyciarUI
 
     public slots:
         /*!
-        Implement the sttyciarRunning() slot in \link sttyciarui_common.hh
+        Implement the sttyciarRunning() slot in SttyciarUI
         */
         void sttyciarRunning();
 
         /*!
-        Implement the sttyciarStopped() slot in \link sttyciarui_common.hh
+        Implement the sttyciarStopped() slot in SttyciarUI
         */
         void sttyciarStopped();
 
         /*!
-        Implement the updateStatistics() slot in \link sttyciarui_common.hh
+        Implement the updateStatistics() slot in SttyciarUI
         */
         void updateStatistics( shared_ptr<Statistics>& stats );
 
         /*!
-        Implement the receiveDevices() slot in \link sttyciarui_common.hh
+        Implement the receiveDevices() slot in SttyciarUI
         */
         void receiveDevices( const QList<shared_ptr<Device> >& devices );
 
         /*!
         Implement the receiveActivatedDevices() slot in
-        \link sttyciarui_common.hh
+        SttyciarUI
         */
         void receiveActivatedDevices(
             const QList<shared_ptr<Device> >& devices );
 
     protected slots:
         /*!
-        Implement the exit() slot in \link sttyciarui_common.hh
+        Implement the exit() slot in SttyciarUI
         */
         void exit();
 
@@ -88,12 +88,23 @@ class SttyciarGUI: public SttyciarUI
             const QString& dumpFile);
 
     private:
-        scoped_ptr<SttyciarGUIMain> _mainUI; //! Pointer to the SttyciarGUIMain object that displays the main form.
-        scoped_ptr<SttyciarGUIStatistics> _statisticsUI; //! Pointer to the SttyciarGUIStatistics object that displays the statistics form.
-        QMap<int, QString> _availableNetworkDevices; //! Available network devices to be implemented.
-        QString _deviceType; //! Device Type being emulated
-        QString _dumpFile; //! File to dump packets to
-        shared_ptr<QStringList> _deviceList; //! List of devices being emulated
+        //! Pointer to the SttyciarGUIMain object that displays the main form.
+        scoped_ptr<SttyciarGUIMain> _mainUI;
+
+        //! Pointer to the SttyciarGUIStatistics object that displays the statistics form.
+        scoped_ptr<SttyciarGUIStatistics> _statisticsUI;
+
+        //! Available network devices to be implemented.
+        QMap<int, QString> _availableNetworkDevices;
+
+        //! Device Type being emulated
+        QString _deviceType;
+
+        //! File to dump packets to
+        QString _dumpFile;
+
+        //! List of devices being emulated
+        shared_ptr<QStringList> _deviceList;
 };
 
 #endif

@@ -49,21 +49,21 @@ class Statistics
         /*!
         Get the table of traffic containing percentages. The percentages are calculated as a percetage of
         the total amount of packets being routed
-        \param A table of the traffic percentages as a QMap
+        \return A table of the traffic percentages as a QMap
         */
         shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > getTrafficPercentageTable();
 
         /*!
         Get the table of traffic containing amount of packets
 
-        \param A table of the amount of packets as a QMap
+        \return A table of the amount of packets as a QMap
         */
         shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > getTrafficAmtPacketsTable();
 
         /*!
         Get the table of traffic containing bytes per second
 
-        \param A table of the bytes per second as a QMap
+        \return A table of the bytes per second as a QMap
         */
         shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > getTrafficAmtBytesPerSecondTable();
 
@@ -90,14 +90,24 @@ class Statistics
         int getAwaitingDumpedPackets();
 
     private:
+        //!The matrix indicating the percentage of traffic between each network Device
+        shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _percentageTraffic;
 
-        shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _percentageTraffic; //!The matrix indicating the percentage of traffic between each network Device
-        shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _amtPacketsTraffic; //!The matrix indicating the traffic (in amount of packets) between each network Device
-        shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _amtBytesPerSecondTraffic; //!The matrix indicating the traffic (in number of bytes per second) between each network Device
+        //!The matrix indicating the traffic (in amount of packets) between each network Device
+        shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _amtPacketsTraffic;
+
+        //!The matrix indicating the traffic (in number of bytes per second) between each network Device
+        shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _amtBytesPerSecondTraffic;
         //int _totalPackets; // !The total amount of packets routed in a specific time period
-        double _packetsPerSecond; //!The rate of packets/sec for a given time period
-        double _bytesPerSecond; //!The rate of bytes/sec for a given time period
-        int _awaitingDumpedPackets; //!The amount of packets waiting to be written to file by the PacketDumper
+
+        //!The rate of packets/sec for a given time period
+        double _packetsPerSecond;
+
+        //!The rate of bytes/sec for a given time period
+        double _bytesPerSecond;
+
+        //!The amount of packets waiting to be written to file by the PacketDumper
+        int _awaitingDumpedPackets;
 
         /*!
         Generate the matrix of traffic percentages

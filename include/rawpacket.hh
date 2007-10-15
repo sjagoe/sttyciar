@@ -34,11 +34,14 @@ boost::shared_array, and the header in a boost::shared_ptr.
 class RawPacket
 {
     private:
-        shared_array<u_char> _packet; //! A byte (unsigned char) array containing the actual packet data.
+        //! A byte (unsigned char) array containing the actual packet data.
+        shared_array<u_char> _packet;
 
-        shared_ptr<pcap_pkthdr> _pcapHeader; //! a pcap_pktheader containing information about the packet (such as length)
+        //! a pcap_pktheader containing information about the packet (such as length)
+        shared_ptr<pcap_pkthdr> _pcapHeader;
 
-        shared_ptr<InterfaceRoute> _interfaceRoute; //! An InterfaceRoute containing routing information for the packet
+        //! An InterfaceRoute containing routing information for the packet
+        shared_ptr<InterfaceRoute> _interfaceRoute;
 
     public:
         /*!

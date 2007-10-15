@@ -22,7 +22,8 @@ for specific protocols
 class Packet
 {
     private:
-        shared_ptr<RawPacket> _rawPacket; //! A pointer to the RawPacket containing the actual packet data
+        //! A pointer to the RawPacket containing the actual packet data
+        shared_ptr<RawPacket> _rawPacket;
 
     protected:
         /*!

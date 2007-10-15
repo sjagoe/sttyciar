@@ -80,38 +80,74 @@ class SttyciarGUIStatistics: public QMainWindow
         //! Lay out the buttons
         QHBoxLayout* setupButtons();
 
-        QGroupBox* _grpChangeDevice; //! Group box to contain the widgets that change the device type
-        QLabel* _lblChangeDevice; //! label displaying the function of the combo box
-        QComboBox* _comboChangeDevice; //! combo box to select the new device type
+        //! Group box to contain the widgets that change the device type
+        QGroupBox* _grpChangeDevice;
 
-        QTabWidget* _tabs; //! A QTabWidget providing a tabbed pane to select a statistics view/set.
+        //! label displaying the function of the combo box
+        QLabel* _lblChangeDevice;
 
-        LoadCanvas* _graphLoad; //! A LoadCanvas object to draw a graphical visualisation of the traffic load in the device.
-        //QTableWidget* _tblTextualLoad; //! A QTableWidget to provide the load information in tabular form.
-        LoadTable* _tblLoad; //! A widget containing a table to display percentage load stats
-        LoadTable* _tblPackets; //! A widget containing a table to display actual load (in number of packets) stats
-        LoadTable* _tblBytesPerSecond; //! A widget containing a table to display load in bytes per second for each device
+        //! combo box to select the new device type
+        QComboBox* _comboChangeDevice;
 
-        QGroupBox* _grpRates; //! A QGroupBox to lay out the rates section (packets per second and bytes per second)
-        QLabel* _lblPacketsPerSecond; //! A QLabel to label the packets per second field
-        QLineEdit* _edtPacketsPerSecond; //! A QLineEdit to display the Packets per Second value
-        QLabel* _lblBytesPerSecond; //! A QLabel to label the bytes per second field
-        QLineEdit* _edtBytesPerSecond; //! A QLineEdit to display the Bytes per Second value
-        QLabel* _lblKBytesPerSecond; //! QLabel to label the kilobytes per second field
-        QLineEdit* _edtKBytesPerSecond; //! QLineEdit to display the kilobytes per second field
+        //! A QTabWidget providing a tabbed pane to select a statistics view/set.
+        QTabWidget* _tabs;
 
-        QLabel* _lblDumpBuffer; //! label the Dump Buffer Contents field
-        QLineEdit* _edtDumpBuffer; //! QLineEdit to display the size of the packet dump buffer
+        //! A LoadCanvas object to draw a graphical visualisation of the traffic load in the device.
+        LoadCanvas* _graphLoad;
 
-        QPushButton* _exitButton; //! QPushButton to exit the application
-        QPushButton* _stopButton; //! QPushButton to stop the application
+        //! A widget containing a table to display percentage load stats
+        LoadTable* _tblLoad;
 
-        QWidget* _centralWidget; //! A dummy widget used to layout the form correctly.
+        //! A widget containing a table to display actual load (in number of packets) stats
+        LoadTable* _tblPackets;
 
-        shared_ptr<Statistics> _statistics; //! Store a statistics object with the data to display
+        //! A widget containing a table to display load in bytes per second for each device
+        LoadTable* _tblBytesPerSecond;
 
-        QString _dumpFile; //! File used to dump packets. Needed if the device is restarted
-        shared_ptr<QStringList> _devices; //! List to store the activated devices. Needed if the device is restarted
+        //! A QGroupBox to lay out the rates section (packets per second and bytes per second)
+        QGroupBox* _grpRates;
+
+        //! A QLabel to label the packets per second field
+        QLabel* _lblPacketsPerSecond;
+
+        //! A QLineEdit to display the Packets per Second value
+        QLineEdit* _edtPacketsPerSecond;
+
+        //! A QLabel to label the bytes per second field
+        QLabel* _lblBytesPerSecond;
+
+        //! A QLineEdit to display the Bytes per Second value
+        QLineEdit* _edtBytesPerSecond;
+
+        //! QLabel to label the kilobytes per second field
+        QLabel* _lblKBytesPerSecond;
+
+        //! QLineEdit to display the kilobytes per second field
+        QLineEdit* _edtKBytesPerSecond;
+
+        //! label the Dump Buffer Contents field
+        QLabel* _lblDumpBuffer;
+
+        //! QLineEdit to display the size of the packet dump buffer
+        QLineEdit* _edtDumpBuffer;
+
+        //! QPushButton to exit the application
+        QPushButton* _exitButton;
+
+        //! QPushButton to stop the application
+        QPushButton* _stopButton;
+
+        //! A dummy widget used to layout the form correctly.
+        QWidget* _centralWidget;
+
+        //! Store a statistics object with the data to display
+        shared_ptr<Statistics> _statistics;
+
+        //! File used to dump packets. Needed if the device is restarted
+        QString _dumpFile;
+
+        //! List to store the activated devices. Needed if the device is restarted
+        shared_ptr<QStringList> _devices;
 
     private slots:
         /*!

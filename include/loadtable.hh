@@ -59,14 +59,20 @@ class LoadTable: public QWidget
         void updateStatistics( shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > table );
 
     private:
-        QTableWidget* _tblLoad; //! The table used to display the information
+        //! The table used to display the information
+        QTableWidget* _tblLoad;
 
-        QMap<shared_ptr<Device>, int> _devices; //! Devices and corresponding row/column
+        //! Devices and corresponding row/column
+        QMap<shared_ptr<Device>, int> _devices;
 
-        shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _table; //! The table of data to display
+        //! The table of data to display
+        shared_ptr<QMap<shared_ptr<Device>,QMap<shared_ptr<Device>,double> > > _table;
 
-        bool _percentage; //! store whether or not to display as a percentage value
-        int _threshold; //! threshold above which the value is divided by the threshold and displayed with a k or M suffix
+        //! store whether or not to display as a percentage value
+        bool _percentage;
+
+        //! threshold above which the value is divided by the threshold and displayed with a k or M suffix
+        int _threshold;
 };
 
 #endif

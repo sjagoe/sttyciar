@@ -59,8 +59,12 @@ class LockableQueueGroup
         };
 
     private:
-        long _currentQueue; //! The index of the currently active queue (where the next dequeue will occur).
-        QList<shared_ptr<LockableQueue<T> > > _queues; //! List of queues accessible by the LockableQueueGroup
+
+        //! The index of the currently active queue (where the next dequeue will occur).
+        long _currentQueue;
+
+        //! List of queues accessible by the LockableQueueGroup
+        QList<shared_ptr<LockableQueue<T> > > _queues;
 };
 
 #endif

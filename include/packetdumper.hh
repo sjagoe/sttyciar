@@ -64,19 +64,38 @@ class PacketDumper: public QThread
         int waitingPackets();
 
     private:
-        bool _running; //! boolean to determine the state of the thread, and exit if required
-        bool _enabled; //! is packet dumping enabled
-        QSemaphore _packetsWaiting; //! Indicate that packets are waiting to be processed
-        QMutex _waitMutex; //! Mutex used by the wait condition to mak ethe thread sleep
-        QWaitCondition _wait; //! wait condition to make the thread sleep and signal it to wake up
-        LockableQueue<shared_ptr<RawPacket> > _packetQueue; //! Queue for packets to be processed
-        int _linkType; //! Paramater for opening the dummy interface
-        int _captureLength; //! Paramater for opening the dummy interface
+        //! boolean to determine the state of the thread, and exit if required
+        bool _running;
 
-        QString _file; //! Filename of the dump file
+        //! is packet dumping enabled
+        bool _enabled;
 
-        pcap_t* _dumpInterface; //! dummy interface used for the dump
-        pcap_dumper_t* _dumpFile; //! file used for the dump
+        //! Indicate that packets are waiting to be processed
+        QSemaphore _packetsWaiting;
+
+        //! Mutex used by the wait condition to mak ethe thread sleep
+        QMutex _waitMutex;
+
+        //! wait condition to make the thread sleep and signal it to wake up
+        QWaitCondition _wait;
+
+        //! Queue for packets to be processed
+        LockableQueue<shared_ptr<RawPacket> > _packetQueue;
+
+        //! Paramater for opening the dummy interface
+        int _linkType;
+
+        //! Paramater for opening the dummy interface
+        int _captureLength;
+
+        //! Filename of the dump file
+        QString _file;
+
+        //! dummy interface used for the dump
+        pcap_t* _dumpInterface;
+
+        //! file used for the dump
+        pcap_dumper_t* _dumpFile;
 };
 
 #endif

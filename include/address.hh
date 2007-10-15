@@ -148,8 +148,11 @@ class Address
         bpf_u_int32 to_bpf_u_int32();
 
     private:
-        shared_array<uint8_t> _address; //! The bytes stored in the Address
-        int _size; //! This indicates the amount of bytes stored in the _address member variable.
+        //! The bytes stored in the Address
+        shared_array<uint8_t> _address;
+
+        //! This indicates the amount of bytes stored in the _address member variable.
+        int _size;
 
 };
 

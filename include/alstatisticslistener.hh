@@ -32,8 +32,7 @@ class ALStatisticsListener
         The SL processes the data received through this method, and passes the
         processed information to the user interface for displaying.
 
-        \param interfaces The InterfaceRoute object passed to the AL after
-        routing, containing complete source/destination interface data.
+        \param rawPacket The packet that has been processed by the NLL.
         */
         virtual void addRawPacket(const shared_ptr<RawPacket>& rawPacket ) = 0;
 

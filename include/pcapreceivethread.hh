@@ -89,13 +89,26 @@ class PcapReceiveThread : public QThread
         */
         void run() throw(CannotOpenDeviceException);
     private:
-        weak_ptr<Device> _device; //!A pointer to the Device from where network packets will be received
-        int _pcapPacketCaptureSize; //!The maximum size of a packet to be captured from the network layer
-        int _pcapTimeout; //!How long to wait for packets before the <a href="http://www.winpcap.org/docs/docs_40_1/html/group__wpcapfunc.html#g439439c2eae61161dc1efb1e03a81133">pcap_next_ex()</a> function times out
-        char _pcapErrorBuffer[PCAP_ERRBUF_SIZE]; //!The array buffer to be used by libpcap in the case of an error occuring
-        bool _listening; //!A flag used by the loop in the run() function to indicate that the thread must continue running. Can be made false using PcapReceiveThread::stopListening()
-        weak_ptr<ALNetworkListener> _alNetworkListener; //!The ALNetworkListener which will handle incoming network packets
-        scoped_ptr<PcapThreadTicket> _receiveBuffer; //!The buffer which temporarily stores packets received from the network before they are processed.
+        //!A pointer to the Device from where network packets will be received
+        weak_ptr<Device> _device;
+
+        //!The maximum size of a packet to be captured from the network layer
+        int _pcapPacketCaptureSize;
+
+        //!How long to wait for packets before the <a href="http://www.winpcap.org/docs/docs_40_1/html/group__wpcapfunc.html#g439439c2eae61161dc1efb1e03a81133">pcap_next_ex()</a> function times out
+        int _pcapTimeout;
+
+        //!The array buffer to be used by libpcap in the case of an error occuring
+        char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
+
+        //!A flag used by the loop in the run() function to indicate that the thread must continue running. Can be made false using PcapReceiveThread::stopListening()
+        bool _listening;
+
+        //!The ALNetworkListener which will handle incoming network packets
+        weak_ptr<ALNetworkListener> _alNetworkListener;
+
+        //!The buffer which temporarily stores packets received from the network before they are processed.
+        scoped_ptr<PcapThreadTicket> _receiveBuffer;
 };
 
 #endif // __PCAPRECEIVETHREAD_HH__

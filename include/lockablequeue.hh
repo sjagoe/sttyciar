@@ -59,8 +59,12 @@ class LockableQueue
         };
 
     private:
-        QQueue<T> _queue; //! QQueue instance to form the basis of the LockableQueue.
-        QMutex _queueMutex; //! QMutex used to lock the QQueue.
+        //! QQueue instance to form the basis of the LockableQueue.
+        QQueue<T> _queue;
+
+        //! QMutex used to lock the QQueue.
+        QMutex _queueMutex;
+
 
 //        long long _pushes;
 //        long long _pops;

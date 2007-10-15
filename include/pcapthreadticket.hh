@@ -50,8 +50,11 @@ class PcapThreadTicket
         };
 
     private:
-        weak_ptr<ALNetworkListener> _networkLogicLayer; //! Weak pointer to the NLL to notify on packet receipt (weak pointer avoids cyclic dependencies and memory leaks).
-        shared_ptr<LockableQueue<shared_ptr<RawPacket> > > _receiveBuffer; //! LockableQueue used by the thread containing this ticket.
+        //! Weak pointer to the NLL to notify on packet receipt (weak pointer avoids cyclic dependencies and memory leaks).
+        weak_ptr<ALNetworkListener> _networkLogicLayer;
+
+        //! LockableQueue used by the thread containing this ticket.
+        shared_ptr<LockableQueue<shared_ptr<RawPacket> > > _receiveBuffer;
 };
 
 #endif

@@ -99,7 +99,8 @@ class NetworkLogicLayer:
         virtual void update( int /*millisecondsElapsed*/ ) {};
 
     protected:
-        QList<shared_ptr<Device> > _devices; //! activated devices used for routing information
+        //! activated devices used for routing information
+        QList<shared_ptr<Device> > _devices;
 
         /*!
         virtual method provided by QThread, where the actual thread loop is
@@ -123,19 +124,26 @@ class NetworkLogicLayer:
         shared_ptr<AbstractionLayer> getAbstractionLayer();
 
     private:
-        weak_ptr<AbstractionLayer> _abstractionLayer; //! A weak_ptr to the abstraction layer - the weak_ptr prevents cyclic dependencies and memory leaks.
+        //! A weak_ptr to the abstraction layer - the weak_ptr prevents cyclic dependencies and memory leaks.
+        weak_ptr<AbstractionLayer> _abstractionLayer;
 
-        scoped_ptr<LockableQueueGroup<shared_ptr<RawPacket> > > _receiveBuffer; //! The LockableQueueGroup that the NLL receives packets from
+        //! The LockableQueueGroup that the NLL receives packets from
+        scoped_ptr<LockableQueueGroup<shared_ptr<RawPacket> > > _receiveBuffer;
 
-        shared_ptr<QWaitCondition> _wait;//! the QWaitCondition used to wake up the thread once a packet is on the receive buffer
+        //! the QWaitCondition used to wake up the thread once a packet is on the receive buffer
+        shared_ptr<QWaitCondition> _wait;
 
-        shared_ptr<QSemaphore> _waitingPackets; //! A QSemaphore to signal how many packets are waiting to be processed
+        //! A QSemaphore to signal how many packets are waiting to be processed
+        shared_ptr<QSemaphore> _waitingPackets;
 
-        QMutex _waitMutex; //! A mutex used by the QWaitCondition
+        //! A mutex used by the QWaitCondition
+        QMutex _waitMutex;
 
-        static QMutex _runningMutex; //! A static mutex (i.e. shared by all instances of the class) to prevent corrupting of the _running boolean
+        //! A static mutex (i.e. shared by all instances of the class) to prevent corrupting of the _running boolean
+        static QMutex _runningMutex;
 
-        static bool _running; //! A static bool (shared by all instances of the class) to enable or disable *all* running NLL modules (currently only one instance is supported, but extension is possible. It depends on the AL).
+        //! A static bool (shared by all instances of the class) to enable or disable *all* running NLL modules (currently only one instance is supported, but extension is possible. It depends on the AL).
+        static bool _running;
 };
 
 #endif

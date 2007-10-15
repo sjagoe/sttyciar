@@ -13,6 +13,9 @@ Ethernet Switch.
 class NLLSwitch: public NetworkLogicLayer
 {
     public:
+        /*!
+        Empty constructor that calls the constructor of the base class.
+        */
         NLLSwitch()
             : NetworkLogicLayer()
         {};
@@ -34,7 +37,8 @@ class NLLSwitch: public NetworkLogicLayer
         void routePacket( shared_ptr<RawPacket>& packet );
 
     private:
-        MACLookup _lookupTable; //! The MAC Address Lookup table
+        //! The MAC Address Lookup table
+        MACLookup _lookupTable;
 };
 
 #endif

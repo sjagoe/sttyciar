@@ -38,29 +38,53 @@ class SttyciarRunner: public QObject
         SttyciarRunner();
 
     private:
-        static const int NLL_UPDATE_TIMEOUT_MSEC = 30000; //! Default time to update the NLL
-        static const int STAT_UPDATE_TIMEOUT_MSEC = 1000; //! Default time to update statistics
+        //! Default time to update the NLL
+        static const int NLL_UPDATE_TIMEOUT_MSEC = 30000;
 
-        static const int PACKET_CAPTURE_SIZE = 65535; //! Maximum size of packets that can be captured
-        static const int PCAP_READ_TIMEOUT = 50; //! Timeout of the pcap_next_ex method
-        static const short HUB_TYPE = 1; //! Identifier for a Hub device
-        static const short SWITCH_TYPE = 2; //! Identifier for a Switch device
+        //! Default time to update statistics
+        static const int STAT_UPDATE_TIMEOUT_MSEC = 1000;
 
-        static const int PDUMP_LINKTYPE = DLT_EN10MB; //! Link Type used to open the packet dump (Ethernet)
-        shared_ptr<PacketDumper> _packetDumper; //! The PacketDumper object that will dump raw packet data in the pcap file format
+        //! Maximum size of packets that can be captured
+        static const int PACKET_CAPTURE_SIZE = 65535;
 
-        QMap<int, QString> _availableDevices; //! Map of network system devices that can be created
+        //! Timeout of the pcap_next_ex method
+        static const int PCAP_READ_TIMEOUT = 50;
 
-        shared_ptr<QTimer> _nllUpdateTimer; //! QTimer to call the update slot of the NetworkLogicLayer
-        shared_ptr<QTimer> _statisticsUpdateTimer; //! QTimer to tell the StatisticsLayer to update the statitics
+        //! Identifier for a Hub device
+        static const short HUB_TYPE = 1;
 
-        scoped_ptr<SttyciarUI> _ui; //! The User Interface object
-        shared_ptr<AbstractionLayer> _abstractionLayer; //! The AbstractionLayer object
+        //! Identifier for a Switch device
+        static const short SWITCH_TYPE = 2;
 
-        shared_ptr<NetworkLogicLayer> _networkLogicLayer; //! The NetworkLogicLayer object
-        shared_ptr<StatisticsLayer> _statisticsLayer; //! The SL Object
+        //! Link Type used to open the packet dump (Ethernet)
+        static const int PDUMP_LINKTYPE = DLT_EN10MB;
 
-        bool _sttyciarRunning; //! Store the status if the application
+        //! The PacketDumper object that will dump raw packet data in the pcap file format
+        shared_ptr<PacketDumper> _packetDumper;
+
+        //! Map of network system devices that can be created
+        QMap<int, QString> _availableDevices;
+
+        //! QTimer to call the update slot of the NetworkLogicLayer
+        shared_ptr<QTimer> _nllUpdateTimer;
+
+        //! QTimer to tell the StatisticsLayer to update the statitics
+        shared_ptr<QTimer> _statisticsUpdateTimer;
+
+        //! The User Interface object
+        scoped_ptr<SttyciarUI> _ui;
+
+        //! The AbstractionLayer object
+        shared_ptr<AbstractionLayer> _abstractionLayer;
+
+        //! The NetworkLogicLayer object
+        shared_ptr<NetworkLogicLayer> _networkLogicLayer;
+
+        //! The SL Object
+        shared_ptr<StatisticsLayer> _statisticsLayer;
+
+        //! Store the status if the application
+        bool _sttyciarRunning;
 
 
     private slots:

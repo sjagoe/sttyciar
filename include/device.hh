@@ -144,7 +144,7 @@ class Device
         AbstractionLayer::sendDataLinkLayerPacket(shared_ptr<DataLinkLayerPacket >) or AbstractionLayer::sendNetworkLayerPacket(shared_ptr<NetworkLayerPacket>).
         Also this function can only be called when this Device's PcapSendThread is running.
 
-        \param The RawPacket to be sent over the network.
+        \param packet The RawPacket to be sent over the network.
         */
         void sendPacket(const shared_ptr<RawPacket>& packet);
 
@@ -157,15 +157,32 @@ class Device
         pcap_t* getPcapSource();
 
     private:
-        string _name; //!The name of the Device according to libpcap
-        string _description; //!The description of the Device according to libpcap
-        QList<DeviceAddress> _addresses; //!The list of addresses (DeviceAddress) associated with this Device
-        shared_ptr<PcapSendThread> _pcapSendThread; //!The thread object used to handle packets waiting to be sent on this Device
-        shared_ptr<PcapReceiveThread> _pcapReceiveThread; //!The thread object used to handle packets which have been received on this Device
-        unsigned int _flags; //!The flags representing various modes of this Device, according to libpcap
-        pcap_t* _pcapSource; //!The open capture instance associated with this Device when it is handling packets
-        weak_ptr<Device> _self; //!A Device's reference to itself
-        char _pcapErrorBuffer[PCAP_ERRBUF_SIZE]; //!The error buffer used by libpcap to indicate the nature of any pcap errors
+        //!The name of the Device according to libpcap
+        string _name;
+
+        //!The description of the Device according to libpcap
+        string _description;
+
+        //!The list of addresses (DeviceAddress) associated with this Device
+        QList<DeviceAddress> _addresses;
+
+        //!The thread object used to handle packets waiting to be sent on this Device
+        shared_ptr<PcapSendThread> _pcapSendThread;
+
+        //!The thread object used to handle packets which have been received on this Device
+        shared_ptr<PcapReceiveThread> _pcapReceiveThread;
+
+        //!The flags representing various modes of this Device, according to libpcap
+        unsigned int _flags;
+
+        //!The open capture instance associated with this Device when it is handling packets
+        pcap_t* _pcapSource;
+
+        //!A Device's reference to itself
+        weak_ptr<Device> _self;
+
+        //!The error buffer used by libpcap to indicate the nature of any pcap errors
+        char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
 //        bool _isOpened; //!Indicates whether a device is open or not
 
         /*!

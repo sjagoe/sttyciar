@@ -81,22 +81,38 @@ class LoadCanvas: public QWidget
         void paintEvent( QPaintEvent* event );
 
     private:
-        QPoint _centre; //! The centre of the canvas
-        int _width; //! The width of the widget
-        int _height; //! The height of the widget
+        //! The centre of the canvas
+        QPoint _centre;
 
-        int _radius; //! The radius of the circle in which the statistics are displayed
+        //! The width of the widget
+        int _width;
 
-        QPen _pen; //! The QPen that will be used to render the view
-        QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > > _labels; //! Labels placed on the visualisation for each of the interfaces bound to the device. Key == Device, Value.first == angle, Value.second == LoadLabel.
+        //! The height of the widget
+        int _height;
 
-        static const int MINIMUM_SIZE_HINT = 400; //! Minimum size hint of the widget
-        static const int SIZE_HINT = 500; //! Size hint of the widget
-        static const double PI = 3.141593; //! constant pi, used in polar coordinate conversions
+        //! The radius of the circle in which the statistics are displayed
+        int _radius;
 
-        static const int MAX_PEN_WIDTH = 35; //! The pen width depicting maximum/all traffic
+        //! The QPen that will be used to render the view
+        QPen _pen;
 
-        shared_ptr<Statistics> _statistics; //! Statistics object that stores the data to display
+        //! Labels placed on the visualisation for each of the interfaces bound to the device. Key == Device, Value.first == angle, Value.second == LoadLabel.
+        QMap<shared_ptr<Device>, QPair<double, shared_ptr<LoadLabel> > > _labels;
+
+        //! Minimum size hint of the widget
+        static const int MINIMUM_SIZE_HINT = 400;
+
+        //! Size hint of the widget
+        static const int SIZE_HINT = 500;
+
+        //! constant pi, used in polar coordinate conversions
+        static const double PI = 3.141593;
+
+        //! The pen width depicting maximum/all traffic
+        static const int MAX_PEN_WIDTH = 35;
+
+        //! Statistics object that stores the data to display
+        shared_ptr<Statistics> _statistics;
 
         /*!
         Check if the widget has been resized, and store the new size in class variables.

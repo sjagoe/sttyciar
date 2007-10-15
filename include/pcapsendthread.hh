@@ -70,12 +70,23 @@ class PcapSendThread : public QThread
         void run();
 
     private:
-        LockableQueue<shared_ptr<RawPacket> > _packetQueue; //! The send buffer
-        bool _running; //!A flag used by the loop in the run() function to indicate that the thread must continue running. Can be made false using PcapReceiveThread::stopRunning()
-        QWaitCondition _waitCondition; //!Used to prevent deadlocks and other concurrent programming problems
-        QMutex _mutex; //!Used to prevent deadlocks and other concurrent programming problems
-        pcap_t *_pcapSource; //!The pcap capture interface used for sending packets
-        char _pcapErrorBuffer[PCAP_ERRBUF_SIZE]; //!The array buffer to be used by libpcap in the case of an error occuring
+        //! The send buffer
+        LockableQueue<shared_ptr<RawPacket> > _packetQueue;
+
+        //!A flag used by the loop in the run() function to indicate that the thread must continue running. Can be made false using PcapReceiveThread::stopRunning()
+        bool _running;
+
+        //!Used to prevent deadlocks and other concurrent programming problems
+        QWaitCondition _waitCondition;
+
+        //!Used to prevent deadlocks and other concurrent programming problems
+        QMutex _mutex;
+
+        //!The pcap capture interface used for sending packets
+        pcap_t *_pcapSource;
+
+        //!The array buffer to be used by libpcap in the case of an error occuring
+        char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
 };
 
 #endif // __PCAPSENDTHREAD_HH__

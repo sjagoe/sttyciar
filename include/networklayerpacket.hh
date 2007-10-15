@@ -17,7 +17,8 @@ all Network Layer protocol packets.
 class NetworkLayerPacket: public Packet
 {
     private:
-        int _networkLayerPacketOffset; //! The offset of the Network Layer header from the start of the packet.
+        //! The offset of the Network Layer header from the start of the packet.
+        int _networkLayerPacketOffset;
 
     protected:
         /*!

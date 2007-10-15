@@ -57,7 +57,8 @@ class SttyciarGUIMain: public QMainWindow
         void setNetworkDevices( QMap<int, QString> networkDevices );
 
     private:
-        Ui::FormSttyciarGUIMain* _ui; //! The actual GUI form, designed in Qt Designer.
+        //! The actual GUI form, designed in Qt Designer.
+        Ui::FormSttyciarGUIMain* _ui;
 
     private slots:
         /*!

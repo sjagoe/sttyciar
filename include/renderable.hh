@@ -43,7 +43,8 @@ class Renderable
         const QPoint& position();
 
     private:
-        QPoint _position; //! The position on the canvas of the object.
+        //! The position on the canvas of the object.
+        QPoint _position;
 };
 
 inline

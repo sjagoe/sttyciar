@@ -204,16 +204,26 @@ class AbstractionLayer//: public NLLListener
         };
 
     private:
-        char _pcapErrorBuffer[PCAP_ERRBUF_SIZE]; //! A buffer used by libpcap to contain an error message generated from any libpcap fucntion
+        //! A buffer used by libpcap to contain an error message generated from any libpcap fucntion
+        char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
 
-        QList<shared_ptr<Device> > _devices; //!The devices attached to the system when the AbstracionLayer is created (i.e. this list is only filled when the constructor is called
-        QList<shared_ptr<Device> > _activatedDevices; //!A list of devices which will be used to send and receive packet
+        //!The devices attached to the system when the AbstracionLayer is created (i.e. this list is only filled when the constructor is called
+        QList<shared_ptr<Device> > _devices;
 
-        weak_ptr<ALNetworkListener> _networkLogicLayer; //!A pointer to the ALNetworkListener registered to handle packets received from the network
-        shared_ptr<ALStatisticsListener> _statisticsLayer; //!A pointer to the ALStatisticsListener registered to handle routing statistics. This defaults to an implementation with empty overridden virtual functions
+        //!A list of devices which will be used to send and receive packet
+        QList<shared_ptr<Device> > _activatedDevices;
 
-        bool _filterEnabled; //!A flag indicating whether to enable the pcap filter when listening for packets
-        bool _devicesOpened; //!A flag indicating that the pcap capture interfaces have been opened.
+        //!A pointer to the ALNetworkListener registered to handle packets received from the network
+        weak_ptr<ALNetworkListener> _networkLogicLayer;
+
+        //!A pointer to the ALStatisticsListener registered to handle routing statistics. This defaults to an implementation with empty overridden virtual functions
+        shared_ptr<ALStatisticsListener> _statisticsLayer;
+
+        //!A flag indicating whether to enable the pcap filter when listening for packets
+        bool _filterEnabled;
+
+        //!A flag indicating that the pcap capture interfaces have been opened.
+        bool _devicesOpened;
 
         /*!
         Used to initialize a list of network devices which are currently attached to the system. This function is called by

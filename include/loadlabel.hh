@@ -89,9 +89,14 @@ class LoadLabel: public Renderable
         const int& getHeight();
 
     private:
-        QString _label; //! The label displayed on the canvas.
-        int _height; //! The total height of the label
-        int _width; //! The total width of the label
+        //! The label displayed on the canvas.
+        QString _label;
+
+        //! The total height of the label
+        int _height;
+
+        //! The total width of the label
+        int _width;
 };
 
 #endif

@@ -29,14 +29,20 @@ encapsulated RawPacket.
 class EthernetIIFrame: public DataLinkLayerPacket
 {
     private:
-        static const int ETHERNETII_HEAD_LENGTH = 14; //! Length of an Ethernet II Frame Header
-        static const int ETHERNETII_MAC_LENGTH = 6; //! Length of an Ethernet Hardware (MAC) Address
+        //! Length of an Ethernet II Frame Header
+        static const int ETHERNETII_HEAD_LENGTH = 14;
 
-        mac_t* _destMAC; //! A pointer to the part of the packet that contains the destination MAC
+        //! Length of an Ethernet Hardware (MAC) Address
+        static const int ETHERNETII_MAC_LENGTH = 6;
 
-        mac_t* _sourceMAC; //! A pointer to the part of the packet that contains the source MAC
+        //! A pointer to the part of the packet that contains the destination MAC
+        mac_t* _destMAC;
 
-        ethertype_t* _etherType; //! A pointer to the part of the packet that contains the EtherType
+        //! A pointer to the part of the packet that contains the source MAC
+        mac_t* _sourceMAC;
+
+        //! A pointer to the part of the packet that contains the EtherType
+        ethertype_t* _etherType;
 
     public:
         /*!
@@ -104,8 +110,11 @@ class EthernetIIFrame: public DataLinkLayerPacket
         const ethertype_t& getEtherType() const;
 
         // EtherTypes
-        static const u_short ETHERTYPE_IPV4 = 0x0800; //! The EtherType of an IPv4 Datagram \see IPv4Datagram
-        static const u_short ETHERTYPE_ARP = 0x0806; //! The EtherType of an ARP
+        //! The EtherType of an IPv4 Datagram
+        static const u_short ETHERTYPE_IPV4 = 0x0800;
+
+        //! The EtherType of an ARP
+        static const u_short ETHERTYPE_ARP = 0x0806;
 };
 
 #endif
