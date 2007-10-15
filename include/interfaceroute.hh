@@ -13,7 +13,7 @@
 using std::list;
 using boost::shared_ptr;
 
-// forward declerations
+// forward declarations
 class Device;
 
 /*!

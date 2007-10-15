@@ -60,8 +60,6 @@ class AbstractionLayer//: public NLLListener
         contained, and the AL can send it without modification)
 
         \param packet The DataLinkLayerPacket object containing the data.
-        \param interfaces The InterfaceRoute object now containing full
-        source/destination interface data.
         */
         void sendDataLinkLayerPacket( shared_ptr<DataLinkLayerPacket> packet);
 
@@ -70,8 +68,6 @@ class AbstractionLayer//: public NLLListener
         payload is contained, and the AL needs to calculate the DLL header)
 
         \param packet The NetworkLayerPacket object containing the data.
-        \param interfaces The InterfaceRoute object now containing full
-        source/destination interface data.
         */
         void sendNetworkLayerPacket( shared_ptr<NetworkLayerPacket> packet );
 
@@ -104,7 +100,7 @@ class AbstractionLayer//: public NLLListener
         Return a list of network devices on the current system. Not all of these devices
         do not necessarily represent actual network devices. The returned list depends on
         the operating system. The ordering of the devices in the list is undefined.
-        This list is remains constant for the lifetime if the abstractionlayer. So if new
+        This list remains constant for the lifetime if the abstractionlayer. So if new
         devices are added to the system when the AbstractionLayer is alread in existence, this
         function will return a list of devices <b>without</b> the newly added devices.
 
@@ -134,6 +130,7 @@ class AbstractionLayer//: public NLLListener
         /*!
         Check whether a device has been activated or not.
 
+        \param device The device to check
         \return true if the device has been activated, false otherwise
         */
         bool isDeviceActivated(shared_ptr<Device>& device);
@@ -222,6 +219,7 @@ class AbstractionLayer//: public NLLListener
         Used to initialize a list of network devices which are currently attached to the system. This function is called by
         the constructor and it is for that reason, that the list of devices does not change for the lifetime of an AbstractionLayer
         object.
+		\throw DeviceNotFoundException if no Devices are found in the system
         */
         void retrieveDevices() throw (DeviceNotFoundException);
 
