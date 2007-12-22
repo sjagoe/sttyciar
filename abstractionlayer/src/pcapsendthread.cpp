@@ -1,15 +1,19 @@
 #include "pcapsendthread.hh"
 #include "rawpacket.hh"
 
+int PcapSendThread::thread_counter = 1;
+
 PcapSendThread::PcapSendThread()
 {
     this->_running = false;
+    this->thread_number = thread_counter++;
 }
 
 PcapSendThread::PcapSendThread(pcap_t* pcapDevice)
 {
     this->_running = false;
     this->_pcapDevice = pcapDevice;
+    this->thread_number = thread_counter++;
 }
 
 PcapSendThread::~PcapSendThread()
@@ -39,6 +43,7 @@ void PcapSendThread::stopRunning()
 
 void PcapSendThread::run()
 {
+    //std::cout << "\nsend: start - thread number: " << thread_number << std::endl;
     this->_running = true;
 
     shared_ptr<RawPacket> rawPacket;
@@ -57,5 +62,6 @@ void PcapSendThread::run()
         }
 
     }
+    std::cout << "\nsend: finish - thread number: " << thread_number << std::endl;
     //pcap_close(source);
 }
