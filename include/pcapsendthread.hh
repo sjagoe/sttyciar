@@ -2,6 +2,7 @@
 #define __PCAPSENDTHREAD_HH__
 
 #include <string>
+#include <iostream>
 #include <QtCore>
 #include <boost/shared_ptr.hpp>
 #include "pcap.h"
@@ -23,6 +24,8 @@ class PcapSendThread : public QThread
         void setDevice(pcap_t* pcapdevice);
         void addPacket(const shared_ptr<RawPacket>& packet);
         void stopRunning();
+        int thread_number;
+
     protected:
         void run();
 
@@ -33,6 +36,8 @@ class PcapSendThread : public QThread
         QMutex _mutex;
         pcap_t *_pcapDevice;
         char _pcapErrorBuffer[PCAP_ERRBUF_SIZE];
+        static int thread_counter;
+
 
 };
 

@@ -2,6 +2,7 @@
 #define __PCAPTHREAD_HH__
 
 #include <QtCore>
+#include <iostream>
 #include <boost/shared_ptr.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/weak_ptr.hpp>
@@ -29,6 +30,7 @@ class PcapThread : public QThread
                     weak_ptr<ALNetworkListener> alNetworkListener) throw(CannotOpenDeviceException);
         ~PcapThread();
         void stopListening();
+        int thread_number;
 
     protected:
         void run() throw(CannotOpenDeviceException);
@@ -40,6 +42,7 @@ class PcapThread : public QThread
         bool _listening;
         weak_ptr<ALNetworkListener> _alNetworkListener;
         scoped_ptr<PcapThreadTicket> _receiveBuffer;
+        static int thread_counter;
 };
 
 #endif // PCAPTHREAD_HH

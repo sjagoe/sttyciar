@@ -6,6 +6,8 @@
 
 #include "pcapthreadticket.hh"
 
+int PcapThread::thread_counter = 1;
+
 PcapThread::PcapThread( const shared_ptr<Device>& device,
                         weak_ptr<ALNetworkListener> alNetworkListener) throw (CannotOpenDeviceException) : _listening(false)
 {
@@ -13,6 +15,7 @@ PcapThread::PcapThread( const shared_ptr<Device>& device,
     this->_alNetworkListener = alNetworkListener;
 
     this->_receiveBuffer.reset(new PcapThreadTicket( this->_alNetworkListener ));
+    this->thread_number = thread_counter++;
 }
 
 PcapThread::~PcapThread()
@@ -28,6 +31,7 @@ void PcapThread::stopListening()
 void PcapThread::run() throw(CannotOpenDeviceException)
 
 {
+    //std::cout << "\nreceive: start - thread number: " << thread_number << std::endl;
     pcap_t* source=this->_device->getPcapDevice();
     this->_listening = true;
 
@@ -52,6 +56,7 @@ void PcapThread::run() throw(CannotOpenDeviceException)
             noterror=false;
         }
     }
+    std::cout << "\nreceive: finish - thread number: " << thread_number << std::endl;
 //    delete pkt_header;
 //    delete pkt_data;
 
