@@ -91,6 +91,11 @@ bool AbstractionLayer::isDeviceActivated(shared_ptr<Device>& device)
 
 }
 
+QList<shared_ptr<Device> > AbstractionLayer::getActivateDevices()
+{
+    return this->_activatedDevices;
+}
+
 void AbstractionLayer::startListening(int packetCaptureSize,int timeout)
 {
     this->_pcapThreads.clear();

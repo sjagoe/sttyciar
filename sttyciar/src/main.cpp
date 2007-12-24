@@ -113,10 +113,9 @@ int main()
     networkLogicLayer->start();
 
     u_char* data = new u_char[size];
-<<<<<<< TREE
+
     //*data = *pingPacketData;
-=======
->>>>>>> MERGE-SOURCE
+
 
     for (int i = 0; i != size; i++)
     {
